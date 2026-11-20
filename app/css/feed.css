@@ -1,0 +1,66 @@
+/* The feed (app/js/feed.js): posts, learn cards and questions from every course. */
+.feed-main { padding: 0 0 110px; gap: 0; }
+#feedSentinel { height: 1px; }
+.cover-math { transform-origin: center; white-space: nowrap; font-size: 19px; line-height: 1; }
+.cover-math .katex-display, .cover-math math { margin: 0 !important; padding: 0 !important; overflow: visible !important; }
+.post { border-bottom: 1px solid var(--line); padding-bottom: 14px; background: var(--paper); scroll-margin-top: 60px; }
+.post-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; }
+.mini-av {
+  width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center;
+  background: var(--card); border: 2px solid var(--c); font-family: var(--font-display); font-style: italic; font-size: 13px;
+}
+.ph-t { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.ph-t b { font-family: var(--font-mono); font-size: 13px; font-weight: 500; }
+.ph-t span { font-size: 12.5px; color: var(--muted); }
+.ph-k { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); border: 1px solid var(--c); border-radius: 99px; padding: 2px 8px; white-space: nowrap; }
+.post-cover {
+  position: relative; aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden; user-select: none;
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
+    color-mix(in srgb, var(--c) 12%, var(--card));
+  border-top: 3px solid var(--c);
+}
+.post-cover .cover-math { font-size: 38px; }
+.pop { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; pointer-events: none; color: #fff; }
+.pop svg { width: 96px; height: 96px; filter: drop-shadow(0 4px 14px rgba(0,0,0,0.35)); }
+.pop svg path { fill: currentColor; }
+@media (prefers-reduced-motion: no-preference) {
+  .post-cover.popping .pop { animation: heartpop 0.8s ease-out; }
+  @keyframes heartpop { 0% { opacity: 0; transform: scale(0.5); } 25% { opacity: 1; transform: scale(1.1); } 70% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1); } }
+}
+.post-acts { display: flex; align-items: center; gap: 4px; padding: 6px 8px 0; }
+.post-acts .sp { flex: 1; }
+.pa-btn { background: none; border: none; padding: 6px; cursor: pointer; color: var(--ink); display: inline-flex; border-radius: 8px; }
+.pa-btn svg { width: 26px; height: 26px; }
+.pa-btn.like[aria-pressed="true"] { color: var(--ex); }
+.pa-btn.save[aria-pressed="true"] { color: var(--ink); }
+.pa-btn[aria-pressed="true"] svg path { fill: currentColor; }
+.post-cap { padding: 2px 14px 0; display: flex; flex-direction: column; gap: 6px; }
+.post-title { margin: 0; font-size: 18px; line-height: 1.3; text-wrap: balance; }
+.post-body p, .post-reveal p { margin: 0 0 8px; }
+.post-body a { color: var(--def); }
+.post-reveals { display: flex; gap: 8px; flex-wrap: wrap; }
+.post-reveals .act { --c: var(--def); }
+.post-reveal { border-left: 3px solid var(--c); padding: 4px 0 2px 12px; }
+.post-reveal .rv-k { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.post-tags { font-family: var(--font-mono); font-size: 12.5px; color: var(--def); }
+.post .katex-display { overflow-x: auto; overflow-y: hidden; }
+.post { scroll-margin-top: 100px; }
+.post-pin { position: absolute; right: 10px; top: 8px; color: var(--muted); }
+.post-pin svg { width: 16px; height: 16px; }
+
+/* learn cards and questions: no cover, the text is the post */
+.post-learn .post-head, .post-q .post-head { border-bottom: 3px solid var(--c); }
+.post-learn .post-cap, .post-q .post-cap { padding-top: 10px; }
+.post-q .q-label { margin: 0; }
+.post-q .q-prompt { cursor: pointer; }
+.post-learn .fig, .post-q .fig { margin: 6px 0 4px; }
+.fq-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 2px; }
+.fq-btn { background: var(--c); color: var(--on-accent); border: none; border-radius: 999px; padding: 8px 18px; font-family: var(--font-mono); font-size: 13px; cursor: pointer; }
+.fq-btn:hover { filter: brightness(1.08); }
+.fq-res { font-family: var(--font-mono); font-size: 12.5px; }
+.fq-res.good { color: var(--good); }
+.fq-res.bad { color: var(--bad); }
+.feed-main .divider { margin: 14px 16px; }
+.feed-main .empty { margin: 0; }

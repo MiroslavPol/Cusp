@@ -1,0 +1,22 @@
+# Checks every pull request: the build validates all courses, Node checks the JavaScript syntax.
+name: Check
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and validate courses
+        run: python3 build.py
+      - name: JavaScript syntax
+        run: |
+          for f in app/js/*.js courses/*/generators.js; do
+            node --check "$f" || exit 1
+          done

@@ -1,0 +1,243 @@
+=== tip | P1 | Vítejte v MA I | \varepsilon>0 | pin
+Tady najdete definice, věty, protipříklady a úlohy k přednášce M1100. Příspěvky přibývají s přednáškami. Kurz v záložce <b>Učit se</b> jde přesně podle plánu přednášek; všechno ostatní je bonus navíc.
+
+K hlubšímu porozumění slouží <a href="https://monstruoz.quarto.pub/spma/" target="_blank" rel="noopener">Sprievodca Matematickou analýzou I</a>.
+
+=== def | P1 | Zobrazení | f\colon A\to B
+Relace $f\subseteq A\times B$ je <b>zobrazení</b> $A$ do $B$, jestliže ke každému $x\in A$ existuje <b>právě jedno</b> $y\in B$ s $(x,y)\in f$.
+
+„Právě jedno“ obsahuje dvě podmínky: aspoň jedno (každé $x$ má obraz) a nejvýše jedno (obraz je jednoznačný).
+
+=== def | P1 | Uspořádání | \le
+Relace $\le$ je <b>uspořádání</b>, je-li reflexivní, antisymetrická a tranzitivní. Je <b>úplné</b>, jestliže lze porovnat každé dva prvky.
+
+Dělitelnost na $\mathbb N$ je uspořádání, které není úplné: $2$ a $3$ porovnat nelze.
+
+=== def | P2 | Supremum | \sup B
+$\sup B$ je <b>nejmenší horní závora</b> množiny $B$. V $\mathbb R$ ji poznáme takto: $a$ je horní závora a
+$$\forall\varepsilon>0\ \exists x\in B:\ x>a-\varepsilon.$$
+Supremum nemusí ležet v $B$: $\sup(0,1) = 1\notin(0,1)$.
+
+=== thm | P2 | Axiom suprema | (\mathrm{R}13)
+Každá neprázdná shora ohraničená podmnožina $\mathbb R$ má supremum.
+
+Tento jediný axiom odlišuje $\mathbb R$ od $\mathbb Q$ a stojí na něm skoro celá analýza: existence $\sqrt2$, limity monotónních posloupností, Bolzanova–Weierstrassova věta i věty o spojitých funkcích.
+
+=== proof | P2 | √2 není racionální | \sqrt2\notin\mathbb Q
+Tvrzení: neexistují celá čísla $p, q$ s $\left(\tfrac pq\right)^2=2$.
+--- proof
+Nechť $\sqrt2=\tfrac pq$ v základním tvaru. Pak $p^2=2q^2$, tedy $p$ je sudé, $p=2m$. Dosazením $q^2=2m^2$, takže i $q$ je sudé. Zlomek tedy nebyl v základním tvaru, spor.
+
+=== thm | P3 | Hustota racionálních a iracionálních čísel | \mathbb Q\ \&\ \mathbb I
+Mezi libovolnými dvěma různými reálnými čísly leží racionální i iracionální číslo, a dokonce nekonečně mnoho obojích.
+
+Klíčem je archimedovská vlastnost: pro $a>0$ a každé $b$ existuje $n\in\mathbb N$ s $na>b$.
+
+=== def | P3 | Okolí bodu | \mathcal O_\delta(x_0)
+$\mathcal O_\delta(x_0) = (x_0-\delta,\ x_0+\delta)$. Okolí $+\infty$ je $(A,\infty)$ a okolí $-\infty$ je $(-\infty,A)$.
+
+Díky okolím zapíšeme všechny druhy limit jedním jazykem: „pro každé okolí limity existuje okolí bodu, ze kterého…“
+
+=== def | P4 | Limita posloupnosti | a_n\to A
+$$\forall\varepsilon>0\ \exists n_0\in\mathbb N\ \forall n\ge n_0:\ |a_n-A|<\varepsilon.$$
+Hra dvou hráčů: soupeř zvolí přesnost $\varepsilon$, vy odpovíte indexem $n_0$. Limita je $A$, pokud máte odpověď na každé $\varepsilon$.
+
+=== cex | P4 | Ohraničená ≠ konvergentní | (-1)^n
+Konvergentní posloupnost je vždy ohraničená. Obrácení neplatí: $\{(-1)^n\}$ je ohraničená, ale skáče mezi $-1$ a $1$ a limitu nemá.
+
+Co z ohraničenosti plyne, říká Bolzanova–Weierstrassova věta: konvergentní je aspoň nějaká vybraná posloupnost.
+
+=== thm | P5 | Věta o třech limitách | a_n\le c_n\le b_n
+Je-li $a_n\le c_n\le b_n$ od jistého indexu a $a_n\to L$, $b_n\to L$, pak i $c_n\to L$.
+--- solution
+Příklad: $\sqrt[n]{2^n+3^n}$. Platí $3\le\sqrt[n]{2^n+3^n}\le3\sqrt[n]2$ a $\sqrt[n]2\to1$, takže limita je $3$.
+
+=== def | P5 | Eulerovo číslo | e
+$$e=\lim_{n\to\infty}\left(1+\frac1n\right)^n\approx2.718281828$$
+Posloupnost je rostoucí a ohraničená, a proto konverguje. Interpretace: $1$ Kč úročená ročně $100\,\%$, ale připisováno $n$krát ročně. Při spojitém úročení máte na konci roku $e$ Kč.
+
+=== exam | P6 | Hromadné body | 3\cos\frac{n\pi}{2}
+Zkouška M1100, prosinec 2010: určete všechny hromadné body posloupnosti $a_n = 3\cos\frac{n\pi}{2}$ a také $\liminf a_n$ a $\limsup a_n$.
+--- hint
+Vypište prvních osm členů.
+--- solution
+Členy jsou $0,-3,0,3,0,-3,0,3,\dots$ Hromadné body jsou $-3$, $0$ a $3$, takže $\liminf a_n=-3$ a $\limsup a_n=3$.
+
+=== thm | P6 | Bolzanova–Weierstrassova věta | a_{n_k}
+Z každé ohraničené posloupnosti reálných čísel lze vybrat konvergentní posloupnost.
+--- proof
+Z každé posloupnosti lze vybrat monotónní posloupnost (stačí sledovat členy, které jsou větší než všechny následující). Vybraná monotónní posloupnost je ohraničená, a proto konverguje.
+
+=== def | P7 | Limita funkce | \lim_{x\to x_0}f(x)
+$\lim_{x\to x_0}f(x) = L$, jestliže ke každému okolí $\mathcal O(L)$ existuje ryzí okolí bodu $x_0$, které $f$ zobrazí do $\mathcal O(L)$.
+
+Hodnota $f(x_0)$ v definici nehraje roli, funkce v $x_0$ ani nemusí být definovaná.
+
+=== exam | P7 | Limita v −∞ | \lim_{x\to-\infty}
+Zkouška M1100, prosinec 2015: definujte vlastní limitu $L$ funkce $f$ v bodě $-\infty$.
+--- solution
+$\lim_{x\to-\infty}f(x)=L\in\mathbb R$, jestliže
+$$\forall\varepsilon>0\ \exists A\in\mathbb R\ \forall x<A:\ |f(x)-L|<\varepsilon.$$
+Na obrázku: graf leží od jistého místa vlevo v pásu $(L-\varepsilon,L+\varepsilon)$.
+
+=== cex | P7 | Limita složené funkce | f(g(x))
+Nechť $g(x)=0$ pro všechna $x$ a $f(y)=1$ pro $y\ne0$, $f(0)=0$. Pak $\lim_{x\to0}g(x)=0$ a $\lim_{y\to0}f(y)=1$, ale $f(g(x))=0$ pro všechna $x$.
+
+Proto věta o limitě složené funkce potřebuje navíc spojitost vnější funkce, nebo aby $g(x)\ne\alpha$ na ryzím okolí.
+
+=== def | P8 | Spojitost v bodě | \lim_{x\to x_0}f(x)=f(x_0)
+$f$ je spojitá v $x_0$, jestliže $\lim_{x\to x_0}f(x)=f(x_0)$. Skrývají se v tom tři požadavky: $f(x_0)$ existuje, limita existuje a obě hodnoty se rovnají.
+
+=== thm | P8 | Weierstrassova věta | \max_{[a,b]}f
+Funkce spojitá na <b>uzavřeném ohraničeném</b> intervalu $[a,b]$ je na něm ohraničená a nabývá na něm své největší i nejmenší hodnoty.
+--- proof
+Princip: nechť $M=\sup f$ na $[a,b]$. Najdeme $x_n$ s $f(x_n)\to M$. Podle Bolzanovy–Weierstrassovy věty má $\{x_n\}$ vybranou posloupnost konvergující k nějakému $c\in[a,b]$ a ze spojitosti $f(c)=M$.
+
+=== cex | P8 | Bez uzavřeného intervalu to nejde | \frac1x
+$f(x)=\frac1x$ je spojitá na $(0,1]$, ale není shora ohraničená. $f(x)=x$ je spojitá na $(0,1)$, je ohraničená, a přesto nemá maximum ani minimum.
+
+Všechny předpoklady Weierstrassovy věty jsou potřeba.
+
+=== thm | P9 | Bolzanova věta | f(a)\,f(b)<0
+Je-li $f$ spojitá na $[a,b]$ a $f(a)f(b)<0$, existuje $c\in(a,b)$ s $f(c)=0$.
+
+Důsledek: spojitá funkce na intervalu nabývá všech hodnot mezi kterýmikoli dvěma svými hodnotami.
+
+=== app | P9 | Půlení intervalu | x^3+x-1=0
+Ukažte, že rovnice $x^3+x-1=0$ má kořen v intervalu $(0,1)$, a zpřesněte ho.
+--- solution
+$f(0)=-1<0$ a $f(1)=1>0$, takže podle Bolzanovy věty existuje kořen. $f(0.5)=-0.375<0$, kořen leží v $(0.5;1)$; $f(0.75)\approx0.17>0$, kořen leží v $(0.5;0.75)$. Každým krokem se interval zkrátí na polovinu; kořen je přibližně $0.6823$.
+
+=== def | P9 | Derivace | f'(x_0) | #geometrický-význam-derivácie
+$$f'(x_0)=\lim_{h\to0}\frac{f(x_0+h)-f(x_0)}{h}$$
+Geometricky je to směrnice tečny, limita směrnic sečen. Rovnice tečny: $y=f(x_0)+f'(x_0)(x-x_0)$.
+
+=== cex | P10 | Spojitá, ale bez derivace | |x|
+Má-li $f$ vlastní derivaci v $x_0$, je v $x_0$ spojitá. Obrácení neplatí: $|x|$ je v $0$ spojitá, ale
+$$f'_+(0)=1\ne-1=f'_-(0).$$
+Weierstrass dokonce sestrojil funkci spojitou na celém $\mathbb R$, která nemá derivaci v žádném bodě.
+
+=== hist | P10 | Nejprve používána, pak definována | 1637\to1872
+Judith Grabinerová (Mathematics Magazine, 1983) popisuje cestu derivace ve čtyřech krocích. Nejprve byla <b>používána</b> (Fermat hledal extrémy a tečny), pak <b>objevena</b> jako obecný pojem (Newton, Leibniz), poté <b>zkoumána a rozvíjena</b> v 18. století (Taylor, Euler, Lagrange) a teprve nakonec <b>definována</b> pomocí limity (Cauchy, Weierstrass).
+
+V přednášce postupujeme přesně opačně: nejdřív definice, pak použití.
+
+=== app | P11 | Vypouštění nádrže | \frac{dh}{dt}
+Válcová nádrž má poloměr $2$ m. Čerpáme z ní $3\ \mathrm{m^3}$ za minutu. Jak rychle klesá hladina?
+--- hint
+Objem a výška hladiny jsou funkce času: $V(t)=\pi r^2h(t)$. Zderivujte podle $t$.
+--- solution
+$V'(t)=4\pi\,h'(t)$ a $V'(t)=-3$, takže $h'(t)=-\frac{3}{4\pi}\approx-0.24$ m/min. Hladina klesá konstantní rychlostí asi $24$ cm za minutu.
+
+=== app | P11 | Žebřík u zdi | x^2+y^2=25
+Žebřík délky $5$ m se opírá o zeď. Spodní konec klouže od zdi rychlostí $1$ m/s. Jak rychle klesá horní konec ve chvíli, kdy je spodní konec $3$ m od zdi?
+--- solution
+Pro vzdálenosti $x(t)$ a $y(t)$ platí $x^2+y^2=25$. Derivací $2xx'+2yy'=0$. Pro $x=3$ je $y=4$ a $x'=1$, takže $y'=-\frac{3\cdot1}{4}=-0.75$ m/s.
+
+=== thm | P12 | Lagrangeova věta | f'(\xi)
+Je-li $f$ spojitá na $[a,b]$ a má derivaci na $(a,b)$, existuje $\xi\in(a,b)$ s
+$$f'(\xi)=\frac{f(b)-f(a)}{b-a}.$$
+Fyzikálně: ujedete-li $120$ km za hodinu, v nějakém okamžiku jste jeli přesně $120$ km/h.
+
+=== cex | P12 | Rolle bez derivace | |x|
+Funkce $|x|$ na $[-1,1]$ je spojitá a $f(-1)=f(1)$, ale $f'(x)=0$ neplatí nikde. Předpoklad existence derivace v Rolleově větě je nutný: zde chybí v jediném bodě $0$.
+
+=== thm | P13 | L'Hospitalovo pravidlo | \frac{f'}{g'}
+Je-li limita typu $\frac00$ nebo $\frac{\cdot}{\infty}$ a existuje $\lim\frac{f'(x)}{g'(x)}$, pak
+$$\lim\frac{f(x)}{g(x)}=\lim\frac{f'(x)}{g'(x)}.$$
+Pozor: derivujeme čitatele a jmenovatele zvlášť, ne podíl.
+
+=== cex | P13 | Když L'Hospital mlčí | \frac{x+\sin x}{x}
+$\lim_{x\to\infty}\frac{x+\sin x}{x}=1$, protože $\frac{\sin x}{x}\to0$. Podíl derivací $\frac{1+\cos x}{1}$ ale limitu nemá.
+
+L'Hospitalovo pravidlo je jen postačující podmínka: neexistence limity podílu derivací nic neříká.
+
+=== app | P13 | Proč je duha ve 42° | 42^\circ
+Paprsek, který se v kapce jednou odrazí, se odchýlí o úhel $D(i)=180^\circ+2i-4r$, kde $\sin i=n\sin r$ a $n\approx\frac43$ je index lomu vody.
+
+Funkce $D$ má minimum pro $\cos^2 i=\frac{n^2-1}{3}$, tedy $i\approx59.4^\circ$, a $D_{\min}\approx138^\circ$. U stacionárního bodu se paprsky hromadí, a proto vidíme jasný oblouk pod úhlem $180^\circ-138^\circ=42^\circ$. Podrobně viz bakalářská práce J. Šmaka <i>Matematická analýza duhy</i> (MU, 2013).
+
+=== exam | P14 | Zahrada s maximální plochou | \max S
+Zkouška M1100, prosinec 2010: zahrada má tvar rovnoramenného trojúhelníka s obvodem $900$ m. Určete délky stran tak, aby plocha byla maximální.
+--- hint
+Pro ramena $a$ a základnu $b=900-2a$ je $S=\frac b4\sqrt{4a^2-b^2}$. Maximalizujte $S^2$.
+--- solution
+Maximum nastává pro $a=b=300$ m: rovnostranný trojúhelník s plochou $22\,500\sqrt3\approx38\,971\ \mathrm{m^2}$.
+
+=== def | P15 | Konvexní funkce | f''\ge0
+$f$ je konvexní na $I$, jestliže sečna mezi libovolnými dvěma body grafu leží nad grafem. Pro dvakrát diferencovatelnou funkci to nastane, právě když $f''\ge0$ na $I$.
+
+Inflexní bod je místo, kde se konvexnost mění v konkávnost.
+
+=== thm | P16 | Taylorův polynom | T_n(x)
+$$T_n(x)=\sum_{k=0}^{n}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$
+je jediný polynom stupně nejvýše $n$, který má v $x_0$ stejnou hodnotu a stejné derivace až do řádu $n$ jako $f$. Chyba $R_n(x)=f(x)-T_n(x)$ je v Lagrangeově tvaru $\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}$.
+
+=== app | P16 | Odhad e bez kalkulačky | e\approx\frac{8}{3}
+$e^x\approx1+x+\frac{x^2}{2}+\frac{x^3}{6}$. Pro $x=1$: $e\approx\frac83\approx2.667$. S členem $\frac{x^4}{24}$ dostaneme $2.708$, s dalším $2.7167$.
+--- solution
+Lagrangeův zbytek pro $T_3$: $R_3(1)=\frac{e^\xi}{24}$ s $\xi\in(0,1)$, tedy chyba je menší než $\frac{3}{24}=0.125$. Skutečná chyba je asi $0.052$.
+
+=== def | P17 | Primitivní funkce | F'=f
+$F$ je primitivní funkce k $f$ na intervalu $I$, jestliže $F'(x)=f(x)$ pro všechna $x\in I$. Primitivní funkce se liší jen o konstantu, proto píšeme $\int f(x)\,dx=F(x)+C$.
+
+=== cex | P17 | Funkce bez primitivní funkce | \operatorname{sgn}x
+$\operatorname{sgn}x$ nemá na $\mathbb R$ primitivní funkci. Derivace má totiž Darbouxovu vlastnost: nabývá všech hodnot mezi kterýmikoli dvěma svými hodnotami. $\operatorname{sgn}$ nabývá $-1$ a $1$, ale nikdy $\frac12$.
+
+Každá spojitá funkce na intervalu primitivní funkci má.
+
+=== thm | P18 | Per partes | \int uv'
+$$\int u\,v'\,dx=uv-\int u'\,v\,dx$$
+Volíme tak, aby $\int u'v$ byl jednodušší. Typicky $u$ = polynom a $v'$ = $e^x$, $\sin x$, $\cos x$, nebo $u=\ln x$, $\operatorname{arctg}x$ a $v'$ = polynom.
+--- solution
+$\int x e^x\,dx = xe^x-\int e^x\,dx = (x-1)e^x+C$.
+
+=== tip | P19 | Univerzální substituce | t=\operatorname{tg}\frac x2
+Integrál racionální funkce v $\sin x$ a $\cos x$ převede substituce $t=\operatorname{tg}\frac x2$ na integrál racionální funkce:
+$$\sin x=\frac{2t}{1+t^2},\quad\cos x=\frac{1-t^2}{1+t^2},\quad dx=\frac{2\,dt}{1+t^2}.$$
+Funguje vždy, ale často vede ke zdlouhavým výpočtům. Napřed zkuste jednodušší substituce, např. $t=\sin x$, pokud je integrand lichý v $\cos x$.
+
+=== def | P20 | Riemannův integrál | \int_a^b f
+Pro dělení $D$ intervalu $[a,b]$ tvoří dolní součty $s(f,D)$ a horní součty $S(f,D)$ aproximace plochy zdola a shora. Je-li supremum dolních součtů rovno infimu horních, je $f$ integrovatelná a toto číslo je $\int_a^b f(x)\,dx$.
+
+=== cex | P21 | Dirichletova funkce | \chi_{\mathbb Q}
+$f(x)=1$ pro $x\in\mathbb Q$ a $f(x)=0$ pro $x\in\mathbb I$. V každém dílčím intervalu je racionální i iracionální číslo, takže každý dolní součet na $[0,1]$ je $0$ a každý horní $1$.
+
+Funkce je ohraničená, ale riemannovsky integrovatelná není.
+
+=== thm | P23 | Integrál jako funkce horní meze | \frac{d}{dx}\int_a^x
+Je-li $f$ spojitá na $[a,b]$, je $F(x)=\int_a^x f(t)\,dt$ diferencovatelná a $F'(x)=f(x)$. Každá spojitá funkce má tedy primitivní funkci.
+
+=== thm | P24 | Newtonova–Leibnizova formule | [F]_a^b
+Je-li $f$ integrovatelná na $[a,b]$ a $F$ je k ní primitivní, pak
+$$\int_a^b f(x)\,dx=F(b)-F(a).$$
+Spojuje dva na první pohled nesouvisející pojmy: plochu pod grafem a obrácenou derivaci.
+
+=== app | P24 | Spravedlivé dělení čokolády | \frac{\pi}{3}
+Kulatou čokoládu o poloměru $1$ chcete dvěma rovnoběžnými řezy rozdělit mezi tři lidi. Kam řezat?
+--- hint
+Krajní kus od $x=c$ do $x=1$ má plochu $\int_c^1 2\sqrt{1-x^2}\,dx$. Ta má být třetinou z $\pi$.
+--- solution
+Výpočet dává $\arccos c-c\sqrt{1-c^2}=\frac\pi3$. Rovnici nelze vyřešit vzorcem; numericky (půlením intervalu) $c\approx0.265$. Řezy vedeme ve vzdálenosti asi $0.265$ poloměru od středu, ne ve třetinách průměru.
+
+=== app | P25 | Délka řetězovky | \cosh x
+Zkouška M1100, prosinec 2010: vypočtěte délku oblouku $f(x)=\cosh x$ na $[-1,1]$.
+--- solution
+$$\ell=\int_{-1}^1\sqrt{1+\sinh^2x}\,dx=\int_{-1}^1\cosh x\,dx=2\sinh1=e-\frac1e\approx2.35.$$
+
+=== app | P26 | Gabrielův roh | \pi<\infty
+Graf $y=\frac1x$ pro $x\ge1$ rotuje kolem osy $x$. Objem tělesa je
+$$V=\pi\int_1^\infty\frac{dx}{x^2}=\pi,$$
+ale povrch je nekonečný, protože $2\pi\int_1^\infty\frac1x\sqrt{1+\frac1{x^4}}\,dx\ge2\pi\int_1^\infty\frac{dx}{x}=\infty$. Roh se dá naplnit barvou, ale nedá se natřít.
+
+=== thm | P27 | Srovnávací kritérium | 0\le f\le g
+Nechť $0\le f(x)\le g(x)$ na $[a,\infty)$. Konverguje-li $\int_a^\infty g$, konverguje i $\int_a^\infty f$. Diverguje-li $\int_a^\infty f$, diverguje i $\int_a^\infty g$.
+
+Srovnáváme nejčastěji s $\int_1^\infty\frac{dx}{x^p}$, který konverguje, právě když $p>1$.
+
+=== exam | P27 | Plocha pod arctg x / x³ | \int_1^\infty\frac{\operatorname{arctg}x}{x^3}
+Zkouška M1100, prosinec 2010: vypočtěte plochu mezi grafem $f(x)=\frac{\operatorname{arctg}x}{x^3}$ a osou $x$ na $[1,\infty)$.
+--- hint
+Per partes s $u=\operatorname{arctg}x$, $v'=x^{-3}$, pak rozklad $\frac{1}{x^2(1+x^2)}=\frac1{x^2}-\frac1{1+x^2}$.
+--- solution
+$$\int_1^\infty\frac{\operatorname{arctg}x}{x^3}dx=\left[-\frac{\operatorname{arctg}x}{2x^2}\right]_1^\infty+\frac12\int_1^\infty\left(\frac1{x^2}-\frac1{1+x^2}\right)dx=\frac\pi8+\frac12\left(1-\frac\pi4\right)=\frac12.$$

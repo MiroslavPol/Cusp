@@ -1,0 +1,41 @@
+<nav class="tabbar" aria-label="Sections">
+  <button class="tab" type="button" data-view="learn" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5 12 4l9 4.5-9 4.5-9-4.5Z"/><path d="M7 10.6V15c0 1.4 2.2 3 5 3s5-1.6 5-3v-4.4"/><path d="M21 8.5V14"/></svg>
+    <span id="tabLearnLabel">Learn</span>
+  </button>
+  <button class="tab" type="button" data-view="feed">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="7" rx="1.5"/><rect x="4" y="14" width="16" height="7" rx="1.5"/></svg>
+    <span id="tabFeedLabel">Feed</span>
+  </button>
+</nav>
+
+<div class="sheet-wrap" id="courseSheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <h2 id="sheetTitle">Choose a course</h2>
+    <div id="courseList" style="display:flex;flex-direction:column;gap:10px"></div>
+  </div>
+</div>
+
+<div class="lesson" id="lesson" hidden role="dialog" aria-modal="true" aria-label="Lesson">
+  <div class="lesson-top">
+    <button class="x-btn" id="lessonClose" type="button" aria-label="Close lesson"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="bar" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="100"><span id="lessonBar"></span></div>
+  </div>
+  <div class="lesson-body" id="lessonBody"></div>
+  <div class="lesson-foot" id="lessonFoot">
+    <div class="foot-inner">
+      <div class="fb" id="fb" hidden></div>
+      <button class="primary" id="primary" type="button">Check</button>
+    </div>
+  </div>
+</div>
+
+<div class="guide" id="guide" hidden role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+  <div class="guide-top">
+    <button class="x-btn" id="guideClose" type="button" aria-label="Zavřít Průvodce"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="guide-h"><span class="guide-k" id="guideKicker">Sprievodca</span><h2 id="guideTitle"></h2></div>
+  </div>
+  <div class="guide-body" id="guideBody"></div>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>

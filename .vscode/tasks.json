@@ -1,0 +1,53 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "python3 build.py",
+      "windows": { "command": "python build.py" },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Serve",
+      "type": "shell",
+      "command": "python3 -m http.server 8000 -d site",
+      "windows": { "command": "python -m http.server 8000 -d site" },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Serve app (PWA, offline test)",
+      "type": "shell",
+      "command": "python3 -m http.server 8001 -d pwa",
+      "windows": { "command": "python -m http.server 8001 -d pwa" },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Insert icons (courses/<id>/icons.py → lessons.txt)",
+      "type": "shell",
+      "command": "python3 tools/insert_icons.py ${input:course} && python3 build.py",
+      "windows": { "command": "python tools/insert_icons.py ${input:course}; python build.py" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Insert figures (courses/<id>/figs.py → lessons.txt)",
+      "type": "shell",
+      "command": "python3 tools/insert_figs.py ${input:course} && python3 build.py",
+      "windows": { "command": "python tools/insert_figs.py ${input:course}; python build.py" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Convert MA I guide (.qmd → guide.json)",
+      "type": "shell",
+      "command": "python3 courses/calc1/guide/convert.py && python3 build.py",
+      "windows": { "command": "python courses/calc1/guide/convert.py; python build.py" },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    { "id": "course", "type": "promptString", "description": "Course id (folder in courses/)", "default": "calc1" }
+  ]
+}

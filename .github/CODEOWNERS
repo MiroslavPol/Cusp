@@ -1,0 +1,14 @@
+# Who must review changes to which folder (GitHub asks them automatically on pull requests).
+# Replace the placeholders with GitHub usernames and remove the leading "# " to switch a line on.
+# Later lines win, so the course lines below override the catch-all line.
+# To enforce it: Settings → Branches → protect "main" → "Require review from Code Owners".
+#
+# *                   @MAINTAINER
+# /app/               @MAINTAINER
+# /build.py           @MAINTAINER
+# /tools/             @MAINTAINER
+# /.github/           @MAINTAINER
+#
+# /courses/calc1/     @MAINTAINER
+# /courses/hs/        @MAINTAINER
+# /courses/<id>/      @COLLEAGUE
