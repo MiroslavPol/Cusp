@@ -10,6 +10,21 @@
       "problemMatcher": []
     },
     {
+      "label": "Test (build + browser tests)",
+      "type": "shell",
+      "command": "python3 tools/test_app.py",
+      "windows": { "command": "python tools/test_app.py" },
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Assign ids (courses/<id>/lessons.txt)",
+      "type": "shell",
+      "command": "python3 tools/assign_ids.py ${input:course} && python3 build.py",
+      "windows": { "command": "python tools/assign_ids.py ${input:course}; python build.py" },
+      "problemMatcher": []
+    },
+    {
       "label": "Serve",
       "type": "shell",
       "command": "python3 -m http.server 8000 -d site",

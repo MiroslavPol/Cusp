@@ -51,3 +51,4 @@ if counter:
         out[j:j] = opts
 open(course, "w", encoding="utf-8").write("\n".join(out))
 print("merged", sum(len(b) for b in blocks.values()), "lines into", len(blocks), "lessons")
+print("Now give the new questions ids:  python tools/assign_ids.py <course id>")

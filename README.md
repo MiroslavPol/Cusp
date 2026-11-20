@@ -14,7 +14,20 @@ Opening `site/index.html` directly (double-click) works too. You need internet t
 because KaTeX loads from a CDN. You need Python 3.8+; nothing else is required to build.
 
 In VS Code: **Terminal → Run Build Task** (Ctrl+Shift+B) builds. **Run Task → Serve** starts the
-local server.
+local server, **Run Task → Test** runs the browser tests.
+
+### Tests
+
+```bash
+pip install playwright && python -m playwright install chromium     # once
+python tools/test_app.py                                            # builds, then tests both builds
+```
+
+The tests use the app like a student would: the map, a whole lesson answered correctly, the
+feed, saving, the guide, backup and restore, the migration of old progress, and the installable
+app offline. On Windows you can skip the Chromium download and use Edge:
+`set CUSP_BROWSER=msedge` (PowerShell: `$env:CUSP_BROWSER="msedge"`). GitHub runs the same tests
+on every pull request and before every deploy, so a failing test keeps the old version online.
 
 **Admin mode:** tap the XP pill (top right) 7 times within 3 s. Every lesson unlocks, draft courses
 appear, and you get a "Vynulovat postup" (reset progress) button.
@@ -27,7 +40,7 @@ app/                   THE INTERFACE: shared by all courses, see app/README.md
 courses/               THE CONTENT: one self-contained folder per course, see courses/README.md
   calc1/               Matematická analýza I (M1100), with its guide (Sprievodca)
   hs/                  Středoškolské opakování
-tools/                 helpers that work on one course at a time (new_course, insert_icons, …)
+tools/                 helpers that take a course id (new_course, assign_ids, insert_icons, …) + test_app.py
 site/, pwa/            build output (generated, not in git)
 ```
 
@@ -56,12 +69,17 @@ material automatically.
 | theory | posts in `feed.txt` (def, thm, proof, cex, hist, tip) and learn cards (`> Title`) in `lessons.txt` | 70 % |
 | exercises | questions (`? kind`) in `lessons.txt` and `feed.txt` posts of type app or exam | 30 % |
 
-Pinned posts come first. Inside each group the order is shuffled and doesn't repeat until
-everything has been shown. Chips at the top filter by course or show saved posts. Tapping
-**Odpovědět** on a question opens it in the lesson player. The answer updates spaced repetition
-the same way it would in a lesson. The 70 % share is `THEORY_SHARE` in `app/js/feed.js`.
+Pinned posts come first. Half of the picks come from what matters now: theory of the last three
+lectures (or, without a schedule, the lessons you've reached), and questions that are due for
+review or that you got wrong. The rest is everything else. Inside each group the order is
+shuffled and doesn't repeat until everything has been shown. Chips at the top filter by course or
+show saved posts.
 
-Everything is shown from day one. Lecture dates are only used for labels.
+Multiple-choice, true/false and select-all questions are answered right in the post. The other
+kinds (typed answers, ordering) open in the lesson player. Either way the answer updates spaced
+repetition just like in a lesson. The shares are `THEORY_SHARE`, `FOCUS` and `RECENT_LECTURES` at
+the top of `app/js/feed.js`. Nothing is hidden: future lectures' material appears too, only less
+often.
 
 ## Learn path and spaced repetition
 
@@ -74,7 +92,7 @@ the inside. The spiral sits on a coordinate grid that is flat far away and twist
 hole. The metric of that twist is written on the rim. All of this is `app/js/path.js`.
 
 A lesson shows `LESSON_Q = 7` questions drawn from its pool (at most 3 generated ones), plus 2
-review questions from finished lessons. These constants are in `app/js/learn.js`. Each unit ends
+review questions from finished lessons. These constants are in `app/js/player.js`. Each unit ends
 with a checkpoint.
 
 Each answered question gets a Leitner box (`P.srs[key] = [box, dueDay]`). Answering correctly on
@@ -87,15 +105,27 @@ the path.
 All progress lives in the browser's `localStorage` under `lemma.*` keys: `lemma.learn` (progress,
 XP, spaced repetition), `lemma.course`, `lemma.admin`, `lemma.f.liked` and `lemma.f.saved`. It
 belongs to one browser and origin, so localhost and the published app keep separate progress.
-Question keys contain the course id (`calc1-u3-l2-q5`), so courses never share progress.
+
+**Backup:** the course picker has *Zálohovat* (a `.json` file; on phones it opens the share
+sheet, so you can send it to yourself) and *Obnovit* (from the file or pasted as text).
+Restoring merges: nothing on the device is lost, the backup only adds or moves things forward.
+
+**Stable ids:** progress is stored under ids like `calc1:q:7hx0c`, which are written into
+`lessons.txt` by `tools/assign_ids.py` (see courses/README.md). Inserting or reordering
+questions doesn't touch anyone's history. Progress saved under the old positional keys
+(`calc1-u3-l2-q5`) is moved over automatically, using `courses/<id>/legacy-ids.json`.
 
 ## Phone app (PWA) on GitHub Pages
 
 `build.py` writes two versions:
 
-- `site/index.html` is a single file that loads KaTeX from a CDN, e.g. for a claude.ai artifact.
-- `pwa/` is the **installable app**. It bundles KaTeX, a manifest, icons and a service worker,
-  so it works offline after the first visit.
+- `site/` has every course inside `index.html` (KaTeX from a CDN), plus `img/` and `fonts/`.
+- `pwa/` is the **installable app**. Each course's data is its own file (`data/<id>.json`),
+  loaded when that course is opened (the feed loads all of them). It bundles KaTeX, the fonts,
+  a manifest, icons and a service worker, so it works offline after the first visit.
+
+The fonts (Instrument Serif, Literata, IBM Plex Mono; SIL Open Font License) are in
+`app/vendor/fonts/`, so the app makes no requests to Google or other third parties.
 
 ### Publish (one time)
 
@@ -104,18 +134,17 @@ Question keys contain the course id (`calc1-u3-l2-q5`), so courses never share p
 3. `.github/workflows/pages.yml` builds and deploys. After a minute or so the app is at
    `https://<you>.github.io/<repo>/`. Check the **Actions** tab if it doesn't appear.
 
-After that, every push to `main` updates the app. Installed copies pick up the new version the
-next time they're opened online. Pull requests are checked by `.github/workflows/check.yml`,
-which runs the build and a JavaScript syntax check.
+After that, every push to `main` updates the app, after the tests pass. Installed copies pick
+up the new version the next time they're opened online. Pull requests are checked by
+`.github/workflows/check.yml`: the build, a JavaScript syntax check and the browser tests.
 
 ### Install on a phone
 
 - **Android (Chrome):** open the link → menu ⋮ → **Install app**.
 - **iPhone (Safari):** open the link → Share → **Add to Home Screen**.
 
-The app opens full screen and works offline. Web fonts are cached after the first online visit;
-until then it falls back to system fonts. On iPhone, the home-screen app keeps its progress
-separate from Safari.
+The app opens full screen and works offline after the first visit. On iPhone, the home-screen
+app keeps its progress separate from Safari (the backup moves it across).
 
 ### Test locally
 

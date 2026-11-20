@@ -88,5 +88,11 @@ ICONS = {{
 }}
 """)
 
+# give the example's units, lessons and questions their permanent ids (tools/assign_ids.py)
+import importlib.util
+spec = importlib.util.spec_from_file_location("assign_ids", ROOT / "tools" / "assign_ids.py")
+ids = importlib.util.module_from_spec(spec); spec.loader.exec_module(ids)
+lp = d / "lessons.txt"
+lp.write_text("\n".join(ids.assign(lp.read_text(encoding="utf-8").split("\n"))[0]), encoding="utf-8", newline="\n")
 print(f"Created courses/{cid}/ (course.json, lessons.txt, feed.txt, generators.js, icons.py).")
 print("Next: python build.py, then open site/index.html; turn on admin mode to see the draft.")

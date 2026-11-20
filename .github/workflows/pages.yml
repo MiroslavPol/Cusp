@@ -24,8 +24,16 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Build
         run: python3 build.py
+      - name: Test before publishing (a failing test keeps the old version online)
+        run: |
+          pip install playwright
+          python3 -m playwright install --with-deps chromium
+          python3 tools/test_app.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

@@ -17,13 +17,18 @@ different courses. Stay inside your scope so you never break someone else's cour
    building it in passing.
 5. `site/` and `pwa/` are build output. Never edit them by hand.
 
+## Ids
+
+Every unit (`## … | #id`), lesson (`### … | #id`) and question (`? kind #id`) has a permanent id;
+students' progress is stored under it. **Never edit, reuse or invent ids.** After adding units,
+lessons or questions, run `python tools/assign_ids.py <id>`, which fills in the missing ones. When you
+copy a question, delete the copied `#id` first. Don't edit `legacy-ids.json`.
+
 ## Before you finish
 
 - Run `python build.py`. It validates every course and must end without "Build stopped".
+- If you changed anything in `app/`, run `python tools/test_app.py` (browser tests) too.
 - If you changed `generators.js` and have Node, run `node --check courses/<id>/generators.js`.
-- If students already use the course, don't reorder or delete existing units, lessons or
-  questions. Add new questions at the end of a lesson. Keys like `calc1-u3-l2-q5` come from
-  positions, and students' spaced-repetition history depends on them.
 
 ## Formats
 
@@ -36,6 +41,8 @@ course.json (`lang`); the existing courses are Czech.
 ```bash
 python build.py                                   # build + validate all courses
 python tools/new_course.py <id> "Title"           # start a new course (draft)
+python tools/assign_ids.py <id>                   # give new units / lessons / questions their ids
+python tools/test_app.py                          # build + browser tests (needs: pip install playwright)
 python tools/insert_icons.py <id>                 # write icons.py into lessons.txt
 python tools/insert_figs.py <id>                  # write figs.py into lessons.txt
 ```

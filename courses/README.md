@@ -13,6 +13,7 @@ courses/<id>/
   icons.py         lesson icons for the path                   optional, used by tools/insert_icons.py
   figs.py          figure table                                optional, used by tools/insert_figs.py
   guide/           a reader text (guide.json + img/)           optional, see calc1/guide
+  legacy-ids.json  old progress keys → ids                     written once by tools/assign_ids.py --legacy
 ```
 
 Start a new course with `python tools/new_course.py <id> "Title"`, which writes an example of
@@ -20,10 +21,20 @@ every file. Then run `python build.py`. The build checks every course and stops 
 `file:line` messages if something is wrong (an unknown question kind, a missing generator, a
 header without a space, invalid JSON …).
 
-Question keys and progress come from the position of units, lessons and questions
-(`calc1-u3-l2-q5`). If students already use a course, **add new questions at the end of a
-lesson** and new lessons at the end of a unit. Inserting in the middle shifts the keys, and the
-spaced-repetition history then points at different questions.
+### Ids: every unit, lesson and question has one
+
+```
+## Funkce | P3–P4 | #k2f9a
+### Limita posloupnosti | P4 | #q81zd
+? mc #7hx0c
+? input #rrj8n | 1/2; 0.5
+```
+
+Students' progress is stored under these ids, so you can insert, move and reorder freely. After
+adding units, lessons or questions, run `python tools/assign_ids.py <id>`: it gives everything
+that has no id yet a new one and never changes existing ids. The build stops if something has no
+id or an id is used twice. **Never change or reuse an id**. When you copy a question, delete the
+copied `#id` and run the tool again. Deleting a question deletes its history, which is fine.
 
 ## course.json
 
@@ -137,8 +148,9 @@ app keeps working, and the browser console names the file.
 Expressions use `^`, `pi`, `E`, `sin cos tan asin acos atan sinh cosh exp ln sqrt abs floor sign cbrt`
 and ternaries (`x<0?-1:1`, `NaN` = gap). If `y` is omitted, the range is chosen automatically.
 
-`figs.py` is an optional table of figures that `python tools/insert_figs.py <id>` writes into
-lessons.txt. It removes all `@`/`@@` lines first, so only use it if the table is the source of
+Usually you write `@`/`@@` lines straight into lessons.txt (MA I does). Optionally, a course can
+keep its figures in a table, `figs.py`, which `python tools/insert_figs.py <id>` writes into
+lessons.txt. It removes all `@`/`@@` lines first, so use it only if the table is the source of
 truth for your course. It refuses to write if a table entry doesn't match exactly one item.
 
 ## Lesson icons (icons.py)
@@ -167,4 +179,5 @@ Write new items in a separate file under `### Lesson title` headers, optionally 
 ```bash
 python tools/verify.py my-additions.txt                                # needs sympy + node
 python tools/merge.py courses/<id>/lessons.txt my-additions.txt [--counter counter.txt]
+python tools/assign_ids.py <id>
 ```

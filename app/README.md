@@ -21,11 +21,19 @@ js/                 loaded in this order (see build.py):
   (courses/*/generators.js)
   path.js           the Learn map: spiral geometry, twisted coordinate grid, pan & zoom, lesson icons
   feed.js           the cross-course feed
-  learn.js          courses, progress, spaced repetition, path, lesson player, tabs (the core)
+  strings.js        every interface text, per language (cs, en)
+  core.js           courses and loading their data, stable ids, progress, spaced repetition, backup, helpers
+  guide.js          the guide reader
+  player.js         the lesson player (all question kinds), also for single questions from the feed
+  map.js            the Learn view: header, the map's stops and card, course picker, admin mode
+  main.js           tabs and start-up
 pwa/                service worker template, app icons (make_icons.py needs Pillow)
 vendor/katex/       KaTeX 0.16.9 (MIT) for the offline app
+vendor/fonts/       the web fonts, self-hosted (SIL OFL), with fonts.css
 ```
 
-`learn.js` reads the courses from the data blocks that `build.py` embeds
-(`<script id="courses">`, `lessons-<id>`, `feed-<id>`, `guide-<id>`) and shares what the feed
-needs as `window.LEMMA`. Interface texts are in `STR` at the top of `learn.js` (`cs` and `en`).
+The modules share one object, `window.CUSP` (defined in `core.js`), and talk through it:
+`C.on("progress" | "admin" | "loaded", fn)` / `C.emit(...)`. The course registry is embedded in
+the page (`<script id="courses">`); a course's lessons, feed posts, guide and legacy-id map come
+from `<script id="data-<id>">` in `site/` or from `data/<id>.json` in `pwa/` (`C.load(course)`).
+Interface texts are in `strings.js`; a course's `lang` picks the language.

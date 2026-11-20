@@ -1,4 +1,5 @@
-# Checks every pull request: the build validates all courses, Node checks the JavaScript syntax.
+# Checks every pull request: the build validates all courses, Node checks the JavaScript syntax,
+# and tools/test_app.py uses the built app in a real browser.
 name: Check
 
 on:
@@ -13,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Build and validate courses
         run: python3 build.py
       - name: JavaScript syntax
@@ -20,3 +24,9 @@ jobs:
           for f in app/js/*.js courses/*/generators.js; do
             node --check "$f" || exit 1
           done
+      - name: Install the test browser
+        run: |
+          pip install playwright
+          python3 -m playwright install --with-deps chromium
+      - name: End-to-end tests
+        run: python3 tools/test_app.py

@@ -54,7 +54,7 @@
 .post-learn .post-head, .post-q .post-head { border-bottom: 3px solid var(--c); }
 .post-learn .post-cap, .post-q .post-cap { padding-top: 10px; }
 .post-q .q-label { margin: 0; }
-.post-q .q-prompt { cursor: pointer; }
+.post-q .q-prompt.tappable { cursor: pointer; }
 .post-learn .fig, .post-q .fig { margin: 6px 0 4px; }
 .fq-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 2px; }
 .fq-btn { background: var(--c); color: var(--on-accent); border: none; border-radius: 999px; padding: 8px 18px; font-family: var(--font-mono); font-size: 13px; cursor: pointer; }
@@ -64,3 +64,14 @@
 .fq-res.bad { color: var(--bad); }
 .feed-main .divider { margin: 14px 16px; }
 .feed-main .empty { margin: 0; }
+
+/* questions answered right in the post */
+.post-q .fq-options { margin: 4px 0 2px; }
+.post-q .fq-options .opt { font-size: 16px; padding: 10px 14px; }
+.post-q > .post-cap > .fq-btn { align-self: flex-start; }
+.post-q .fq-btn:disabled { opacity: 0.45; cursor: default; }
+.fq-fb { border-left: 3px solid var(--good); padding: 4px 0 2px 12px; font-size: 15.5px; }
+.fq-fb.bad { border-left-color: var(--bad); }
+.fq-fb strong { color: var(--good); font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; }
+.fq-fb.bad strong { color: var(--bad); }
+.fq-fb p { margin: 4px 0 0; }

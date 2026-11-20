@@ -3,7 +3,7 @@
    - space(root, opts): the course as a spiral that starts on the outer rim and winds into a black hole
      (the final test), drawn over a coordinate grid that is flat far away and "slightly twisted" near the
      hole. Pan by dragging, zoom by pinching / the wheel / the buttons; tapping a node shows its card.
-   Called from learn.js (renderPath), which supplies the items, the HUD and the card contents. */
+   Called from map.js (renderPath), which supplies the items, the HUD and the card contents. */
 (function () {
   "use strict";
   var F = function () { return window.LEMMA_FIG; };
@@ -159,7 +159,7 @@
   function background(g, key, opts) {
     var H = g.H, C = g.C, out = [], rand = rng(key);
     // stars
-    var stars = "", n = Math.round((4 * H * H) / 2600);
+    var stars = "", n = Math.round((4 * H * H) / 4800);
     for (var i = 0; i < n; i++) {
       var x = rand() * 2 * H, y = rand() * 2 * H, r = 0.35 + Math.pow(rand(), 3) * 1.5, o = 0.25 + rand() * 0.7;
       stars += '<circle cx="' + f1(x) + '" cy="' + f1(y) + '" r="' + r.toFixed(2) + '" opacity="' + o.toFixed(2) + '"' + (rand() < 0.08 ? ' class="tw" style="animation-delay:-' + (rand() * 4).toFixed(1) + 's"' : "") + "/>";
@@ -168,9 +168,10 @@
     // the twisted Cartesian grid
     var step = UNIT / 2, minor = "", major = "", axes = "", lim = H - 10;
     function line(x0, y0, x1, y1) {
-      var pts = [], len = Math.hypot(x1 - x0, y1 - y0), m = Math.ceil(len / 10);
-      for (var k = 0; k <= m; k++) {
-        var x = x0 + (x1 - x0) * k / m, y = y0 + (y1 - y0) * k / m;
+      var pts = [], len = Math.hypot(x1 - x0, y1 - y0), near = g.rOut + 60;
+      for (var t = 0; t <= len + 0.01; ) {          // fine steps where the twist bends the line, coarse far out
+        var x = x0 + (x1 - x0) * t / len, y = y0 + (y1 - y0) * t / len;
+        t = t >= len ? len + 1 : Math.min(len, t + (x * x + y * y < near * near ? 10 : 30));
         if (x * x + y * y < 40 * 40) { if (pts.length) pts.push(null); continue; }
         var w = warp(x, y); pts.push([C + w[0], C + w[1]]);
       }
@@ -247,18 +248,37 @@
   }
 
   // ---------------------------------------------------------------- pan & zoom
-  var views = {}, seenCurrent = {}, active = null;
+  var views = {}, seenCurrent = {}, active = null, bgCache = {};
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function space(root, opts) {
     var key = opts.key, items = opts.items, g = geometry(items.length), H = g.H;
-    root.innerHTML = "";
-    root.classList.add("space");
-    var view = document.createElement("div"); view.className = "sp-view";
-    var world = document.createElement("div"); world.className = "sp-world";
-    world.style.width = world.style.height = 2 * H + "px";
-    world.innerHTML = '<svg class="sp-svg" width="' + 2 * H + '" height="' + 2 * H + '" viewBox="0 0 ' + 2 * H + " " + 2 * H + '" aria-hidden="true">' +
-      background(g, key, opts) + course(g, items, key) + "</svg>";
+    if (active && active.stop) active.stop();
+    var old = root._sp, fresh = !(old && old.key === key && old.n === items.length && old.metric === opts.metric && old.view.parentNode === root);
+    var view, world;
+    if (fresh) {
+      root.innerHTML = "";
+      root.classList.add("space");
+      view = document.createElement("div"); view.className = "sp-view";
+      world = document.createElement("div"); world.className = "sp-world";
+      world.style.width = world.style.height = 2 * H + "px";
+      var svg = '<svg class="sp-svg CLS" width="' + 2 * H + '" height="' + 2 * H + '" viewBox="0 0 ' + 2 * H + " " + 2 * H + '" aria-hidden="true">';
+      var bkey = key + ":" + items.length + ":" + opts.metric;
+      if (!bgCache[bkey]) bgCache[bkey] = background(g, key, opts);       // stars + twisted grid: built once per course
+      world.innerHTML = svg.replace("CLS", "sp-bg") + bgCache[bkey] + "</svg>" + svg.replace("CLS", "sp-fg") + "</svg>";
+      view.appendChild(world);
+      // one set of listeners per map; they talk to whichever controller is current
+      view.addEventListener("pointerdown", function (e) { if (active) active.down(e); });
+      view.addEventListener("click", function (e) { if (active) active.click(e); }, true);
+      view.addEventListener("focusin", function (e) { if (active) active.focusin(e); });
+      view.addEventListener("wheel", function (e) { if (active) active.wheel(e); }, { passive: false });
+      root._sp = { key: key, n: items.length, metric: opts.metric, view: view, world: world };
+    } else {
+      view = old.view; world = old.world;
+      Array.prototype.forEach.call(world.querySelectorAll(".sp-node, .bh"), function (n) { n.remove(); });
+      Array.prototype.forEach.call(root.querySelectorAll(":scope > .hud"), function (n) { n.remove(); });
+    }
+    world.querySelector(".sp-fg").innerHTML = course(g, items, key);
     var byId = {};
     items.forEach(function (it, i) {
       var p = g.at(g.radii[i]), wrap = document.createElement("div");
@@ -274,7 +294,6 @@
     bh.querySelector(".sing-core").setAttribute("aria-label", opts.sing.title);
     world.appendChild(bh);
     byId.sing = { item: { id: "sing" }, x: g.C, y: g.C, btn: bh.querySelector(".sing-core") };
-    view.appendChild(world);
 
     // HUD
     var top = document.createElement("div"); top.className = "hud hud-top";
@@ -288,7 +307,8 @@
     var coords = document.createElement("div"); coords.className = "hud hud-coords"; coords.setAttribute("aria-hidden", "true");
     var card = document.createElement("div"); card.className = "hud hud-card";
     top.appendChild(tools); top.appendChild(coords);      // they hang below the top panel
-    root.appendChild(view); root.appendChild(top); root.appendChild(card);
+    if (fresh) root.appendChild(view);
+    root.appendChild(top); root.appendChild(card);
 
     // camera: screen = world·k + (x, y)
     var cam = views[key] ? Object.assign({}, views[key].cam) : null, size = { w: 0, h: 0 }, focusId = null, anim = 0;
@@ -312,6 +332,7 @@
     }
     function centerOn(wx, wy, k) { var ins = insets(); return { k: k, x: ins.cx - wx * k, y: ins.cy - wy * k }; }
     function fly(to, ms) {
+      if (active !== ctl) return;                       // a newer map has taken over
       cancelAnimationFrame(anim);
       if (reduce || !ms) { cam = to; apply(); return; }
       var from = Object.assign({}, cam), t0 = performance.now();
@@ -360,14 +381,14 @@
     // pointer gestures: drag to pan, pinch / wheel to zoom; a drag never counts as a tap
     var ptrs = {}, moved = false, startDist = 0, startK = 1, startMid = null, last = null;
     function mid() { var a = Object.keys(ptrs).map(function (k) { return ptrs[k]; }); return { x: (a[0].x + a[1].x) / 2, y: (a[0].y + a[1].y) / 2, d: Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y) }; }
-    view.addEventListener("pointerdown", function (e) {
+    function onDown(e) {
       if (e.button !== 0 && e.pointerType === "mouse") return;
       cancelAnimationFrame(anim);
       var r = root.getBoundingClientRect();
       ptrs[e.pointerId] = { x: e.clientX - r.left, y: e.clientY - r.top };
       if (Object.keys(ptrs).length === 1) { moved = false; last = ptrs[e.pointerId]; }
       if (Object.keys(ptrs).length === 2) { var m = mid(); startDist = m.d; startK = cam.k; startMid = m; last = m; }
-    });
+    }
     function onMove(e) {
       if (!ptrs[e.pointerId]) return;
       var r = root.getBoundingClientRect(), p = { x: e.clientX - r.left, y: e.clientY - r.top };
@@ -392,21 +413,21 @@
       if (left.length === 1) last = ptrs[left[0]];
       if (!left.length) { world.classList.remove("moving"); setTimeout(function () { moved = false; }, 0); }
     }
-    view.addEventListener("click", function (e) {
+    function onClick(e) {
       if (moved) { e.stopPropagation(); e.preventDefault(); return; }
       var b = e.target.closest("button[data-id]"); if (!b) return;
       focus(b.dataset.id, true);
-    }, true);
-    view.addEventListener("focusin", function (e) {        // keyboard: Tab through the nodes, the map follows
+    }
+    function onFocusIn(e) {        // keyboard: Tab through the nodes, the map follows
       var b = e.target.closest("button[data-id]"); if (b && !Object.keys(ptrs).length) focus(b.dataset.id, true);
-    });
-    view.addEventListener("wheel", function (e) {
+    }
+    function onWheel(e) {
       e.preventDefault();
       var r = root.getBoundingClientRect(), sx = e.clientX - r.left, sy = e.clientY - r.top;
       var dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY, dx = e.deltaMode === 1 ? e.deltaX * 16 : e.deltaX;
       if (e.ctrlKey || (Math.abs(dy) >= 40 && !dx)) zoomAt(Math.exp(-dy * (e.ctrlKey ? 0.01 : 0.0015)), sx, sy);   // pinch / mouse wheel
       else { cam.x -= dx; cam.y -= dy; apply(); }                                                                    // trackpad scroll
-    }, { passive: false });
+    }
     tools.addEventListener("click", function (e) {
       var b = e.target.closest(".hud-btn"); if (!b) return;
       var ins = insets(), t = b.dataset.t;
@@ -415,7 +436,8 @@
       else { var cur = byId[opts.currentId] || byId.sing; focus(cur.item.id, false); fly(centerOn(cur.x, cur.y, nodeK()), 700); }
     });
 
-    var ctl = { refresh: measure, focus: function (id) { focus(id, true); }, move: onMove, up: up };
+    var ctl = { refresh: measure, focus: function (id) { focus(id, true); }, move: onMove, up: up,
+      down: onDown, click: onClick, focusin: onFocusIn, wheel: onWheel, stop: function () { cancelAnimationFrame(anim); } };
     active = ctl;
     measure();
     return ctl;

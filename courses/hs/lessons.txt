@@ -1,105 +1,105 @@
-## Základy algebry
-### Lineární rovnice
+## Základy algebry | #kjg5l
+### Lineární rovnice | #ry7bu
 ~ f=0.7*x+0.2; pt=-0.286,0
 > Obě strany v rovnováze
 Rovnice je jako rovnoramenné váhy: co uděláte s jednou stranou, musíte udělat i s druhou. Rovnici $ax + b = c$ vyřešíme tak, že operace vrátíme v opačném pořadí: odečteme $b$ a pak vydělíme $a$.
 $$3x + 5 = 20 \;\Rightarrow\; 3x = 15 \;\Rightarrow\; x = 5$$
-? input | 4
+? input #rrj8n | 4
 Vyřešte $2x + 7 = 15$.
 ! Odečteme $7$: $2x = 8$. Vydělíme $2$: $x = 4$.
-? mc
+? mc #h3u7b
 Vyřešte $5 - x = 9$.
 - $x = 4$
 + $x = -4$
 - $x = 14$
 - $x = -14$
 ! Odečteme $5$: $-x = 4$, tedy $x = -4$.
-? input | 8
+? input #zirap | 8
 Vyřešte $2(x - 3) = 10$.
 ! Vydělíme $2$: $x - 3 = 5$, tedy $x = 8$.
-? input | 3
+? input #gv8bc | 3
 Vyřešte $4x - 1 = 2x + 5$.
 ! Členy s $x$ převedeme na jednu stranu: $2x = 6$, tedy $x = 3$.
-? mc
+? mc #4845b
 Vyřešte $\dfrac{x}{3} + 1 = 5$.
 - $x = \tfrac43$
 - $x = 6$
 + $x = 12$
 - $x = 18$
 ! Odečteme $1$: $\tfrac{x}{3} = 4$. Vynásobíme $3$: $x = 12$.
-? gen | hs_lin
-? input | -7
+? gen #17z83 | hs_lin
+? input #hea46 | -7
 Vyřešte $3(x+2) = 2x-1$.
 ! $3x+6 = 2x-1$, tedy $x = -7$.
-? input | 6
+? input #2kk58 | 6
 Vyřešte $\dfrac x2 - \dfrac x3 = 1$.
 ! Vynásobíme $6$: $3x - 2x = 6$.
-? tf | true
+? tf #qv9lr | true
 Rovnice $2x+1 = 2x+3$ nemá řešení.
 ! Odečtením $2x$ dostaneme $1 = 3$, což neplatí pro žádné $x$.
-? set | -2; 4
+? set #vvhk6 | -2; 4
 Vyřešte $|x-1| = 3$.
 ! $x-1 = 3$ nebo $x-1 = -3$.
-? input | 5
+? input #uc0xh | 5
 Vyřešte $\dfrac{x+1}{2} = \dfrac{x+7}{4}$.
 ! Vynásobíme $4$: $2x+2 = x+7$.
-? input | 12
+? input #ckfk1 | 12
 Obvod obdélníku je $40$ cm a jedna strana je o $4$ cm delší než druhá. Jak dlouhá je delší strana (cm)?
 ! $2(a + a+4) = 40$, tedy $a = 8$ a delší strana $12$.
 
-### Počítání s mocninami
+### Počítání s mocninami | #qunbl
 ~ noaxes; text=xⁿ; size=0.9
 > Pravidla
 Pro $a \ne 0$ a celá čísla $m, n$ platí:
 $$a^m a^n = a^{m+n},\qquad \frac{a^m}{a^n} = a^{m-n},\qquad (a^m)^n = a^{mn}$$
 $$a^0 = 1,\qquad a^{-n} = \frac{1}{a^n},\qquad a^{1/n} = \sqrt[n]{a}\ \ (a>0)$$
-? mc
+? mc #j601y
 Zjednodušte $x^3 \cdot x^4$.
 + $x^7$
 - $x^{12}$
 - $2x^7$
 - $2x^{12}$
 ! Stejný základ, takže exponenty sečteme: $3 + 4 = 7$.
-? input | 1/8; 0.125
+? input #4v21x | 1/8; 0.125
 Vypočtěte $2^{-3}$.
 ! $2^{-3} = \dfrac{1}{2^3} = \dfrac18$.
-? input | 4
+? input #xwkdt | 4
 Vypočtěte $8^{2/3}$.
 ! $8^{1/3} = 2$ a $2^2 = 4$.
-? tf | false
+? tf #is75y | false
 Pro všechna reálná $a, b$ platí $(a + b)^2 = a^2 + b^2$.
 ! $(a+b)^2 = a^2 + 2ab + b^2$. Zkuste $a = b = 1$: $4 \ne 2$.
 + $a = b = 1$
 - $a = 0$, $b = 1$
 - $a = b = 0$
-? mc
+? mc #mxmic
 Zjednodušte $\dfrac{(x^2)^3}{x^4}$.
 - $x$
 + $x^2$
 - $x^{-2}$
 - $x^{10}$
 ! $(x^2)^3 = x^6$ a $x^6 / x^4 = x^2$.
-? input | 9
+? input #hp3pn | 9
 Vypočtěte $\left(\tfrac{1}{3}\right)^{-2}$.
 ! Záporný exponent zlomek převrátí: $\left(\tfrac13\right)^{-2} = 3^2 = 9$.
-? gen | hs_pow
-? expr | x^3
+? gen #itmp8 | hs_pow
+? expr #gfplj | x^3
 Zjednodušte $\dfrac{x^5}{x^2}$.
 ! Exponenty odečteme: $5-2 = 3$.
-? input | 3
+? input #yi61u | 3
 Vypočtěte $27^{1/3}$.
 ! $3^3 = 27$.
-? input | 4
+? input #3z9fl | 4
 Vypočtěte $\dfrac{(2^3)^2}{2^4}$.
 ! $(2^3)^2 = 2^6$ a $2^6:2^4 = 2^2$.
-? tf | false
+? tf #sh6k7 | false
 Platí $(-2)^2 = -2^2$.
 ! $(-2)^2 = 4$, kdežto $-2^2 = -(2^2) = -4$: mocnina má přednost před znaménkem.
-? expr | x^6
+? expr #vtbys | x^6
 Zjednodušte $(x^2)^3$.
 ! Při umocnění mocniny exponenty násobíme.
 
-### Rozklad a kvadratické rovnice
+### Rozklad a kvadratické rovnice | #1hpou
 ~ f=1.2*x^2-0.6; pt=-0.707,0; pt=0.707,0
 > Rozložte a použijte nulový součin
 Je-li $AB = 0$, pak $A = 0$ nebo $B = 0$. Při řešení $x^2 + bx + c = 0$ hledáme čísla $p, q$ taková, že $p + q = b$ a $pq = c$. Pak $x^2 + bx + c = (x+p)(x+q)$.
@@ -108,603 +108,603 @@ $$x^2 - 5x + 6 = (x-2)(x-3) = 0 \;\Rightarrow\; x = 2 \text{ nebo } x = 3$$
 Každá rovnice $ax^2 + bx + c = 0$ s $a\ne0$ má řešení
 $$x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.$$
 <b>Diskriminant</b> $D = b^2 - 4ac$ určuje počet reálných řešení: dvě pro $D > 0$, jedno pro $D = 0$, žádné pro $D < 0$.
-? mc
+? mc #4hn37
 Rozložte $x^2 + 7x + 12$.
 + $(x+3)(x+4)$
 - $(x+2)(x+6)$
 - $(x+1)(x+12)$
 - $(x-3)(x-4)$
 ! Hledáme $p + q = 7$ a $pq = 12$: to jsou $3$ a $4$.
-? mc
+? mc #7uzc0
 Rozložte $x^2 - 9$.
 - $(x-3)^2$
 + $(x-3)(x+3)$
 - $(x-9)(x+1)$
 - Rozložit nejde
 ! Rozdíl čtverců: $a^2 - b^2 = (a-b)(a+b)$.
-? input | 5
+? input #o66a0 | 5
 Rovnice $x^2 - 2x - 15 = 0$ má dvě řešení. Zadejte větší z nich.
 ! $x^2 - 2x - 15 = (x-5)(x+3)$, tedy $x = 5$ nebo $x = -3$.
-? input | -24
+? input #nplyq | -24
 Vypočtěte diskriminant trojčlenu $2x^2 + 4x + 5$.
 ! $D = 4^2 - 4\cdot2\cdot5 = 16 - 40 = -24$, takže reálná řešení neexistují.
-? mc
+? mc #a6lsc
 Kolik reálných řešení má rovnice $x^2 + 6x + 9 = 0$?
 - Žádné
 + Právě jedno
 - Dvě
 - Nekonečně mnoho
 ! $x^2 + 6x + 9 = (x+3)^2$, takže jen $x = -3$. Jinak řečeno $D = 36 - 36 = 0$.
-? gen | hs_quad
-? set | -2; 3
+? gen #69xds | hs_quad
+? set #u0us5 | -2; 3
 Vyřešte $x^2-x-6 = 0$.
 ! $x^2-x-6 = (x-3)(x+2)$.
-? set | ±2
+? set #6779o | ±2
 Vyřešte $2x^2-8 = 0$.
 ! $x^2 = 4$, tedy $x = \pm2$.
-? input | -4
+? input #w4edr | -4
 Kvadratická rovnice $x^2 + bx + c = 0$ má kořeny $1$ a $3$. Kolik je $b$?
 ! $(x-1)(x-3) = x^2-4x+3$. Součet kořenů je $-b$.
-? set | ∅
+? set #l2puo | ∅
 Vyřešte v $\mathbb R$ rovnici $x^2+4 = 0$.
 ! $x^2\ge0$, takže $x^2+4\ge4>0$. Diskriminant je $-16<0$.
-? input | 1
+? input #y3zu0 | 1
 Kolik reálných řešení má $x^2-6x+9 = 0$?
 ! $(x-3)^2 = 0$: jediné řešení $x = 3$.
-? set | -1/2; 3
+? set #aiyog | -1/2; 3
 Vyřešte $2x^2-5x-3 = 0$.
 ! $D = 25+24 = 49$, $x = \frac{5\pm7}{4}$.
 
-### Nerovnice
+### Nerovnice | #lp4tv
 ~ f=0.6*x+0.1; shade=-1,1
 > Násobení záporným číslem otáčí znak
 Nerovnice řešíme jako rovnice, jen s jedním rozdílem: když obě strany násobíme nebo dělíme <b>záporným</b> číslem, znak nerovnosti se otočí.
 $$-2x < 6 \;\Rightarrow\; x > -3$$
 > Absolutní hodnota
 $|x| < a$ znamená $-a < x < a$: vzdálenost od $0$ je menší než $a$. A $|x| > a$ znamená $x < -a$ nebo $x > a$.
-? mc
+? mc #nwouz
 Vyřešte $3x - 4 > 5$.
 + $x > 3$
 - $x < 3$
 - $x > \tfrac13$
 - $x > 9$
 ! Přičteme $4$: $3x > 9$. Vydělíme $3$: $x > 3$.
-? mc
+? mc #lq157
 Vyřešte $-2x + 1 \le 7$.
 - $x \le -3$
 + $x \ge -3$
 - $x \ge 3$
 - $x \le 3$
 ! $-2x \le 6$ a dělení číslem $-2$ otočí znak: $x \ge -3$.
-? mc
+? mc #qcezz
 Vyřešte $|x - 2| < 3$.
 - $x < 5$
 + $-1 < x < 5$
 - $x < -1$ nebo $x > 5$
 - $-5 < x < 1$
 ! $-3 < x - 2 < 3$, tedy $-1 < x < 5$.
-? tf | true
+? tf #8lwqr | true
 Je-li $a < b$, pak $-a > -b$.
 ! Vynásobením obou stran číslem $-1$ se nerovnost otočí.
-? input | 5
+? input #tfzqe | 5
 Kolik celých čísel $x$ splňuje $x^2 < 5$?
 ! $x^2 < 5$ znamená $-\sqrt5 < x < \sqrt5 \approx 2{,}24$, tedy $x \in \{-2,-1,0,1,2\}$: pět celých čísel.
-? gen | hs_ineq
-? interval | (-∞; 4)
+? gen #zm4y7 | hs_ineq
+? interval #fvmk7 | (-∞; 4)
 Vyřešte $2x-3<5$.
 ! $2x<8$, tedy $x<4$.
-? interval | (-3; 3)
+? interval #7w92q | (-3; 3)
 Vyřešte $x^2<9$.
 ! $|x|<3$.
-? interval | (-∞; -2] ∪ [2; ∞)
+? interval #ftvg4 | (-∞; -2] ∪ [2; ∞)
 Vyřešte $|x|\ge2$.
 ! Vzdálenost od nuly je aspoň $2$.
-? interval | [1; 4]
+? interval #xfgvr | [1; 4]
 Vyřešte $(x-1)(x-4)\le0$.
 ! Součin je nekladný mezi kořeny, včetně nich.
-? interval | [-1; 3]
+? interval #ji60i | [-1; 3]
 Vyřešte $|x-1|\le2$.
 ! $-2\le x-1\le2$.
-? interval | (-∞; 2) ∪ (5; ∞)
+? interval #jdnma | (-∞; 2) ∪ (5; ∞)
 Vyřešte $(x-2)(x-5)>0$.
 ! Součin je kladný mimo interval mezi kořeny.
 
-## Funkce
-### Co je funkce?
+## Funkce | #z3yyt
+### Co je funkce? | #qjh3h
 ~ noaxes; text=f(x); size=0.62
 > Jeden vstup, jeden výstup
 <b>Funkce</b> $f$ přiřazuje každému vstupu $x$ ze svého <b>definičního oboru</b> právě jednu hodnotu $f(x)$. U funkce zadané vzorcem bereme za definiční obor všechna $x$, pro která má vzorec smysl: nedělíme nulou a neodmocňujeme záporná čísla.
-? input | 7
+? input #sgloh | 7
 Je-li $f(x) = x^2 - 2$, kolik je $f(3)$?
 ! $f(3) = 9 - 2 = 7$.
-? input | 11
+? input #xoj7u | 11
 Je-li $g(t) = 5 - 2t$, kolik je $g(-3)$?
 ! $g(-3) = 5 - 2\cdot(-3) = 5 + 6 = 11$.
-? mc
+? mc #f0lhr
 Jaký je definiční obor funkce $f(x) = \dfrac{1}{x - 4}$?
 - Všechna reálná čísla
 + Všechna reálná čísla kromě $4$
 - $x > 4$
 - $x \ge 4$
 ! Jediný problém je dělení nulou, a to nastane pro $x = 4$.
-? mc
+? mc #4sb9m
 Jaký je definiční obor funkce $f(x) = \sqrt{x + 2}$?
 - $x > -2$
 + $x \ge -2$
 - $x \ge 2$
 - Všechna reálná čísla
 ! Potřebujeme $x + 2 \ge 0$, tedy $x \ge -2$.
-? tf | false
+? tf #6d2qo | false
 Kružnice $x^2 + y^2 = 1$ je grafem nějaké funkce $y = f(x)$.
 ! Pro $x = 0$ dostaneme dvě hodnoty, $y = 1$ a $y = -1$. Funkce dává ke každému vstupu právě jeden výstup.
-? gen | hs_fval
-? interval | (3; ∞)
+? gen #invfr | hs_fval
+? interval #tiq10 | (3; ∞)
 Jaký je definiční obor funkce $f(x) = \dfrac{1}{\sqrt{x-3}}$?
 ! Odmocnina vyžaduje $x-3\ge0$ a jmenovatel nesmí být nulový: $x>3$.
-? input | 3
+? input #xkr3p | 3
 Je-li $f(x) = 2x^2-x$, kolik je $f(-1)$?
 ! $2\cdot1 - (-1) = 3$.
-? tf | false
+? tf #s79db | false
 Funkce může v jednom bodě nabývat dvou různých hodnot.
 ! Funkce přiřazuje každému vstupu právě jednu hodnotu.
-? interval | [1; ∞)
+? interval #kt335 | [1; ∞)
 Jaký je obor hodnot funkce $f(x) = x^2+1$?
 ! $x^2\ge0$ a nabývá všech nezáporných hodnot.
-? input | 9
+? input #m59er | 9
 Je-li $f(x) = x^2$, kolik je $f(f(\sqrt3))$?
 ! $f(\sqrt3) = 3$ a $f(3) = 9$.
-? interval | (-∞; 2]
+? interval #msb0c | (-∞; 2]
 Jaký je definiční obor funkce $\sqrt{4-2x}$?
 ! $4-2x\ge0\iff x\le2$.
 
-### Lineární funkce
+### Lineární funkce | #atseo
 ~ f=0.6*x+0.15; f=-0.5*x-0.3
 > Směrnice a úsek
 Lineární funkce má tvar $f(x) = kx + q$. Jejím grafem je přímka se <b>směrnicí</b> $k$, která protíná osu $y$ v bodě $q$. Pro přímku procházející body $(x_1, y_1)$ a $(x_2, y_2)$ je
 $$k = \frac{y_2 - y_1}{x_2 - x_1}.$$
 Rovnoběžné přímky mají stejnou směrnici. Směrnice kolmých přímek mají součin $-1$.
-? input | 3
+? input #ec5w5 | 3
 Určete směrnici přímky procházející body $(1, 2)$ a $(3, 8)$.
 ! $k = \dfrac{8 - 2}{3 - 1} = \dfrac62 = 3$.
-? input | -5
+? input #e270q | -5
 V jakém bodě protíná přímka $y = 2x - 5$ osu $y$? Zadejte hodnotu $y$.
 ! Dosadíme $x = 0$: $y = -5$.
-? mc
+? mc #v7i5s
 Která přímka je rovnoběžná s $y = 3x + 1$?
 - $y = -3x + 1$
 - $y = \tfrac13 x + 1$
 + $y = 3x - 7$
 - $y = -\tfrac13 x$
 ! Rovnoběžné přímky mají stejnou směrnici, $3$.
-? mc
+? mc #6bdz0
 Přímka $p$ má směrnici $2$. Jakou směrnici má přímka k ní kolmá?
 - $2$
 - $-2$
 - $\tfrac12$
 + $-\tfrac12$
 ! Směrnice kolmých přímek mají součin $-1$: $2 \cdot \left(-\tfrac12\right) = -1$.
-? input | 2/3
+? input #o1vzc | 2/3
 Kde protíná přímka $y = 3x - 2$ osu $x$? Zadejte hodnotu $x$.
 ! Dosadíme $y = 0$: $3x = 2$, tedy $x = \tfrac23$.
-? gen | hs_line
-? expr | 2x+1
+? gen #pcvby | hs_line
+? expr #1lmnv | 2x+1
 Napište rovnici přímky procházející body $[0,1]$ a $[2,5]$ ve tvaru $y = \dots$
 ! Směrnice $\frac{5-1}{2-0} = 2$, úsek $1$.
-? expr | -3x+5
+? expr #qjqmp | -3x+5
 Napište rovnici přímky se směrnicí $-3$, která prochází bodem $[1,2]$.
 ! $y = 2 - 3(x-1)$.
-? input | 2
+? input #b1y7e | 2
 Přímky $y = 2x+1$ a $y = -x+7$ se protínají. Jakou souřadnici $x$ má průsečík?
 ! $2x+1 = -x+7$, tedy $3x = 6$.
-? mc
+? mc #usoyh
 Který graf patří funkci $y = -x+2$?
 + @ x=-2..4; y=-2..4; f=0-x+2
 - @ x=-2..4; y=-2..6; f=x+2
 - @ x=-4..2; y=-4..2; f=0-x-2
 - @ x=-2..2; y=-4..4; f=2*x
 ! Klesající přímka (směrnice $-1$), protíná osu $y$ v bodě $2$.
-? input | -1/2; -0.5
+? input #f7uxy | -1/2; -0.5
 Jakou směrnici má přímka kolmá k $y = 2x+3$?
 ! Součin směrnic kolmých přímek je $-1$.
-? expr | 3x-2
+? expr #kwsiv | 3x-2
 Napište rovnici přímky rovnoběžné s $y = 3x+1$, která prochází bodem $[1,1]$.
 ! Stejná směrnice $3$: $y = 1+3(x-1)$.
 
-### Složená a inverzní funkce
+### Složená a inverzní funkce | #yom5k
 ~ dash=-1,-1,1,1; f=exp(1.6*x)/2.5-0.8; f=ln(2.5*(x+0.8))/1.6
 > Skládání
 $(f\circ g)(x) = f(g(x))$: nejdřív použijeme $g$, potom $f$. Na pořadí záleží, obvykle $f\circ g \ne g\circ f$.
 > Inverzní funkce
 Je-li $f$ prostá, její <b>inverzní funkce</b> $f^{-1}$ ji „vrací zpět“: $f^{-1}(f(x)) = x$. Najdeme ji tak, že napíšeme $y = f(x)$ a vyjádříme $x$.
 $$y = 2x + 3 \;\Rightarrow\; x = \frac{y - 3}{2},\quad\text{tedy } f^{-1}(x) = \frac{x-3}{2}.$$
-? input | 11
+? input #qw6fa | 11
 Nechť $f(x) = 2x + 1$. Vypočtěte $f(f(2))$.
 ! $f(2) = 5$ a $f(5) = 11$.
-? input | 10
+? input #vqi9x | 10
 Nechť $f(x) = x^2 + 1$ a $g(x) = x - 2$. Vypočtěte $f(g(5))$.
 ! $g(5) = 3$, pak $f(3) = 9 + 1 = 10$.
-? mc
+? mc #jfrt4
 Pro $f(x) = x^2$ a $g(x) = x + 1$ určete $(g\circ f)(x)$.
 - $(x+1)^2$
 + $x^2 + 1$
 - $x^2 + x$
 - $2x + 1$
 ! Nejdřív $f$, tím dostaneme $x^2$, pak $g$ přičte $1$.
-? mc
+? mc #w61t5
 Najděte inverzní funkci k $f(x) = 3x - 6$.
 + $f^{-1}(x) = \dfrac{x + 6}{3}$
 - $f^{-1}(x) = \dfrac{x - 6}{3}$
 - $f^{-1}(x) = 3x + 6$
 - $f^{-1}(x) = \dfrac{1}{3x - 6}$
 ! $y = 3x - 6 \Rightarrow x = \dfrac{y+6}{3}$.
-? tf | false
+? tf #ng6a4 | false
 Zápis $f^{-1}(x)$ znamená $\dfrac{1}{f(x)}$.
 ! $f^{-1}$ je inverzní funkce, kdežto $\dfrac{1}{f(x)}$ je převrácená hodnota. Obvykle jde o různé věci.
-? gen | hs_inverse
-? expr | (x-6)/2
+? gen #zlrdy | hs_inverse
+? expr #y0s60 | (x-6)/2
 Najděte inverzní funkci k $f(x) = 2x+6$.
 ! $y = 2x+6\Rightarrow x = \frac{y-6}{2}$.
-? expr | (x-3)^2
+? expr #6er2k | (x-3)^2
 Pro $f(x) = x^2$ a $g(x) = x-3$ zapište $f(g(x))$.
 ! Do $f$ dosadíme $g(x)$.
-? expr | x^(1/3)
+? expr #ibd0v | x^(1/3)
 Najděte inverzní funkci k $f(x) = x^3$.
 ! Třetí odmocnina, kterou můžete zapsat jako $x^{1/3}$.
-? tf | false
+? tf #xdblx | false
 Funkce $f(x) = x^2$ má na celém $\mathbb R$ inverzní funkci.
 ! Není prostá: $f(-2) = f(2)$.
-? input | 9
+? input #kehfj | 9
 Je-li $f(x) = 2x-1$ a $g(x) = x^2$, kolik je $g(f(2))$?
 ! $f(2) = 3$ a $g(3) = 9$.
-? input | 3
+? input #72wkh | 3
 Je-li $f(x) = 2x+1$, kolik je $f^{-1}(7)$?
 ! Hledáme $x$ s $2x+1 = 7$.
 
-### Kvadratická funkce
+### Kvadratická funkce | #etst6
 ~ f=0.6-1.4*(x-0.15)^2; pt=0.15,0.6
 > Parabola
 Grafem funkce $f(x) = ax^2 + bx + c$ je parabola. Pro $a > 0$ je otevřená nahoru, pro $a < 0$ dolů. Její vrchol leží v bodě
 $$x = -\frac{b}{2a}.$$
 Ve <b>vrcholovém tvaru</b> $f(x) = a(x - m)^2 + n$ je vrchol v bodě $(m, n)$.
-? input | 3
+? input #konjx | 3
 Jaká je souřadnice $x$ vrcholu paraboly $f(x) = x^2 - 6x + 2$?
 ! $x = -\dfrac{-6}{2\cdot 1} = 3$.
-? input | -7
+? input #jzl3b | -7
 Jaká je nejmenší hodnota funkce $f(x) = x^2 - 6x + 2$?
 ! Je to hodnota ve vrcholu: $f(3) = 9 - 18 + 2 = -7$.
-? mc
+? mc #hfo89
 Kde leží vrchol paraboly $f(x) = -2(x + 1)^2 + 4$?
 - $(1, 4)$
 + $(-1, 4)$
 - $(-1, -4)$
 - $(2, 4)$
 ! $x + 1 = x - (-1)$, takže $m = -1$ a $n = 4$.
-? mc
+? mc #vx7mk
 Má funkce $f(x) = -x^2 + 4x$ maximum, nebo minimum?
 + Maximum, protože $a < 0$
 - Minimum, protože $a < 0$
 - Maximum, protože $c = 0$
 - Ani jedno
 ! Vedoucí koeficient je $-1$, parabola je otevřená dolů a má nejvyšší bod.
-? input | 2
+? input #nw3tx | 2
 Parabola $y = x^2 - 4$ protíná osu $x$ v bodech $x = -2$ a $x = a$. Určete $a$.
 ! $x^2 - 4 = 0$ dává $x = \pm 2$.
-? gen | hs_vertex
-? input | -3
+? gen #ay7qy | hs_vertex
+? input #h5831 | -3
 Jakou souřadnici $y$ má vrchol paraboly $y = x^2+4x+1$?
 ! $x^2+4x+1 = (x+2)^2-3$.
-? set | 1; 3
+? set #938w3 | 1; 3
 Ve kterých bodech protíná parabola $y = x^2-4x+3$ osu $x$? Zapište souřadnice $x$.
 ! $x^2-4x+3 = (x-1)(x-3)$.
-? interval | (-∞; 1]
+? interval #ffpkd | (-∞; 1]
 Jaký je obor hodnot funkce $f(x) = -x^2+2x$?
 ! $-x^2+2x = 1-(x-1)^2\le1$, maximum $1$ ve vrcholu.
-? mc
+? mc #9rvm8
 Který graf patří funkci $y = (x-1)^2-2$?
 + @ x=-2..4; y=-3..5; f=(x-1)^2-2; pt=1,-2
 - @ x=-4..2; y=-3..5; f=(x+1)^2-2; pt=-1,-2
 - @ x=-2..4; y=-1..7; f=(x-1)^2+2; pt=1,2
 - @ x=-2..4; y=-5..3; f=0-(x-1)^2-2; pt=1,-2
 ! Vrchol $[1,-2]$, parabola otevřená nahoru.
-? input | 2
+? input #wlwui | 2
 Jakou souřadnici $x$ má vrchol paraboly $y = -x^2+4x+1$?
 ! $x = -\frac{b}{2a} = -\frac{4}{-2}$.
-? tf | true
+? tf #y8lm5 | true
 Parabola $y = x^2+x+1$ neprotíná osu $x$.
 ! $D = 1-4 = -3<0$.
 
-## Exponenciály a logaritmy
-### Exponenciální funkce
+## Exponenciály a logaritmy | #7dte4
+### Exponenciální funkce | #7t1ff
 ~ f=exp(2*x)/4-0.7
 > Růst o stálý násobek
 Exponenciální funkce $f(x) = a\cdot b^x$ se při zvětšení $x$ o $1$ vynásobí číslem $b$. Pro $b > 1$ roste, pro $0 < b < 1$ klesá. Zvláštní základ $e \approx 2{,}71828$ se v analýze objevuje všude.
-? input | 96
+? input #lqvq4 | 96
 Kultura začíná se $3$ buňkami a každou hodinu se zdvojnásobí. Kolik buněk je po $5$ hodinách?
 ! $3 \cdot 2^5 = 3 \cdot 32 = 96$.
-? input | 3
+? input #geszh | 3
 Vyřešte $2^x = 8$.
 ! $8 = 2^3$, tedy $x = 3$.
-? input | 5/2; 2.5
+? input #z5sn1 | 5/2; 2.5
 Vyřešte $4^x = 32$.
 ! Obě strany zapíšeme jako mocniny $2$: $2^{2x} = 2^5$, tedy $2x = 5$ a $x = \tfrac52$.
-? mc
+? mc #pt03i
 Která funkce popisuje úbytek (rozpad)?
 - $f(x) = 2^x$
 - $f(x) = 1{,}05^x$
 + $f(x) = 0{,}8^x$
 - $f(x) = e^x$
 ! Základ $0{,}8$ leží mezi $0$ a $1$, takže každý krok násobí hodnotu $0{,}8$ a hodnoty se zmenšují.
-? input | 250
+? input #8m3xb | 250
 Látka má poločas rozpadu $3$ roky. Kolik gramů zbude po $6$ letech z původních $1000$ g?
 ! Šest let jsou dva poločasy: $1000 \to 500 \to 250$.
-? gen | hs_exp
-? input | -3
+? gen #kt3lp | hs_exp
+? input #mmov7 | -3
 Vyřešte $2^x = \frac18$.
 ! $\frac18 = 2^{-3}$.
-? input | 0
+? input #fl8yo | 0
 Vyřešte $e^x = 1$.
 ! $e^0 = 1$.
-? mc
+? mc #s5h8x
 Který graf patří funkci $y = 0{,}5^x$?
 + @ x=-3..3; y=-0.5..8.5; f=0.5^x
 - @ x=-3..3; y=-0.5..8.5; f=2^x
 - @ x=-3..3; y=-8.5..0.5; f=0-(0.5^x)
 - @ x=-0.5..6; y=-3..2; f=ln(x)/ln(2)
 ! Základ mezi $0$ a $1$: klesající exponenciála procházející bodem $[0,1]$.
-? input | 1210
+? input #lz3cx | 1210
 Vklad $1000$ Kč se úročí $10\,\%$ ročně (úroky se připisují). Kolik Kč bude na účtu po dvou letech?
 ! $1000\cdot1{,}1^2 = 1210$.
-? input | 4
+? input #cajka | 4
 Vyřešte $2^{x-1} = 8$.
 ! $8 = 2^3$, tedy $x-1 = 3$.
-? tf | true
+? tf #vtwkp | true
 Funkce $2^x$ nabývá jen kladných hodnot.
 ! Kladné číslo umocněné na libovolný exponent je kladné.
 
-### Logaritmy
+### Logaritmy | #1davk
 ~ f=0.35*ln(x+1.02)+0.2
 > Inverze k mocnině
 $\log_b x$ je exponent, na který musíme umocnit $b$, abychom dostali $x$:
 $$\log_b x = y \iff b^y = x \qquad (b > 0,\ b \ne 1,\ x > 0).$$
 Zvláštní značení: $\ln x = \log_e x$ a $\log x = \log_{10} x$.
-? input | 3
+? input #vo8tn | 3
 Vypočtěte $\log_2 8$.
 ! $2^3 = 8$.
-? input | -2
+? input #fjg2w | -2
 Vypočtěte $\log_{10} 0{,}01$.
 ! $10^{-2} = 0{,}01$.
-? input | 0
+? input #bz6tv | 0
 Vypočtěte $\ln 1$.
 ! $e^0 = 1$, tedy $\ln 1 = 0$.
-? input | 1/2; 0.5
+? input #ssnia | 1/2; 0.5
 Vypočtěte $\log_9 3$.
 ! $9^{1/2} = \sqrt9 = 3$.
-? mc
+? mc #zwwb7
 Jaký je definiční obor funkce $f(x) = \ln x$?
 - Všechna reálná čísla
 - $x \ge 0$
 + $x > 0$
 - $x \ne 0$
 ! $e^y$ je vždy kladné, takže logaritmus mají jen kladná čísla.
-? gen | hs_log
-? input | 3
+? gen #nfm4v | hs_log
+? input #eadbw | 3
 Vypočtěte $\log_5125$.
 ! $5^3 = 125$.
-? input | -2
+? input #31b6t | -2
 Vypočtěte $\log_2\frac14$.
 ! $2^{-2} = \frac14$.
-? interval | (2; ∞)
+? interval #h6ne1 | (2; ∞)
 Jaký je definiční obor funkce $\ln(x-2)$?
 ! Logaritmus je definován jen pro kladná čísla: $x-2>0$.
-? input | 7
+? input #mtwmp | 7
 Vypočtěte $10^{\log 7}$.
 ! Exponenciála a logaritmus o stejném základu se navzájem ruší.
-? input | 100
+? input #sz69n | 100
 Vyřešte $\log x = 2$.
 ! $x = 10^2$.
-? input | 1/2; 0.5
+? input #0ok9u | 1/2; 0.5
 Vypočtěte $\log_42$.
 ! $4^{1/2} = 2$.
 
-### Pravidla pro logaritmy
+### Pravidla pro logaritmy | #y9bc0
 ~ noaxes; text=log; size=0.62
 > Pravidla
 Pro kladná $x, y$ platí:
 $$\log_b(xy) = \log_b x + \log_b y,\qquad \log_b\frac{x}{y} = \log_b x - \log_b y,$$
 $$\log_b(x^r) = r\log_b x.$$
 Odpovídají pravidlům pro mocniny: násobení čísel sčítá exponenty.
-? input | 2
+? input #pehax | 2
 Zjednodušte $\log_6 4 + \log_6 9$.
 ! $\log_6(4\cdot9) = \log_6 36 = 2$.
-? input | 3
+? input #qrxxy | 3
 Zjednodušte $\log_2 40 - \log_2 5$.
 ! $\log_2\tfrac{40}{5} = \log_2 8 = 3$.
-? tf | false
+? tf #tadd8 | false
 Platí $\log(x + y) = \log x + \log y$.
 ! Pravidlo pro součin zní $\log(xy) = \log x + \log y$. Pro logaritmus součtu žádné jednoduché pravidlo není.
 + $x = y = 1$
 - $x = y = 2$
 - $x = 9$, $y = \frac98$
-? mc
+? mc #1thgo
 Vyřešte $e^{2x} = 5$.
 + $x = \tfrac12 \ln 5$
 - $x = \ln \tfrac52$
 - $x = 2\ln 5$
 - $x = \tfrac{5}{2e}$
 ! Zlogaritmujeme obě strany: $2x = \ln 5$.
-? input | 2
+? input #0wo0v | 2
 Vyřešte $\log_3(x + 7) = 2$.
 ! $x + 7 = 3^2 = 9$, tedy $x = 2$.
-? gen | hs_logrule
-? input | 2
+? gen #mzgez | hs_logrule
+? input #y8hdi | 2
 Zjednodušte $\log_381-\log_39$.
 ! $\log_3\frac{81}{9} = \log_39 = 2$.
-? input | 4
+? input #nlof6 | 4
 Vyřešte $\log_2x + \log_2(x-2) = 3$.
 ! $\log_2\big(x(x-2)\big) = 3$, tedy $x^2-2x-8 = 0$ a $x = 4$ (kořen $-2$ nevyhovuje definičnímu oboru).
-? input | 2
+? input #5hj3j | 2
 Zjednodušte $2\log5 + \log4$.
 ! $\log25 + \log4 = \log100 = 2$.
-? tf | true
+? tf #v95p4 | true
 Platí $\ln\left(e^5\right) = 5$.
 ! $\ln$ je inverzní funkce k $e^x$.
-? input | 3
+? input #v4iaj | 3
 Vypočtěte $\log_2 40 - \log_2 5$.
 ! $\log_2 8 = 3$.
-? input | 6
+? input #yq4nl | 6
 Vypočtěte $\log_3 9^3$.
 ! $3\log_39 = 3\cdot2$.
 
-## Goniometrie
-### Pravoúhlý trojúhelník
+## Goniometrie | #f864b
+### Pravoúhlý trojúhelník | #3svnn
 ~ noaxes; poly=-0.8,-0.7,0.8,-0.7,-0.8,0.6,-0.8,-0.7; poly=-0.8,-0.45,-0.55,-0.45,-0.55,-0.7
 > Sinus, kosinus, tangens
 V pravoúhlém trojúhelníku pro ostrý úhel $\alpha$ platí:
 $$\sin\alpha = \frac{\text{protilehlá}}{\text{přepona}},\qquad \cos\alpha = \frac{\text{přilehlá}}{\text{přepona}},$$
 $$\operatorname{tg}\alpha = \frac{\text{protilehlá}}{\text{přilehlá}}.$$
-? input | 5
+? input #0p4q6 | 5
 Pravoúhlý trojúhelník má odvěsny $3$ a $4$. Jak dlouhá je přepona?
 ! $\sqrt{3^2 + 4^2} = \sqrt{25} = 5$.
-? mc
+? mc #bsih7
 V trojúhelníku $3$–$4$–$5$ označme $\alpha$ úhel proti straně délky $3$. Kolik je $\sin\alpha$?
 + $\tfrac35$
 - $\tfrac45$
 - $\tfrac34$
 - $\tfrac43$
 ! Protilehlá ku přeponě: $\tfrac35$.
-? mc
+? mc #9pv1x
 V trojúhelníku $3$–$4$–$5$ označme $\alpha$ úhel proti straně délky $3$. Kolik je $\operatorname{tg}\alpha$?
 - $\tfrac35$
 - $\tfrac45$
 + $\tfrac34$
 - $\tfrac53$
 ! Protilehlá ku přilehlé: $\tfrac34$.
-? input | 1/2; 0.5
+? input #vfhod | 1/2; 0.5
 Kolik je $\sin 30^\circ$?
 ! V trojúhelníku s úhly $30^\circ$, $60^\circ$, $90^\circ$ a přeponou $2$ má strana proti úhlu $30^\circ$ délku $1$.
-? input | 10
+? input #52nm5 | 10
 Žebřík svírá se zemí úhel $60^\circ$ a jeho pata je $5$ m od zdi. Jak je žebřík dlouhý (v metrech)?
 ! $\cos 60^\circ = \tfrac12 = \dfrac{5}{L}$, tedy $L = 10$.
-? gen | hs_pyth
-? input | 1/2; 0.5
+? gen #ugzy0 | hs_pyth
+? input #gkqfm | 1/2; 0.5
 Kolik je $\cos60^\circ$?
 ! V trojúhelníku s úhly $30^\circ$, $60^\circ$, $90^\circ$ a přeponou $2$ je přilehlá odvěsna k úhlu $60^\circ$ dlouhá $1$.
-? input | 1
+? input #9st0u | 1
 Kolik je $\operatorname{tg}45^\circ$?
 ! Rovnoramenný pravoúhlý trojúhelník: obě odvěsny jsou stejné.
-? input | 6
+? input #bc0qw | 6
 V pravoúhlém trojúhelníku je přepona $10$ a $\sin\alpha = 0{,}6$. Jak dlouhá je odvěsna protilehlá úhlu $\alpha$?
 ! $\sin\alpha = \frac{a}{10}$, tedy $a = 6$.
-? gen | hs_trig
-? input | 1/2; 0.5
+? gen #puihg | hs_trig
+? input #re219 | 1/2; 0.5
 Kolik je $\sin30^\circ$?
 ! Protilehlá odvěsna je polovina přepony.
-? input | √3; 1.7321
+? input #l6zae | √3; 1.7321
 Kolik je $\operatorname{tg}60^\circ$?
 ! $\frac{\sin60^\circ}{\cos60^\circ} = \frac{\sqrt3/2}{1/2}$.
 
-### Oblouková míra a jednotková kružnice
+### Oblouková míra a jednotková kružnice | #ppkt2
 ~ circle=0,0,0.8; line=0,0,0.566,0.566; pt=0.566,0.566
 > Radiány
 Celý úhel je $360^\circ = 2\pi$ radiánů, tedy $180^\circ = \pi$. Stupně na radiány převedeme vynásobením $\frac{\pi}{180}$.
 > Jednotková kružnice
 Bod na kružnici o poloměru $1$ v úhlu $\alpha$ má souřadnice $(\cos\alpha, \sin\alpha)$. Tím jsou $\sin$ a $\cos$ definované pro každý úhel, i tupý a záporný.
-? mc
+? mc #7mnjq
 Kolik je $90^\circ$ v radiánech?
 - $\pi$
 + $\tfrac{\pi}{2}$
 - $\tfrac{\pi}{4}$
 - $2\pi$
 ! $90 \cdot \frac{\pi}{180} = \frac{\pi}{2}$.
-? input | 60
+? input #ncdh8 | 60
 Převeďte $\dfrac{\pi}{3}$ radiánů na stupně.
 ! $\frac{\pi}{3}\cdot\frac{180}{\pi} = 60$.
-? input | -1
+? input #jbj4j | -1
 Kolik je $\cos\pi$?
 ! Úhlu $\pi$ odpovídá na jednotkové kružnici bod $(-1, 0)$.
-? input | -1
+? input #l74yd | -1
 Kolik je $\sin\frac{3\pi}{2}$?
 ! $\frac{3\pi}{2}$ je nejnižší bod jednotkové kružnice, bod $(0, -1)$.
-? mc
+? mc #dcp2u
 Ve kterém kvadrantu je $\sin\alpha > 0$ a $\cos\alpha < 0$?
 - V prvním
 + Ve druhém
 - Ve třetím
 - Ve čtvrtém
 ! $\cos\alpha$ je souřadnice $x$ a $\sin\alpha$ souřadnice $y$, potřebujeme tedy $x < 0$ a $y > 0$: druhý kvadrant.
-? gen | hs_rad
-? input | π/4; 0.7854
+? gen #1uss6 | hs_rad
+? input #s8ep0 | π/4; 0.7854
 Kolik je $45^\circ$ v radiánech?
 ! $45\cdot\frac{\pi}{180} = \frac\pi4$.
-? input | 120
+? input #wsw42 | 120
 Převeďte $\frac{2\pi}{3}$ radiánů na stupně.
 ! $\frac{2\pi}{3}\cdot\frac{180}{\pi} = 120$.
-? input | 1/2; 0.5
+? input #w71k5 | 1/2; 0.5
 Kolik je $\sin\frac\pi6$?
 ! $\frac\pi6 = 30^\circ$.
-? set | π/2; 3π/2
+? set #wsup5 | π/2; 3π/2
 Najděte všechna řešení rovnice $\cos x = 0$ v intervalu $[0,2\pi]$.
 ! Na jednotkové kružnici má souřadnici $x = 0$ nejvyšší a nejnižší bod.
-? input | -1/2; -0.5
+? input #6dtd4 | -1/2; -0.5
 Kolik je $\cos\frac{2\pi}{3}$?
 ! $\frac{2\pi}3 = 120^\circ$ leží ve druhém kvadrantu.
-? input | 0
+? input #ci0jp | 0
 Kolik je $\sin\pi$?
 ! Bod $(-1,0)$ na jednotkové kružnici.
 
-### Goniometrické vzorce
+### Goniometrické vzorce | #14oa3
 ~ f=0.6*sin(3*x); fd=0.6*cos(3*x)
 > Pythagorova identita
 Bod $(\cos\alpha, \sin\alpha)$ leží na jednotkové kružnici, proto
 $$\sin^2\alpha + \cos^2\alpha = 1 \quad\text{pro každé } \alpha.$$
 > Dvojnásobný úhel
 $$\sin 2\alpha = 2\sin\alpha\cos\alpha,\qquad \cos 2\alpha = \cos^2\alpha - \sin^2\alpha.$$
-? input | 1
+? input #to01n | 1
 Zjednodušte $\sin^2 37^\circ + \cos^2 37^\circ$.
 ! Pythagorova identita platí pro každý úhel.
-? mc
+? mc #0q7ky
 Je-li $\sin\alpha = \tfrac35$ a $\alpha$ ostrý, kolik je $\cos\alpha$?
 + $\tfrac45$
 - $\tfrac25$
 - $-\tfrac45$
 - $\tfrac{16}{25}$
 ! $\cos^2\alpha = 1 - \tfrac{9}{25} = \tfrac{16}{25}$ a pro ostrý úhel je $\cos\alpha > 0$.
-? input | 24/25; 0.96
+? input #uvej7 | 24/25; 0.96
 Je-li $\sin\alpha = \tfrac35$ a $\alpha$ ostrý, kolik je $\sin 2\alpha$?
 ! $2\cdot\tfrac35\cdot\tfrac45 = \tfrac{24}{25}$.
-? tf | true
+? tf #41aus | true
 Kdykoli $\cos\alpha \ne 0$, platí $\operatorname{tg}\alpha = \dfrac{\sin\alpha}{\cos\alpha}$.
 ! Na jednotkové kružnici je to směrnice $\tfrac{y}{x}$, což odpovídá poměru protilehlé ku přilehlé.
-? mc
+? mc #umqrg
 Který výraz se rovná $1 - 2\sin^2\alpha$?
 - $\sin 2\alpha$
 + $\cos 2\alpha$
 - $\cos^2\alpha$
 - $2\cos\alpha$
 ! $\cos 2\alpha = \cos^2\alpha - \sin^2\alpha = (1 - \sin^2\alpha) - \sin^2\alpha$.
-? gen | hs_trig
-? input | -7/25; -0.28
+? gen #ocvjq | hs_trig
+? input #7xlbr | -7/25; -0.28
 Je-li $\cos\alpha = \frac35$, kolik je $\cos2\alpha$?
 ! $\cos2\alpha = 2\cos^2\alpha - 1 = \frac{18}{25} - 1$.
-? tf | false
+? tf #6csn1 | false
 Platí $\sin2\alpha = 2\sin\alpha$ pro všechna $\alpha$.
 ! Správně je $\sin2\alpha = 2\sin\alpha\cos\alpha$.
 + $\alpha = \frac\pi2$
 - $\alpha = 0$
 - $\alpha = \pi$
-? input | 3/4; 0.75
+? input #v38u6 | 3/4; 0.75
 Je-li $\sin\alpha = \frac35$ a $\alpha$ ostrý, kolik je $\operatorname{tg}\alpha$?
 ! $\cos\alpha = \frac45$, takže $\operatorname{tg}\alpha = \frac{3/5}{4/5}$.
-? mc
+? mc #ju3f6
 Který vzorec platí pro všechna $\alpha$, $\beta$?
 + $\sin(\alpha+\beta) = \sin\alpha\cos\beta + \cos\alpha\sin\beta$
 - $\sin(\alpha+\beta) = \sin\alpha + \sin\beta$
 - $\sin(\alpha+\beta) = \sin\alpha\sin\beta - \cos\alpha\cos\beta$
 - $\sin(\alpha+\beta) = \cos\alpha\cos\beta + \sin\alpha\sin\beta$
 ! Poslední výraz je $\cos(\alpha-\beta)$.
-? input | 1
+? input #kboad | 1
 Zjednodušte $\cos^2x + \sin^2x$ pro $x = 5$.
 ! Pythagorova identita platí pro každé $x$.
-? input | 1/4; 0.25
+? input #wyb42 | 1/4; 0.25
 Kolik je $\sin15^\circ\cos15^\circ$?
 ! Podle vzorce pro dvojnásobný úhel je $\sin15^\circ\cos15^\circ = \frac12\sin30^\circ = \frac14$.

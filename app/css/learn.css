@@ -265,3 +265,12 @@ math mo.prime { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math
 .fig .fig-label { font: 11px var(--font-body); fill: var(--ink); }
 .fb .fig { background: color-mix(in srgb, var(--card) 70%, transparent); max-width: 300px; margin-bottom: 0; }
 .fb:has(.fig) { max-height: 52vh; }
+
+/* progress backup, in the course sheet */
+.backup { border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.backup h3 { margin: 0; font-size: 16px; font-weight: 600; }
+.backup p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.backup-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.backup-paste { display: flex; flex-direction: column; gap: 8px; }
+.backup-paste textarea { font-family: var(--font-mono); font-size: 12px; border: 1px solid var(--line); border-radius: 10px; padding: 8px; background: var(--card); color: var(--ink); resize: vertical; }
+.backup-paste .admin-btn { align-self: flex-start; }
