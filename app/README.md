@@ -27,7 +27,7 @@ js/                 loaded in this order (see build.py):
   player.js         the lesson player (all question kinds), also for single questions from the feed
   map.js            the Learn view: header, the map's stops and card, course picker, admin mode
   main.js           tabs and start-up
-pwa/                service worker template, app icons (make_icons.py needs Pillow)
+pwa/                service worker template, app icons: the cusp, drawn by make_icons.py (needs Pillow)
 vendor/katex/       KaTeX 0.16.9 (MIT) for the offline app
 vendor/fonts/       the web fonts, self-hosted (SIL OFL), with fonts.css
 ```

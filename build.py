@@ -262,7 +262,7 @@ if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
         "start_url": "./",
         "scope": "./",
         "display": "standalone",
-        "background_color": "#e9ecf1",
+        "background_color": "#080c1a",
         "theme_color": "#e9ecf1",
         "icons": [
             {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
