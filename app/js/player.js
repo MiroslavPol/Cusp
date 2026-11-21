@@ -128,7 +128,7 @@
 
   function renderItem() {
     var it = S.queue[S.i], c = itemCourse(it), s = C.stringsFor(c);
-    S.choice = null; S.checked = false; S.stage = 1; S.tiles = null; S.inputKind = null; S.spec = null; S.input = null;
+    S.choice = null; S.checked = false; S.stage = 1; S.tiles = null; S.match = null; S.inputKind = null; S.spec = null; S.input = null;
     setBar();
     foot.dataset.state = ""; fb.hidden = true; fb.innerHTML = "";
     body.innerHTML = "";
@@ -165,12 +165,88 @@
       inner.appendChild(S.box);
     } else if (it.kind === "order" || it.kind === "build") {
       buildTiles(inner, it);
+    } else if (it.kind === "match") {
+      buildMatch(inner, it, s);
     } else {
       buildInput(inner, it, s);
     }
     primary.textContent = s.check; primary.disabled = true;
     typeset(inner);
     drawFigs(inner);
+    // a match item too wide for its half of the grid (a long formula): give every item a full-width row
+    if (S.match && !S.match.rights.classList.contains("m-long") &&
+        Array.prototype.some.call(S.match.rights.querySelectorAll(".m-body"), function (b) { return b.scrollWidth > b.clientWidth + 1; })) {
+      S.match.rights.classList.add("m-long");
+    }
+  }
+
+  // Matching pairs (a function and its graph): the left items are buttons on top, the right items (usually
+  // graphs) a grid below. Tap one of each, in either order, to pair them; a pair shares a colour and the right
+  // item shows its partner. Tapping a paired item again undoes the pair.
+  var PAIR_COLORS = ["var(--def)", "var(--ex)", "var(--prf)", "var(--thm)", "var(--app)", "var(--hist)"];
+  function buildMatch(inner, it, s) {
+    var pairs = it.options.filter(function (o) { return o.ok; });
+    var allFigs = it.options.every(function (o) { return /^@ /.test(o.right); });
+    // graphs and short formulas: a 2-column grid; sentences (a theorem and its statement): one per row, full width
+    var long = it.options.some(function (o) {             // count the words outside the formulas
+      return !/^@ /.test(o.right) && C.plain(o.right).replace(/\$\$[\s\S]*?\$\$|\$[^$]*\$/g, "").trim().length > 24;
+    });
+    var lefts = el("div", "m-lefts"), rights = el("div", "m-rights" + (long ? " m-long" : "")), sel = null;
+    shuffle(pairs).forEach(function (o, i) {
+      var b = el("button", "m-left", o.left); b.type = "button"; b._opt = o;
+      b.style.setProperty("--pc", PAIR_COLORS[i % PAIR_COLORS.length]);
+      b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function () { pick(b); });
+      lefts.appendChild(b);
+    });
+    shuffle(it.options).forEach(function (o, i) {
+      var r = el("button", "m-right" + (/^@ /.test(o.right) ? " fig-right" : ""));
+      r.type = "button"; r._opt = o; r._to = null;
+      r.innerHTML = '<span class="m-tag" aria-hidden="true">' + String.fromCharCode(65 + i) + '</span>' +
+        '<span class="m-body"><span class="m-in">' + (/^@ /.test(o.right) ? figs([o.right.slice(2)]) : o.right) + '</span></span><span class="m-slot"></span>';
+      r.setAttribute("aria-label", s.mItem + " " + String.fromCharCode(65 + i));
+      r.addEventListener("click", function () { pick(r); });
+      rights.appendChild(r);
+    });
+    function leftOf(r) { return r._to; }
+    function rightOf(l) { return Array.prototype.filter.call(rights.children, function (r) { return r._to === l; })[0] || null; }
+    function pair(l, r) {
+      var old = rightOf(l); if (old) old._to = null;           // l leaves its old partner
+      r._to = l;                                               // r drops whoever it had
+      changed();
+    }
+    function pick(x) {
+      if (S.checked) return;
+      var isLeft = x.classList.contains("m-left");
+      if (!sel) {
+        var partner = isLeft ? rightOf(x) : leftOf(x);
+        if (partner && !isLeft) { x._to = null; changed(); return; }   // tap a paired graph: undo the pair
+        sel = x; x.classList.add("m-sel"); x.setAttribute("aria-pressed", "true"); return;
+      }
+      if (sel === x) { clear(); return; }
+      var selLeft = sel.classList.contains("m-left");
+      if (selLeft === isLeft) { clear(); sel = x; x.classList.add("m-sel"); x.setAttribute("aria-pressed", "true"); return; }
+      var l = isLeft ? x : sel, r = isLeft ? sel : x;
+      clear();
+      pair(l, r);
+    }
+    function clear() { if (sel) { sel.classList.remove("m-sel"); sel.setAttribute("aria-pressed", "false"); } sel = null; }
+    function changed() {
+      Array.prototype.forEach.call(lefts.children, function (l) { l.classList.toggle("m-used", !!rightOf(l)); });
+      Array.prototype.forEach.call(rights.children, function (r) {
+        var l = r._to, slot = r.querySelector(".m-slot");
+        r.classList.toggle("m-paired", !!l);
+        r.style.setProperty("--pc", l ? l.style.getPropertyValue("--pc") : "");
+        slot.innerHTML = l ? '<span class="m-in">' + l._opt.left + "</span>" : "";
+        r.setAttribute("aria-label", s.mItem + " " + r.querySelector(".m-tag").textContent + (l ? ": " + l.textContent : ""));
+        if (l) typeset(slot);
+      });
+      primary.disabled = !Array.prototype.every.call(lefts.children, function (l) { return rightOf(l); });
+    }
+    inner.appendChild(lefts);
+    inner.appendChild(rights);
+    inner.appendChild(el("div", "in-hint", escapeHtml(allFigs ? s.mHintFig : s.mHint)));
+    S.match = { lefts: lefts, rights: rights };
   }
 
   // Options (mc, tf, multi, and the counterexample step of tf). An option "@ spec" is a figure.
@@ -233,6 +309,30 @@
     inner.appendChild(ans);
     inner.appendChild(bank);
     S.tiles = { ans: ans, bank: bank };
+  }
+
+  // ? build: a statement may be assembled with its "and"/"or" parts in any order ("y ≤ x a x ≤ y ⇒ x = y" is the same
+  // definition), and the two sides of "⇔" may be swapped. canonBuild writes a tile sequence in one fixed order:
+  // the clauses between implication arrows (or commas) stay in place, the parts inside a clause are sorted.
+  var B_AND = /^(a|and|\$\\(land|wedge)\$|∧)$/, B_OR = /^(nebo|or|\$\\(lor|vee)\$|∨)$/;
+  var B_SPLIT = /^(\$\\(Rightarrow|Leftarrow|Leftrightarrow|iff|implies|impliedby)\$|⇒|⇐|⇔|,)$/, B_IFF = /Leftrightarrow|iff|⇔/;
+  function canonBuild(tiles) {
+    var out = [], clause = [];
+    function clauseCanon() {
+      var conns = clause.filter(function (k) { return B_AND.test(k) || B_OR.test(k); });
+      var mixed = conns.some(function (k) { return B_AND.test(k) !== B_AND.test(conns[0]); });
+      if (!conns.length || mixed) return clause.join(" ");              // "A a B nebo C": order matters, keep it
+      var parts = [], cur = [];
+      clause.forEach(function (k) { if (B_AND.test(k) || B_OR.test(k)) { parts.push(cur.join(" ")); cur = []; } else cur.push(k); });
+      parts.push(cur.join(" "));
+      return parts.sort().join(" " + conns[0] + " ");
+    }
+    tiles.map(function (h) { return String(h).trim(); }).forEach(function (k) {
+      if (B_SPLIT.test(k)) { out.push(clauseCanon()); clause = []; out.push(k); } else clause.push(k);
+    });
+    out.push(clauseCanon());
+    if (out.length === 3 && B_IFF.test(out[1]) && out[0] > out[2]) out = [out[2], out[1], out[0]];
+    return out.join(" | ");
   }
 
   // Text answers: numbers, formulas, intervals, sets. Each kind gets its own keys and hint.
@@ -394,11 +494,28 @@
       S.input.readOnly = true;
       S.input.classList.add(ok ? "right" : "wrong");
       answerHtml = answerTeX(it);
+    } else if (S.match) {
+      // right when every pair is together and no decoy got a partner; a wrong item shows what belongs there
+      ok = true;
+      Array.prototype.forEach.call(S.match.lefts.children, function (l) { l.disabled = true; });
+      Array.prototype.forEach.call(S.match.rights.children, function (r) {
+        r.disabled = true;
+        var good = r._opt.ok ? !!r._to && r._to._opt === r._opt : !r._to;
+        if (!good) ok = false;
+        r.classList.add(good ? "right" : "wrong");
+        if (!good) {
+          var slot = r.querySelector(".m-slot");
+          slot.innerHTML = '<span class="m-should">' + (r._opt.ok ? "→ " + r._opt.left : "✕") + "</span>";
+          r.classList.remove("m-paired");
+          typeset(slot);
+        }
+      });
     } else if (S.tiles) {
       var got = Array.prototype.map.call(S.tiles.ans.children, function (t) { return t._opt.html; });
       var want = it.options.filter(function (o) { return o.ok; }).map(function (o) { return o.html; });
       ok = got.length === want.length && got.every(function (h, i) { return h === want[i]; });
-      Array.prototype.forEach.call(S.tiles.ans.children, function (t, i) { t.disabled = true; t.classList.add(t._opt.html === want[i] ? "right" : "wrong"); });
+      if (!ok && it.kind === "build" && got.length === want.length) ok = canonBuild(got) === canonBuild(want);   // "B a A" for "A a B"
+      Array.prototype.forEach.call(S.tiles.ans.children, function (t, i) { t.disabled = true; t.classList.add(ok || t._opt.html === want[i] ? "right" : "wrong"); });
       Array.prototype.forEach.call(S.tiles.bank.children, function (t) { t.disabled = true; });
       answerHtml = it.kind === "order" ? "<ol class=\"ans-steps\"><li>" + want.join("</li><li>") + "</li></ol>" : want.join(" ");
     } else if (it.kind === "multi") {
@@ -552,6 +669,7 @@
   C.startSession = startSession;
   C.instantiate = instantiate;
   C.inputCorrect = inputCorrect;
+  C.canonBuild = canonBuild;
   C.closeLesson = closeLesson;
   C.debugItem = function () { return S && S.queue[S.i]; };
   C.debugStage = function () { return S ? S.stage : 0; };

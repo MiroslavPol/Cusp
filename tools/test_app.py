@@ -106,6 +106,8 @@ SELF_CHECK = """() => CUSP.loadAll(CUSP.COURSES).then(function () {
         var alts = q.answer.split(';').map(function (a) { return a.trim(); });
         r = { ok: alts.every(function (a) { return CUSP.inputCorrect(a, alts[0]); }), error: 'the alternatives in "' + q.answer + '" are not the same answer' };
       }
+      else if (q.kind === 'match') r = { ok: (q.options || []).filter(function (o) { return o.ok && o.left && o.right; }).length >= 2,
+                                         error: 'needs at least two complete pairs ("+ left :: right")' };
       else if (q.kind === 'mc') r = { ok: (q.options || []).length >= 2 && q.options.filter(function (o) { return o.ok; }).length === 1,
                                       error: 'needs 2+ distinct options and exactly one correct' };
       else r = { ok: true };
@@ -126,6 +128,13 @@ SELF_CHECK = """() => CUSP.loadAll(CUSP.COURSES).then(function () {
   }); }); }); });
   return bad;
 })"""
+
+
+# ? match: pair every left item with its own right item (wrong=True: shift them all by one, so every pair is wrong)
+MATCH = """(wrong) => { var L = Array.from(document.querySelectorAll('#lessonBody .m-left')), R = Array.from(document.querySelectorAll('#lessonBody .m-right'));
+  var rs = L.map(function (l) { return R.filter(function (r) { return r._opt === l._opt; })[0]; });
+  if (wrong) rs.push(rs.shift());
+  L.forEach(function (l, i) { l.click(); rs[i].click(); }); }"""
 
 
 def solve_lesson(pg):
@@ -153,6 +162,8 @@ def solve_lesson(pg):
                 for i in range(tiles.count()):
                     if pg.evaluate("(b) => b._opt.html", tiles.nth(i).element_handle()) == o["h"]:
                         tiles.nth(i).click(); break
+        elif k == "match":
+            pg.evaluate(MATCH, False)
         else:
             pg.fill("#lessonBody input.answer-in", it["answer"].split(";")[0].strip() if k == "input" else it["answer"])
         pg.wait_for_timeout(40)
@@ -189,6 +200,8 @@ def fail_lesson(pg):
                 for i in range(tiles.count()):
                     if pg.evaluate("(b) => b._opt.html", tiles.nth(i).element_handle()) == o["h"]:
                         tiles.nth(i).click(); break
+        elif k == "match":
+            pg.evaluate(MATCH, True)
         else:
             pg.fill("#lessonBody input.answer-in", {"interval": "(987654, 987655)", "set": "{987654}"}.get(k, "987654"))
         pg.wait_for_timeout(40)
@@ -301,6 +314,46 @@ def test_site(b, url, cs):
           pg.locator("#fb .report-link").count() == 1 and not pg.is_disabled("#primary") and not pg.evaluate("!!CUSP.P.srs['test:q:broken']"))
     pg.click("#primary"); pg.wait_for_timeout(100)
     errors[:] = [e for e in errors if "can't be checked" not in e]      # that console.error was expected
+
+    # ? match: pair by tapping, undo by tapping again, all pairs needed; a wrong pairing shows what belongs where
+    started = pg.evaluate("""() => { var hit = null; CUSP.COURSES.forEach(function (c) { (c.units || []).forEach(function (u) { u.lessons.forEach(function (l) {
+        l.items.forEach(function (it) { if (!hit && it.kind === 'match') hit = it; }); }); }); });
+      if (hit) CUSP.startSession({ items: [hit], feed: true }); return !!hit; }""")
+    if started:
+        pg.wait_for_timeout(300)
+        n = pg.locator("#lessonBody .m-left").count()
+        pg.locator("#lessonBody .m-left").first.click(); pg.locator("#lessonBody .m-right").first.click(); pg.wait_for_timeout(100)
+        one = pg.locator("#lessonBody .m-right.m-paired").count() == 1 and pg.is_disabled("#primary")
+        pg.locator("#lessonBody .m-right.m-paired").first.click(); pg.wait_for_timeout(100)
+        undone = pg.locator("#lessonBody .m-right.m-paired").count() == 0
+        pg.evaluate(MATCH, True); pg.wait_for_timeout(100)
+        ready = not pg.is_disabled("#primary")
+        pg.click("#primary"); pg.wait_for_timeout(300)
+        check("match: tap to pair, tap again to undo, check once all are paired", n >= 2 and one and undone and ready, str([n, one, undone, ready]))
+        check("match: a wrong pairing is marked and shows what belongs there",
+              pg.locator("#lessonFoot[data-state=bad]").count() == 1 and pg.locator("#lessonBody .m-right.wrong .m-should").count() >= 2)
+        pg.click("#lessonClose"); pg.wait_for_timeout(200)
+        pg.evaluate("""() => { var hit = null; CUSP.COURSES.forEach(function (c) { (c.units || []).forEach(function (u) { u.lessons.forEach(function (l) {
+            l.items.forEach(function (it) { if (!hit && it.kind === 'match') hit = it; }); }); }); }); CUSP.startSession({ items: [hit], feed: true }); }""")
+        pg.wait_for_timeout(300); pg.evaluate(MATCH, False); pg.click("#primary"); pg.wait_for_timeout(300)
+        check("match: the right pairing is accepted", pg.locator("#lessonFoot[data-state=good]").count() == 1)
+        pg.click("#primary"); pg.wait_for_timeout(200)
+    else:
+        check("match: a course has a ? match question to test", False)
+
+    # ? build: "B a A" counts as "A a B", but the two sides of an implication may not be swapped
+    r = pg.evaluate(r"""() => { var c = CUSP.canonBuild;
+        return [c(['$x\\le y$', 'a', '$y\\le x$', '$\\Rightarrow$', '$x=y$']) === c(['$y\\le x$', 'a', '$x\\le y$', '$\\Rightarrow$', '$x=y$']),
+                c(['$x=y$', '$\\Rightarrow$', '$x\\le y$']) !== c(['$x\\le y$', '$\\Rightarrow$', '$x=y$']),
+                c(['A', 'a', 'B', 'nebo', 'C']) !== c(['B', 'a', 'A', 'nebo', 'C'])]; }""")
+    check("build: the parts joined by 'a' may come in either order, an implication may not be turned round", all(r), str(r))
+    if pg.evaluate("!!CUSP.courseById('calc1') && !!CUSP.courseById('calc1').byKey && !!CUSP.courseById('calc1').byKey['calc1:q:vj3bg']"):
+        pg.evaluate("() => CUSP.startSession({ items: [CUSP.courseById('calc1').byKey['calc1:q:vj3bg']], feed: true })"); pg.wait_for_timeout(300)
+        pg.evaluate(r"""() => { var want = ['$y\\le x$', 'a', '$x\\le y$', '$\\Rightarrow$', '$x=y$'];
+            want.forEach(function (h) { var t = Array.from(document.querySelectorAll('#lessonBody .tiles-bank .tile:not(.used)')).filter(function (b) { return b._opt.html === h; })[0]; t.click(); }); }""")
+        pg.click("#primary"); pg.wait_for_timeout(250)
+        check("build: the antisymmetry definition is accepted with 'y ≤ x a x ≤ y'", pg.locator("#lessonFoot[data-state=good]").count() == 1)
+        pg.click("#primary"); pg.wait_for_timeout(150)
 
     # how typed answers are judged: exact numbers but rounding allowed, decimal commas, joined intervals, ∞
     r = pg.evaluate("""() => { var A = window.CUSP_ANS, I = CUSP.inputCorrect;

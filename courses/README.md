@@ -102,8 +102,24 @@ Prompt text with $TeX$
 ? order                               put the "+" lines in order (proof steps)
 ? build                               assemble the "+" tokens in order; "-" tokens are decoys
 ? mc  (with "+ @ spec" options)       choose a graph: an option starting with "@ " is a figure
+? match                               match pairs, e.g. functions and their graphs:
++ $x^2$ :: @ x=-2..2; f=x^2             "+ left :: right" is a pair (the right side may be a figure)
+- @ x=-2..2; f=sin(x)                   "- right" alone is a decoy that nothing matches
 ? gen | name                          a fresh instance from this course's generators.js
 ```
+
+It works for anything that pairs up: a theorem and its statement, a notion and its definition
+(`+ Rolleova věta :: Je-li $f\in C[a,b]$ …`), a formula and its value. Right sides that are graphs or
+short formulas go in a 2-column grid; sentences (more than a few words outside the formulas) get one
+full-width row each. The right sides are shuffled, so an explanation (`!`) should name a decoy by its
+content, never as "the last one".
+
+**? match** shows the left sides as buttons on top and the right sides, shuffled and lettered,
+in a grid below. The student taps one of each to pair them, taps a paired item again to undo, and
+checks once everything on the left is paired. It is right when every pair is together and no decoy
+got a partner; wrong items then show what belongs there. Give every graph the same axes (`x=`, `y=`)
+when the shape is the point, so the window doesn't give the answer away. At least two pairs; the
+build checks that each `+` line has exactly one ` :: ` and that decoys have none.
 
 Typed numbers accept fractions, decimal commas, π, e, √, ln, ∞, powers (`e^2`, `e²`, `2^-3`) and
 ½-style fractions. Numbers must match exactly, except for rounding: a decimal with at least 2

@@ -28,7 +28,7 @@ HTML = ["home.html", "learn.html", "feed.html", "overlays.html"]
 JS_BEFORE_COURSES = ["fig.js", "answers.js", "genkit.js"]
 JS_AFTER_COURSES = ["strings.js", "core.js", "guide.js", "path.js", "player.js", "map.js", "home.js", "feed.js", "main.js"]
 
-KINDS = {"mc", "multi", "tf", "input", "expr", "interval", "set", "order", "build", "gen"}
+KINDS = {"mc", "multi", "tf", "input", "expr", "interval", "set", "order", "build", "match", "gen"}
 POST_TYPES = {"def", "thm", "proof", "cex", "app", "exam", "hist", "tip"}
 COURSE_ID = re.compile(r"^[a-z][a-z0-9-]*$")
 QLINE = re.compile(r"^\? (\w+)(?:\s+#([A-Za-z0-9_-]+))?(?:\s*\|\s*(.*))?$")
@@ -133,11 +133,11 @@ def check_course(d, probs):
                     if answer not in gens:
                         probs.add(at, f'generator "{answer}" is not defined in {rel(gp)}')
                 else:
-                    q = {"kind": kind, "answer": answer, "at": at, "plus": 0, "minus": 0, "text": False}
+                    q = {"kind": kind, "answer": answer, "at": at, "plus": 0, "minus": 0, "text": False, "lines": []}
         elif q:
             # the same rules as the app's reader (app/js/core.js parseCourse)
-            if line.startswith("+ "): q["plus"] += 1
-            elif line.startswith("- "): q["minus"] += 1
+            if line.startswith("+ "): q["plus"] += 1; q["lines"].append(("+", line[2:], at))
+            elif line.startswith("- "): q["minus"] += 1; q["lines"].append(("-", line[2:], at))
             elif line.strip() and not re.match(r"^(@@?|!|=) ", line): q["text"] = True
     end_question()
     if missing:
@@ -180,6 +180,14 @@ def check_question(q, probs):
             elif plus != 1 or minus < 1: probs.add(at, 'counterexamples after ? tf | false: exactly one "+ ..." and at least one "- ..."')
     elif k in ("order", "build"):
         if plus < 2: probs.add(at, f'? {k} needs at least two "+ ..." lines (the tiles in the right order)')
+    elif k == "match":
+        if plus < 2: probs.add(at, '? match needs at least two pairs ("+ left :: right")')
+        for sign, text, lat in q["lines"]:
+            parts = text.split(" :: ")
+            if sign == "+" and (len(parts) != 2 or not parts[0].strip() or not parts[1].strip()):
+                probs.add(lat, '? match pair: write "+ left :: right", e.g. "+ $x^2$ :: @ x=-2..2; f=x^2"')
+            if sign == "-" and len(parts) != 1:
+                probs.add(lat, '? match decoy: "- right" alone (something nothing matches), without " :: "')
     elif k in ("input", "expr", "interval", "set"):
         if not q["answer"].split("|")[0].strip(): probs.add(at, f"? {k} needs an answer: ? {k} #id | answer")
 

@@ -261,7 +261,14 @@
         return;
       }
       if (item.kind !== "learn") {
-        if ((m = line.match(/^([+-]) (.*)/))) { item.options.push({ html: escMath(m[2]), ok: m[1] === "+" }); return; }
+        if ((m = line.match(/^([+-]) (.*)/))) {
+          if (item.kind === "match") {          // "+ left :: right" is a pair; "- right" is a decoy that nothing matches
+            var lr = m[2].split(" :: "), right = escMath(lr.length > 1 ? lr.slice(1).join(" :: ") : lr[0]);
+            var left = lr.length > 1 && m[1] === "+" ? escMath(lr[0]) : null;
+            item.options.push({ html: left ? left + " :: " + right : right, left: left, right: right, ok: !!left });
+          } else item.options.push({ html: escMath(m[2]), ok: m[1] === "+" });
+          return;
+        }
         if ((m = line.match(/^! (.*)/))) { item.explain = escMath(m[1]); return; }
         if ((m = line.match(/^= (.*)/))) { item.show = escMath(m[1]); return; }
       }

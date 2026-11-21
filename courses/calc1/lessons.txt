@@ -18,7 +18,7 @@ Která z relací na $A=\{1,2,3\}$ je zobrazením $A\to A$?
 - $\{(1,2),(1,3),(2,1),(3,3)\}$
 - $\{(1,1),(2,2)\}$
 - $\{(1,1),(2,3),(3,2),(3,3)\}$
-! Každý prvek $A$ musí být první složkou právě jedné dvojice. Ve druhé relaci má $1$ dva obrazy, ve třetí $3$ žádný a ve čtvrté má $3$ dva.
+! Každý prvek $A$ musí být první složkou právě jedné dvojice. V relaci $\{(1,2),(1,3),(2,1),(3,3)\}$ má $1$ dva obrazy, v $\{(1,1),(2,2)\}$ nemá $3$ žádný a v $\{(1,1),(2,3),(3,2),(3,3)\}$ má $3$ dva.
 ? tf #1537z | false
 Kružnice $\{(x,y) : x^2+y^2=1\}$ je zobrazení $[-1,1]\to\mathbb R$.
 ! Bodu $x=0$ odpovídají dvě hodnoty $y=\pm1$, takže nejde o zobrazení.
@@ -64,8 +64,8 @@ Který obrázek je grafem zobrazení $\mathbb R\to\mathbb R$?
 + @ x=-2.2..2.2; y=-1.5..4; f=x^2-1
 - @ x=-1.6..1.6; y=-1.3..1.3; aspect=equal; param=cos(t),sin(t),0,2*pi
 - @ x=-0.5..4; y=-2.2..2.2; param=t^2,t,-2,2
-- @ x=-2..2; y=-2..2; vline=0.5; f=x
-! Graf zobrazení protne každou svislou přímku právě jednou. Kružnice a „ležatá“ parabola to nesplňují; třetí obrázek obsahuje celou svislou přímku.
+- @ x=-2..2; y=-2..2; poly=-2,-2,2,2; poly=0.5,-2,0.5,2
+! Graf zobrazení $\mathbb R\to\mathbb R$ protne každou svislou přímku právě jednou: nad každým $x$ leží právě jeden bod. Kružnice a „ležatá“ parabola mají nad některými $x$ dva body. Obrázek z přímky $y=x$ a svislé přímky $x=\frac12$ má nad bodem $\frac12$ nekonečně mnoho bodů.
 ? tf #n164u | true
 Každá funkce $f\colon\mathbb R\to\mathbb R$ je relací na $\mathbb R$.
 ! Zobrazení je podle definice relace, tedy podmnožina $\mathbb R\times\mathbb R$, se zvláštní vlastností.
@@ -93,7 +93,7 @@ Funkce $g\colon[0,\infty)\to[0,\infty)$, $g(x)=x^2$ je
 - jen surjektivní
 + bijekce
 - ani jedno
-! Na $[0,\infty)$ je $x^2$ rostoucí, tedy prostá, a každé $y\ge0$ je rovno $g(\sqrt y)$.
+! Na $[0,\infty)$ je $x^2$ rostoucí, tedy prostá, a každé $y\ge0$ je rovno $g(\sqrt y)$. Na obrázku: vodorovná přímka $y=2$ protne graf v bodě $(\sqrt2, 2)$, hodnota $2$ má tedy vzor $\sqrt2$. Taková přímka protne graf pro každé $y\ge0$, a to právě jednou.
 @ x=-0.3..2.5; y=-0.3..5; f=x>=0?x^2:NaN; hline=2; pt=1.414,2
 ? multi #5v1fu
 Které z funkcí $\mathbb R\to\mathbb R$ jsou bijekce?
@@ -148,6 +148,13 @@ Seřaďte důkaz: složení dvou prostých zobrazení je prosté.
 + Protože $f$ je prostá, je $x_1 = x_2$.
 + Tedy $g\circ f$ je prostá.
 ! Prostotu dokazujeme tak, že ze stejných obrazů odvodíme stejné vzory.
+? match #vy602
+Přiřaďte funkcím $f\colon\mathbb R\to\mathbb R$ jejich vlastnosti.
++ $f(x) = x^3$ :: bijekce
++ $f(x) = e^x$ :: injekce, ale ne surjekce
++ $f(x) = x^3 - x$ :: surjekce, ale ne injekce
++ $f(x) = x^2$ :: ani injekce, ani surjekce
+! $e^x$ nenabývá záporných hodnot. $x^3-x$ má kořeny $-1$, $0$, $1$, takže není prostá, ale jako polynom lichého stupně nabývá všech reálných hodnot. $x^2$ není prostá a nenabývá záporných hodnot.
 
 ### Uspořádání | P1 | #1777z
 ~ noaxes; pt=0,-0.8; pt=-0.6,0; pt=0.6,0; pt=0,0.8; line=0,-0.8,-0.6,0; line=0,-0.8,0.6,0; line=-0.6,0,0,0.8; line=0.6,0,0,0.8
@@ -161,18 +168,18 @@ Uspořádání je <b>úplné</b> (lineární), jestliže každé dva prvky lze p
 Relace dělitelnosti $a\mid b$ na $\mathbb N$ je uspořádání.
 ! Reflexivita: $a\mid a$. Antisymetrie: z $a\mid b$ a $b\mid a$ plyne v $\mathbb N$ rovnost $a=b$. Tranzitivita: $a\mid b$ a $b\mid c$ dává $a\mid c$.
 ? tf #pnb7c | false
-Dělitelnost na $\mathbb N$ je úplné uspořádání.
-! Čísla $2$ a $3$ nelze porovnat: $2\nmid 3$ ani $3\nmid 2$.
-+ $2$ a $3$: ani jedno nedělí druhé
-- $2$ a $4$
-- $1$ a $5$
-- $3$ a $3$
+Dělitelnost na $\mathbb N$ je úplné uspořádání, tj. ze dvou přirozených čísel vždy jedno dělí druhé.
+! Čísla $2$ a $3$ nelze porovnat: $2\nmid 3$ ani $3\nmid 2$. U ostatních dvojic jedno číslo dělí druhé: $2\mid4$, $1\mid5$, $3\mid3$.
++ čísla $2$ a $3$
+- čísla $2$ a $4$
+- čísla $1$ a $5$
+- čísla $3$ a $3$
 ? tf #q5k71 | false
 Dělitelnost na $\mathbb Z$ je uspořádání.
-! Selže antisymetrie: $2\mid -2$ a $-2\mid 2$, ale $2\ne-2$.
-+ $2\mid-2$ a $-2\mid2$, ale $2\ne-2$
-- $2\mid4$ a $4\mid8$
-- $1\mid n$ pro každé $n$
+! Selže antisymetrie: $2\mid -2$ a $-2\mid 2$, ale $2\ne-2$. Dvojice $2, 4$ a $1, 5$ antisymetrii neporušují, protože dělitelnost u nich platí jen jedním směrem.
++ čísla $2$ a $-2$
+- čísla $2$ a $4$
+- čísla $1$ a $5$
 ? multi #g5c86
 Které vlastnosti má relace $<$ na $\mathbb R$?
 - reflexivita
@@ -181,7 +188,7 @@ Které vlastnosti má relace $<$ na $\mathbb R$?
 - pro všechna $x,y$ platí $x<y$ nebo $y<x$
 ! $x<x$ neplatí nikdy. Antisymetrie platí, protože $x<y$ a $y<x$ současně nenastane. Pro $x=y$ neplatí ani $x<y$, ani $y<x$.
 ? mc #vxfab
-Inkluze $\subseteq$ na množině všech podmnožin $\{1,2\}$ je
+Inkluze $\subseteq$ na množině všech podmnožin množiny $\{1,2\}$, tj. na $\{\emptyset,\ \{1\},\ \{2\},\ \{1,2\}\}$, je
 - úplné uspořádání
 + uspořádání, které není úplné
 - není uspořádání, protože není antisymetrická
@@ -206,7 +213,7 @@ Relace „$x-y$ je sudé číslo“ na $\mathbb Z$ je reflexivní a tranzitivní
 - reflexivita
 - tranzitivita
 - žádná, je to uspořádání
-! $2$ a $4$ jsou v relaci oběma směry, ale $2\ne4$. Jde o ekvivalenci, ne o uspořádání.
+! Reflexivní je, protože $x-x = 0$ je sudé. Tranzitivní také: jsou-li $x-y$ i $y-z$ sudá, je sudý i jejich součet $(x-y)+(y-z) = x-z$. Antisymetrie ale chybí: $2-4$ i $4-2$ jsou sudá, tedy $2$ a $4$ jsou v relaci oběma směry, a přitom $2\ne4$. Jde o ekvivalenci (stejná parita), ne o uspořádání.
 ? build #vj3bg
 Sestavte definici antisymetrie relace $\le$:
 + $x\le y$
@@ -216,7 +223,7 @@ Sestavte definici antisymetrie relace $\le$:
 + $x=y$
 - $x<y$
 - $\Leftarrow$
-! Antisymetrie: jsou-li dva prvky v relaci oběma směry, jsou si rovny.
+! Antisymetrie: jsou-li dva prvky v relaci oběma směry, jsou si rovny. Pořadí $x\le y$ a $y\le x$ je jedno, uznává se obojí.
 ? input #92apa | 8
 Kolik prvků má množina všech podmnožin množiny $\{1,2,3\}$?
 ! Každý ze tří prvků v podmnožině buď je, nebo není: $2^3 = 8$.
@@ -224,12 +231,12 @@ Kolik prvků má množina všech podmnožin množiny $\{1,2,3\}$?
 Lexikografické uspořádání na $\mathbb R^2$ ($(a,b)\preceq(c,d)$, jestliže $a<c$, nebo $a=c$ a $b\le d$) je úplné.
 ! Dvě dvojice porovnáme podle první složky, a pokud se rovná, podle druhé.
 ? mc #vnp51
-Které prvky jsou v množině $\{1,2,3,4,6,12\}$ uspořádané dělitelností nesrovnatelné s $4$?
+Množinu $\{1,2,3,4,6,12\}$ uspořádáme dělitelností: $a\preceq b$, právě když $a$ dělí $b$. Prvky $a$, $b$ jsou srovnatelné, je-li $a\mid b$ nebo $b\mid a$. Které prvky jsou nesrovnatelné se $4$?
 + $3$ a $6$
 - $1$ a $2$
 - $12$
 - žádné
-! $4$ je srovnatelné s $1, 2$ (dělí ho) i s $12$ (dělí ho $4$). Číslo $3$ ani $6$ s $4$ srovnat nelze.
+! Srovnatelné se $4$ jsou $1$ a $2$ (dělí $4$) a $12$ (je dělitelné $4$). Číslo $3$ ani $6$ nedělí $4$ a $4$ nedělí ani $3$, ani $6$, takže jsou se $4$ nesrovnatelné.
 
 ## Reálná čísla | P2–P3 | #q8ikg
 ### Závory a ohraničenost | P2 | #5uupn
@@ -381,6 +388,14 @@ Doplňte charakterizaci: $a = \sup B$, právě když $a$ je horní závora $B$ a
 ? input #cqx26 | √3; 1.7321
 Určete $\sup\{x\in\mathbb R: x^2<3\}$.
 ! Množina je interval $(-\sqrt3,\sqrt3)$.
+? match #txike
+Přiřaďte pojmům jejich definice ($B\subseteq\mathbb R$ je neprázdná).
++ horní závora $U$ :: $x\le U$ pro každé $x\in B$
++ $\sup B$ :: nejmenší horní závora množiny $B$
++ $\inf B$ :: největší dolní závora množiny $B$
++ $\max B$ :: horní závora množiny $B$, která do $B$ patří
+- horní závora množiny $B$, která do $B$ nepatří
+! Supremum do $B$ patřit nemusí, např. $\sup\,(0,1) = 1\notin(0,1)$; když patří, je to maximum.
 
 ### Axiomy reálných čísel | P2 | #wo5z2
 ~ noaxes; text=ℝ; size=1.15
@@ -668,6 +683,14 @@ Sestavte definici liché funkce: $f$ je lichá, jestliže
 - $f(-x)=f(x)$
 - $\exists x\in D(f)$
 ! Definiční obor musí být souměrný podle nuly a hodnoty v opačných bodech opačné.
+? match #0ija5
+Přiřaďte funkcím jejich vlastnosti na $\mathbb R$.
++ $\cos x$ :: sudá a periodická
++ $\sin x$ :: lichá a periodická
++ $x^3$ :: lichá a není periodická
++ $e^x$ :: ani sudá, ani lichá
+- sudá a není periodická
+! $e^{-x}$ se nerovná $e^x$ ani $-e^x$, takže $e^x$ není sudá ani lichá. Sudá a neperiodická je třeba $x^2$, ta tu ale není.
 
 ### Složená a inverzní funkce | P3 | #bssjv
 ~ dash=-1,-1,1,1; f=exp(1.6*x)/2.5-0.8; f=ln(2.5*(x+0.8))/1.6
@@ -803,6 +826,14 @@ Který graf patří polynomu $(x-1)^2(x+1)$?
 ! Dvojnásobný kořen $1$: graf se tam osy jen dotkne. Jednoduchý kořen $-1$: graf osu protne.
 
 ? gen #pjrr2 | roots_set
+? match #62i0i
+Přiřaďte funkcím jejich grafy.
++ $\dfrac{1}{x-1}$ :: @ x=-3..3; y=-4..4; f=1/(x-1)
++ $\dfrac{x+1}{x-1}$ :: @ x=-3..3; y=-4..4; f=(x+1)/(x-1)
++ $\dfrac{1}{x^2}$ :: @ x=-3..3; y=-4..4; f=1/x^2
++ $\dfrac{x}{x^2+1}$ :: @ x=-3..3; y=-4..4; f=x/(x^2+1)
+- @ x=-3..3; y=-4..4; f=1/(x+1)
+! U $x=1$ jsou neohraničené $\frac{1}{x-1}$ i $\frac{x+1}{x-1}$; pro velká $|x|$ se první blíží k $0$, druhá k $1$. $\frac{1}{x^2}$ je kladná a sudá, $\frac{x}{x^2+1}$ je definovaná všude. Graf s nespojitostí v $-1$ patří $\frac{1}{x+1}$.
 
 ### Goniometrické a cyklometrické funkce | P3–P4 | #j2qr6
 ~ f=0.7*sin(3.2*x)
@@ -873,6 +904,13 @@ Který graf patří funkci $\operatorname{arctg}$?
 ? expr #eqsuz | sqrt(1-x^2) | dom=-0.9..0.9
 Zjednodušte $\sin(\arccos x)$ pro $x\in[-1,1]$.
 ! Pro $t = \arccos x\in[0,\pi]$ je $\sin t\ge0$, takže $\sin t = \sqrt{1-\cos^2t}$.
+? match #faqfz
+Přiřaďte funkcím jejich grafy.
++ $\arcsin x$ :: @ x=-2.5..2.5; y=-2..3.5; f=asin(x)
++ $\arccos x$ :: @ x=-2.5..2.5; y=-2..3.5; f=acos(x)
++ $\operatorname{arctg} x$ :: @ x=-2.5..2.5; y=-2..3.5; f=atan(x)
+- @ x=-2.5..2.5; y=-2..3.5; f=PI/2-atan(x)
+! $\arcsin$ a $\arccos$ jsou definované jen na $[-1,1]$: $\arcsin$ roste z $-\frac\pi2$ do $\frac\pi2$, $\arccos$ klesá z $\pi$ do $0$. $\operatorname{arctg}$ roste na celém $\mathbb R$; klesající graf s hodnotami v $(0,\pi)$ patří $\operatorname{arccotg}$.
 
 ### Exponenciální, logaritmické a hyperbolické funkce | P3–P4 | #h292s
 ~ f=exp(2.2*x)/5-0.6
@@ -942,6 +980,13 @@ Který graf patří funkci $\ln x$?
 - @ x=-6..0.5; y=-3..2.5; f=ln(0-x)
 - @ x=-0.5..6; y=-2.5..3; f=0-ln(x)
 ! $\ln$ je definovaný pro $x>0$, roste a prochází bodem $(1,0)$.
+? match #7tqrq
+Přiřaďte funkcím jejich grafy.
++ $\sinh x$ :: @ x=-2.5..2.5; y=-4..4; f=sinh(x)
++ $\cosh x$ :: @ x=-2.5..2.5; y=-4..4; f=cosh(x)
++ $\operatorname{tgh} x$ :: @ x=-2.5..2.5; y=-4..4; f=tanh(x)
++ $e^{-x}$ :: @ x=-2.5..2.5; y=-4..4; f=exp(-x)
+! $\cosh$ je sudý a $\cosh 0 = 1$, $\sinh$ je lichý a neomezený, $\operatorname{tgh}$ je lichý a omezený mezi $-1$ a $1$, $e^{-x}$ je kladná a klesá.
 
 ? gen #lp13c | domain_ivl
 
@@ -1018,7 +1063,7 @@ Která posloupnost konverguje?
 - @ x=0..16; y=-1.5..1.5; seq=(-1)^n
 - @ x=0..16; y=-0.5..4.5; seq=sqrt(n)
 - @ x=0..16; y=-1.3..1.3; seq=sin(n)
-! Členy první posloupnosti se k $1$ přibližují libovolně blízko. Ostatní kmitají nebo rostou nade všechny meze.
+! Členy posloupnosti $1+\frac{(-1)^n}{n}$ se k $1$ přibližují libovolně blízko. $(-1)^n$ a $\sin n$ kmitají, $\sqrt n$ roste nade všechny meze.
 ? tf #4u1h7 | false
 Má-li posloupnost $\{|a_n|\}$ limitu, má limitu i $\{a_n\}$.
 ! Obrácená implikace platí: z $a_n\to A$ plyne $|a_n|\to|A|$.
@@ -1279,6 +1324,14 @@ Seřaďte důkaz: neklesající shora ohraničená posloupnost konverguje.
 + Pro $n\ge n_0$ je $A-\varepsilon < a_{n_0}\le a_n\le A$.
 + Tedy $|a_n - A|<\varepsilon$ pro $n\ge n_0$, a $a_n\to A$.
 ! Supremum existuje díky axiomu suprema; monotonie pak udrží členy blízko.
+? match #43om2
+Přiřaďte posloupnostem jejich limity.
++ $\left(1+\frac1n\right)^n$ :: $e$
++ $\dfrac{n+1}{2n}$ :: $\dfrac12$
++ $\dfrac{\sin n}{n}$ :: $0$
++ $\dfrac{n^2}{n+1}$ :: $+\infty$
+- limita neexistuje
+! $\frac{\sin n}{n}\to0$ podle věty o třech limitách, protože $|\sin n|\le1$. $\frac{n^2}{n+1} = n-1+\frac{1}{n+1}\to+\infty$. Limitu nemá třeba $(-1)^n$, ta tu ale není.
 
 ### Vybrané posloupnosti a hromadné body | P5–P6 | #5mxke
 ~ seq=(-1)^n*(0.55+0.35/n); N=10; dash=-1.1,0.55,1.1,0.55; dash=-1.1,-0.55,1.1,-0.55
@@ -1346,10 +1399,18 @@ Která posloupnost má právě dva hromadné body?
 - @ x=0..16; y=-0.2..1.1; seq=1/n
 - @ x=0..16; y=-1.3..1.3; seq=cos(n*pi/2)
 - @ x=0..16; y=-1..17; seq=n
-! První posloupnost se hromadí u $1$ a $-1$. Druhá má jediný hromadný bod $0$, třetí tři ($-1$, $0$, $1$), čtvrtá jen $+\infty$.
+! Posloupnost $(-1)^n\left(1+\frac1n\right)$ se hromadí u $1$ a $-1$. $\frac1n$ má jediný hromadný bod $0$, $\cos\frac{n\pi}{2}$ tři ($-1$, $0$, $1$) a $n$ jen $+\infty$.
 ? input #69yw3 | 2
 Kolik hromadných bodů má posloupnost $\left\{\dfrac{(-1)^n n + 1}{n}\right\}$?
 ! Člen je $(-1)^n + \frac1n$: sudé jdou k $1$, liché k $-1$.
+? match #g9dit
+Přiřaďte posloupnostem množiny jejich hromadných bodů.
++ $(-1)^n$ :: $\{-1,\ 1\}$
++ $\dfrac1n$ :: $\{0\}$
++ $n$ :: $\{+\infty\}$
++ $\sin\dfrac{n\pi}{2}$ :: $\{-1,\ 0,\ 1\}$
+- $\{0,\ 1\}$
+! $\sin\frac{n\pi}{2}$ nabývá hodnot $1, 0, -1, 0, 1, \dots$, každé nekonečněkrát. Má-li posloupnost limitu, je ta limita jejím jediným hromadným bodem.
 
 ### Limes superior a Bolzanova–Weierstrassova věta | P6 | #g8dbw
 ~ seq=0.6*cos(2.4*n)*(1+0.5/n); N=10; dash=-1.1,0.6,1.1,0.6
@@ -1610,7 +1671,7 @@ Na kterém obrázku má funkce v bodě $1$ limitu $2$?
 - @ x=-0.5..2.5; y=-0.5..4.5; f=x<1?x+1:x+2; hole=1,2; pt=1,3
 - @ x=-0.5..2.5; y=-6..6; f=1/(x-1)
 - @ x=-0.5..2.5; y=-0.5..4; f=x^2; pt=1,1
-! Na prvním obrázku se hodnoty u bodu $1$ blíží ke $2$ z obou stran; hodnota $f(1)$ na tom nic nemění.
+! Limitu $2$ má funkce, jejíž graf je přímka $y=x+1$ s dírou v bodě $(1,2)$: hodnoty se u bodu $1$ blíží ke $2$ z obou stran a hodnota $f(1)$ na tom nic nemění. U grafu se skokem se jednostranné limity liší.
 
 ### Jednostranné limity | P7 | #ha94s
 ~ f=x<0?0.35*x-0.25:0.35*x+0.45; hole=0,-0.25; pt=0,0.45
@@ -1863,7 +1924,7 @@ Na kterém obrázku funkce na intervalu $[0,2]$ (svislé čáry) nenabývá maxi
 - @ x=-0.3..2.3; y=-0.5..4.5; f=x^2; vline=0; vline=2
 - @ x=-0.3..2.3; y=-1.3..1.3; f=sin(3*x); vline=0; vline=2
 - @ x=-0.3..2.3; y=-0.5..1.5; f=1-x/2; vline=0; vline=2
-! Hodnoty první funkce se blíží k $1$, ale $1$ se nenabývá: funkce je v bodě $1$ nespojitá.
+! Funkce, která roste jako $y=x$ k díře v bodě $(1,1)$ a dál je nulová, se k hodnotě $1$ blíží, ale nenabývá jí: v bodě $1$ je nespojitá, takže Weierstrassovu větu použít nelze.
 ? multi #fn0td
 Na kterých intervalech nabývá funkce $\frac1x$ své největší hodnoty?
 + $[1,2]$
@@ -2069,6 +2130,14 @@ Určete $\lim\limits_{x\to0}\dfrac{x}{\operatorname{tg}3x}$.
 ? tf #uele6 | false
 $\lim\limits_{x\to\infty}\dfrac{\sin x}{x} = 1$.
 ! Rovnost $\lim\frac{\sin x}{x} = 1$ platí pro $x\to0$. Pro $x\to\infty$ je limita $0$: ohraničený čitatel, jmenovatel do nekonečna.
+? match #lqnjy
+Přiřaďte limitám jejich hodnoty.
++ $\lim\limits_{x\to0}\frac{\sin x}{x}$ :: $1$
++ $\lim\limits_{x\to0}\frac{1-\cos x}{x^2}$ :: $\dfrac12$
++ $\lim\limits_{x\to0}\frac{e^{2x}-1}{x}$ :: $2$
++ $\lim\limits_{x\to0}(1+x)^{1/x}$ :: $e$
+- $0$
+! $\frac{e^{2x}-1}{x} = 2\cdot\frac{e^{2x}-1}{2x}\to2$. $\frac{1-\cos x}{x^2} = \frac{2\sin^2(x/2)}{x^2}\to\frac12$. Pro $y=\frac1x\to\pm\infty$ je $(1+x)^{1/x} = \left(1+\frac1y\right)^y\to e$.
 
 ### Bonus: Protipříklady ke spojitosti | P8 | bonus | #i6yyk
 ~ f=0.95*x*sin(0.6/x)
@@ -2498,6 +2567,14 @@ Zderivujte $\operatorname{tg}x$.
 ? input #yq8ca | 1
 Spočtěte derivaci $x^x$ v bodě $1$.
 ! $(x^x)' = x^x(\ln x+1)$, v bodě $1$: $1\cdot(0+1)$.
+? match #7ykkz
+Přiřaďte funkcím jejich derivace.
++ $\sin x$ :: $\cos x$
++ $\cos x$ :: $-\sin x$
++ $\ln x$ :: $\dfrac1x$
++ $\operatorname{arctg} x$ :: $\dfrac{1}{1+x^2}$
+- $-\cos x$
+! Pozor na znaménko: $(\cos x)' = -\sin x$, ale $(\sin x)' = \cos x$. Výraz $-\cos x$ je derivace funkce $-\sin x$, ta tu není.
 
 ### Bonus: Související rychlosti | P11 | bonus | #yshgp
 ~ noaxes; line=-0.75,-0.85,-0.75,0.95; line=-0.95,-0.85,0.95,-0.85; bar=-0.75,0.55,0.25,-0.85; arrow=0.35,-0.6,0.85,-0.6
@@ -2663,6 +2740,14 @@ Co dostaneme z Cauchyovy věty pro $g(x) = x$?
 ? expr #wzv60 | x^3 - 1
 Funkce $f$ má na $\mathbb R$ derivaci $3x^2$ a $f(1) = 0$. Zapište $f(x)$.
 ! $f(x) = x^3 + C$ a $1 + C = 0$.
+? match #is9w7
+Přiřaďte větám jejich znění.
++ Weierstrassova věta :: Je-li $f\in C[a,b]$, je $f$ na $[a,b]$ ohraničená a nabývá na něm své největší i nejmenší hodnoty.
++ Bolzanova věta :: Je-li $f\in C[a,b]$ a $f(a)f(b)<0$, existuje $\xi\in(a,b)$ s $f(\xi)=0$.
++ Rolleova věta :: Je-li $f\in C[a,b]$ s derivací na $(a,b)$ a $f(a)=f(b)$, existuje $c\in(a,b)$ s $f'(c)=0$.
++ Lagrangeova věta :: Je-li $f\in C[a,b]$ s derivací na $(a,b)$, existuje $c\in(a,b)$ s $f'(c)=\frac{f(b)-f(a)}{b-a}$.
+- Je-li $f$ spojitá na $(a,b)$, nabývá na něm své největší i nejmenší hodnoty.
+! Tvrzení o funkci spojité na otevřeném intervalu $(a,b)$ neplatí: $\frac1x$ je spojitá na $(0,1)$, ale není tam ohraničená. Weierstrassova věta potřebuje uzavřený interval.
 
 ### L'Hospitalovo pravidlo | P13 | #3bh2w
 ~ noaxes; text=0⁄0; size=0.75
@@ -2993,6 +3078,14 @@ Který graf má v bodě $0$ inflexní bod?
 ? interval #nyj0d | (-1; 1)
 Na kterém intervalu je $f(x) = \ln(1+x^2)$ ryze konvexní? Zapište otevřený interval.
 ! $f''(x) = \dfrac{2(1-x^2)}{(1+x^2)^2}>0\iff|x|<1$.
+? match #x6wos
+Co plyne z derivací na otevřeném intervalu $I$?
++ $f'>0$ na $I$ :: $f$ je na $I$ rostoucí
++ $f'<0$ na $I$ :: $f$ je na $I$ klesající
++ $f''>0$ na $I$ :: $f$ je na $I$ ostře konvexní
++ $f''<0$ na $I$ :: $f$ je na $I$ ostře konkávní
+- $f$ je na $I$ konstantní
+! Znaménko první derivace určuje monotonii, znaménko druhé derivace konvexnost. Konstantní je $f$, je-li $f'=0$ na celém intervalu.
 
 ### Asymptoty | P16 | #ikb33
 ~ f=0.15/(x-0.1)+0.25; dash=0.1,-1.1,0.1,1.1; dash=-1.1,0.25,1.1,0.25
@@ -3053,6 +3146,14 @@ Na kterém obrázku má funkce šikmou asymptotu?
 ? expr #sepq5 | 2x-1
 Najděte asymptotu se směrnicí funkce $f(x) = \dfrac{2x^2+x}{x+1}$ pro $x\to\infty$. Zapište $y = \dots$
 ! $\frac{2x^2+x}{x+1} = 2x-1+\frac{1}{x+1}$.
+? match #r1ec0
+Přiřaďte funkcím všechny jejich asymptoty.
++ $\dfrac{x^2+1}{x}$ :: $x=0$ a $y=x$
++ $\dfrac{2x+1}{x-1}$ :: $x=1$ a $y=2$
++ $\operatorname{arctg}x$ :: $y=\frac\pi2$ pro $x\to+\infty$ a $y=-\frac\pi2$ pro $x\to-\infty$
++ $e^{-x}$ :: jen $y=0$ pro $x\to+\infty$
+- $x=0$ a $y=0$
+! $\frac{x^2+1}{x} = x+\frac1x$, odtud $y=x$. U $e^{-x}$ je pro $x\to-\infty$ podíl $\frac{e^{-x}}{x}\to-\infty$, takže tam asymptota není. Asymptoty $x=0$ a $y=0$ má třeba $\frac1x$, ta tu ale není.
 
 ### Průběh funkce | P16 | #fwn5v
 ~ f=2*x*exp(-4*x^2); pt=0.354,0.429; pt=-0.354,-0.429
@@ -3174,6 +3275,14 @@ Odhadněte $e^{0{,}1}$ Maclaurinovým polynomem 2. stupně.
 ? tf #b8kdf | true
 Taylorův polynom stupně $n$ polynomu stupně $n$ je tento polynom sám.
 ! Zbytek obsahuje $(n+1)$-ní derivaci, a ta je nulová.
+? match #c5gjx
+Přiřaďte funkcím začátek jejich Taylorova polynomu v bodě $0$.
++ $e^x$ :: $1 + x + \frac{x^2}{2} + \dots$
++ $\sin x$ :: $x - \frac{x^3}{6} + \dots$
++ $\cos x$ :: $1 - \frac{x^2}{2} + \dots$
++ $\ln(1+x)$ :: $x - \frac{x^2}{2} + \dots$
+- $1 - x + \frac{x^2}{2} + \dots$
+! Lichá funkce $\sin$ má jen liché mocniny, sudá $\cos$ jen sudé. U $\ln(1+x)$ je $f(0)=0$, $f'(0)=1$ a $f''(0)=-1$. Polynom $1 - x + \frac{x^2}{2}+\dots$ patří funkci $e^{-x}$, ta tu není.
 
 ### Bonus: Optimalizace v praxi | P16 | bonus | #laxyz
 ~ f=0.7-1.6*x^2; pt=0,0.7; dash=0,-1.05,0,0.7
@@ -3278,6 +3387,14 @@ Pro všechny spojité funkce platí $\int fg\,dx = \int f\,dx\cdot\int g\,dx$.
 - $f = g = 0$
 
 ? gen #jqzhv | antider_expr
+? match #qnezu
+Přiřaďte funkcím jejich primitivní funkce.
++ $\cos x$ :: $\sin x + C$
++ $\sin x$ :: $-\cos x + C$
++ $\dfrac1x$ :: $\ln|x| + C$
++ $\dfrac{1}{1+x^2}$ :: $\operatorname{arctg}x + C$
+- $\cos x + C$
+! Zkouška derivací: $(-\cos x)' = \sin x$. Výraz $\cos x + C$ je primitivní funkce k $-\sin x$, ta tu není.
 
 ### Metoda per partes | P17–P18 | #un38d
 ~ noaxes; text=uv′; size=0.8
@@ -3551,6 +3668,14 @@ Integrand je sudý v $\sin x$ i v $\cos x$, například $\dfrac{1}{\sin^2x + 3\c
 ? expr #z6wc3 | 2sqrt(x+1) | +C
 Najděte $\displaystyle\int\frac{dx}{\sqrt{x+1}}$.
 ! $t = \sqrt{x+1}$, $dx = 2t\,dt$: $\int 2\,dt$.
+? match #zgoj7
+Přiřaďte integrálům vhodnou metodu.
++ $\int x\,e^x\,dx$ :: per partes
++ $\int 2x\cos(x^2)\,dx$ :: substituce $t = x^2$
++ $\int\frac{dx}{x^2-1}$ :: rozklad na parciální zlomky
++ $\int\frac{dx}{2+\cos x}$ :: univerzální substituce $t = \operatorname{tg}\frac x2$
++ $\int\frac{dx}{1+\sqrt x}$ :: substituce $t = \sqrt x$
+! Součin polynomu a $e^x$ zjednoduší per partes; $2x$ je derivace $x^2$; racionální funkci rozložíme na parciální zlomky; $R(\sin x,\cos x)$ převede univerzální substituce na racionální funkci; odmocninu odstraní $t=\sqrt x$.
 
 ## Riemannův integrál | P20–P24 | #7zt8v
 ### Dělení a Riemannovy součty | P20 | #o2byn
@@ -3894,6 +4019,14 @@ Spočtěte $\displaystyle\int_0^{\pi/4}\frac{dx}{\cos^2x}$.
 ? tf #np8z7 | false
 $\displaystyle\int_{-1}^{1}\frac{dx}{x} = \big[\ln|x|\big]_{-1}^{1} = 0$.
 ! Integrand není na $[-1,1]$ ohraničený (ani definovaný v nule), formuli nelze použít. Jako nevlastní integrál diverguje.
+? match #2vq86
+Přiřaďte integrálům jejich hodnoty.
++ $\int_0^\pi\sin x\,dx$ :: $2$
++ $\int_0^1 x^2\,dx$ :: $\dfrac13$
++ $\int_1^e\frac{dx}{x}$ :: $1$
++ $\int_0^1 e^x\,dx$ :: $e-1$
+- $0$
+! $\big[-\cos x\big]_0^\pi = 1-(-1) = 2$, $\big[\ln x\big]_1^e = 1$, $\big[e^x\big]_0^1 = e-1$.
 
 ### Per partes a substituce v určitém integrálu | P24 | #4s1va
 ~ noaxes; text=∫ₐᵇ; size=0.9
@@ -4098,7 +4231,7 @@ Jaký je vzorec pro délku křivky zadané parametricky, $x = \varphi(t)$, $y = 
 - $\int_\alpha^\beta\left(\varphi'(t)+\psi'(t)\right)dt$
 - $\int_\alpha^\beta\psi(t)\varphi'(t)\,dt$
 - $\sqrt{\int_\alpha^\beta\varphi'^2\,dt+\int_\alpha^\beta\psi'^2\,dt}$
-! Délka vektoru rychlosti krát čas. Třetí výraz je obsah pod křivkou.
+! Délka vektoru rychlosti krát čas. Výraz $\int_\alpha^\beta\psi(t)\varphi'(t)\,dt$ je obsah pod křivkou.
 ? input #4194a | 5
 Spočtěte délku křivky $x = 3t$, $y = 4t$, $t\in[0,1]$.
 ! $\int_0^1\sqrt{9+16}\,dt = 5$: je to úsečka z $[0,0]$ do $[3,4]$.
@@ -4428,6 +4561,14 @@ Je-li $f$ u bodu $b$ neohraničená, integrál $\int_a^b f$ diverguje.
 ? input #m1frm | 2
 Spočtěte $\displaystyle\int_0^1\frac{dx}{\sqrt{1-x}}$.
 ! $[-2\sqrt{1-x}]_0^1 = 0+2$.
+? match #2avtj
+Přiřaďte nevlastním integrálům jejich hodnoty.
++ $\int_1^\infty\frac{dx}{x^2}$ :: $1$
++ $\int_0^\infty e^{-2x}\,dx$ :: $\dfrac12$
++ $\int_0^1\frac{dx}{\sqrt x}$ :: $2$
++ $\int_1^\infty\frac{dx}{x}$ :: diverguje
+- $0$
+! $\left[-\frac1x\right]_1^\infty = 1$, $\left[-\frac12e^{-2x}\right]_0^\infty = \frac12$, $\left[2\sqrt x\right]_0^1 = 2$. $\int_1^\infty\frac{dx}{x} = \lim\limits_{x\to\infty}\ln x = +\infty$.
 
 ### Bonus: Gabrielův roh a paradoxy nekonečna | P27 | bonus | #zgbt2
 ~ noaxes; f=x>-0.65?0.25/(x+1.1):NaN; f=x>-0.65?-0.25/(x+1.1):NaN; ell=-0.65,0,0.1,0.555
