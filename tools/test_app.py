@@ -379,6 +379,20 @@ def test_site(b, url, cs):
         check("the guide opens from the feed", not pg.locator("#guide").is_hidden())
         pg.click("#guideClose")
 
+    # "all" starts with a word about the feed; a course's pinned post leads only its own filter
+    pg.locator("#feedChips .chip").first.click(); pg.wait_for_timeout(500)
+    check("'all' starts with a word about the feed, not a course's pinned post",
+          pg.evaluate("document.querySelector('#feedList').firstElementChild.className") == "feed-intro" and pg.locator("#feedList .post-pin").count() == 0)
+    if len(cs) > 1:
+        pg.locator("#feedChips .chip").nth(1).click(); pg.wait_for_timeout(500)
+        pinned = pg.evaluate("(function () { var p = document.querySelector('#feedList .post'); return !!(p && p.querySelector('.post-pin')); })()")
+        has_pin = pg.evaluate(f"/\\|\\s*pin\\s*$/m.test(CUSP.courseById('{cs[0][0]}').feedText || '')")
+        check("a course's own filter starts with its pinned post", pinned or not has_pin)
+        pg.locator("#feedChips .chip").first.click(); pg.wait_for_timeout(500)
+    pg.click("#feedList .feed-intro .fi-close"); pg.wait_for_timeout(200)
+    pg.click("#feedShuffle"); pg.wait_for_timeout(500)
+    check("the feed intro stays hidden once closed", pg.locator("#feedList .feed-intro").count() == 0)
+
     # other course on the map
     if len(cs) > 1:
         pg.click('.tab[data-view="learn"]'); pg.wait_for_timeout(300)
@@ -409,6 +423,15 @@ def test_home(b, url, cs):
     pg.click('.tab[data-view="home"]'); pg.wait_for_timeout(300)
     pg.click(".h-change"); pg.wait_for_timeout(200)
     check("Home can change the course", not pg.locator("#courseSheet").is_hidden())
+    # the interface language: English in a Czech course, and it is remembered
+    pg.locator(".lang-opt[lang=en]").click(); pg.wait_for_timeout(400)
+    pg.click("#courseSheet", position={"x": 200, "y": 20}); pg.wait_for_timeout(300)
+    en = pg.evaluate("CUSP.STR.en")
+    check("the interface can switch to English", pg.text_content("#tabHomeLabel") == en["home"] and pg.text_content("#homeTagline") == en["tagline"])
+    pg.reload(); pg.wait_for_timeout(1500)
+    check("the language choice is remembered", pg.text_content("#homeTagline") == en["tagline"] and pg.evaluate("document.documentElement.lang") == "en")
+    pg.click(".h-change"); pg.wait_for_timeout(200); pg.locator(".lang-opt[lang=cs]").click(); pg.wait_for_timeout(300)
+    check("and back to Czech", pg.text_content("#homeTagline") == pg.evaluate("CUSP.STR.cs.tagline"))
     check("no errors in the page", not errors, "; ".join(errors[:3]))
     pg.close()
 

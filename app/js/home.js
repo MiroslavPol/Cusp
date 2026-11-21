@@ -103,6 +103,6 @@
     parts.forEach(function (p) { if (p) body.appendChild(p); });
   }
 
-  ["progress", "admin", "course", "loaded"].forEach(function (ev) { C.on(ev, function () { if (!$("view-home").hidden) render(); }); });
+  ["progress", "admin", "course", "loaded", "lang"].forEach(function (ev) { C.on(ev, function () { if (!$("view-home").hidden) render(); }); });
   C.renderHome = render;
 })();

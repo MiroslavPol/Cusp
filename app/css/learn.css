@@ -278,6 +278,10 @@ math mo.prime { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math
 .fb:has(.fig) { max-height: 52vh; }
 
 /* progress backup, in the course sheet */
+.lang-box { border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.lang-k { font-size: 16px; font-weight: 600; }
+.lang-row { display: flex; gap: 8px; }
+.lang-note { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.4; }
 .backup { border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
 .backup h3 { margin: 0; font-size: 16px; font-weight: 600; }
 .backup p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.45; }

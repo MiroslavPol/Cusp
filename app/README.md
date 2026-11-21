@@ -40,7 +40,10 @@ The modules share one object, `window.CUSP` (defined in `core.js`), and talk thr
 `C.on("progress" | "admin" | "loaded", fn)` / `C.emit(...)`. The course registry is embedded in
 the page (`<script id="courses">`); a course's lessons, feed posts, guide and legacy-id map come
 from `<script id="data-<id>">` in `site/` or from `data/<id>.json` in `pwa/` (`C.load(course)`).
-Interface texts are in `strings.js`; a course's `lang` picks the language. That includes the messages
+Interface texts are in `strings.js`; a course's `lang` picks the language, unless the student has
+chosen one in the course menu (*Jazyk rozhraní*, stored as `cusp.lang`). The choice changes only the
+interface: lessons and posts stay in the language they are written in. A new language is a new block
+in `strings.js` with every key of the others, plus an entry in `LANGS` in `map.js`. That includes the messages
 for answers the app can't read (`ans`), which `answers.js` looks up when it needs one.
 
 Besides `window.CUSP`, a few modules expose one global each: `CUSP_GEN` (genkit.js, which every

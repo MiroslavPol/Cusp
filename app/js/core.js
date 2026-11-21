@@ -377,8 +377,13 @@
     return vis.filter(function (c) { return c.id === courseId; })[0] || vis.filter(function (c) { return c["default"]; })[0] || vis[0] || COURSES[0];
   }
   function setCourse(id) { courseId = id; setRaw("cusp.course", id); }
-  function stringsFor(c) { return STR[c && c.lang] || STR.en; }
+  // The interface language: the student's choice (cusp.lang, set in the course menu), otherwise the course's own.
+  // It changes only the interface; lessons and posts stay in the language they are written in.
+  var uiLang = getRaw("cusp.lang");
+  function stringsFor(c) { return STR[uiLang] || STR[c && c.lang] || STR.en; }
   function L() { return stringsFor(course()); }
+  function lang() { return STR[uiLang] ? uiLang : (course() && STR[course().lang] ? course().lang : "en"); }
+  function setLang(l) { if (!STR[l]) return; uiLang = l; setRaw("cusp.lang", l); emit("lang", l); }
 
   function dayStr(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
   function today() { return dayStr(new Date()); }
@@ -504,7 +509,7 @@
     figs: figs, drawFigs: drawFigs, typeset: typeset, toast: toast, on: on, emit: emit,
     courseById: courseById, load: load, loadAll: loadAll, finalId: finalId, newId: newId, parseCourse: parseCourse,
     save: save, isAdmin: isAdmin, setAdmin: setAdmin, visibleCourses: visibleCourses, courses: visibleCourses,
-    course: course, setCourse: setCourse, L: L, strings: L, stringsFor: stringsFor,
+    course: course, setCourse: setCourse, L: L, strings: L, stringsFor: stringsFor, lang: lang, setLang: setLang,
     today: today, yesterday: yesterday, liveStreak: liveStreak, bumpStreak: bumpStreak,
     dayNum: dayNum, srsRecord: srsRecord, record: record, dueKeys: dueKeys,
     lectNums: lectNums, lectDate: lectDate, lectLabel: lectLabel, currentLecture: currentLecture, guideAnchor: guideAnchor, guideUrl: guideUrl,

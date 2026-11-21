@@ -85,7 +85,9 @@ material automatically.
 | theory | posts in `feed.txt` (def, thm, proof, cex, hist, tip) and learn cards (`> Title`) in `lessons.txt` | 70 % |
 | exercises | questions (`? kind`) in `lessons.txt` and `feed.txt` posts of type app or exam | 30 % |
 
-Pinned posts come first. Half of the picks come from what matters now: theory of the last three
+"Vše" (all courses) starts with a short word about the feed, which the student can hide (×); a
+course's pinned posts (`pin` in `feed.txt`) come first only in that course's own filter and are
+mixed in normally in "Vše". Half of the picks come from what matters now: theory of the last three
 lectures (or, without a schedule, the lessons you've reached), and questions that are due for
 review or that you got wrong. The rest is everything else. Inside each group the order is
 shuffled and doesn't repeat until everything has been shown. Chips at the top filter by course or
@@ -125,8 +127,10 @@ the path.
 ## Storage
 
 All progress lives in the browser's `localStorage` under `cusp.*` keys: `cusp.learn` (progress,
-XP, spaced repetition), `cusp.course`, `cusp.admin`, `cusp.f.liked`, `cusp.f.saved` and `cusp.bk`
-(when the last backup was made). It belongs to one browser and origin, so localhost and the
+XP, spaced repetition), `cusp.course`, `cusp.lang` (the interface language, if chosen), `cusp.admin`,
+`cusp.f.liked`, `cusp.f.saved`, `cusp.f.introHidden` (the feed's intro was closed) and `cusp.bk`
+(when the last backup was made). The interface follows the course's language (all courses are Czech
+now) unless the student picks another in the course menu under *Jazyk rozhraní*. It belongs to one browser and origin, so localhost and the
 published app keep separate progress. If the app is open twice (two tabs, or the installed app and
 the browser), each save first takes in what the other one saved, so neither overwrites the other.
 If the browser refuses to save (storage full or blocked), the student is told once and asked to make

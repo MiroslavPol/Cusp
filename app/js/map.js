@@ -13,7 +13,7 @@
 
   function applyChrome() {
     var s = L(), c = course();
-    document.documentElement.lang = c.lang;
+    document.documentElement.lang = C.lang();
     $("courseKicker").textContent = s.course;
     $("daysLabel").textContent = s.days;
     $("tabLearnLabel").textContent = s.learn;
@@ -179,14 +179,32 @@
       b.addEventListener("click", function () { C.setCourse(c.id); closeSheet(); renderPath(); C.emit("course", c); });
       list.appendChild(b);
     });
+    list.appendChild(langBox(s));
     list.appendChild(backupBox(s));
     $("courseSheet").hidden = false;
   }
   function closeSheet() { $("courseSheet").hidden = true; }
 
+  // the interface language (each language's own name, so anyone can find theirs)
+  var LANGS = [["cs", "Čeština"], ["en", "English"]];
+  function langBox(s) {
+    var box = el("div", "lang-box");
+    box.appendChild(el("span", "lang-k", escapeHtml(s.langK)));
+    var row = el("div", "lang-row");
+    LANGS.forEach(function (o) {
+      var b = el("button", "chip lang-opt", escapeHtml(o[1])); b.type = "button"; b.lang = o[0];
+      b.setAttribute("aria-pressed", String(C.lang() === o[0]));
+      b.addEventListener("click", function () { if (C.lang() !== o[0]) { C.setLang(o[0]); openSheet(); } });
+      row.appendChild(b);
+    });
+    box.appendChild(row);
+    box.appendChild(el("p", "lang-note", escapeHtml(s.langNote)));
+    return box;
+  }
+
   function lastBackupText(s) {
     var last = C.lastBackup();
-    return last ? fmt(s.bkLast, { d: new Date(last + "T12:00").toLocaleDateString(course().lang) }) : s.bkNever;
+    return last ? fmt(s.bkLast, { d: new Date(last + "T12:00").toLocaleDateString(C.lang()) }) : s.bkNever;
   }
   function backupBox(s) {
     var box = el("div", "backup");
@@ -270,6 +288,7 @@
 
   C.on("progress", renderPath);
   C.on("admin", renderPath);
+  C.on("lang", renderPath);
   C.courseState = courseState;
   C.openCourseSheet = openSheet;
   C.renderPath = renderPath;

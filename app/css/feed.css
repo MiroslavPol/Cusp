@@ -5,6 +5,13 @@
 .cover-math .katex-display, .cover-math math { margin: 0 !important; padding: 0 !important; overflow: visible !important; }
 .post { border-bottom: 1px solid var(--line); padding-bottom: 14px; background: var(--paper); scroll-margin-top: 60px; }
 .post-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; }
+/* a word about the whole feed, at the top of "all" until hidden (feed.js introCard) */
+.feed-intro { position: relative; margin: 12px 14px; padding: 12px 40px 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+.feed-intro .fi-k { font-family: var(--font-display); font-style: italic; font-size: 22px; line-height: 1.1; display: flex; align-items: baseline; gap: 2px; }
+.feed-intro .cusp-mark { order: 2; }
+.feed-intro p { margin: 6px 0 0; font-size: 15px; line-height: 1.45; color: var(--muted); }
+.fi-close { position: absolute; top: 6px; right: 8px; width: 30px; height: 30px; border: none; background: none; border-radius: 8px; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; }
+.fi-close:hover { background: var(--line); color: var(--ink); }
 .mini-av {
   width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center;
   background: var(--card); border: 2px solid var(--c); font-family: var(--font-display); font-style: italic; font-size: 13px;
