@@ -4,3 +4,5 @@ __pycache__/
 # build output: run python build.py
 /site/
 /pwa/
+# phone playthrough screenshots (tools/playthrough.py)
+/playthrough/

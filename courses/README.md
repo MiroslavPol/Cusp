@@ -17,7 +17,7 @@ courses/<id>/
 ```
 
 Start a new course with `python tools/new_course.py <id> "Title"`, which writes an example of
-every file. Then run `python build.py`. The build checks every course and stops with
+every file; its first lesson has one question of every kind, to copy from. Then run `python build.py`. The build checks every course and stops with
 `file:line` messages if something is wrong (an unknown question kind, a missing generator, a
 header without a space, invalid JSON, an `mc` without exactly one `+`, a `tf` that isn't `true` or
 `false`, a question without a prompt or answer, a `P#` beyond the lecture dates …).

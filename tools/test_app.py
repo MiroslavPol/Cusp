@@ -414,7 +414,8 @@ def test_site(b, url, cs):
     for _ in range(6): pg.mouse.wheel(0, 4000); pg.wait_for_timeout(120)
     ids = pg.eval_on_selector_all("#feedList .post", "ns => ns.map(n => n.dataset.id)")
     check("feed shows posts", len(ids) > 20, f"{len(ids)} posts")
-    check("feed mixes every course", all(any(i.startswith(cid + ":") for i in ids) for cid, _ in cs), str({cid: sum(i.startswith(cid + ':') for i in ids) for cid, _ in cs}))
+    pub = [cid for cid, m in cs if not m.get("draft")]          # a draft course is in the feed only in admin mode
+    check("feed mixes every course", all(any(i.startswith(cid + ":") for i in ids) for cid in pub), str({cid: sum(i.startswith(cid + ':') for i in ids) for cid in pub}))
     theory = sum(1 for i in ids if ":post:" in i or ":c:" in i) / max(1, len(ids))
     check("feed is mostly theory", 0.5 < theory < 0.9, f"{theory:.2f}")
     q = pg.locator("#feedList .post-q:has(.fq-options)").first
@@ -548,7 +549,7 @@ def test_pwa(b, cs):
     check("course data is asked for by version", pg.evaluate("CUSP.COURSES.every(function (c) { return /^data\\/[\\w-]+\\.json\\?v=[0-9a-f]{10}$/.test(c.data); })"))
     check("map loads its course on demand", pg.locator("#path .node").count() == expected_nodes(first))
     pg.click('.tab[data-view="feed"]'); pg.wait_for_timeout(2500)
-    check("feed loads every course", pg.evaluate("CUSP.COURSES.every(function (c) { return !!c.units; })"))
+    check("feed loads every course", pg.evaluate("CUSP.visibleCourses().every(function (c) { return !!c.units; })"))
     check("service worker is active", pg.evaluate("navigator.serviceWorker.ready.then(function (r) { return !!r.active; })"))
     pg.wait_for_timeout(1500)
     ctx.set_offline(True)

@@ -38,6 +38,9 @@ write("course.json", json.dumps({
     "blurb": "Krátký popis kurzu (jedna nebo dvě věty).",
 }, ensure_ascii=False, indent=2) + "\n")
 
+# One lesson with an example of every question kind (courses/README.md explains each). It follows the
+# writing rules there: points [1, 2], decimal commas 0{,}5, long formulas as $$…$$, explanations that end
+# with the result and never point at an option by its position (options are shuffled).
 write("lessons.txt", """## První kapitola
 ### První lekce
 > Nový pojem
@@ -50,12 +53,66 @@ Kolik je $2+2$?
 - $3$
 - $5$
 ! Sečteme: $2+2=4$.
+? multi
+Která čísla jsou kořeny rovnice $x^2 = 4$?
++ $2$
++ $-2$
+- $4$
+- $0$
+! $x^2 = 4 \\iff x = \\pm2$.
 ? tf | true
 Funkce $x^2$ je sudá.
 ! $(-x)^2 = x^2$.
+? tf | false
+Každá spojitá funkce má derivaci.
+! Spojitá funkce nemusí mít derivaci: $|x|$ ji v nule nemá.
++ $|x|$ v bodě $0$
+- $x^2$ v bodě $0$
+- $\\sin x$ v bodě $0$
 ? input | 1/3; 0.3333
 Spočtěte $\\int_0^1 x^2\\,dx$.
 ! $\\left[\\frac{x^3}{3}\\right]_0^1 = \\frac13$.
+? input | 0.5; 1/2
+Jaká je hodnota $\\sin 30^\\circ$? Desetinné číslo pište s čárkou nebo tečkou.
+! $\\sin 30^\\circ = 0{,}5$.
+? expr | 2x
+Zderivujte $x^2$.
+! $(x^n)' = nx^{n-1}$, tedy $(x^2)' = 2x$.
+? expr | x^3/3 | +C
+Najděte primitivní funkci k $x^2$.
+! $\\int x^2\\,dx = \\frac{x^3}{3} + C$.
+? interval | (-∞; -2) ∪ (2; ∞)
+Vyřešte $x^2 > 4$.
+! $x^2 > 4 \\iff |x| > 2$.
+? set | -1; 1
+Najděte všechna řešení rovnice $x^2 = 1$.
+! $x^2 = 1 \\iff x = \\pm1$.
+? order
+Seřaďte kroky řešení rovnice $2x + 3 = 7$.
++ Odečteme $3$: $2x = 4$.
++ Vydělíme $2$: $x = 2$.
++ Zkouška: $2\\cdot2 + 3 = 7$.
+! Nejdřív osamostatníme člen s $x$, pak dělíme a nakonec ověříme.
+? build
+Sestavte definici: $f$ je sudá, jestliže
++ $\\forall x\\in D(f)$
++ $f(-x) = f(x)$
+- $\\exists x\\in D(f)$
+- $f(-x) = -f(x)$
+! Pro každé $x$ z definičního oboru platí $f(-x) = f(x)$.
+? mc
+Který graf patří funkci $y = x^2 - 1$?
++ @ x=-2..2; y=-2..3; f=x^2-1; pt=0,-1
+- @ x=-2..2; y=-2..3; f=x^2+1; pt=0,1
+- @ x=-2..2; y=-2..3; f=1-x^2; pt=0,1
+! Parabola otevřená nahoru s vrcholem $[0, -1]$.
+? match
+Přiřaďte funkcím jejich grafy.
++ $y = x$ :: @ x=-2..2; y=-2..2; f=x
++ $y = x^2$ :: @ x=-2..2; y=-2..2; f=x^2
++ $y = x^3$ :: @ x=-2..2; y=-2..2; f=x^3
+- @ x=-2..2; y=-2..2; f=-x
+! Přímka $y = x$ roste, parabola $y = x^2$ je sudá a $y = x^3$ lichá. Klesající přímka patří $y = -x$, ta tu není.
 ? gen | example_sum
 """)
 
