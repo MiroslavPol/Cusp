@@ -15,6 +15,8 @@
 
   // ---- Question bank: each session draws from the lesson's pool; templates get fresh numbers ----
   var LESSON_Q = 7, REVIEW_Q = 2, CHECKPOINT_Q = 8;
+  var HEARTS = 3;   // lives in a lesson, checkpoint or final test; losing the last one means starting it again
+  var HEART = '<path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/>';
   function instantiate(it) {
     if (!it || it.kind !== "gen") return it;
     var g = window.LEMMA_GEN && window.LEMMA_GEN.get(it.cid, it.answer);
@@ -75,8 +77,10 @@
     S = {
       node: opts.node || null, review: !!opts.review, final: !!opts.final, queue: queue, i: 0,
       feed: !!opts.feed, onDone: opts.onDone || null, result: null,
-      goal: queue.length, progress: 0, missed: {}, questions: queue.filter(function (q) { return q.key; }).length, firstTry: 0
+      goal: queue.length, progress: 0, missed: {}, questions: queue.filter(function (q) { return q.key; }).length, firstTry: 0,
+      opts: opts, hearts: opts.review || opts.feed ? null : HEARTS   // daily review and the feed are practice: no lives
     };
+    renderHearts(false);
     $("lesson").hidden = false;
     document.body.style.overflow = "hidden";
     renderItem();
@@ -91,6 +95,18 @@
     if (done) done(result);
   }
   $("lessonClose").addEventListener("click", closeLesson);
+
+  function renderHearts(lost) {
+    var box = $("lessonHearts");
+    box.hidden = S.hearts === null;
+    if (S.hearts === null) return;
+    var h = "";
+    for (var i = 0; i < HEARTS; i++) {
+      h += '<svg viewBox="0 0 24 24" aria-hidden="true"' + (i >= S.hearts ? ' class="lost' + (lost && i === S.hearts ? ' lose' : '') + '"' : "") + ">" + HEART + "</svg>";
+    }
+    box.innerHTML = h;
+    box.setAttribute("aria-label", C.fmt(L().hearts, { n: S.hearts, m: HEARTS }));
+  }
 
   function setBar() { $("lessonBar").style.width = Math.round(100 * S.progress / S.goal) + "%"; }
 
@@ -387,7 +403,8 @@
       if (!S.missed[it.key]) srsRecord(it.key, false);
       S.missed[it.key] = true;
       P.mistakes[it.key] = true;
-      if (!S.feed) S.queue.push(it);   // a lesson asks a missed question again at the end
+      if (S.hearts !== null) { S.hearts--; renderHearts(true); if (!S.hearts) S.out = true; }
+      if (!S.feed && !S.out) S.queue.push(it);   // a lesson asks a missed question again at the end
     }
     save();
     setBar();
@@ -397,7 +414,7 @@
       (ok || !answerHtml ? "" : (it.kind === "order" ? "<p>" + s.answer + "</p>" + answerHtml : "<p>" + s.answer + " " + answerHtml + "</p>")) +
       (it.explain ? "<p>" + it.explain + "</p>" : "") +
       figs(it.figA) +
-      (ok || S.feed ? "" : '<p class="muted">' + s.again + "</p>") +
+      (ok || S.feed ? "" : '<p class="muted">' + (S.out ? s.lastLife : s.again) + "</p>") +
       C.reportLink(course(), C.reportItem(it));
     fb.hidden = false;
     typeset(fb);
@@ -422,6 +439,7 @@
   }
 
   function next() {
+    if (S.out) { outOfHearts(); return; }
     var it = S.queue[S.i];
     if (it.kind === "learn") S.progress++;
     S.i++;
@@ -457,6 +475,28 @@
     S.finished = true;
   }
 
+  // The last life is gone: the lesson isn't marked done and starts again from the beginning, with a fresh draw of
+  // questions. Mistakes made so far stay recorded for spaced repetition.
+  function outOfHearts() {
+    var s = L();
+    body.innerHTML = "";
+    var inner = el("div", "lesson-inner done-screen out-screen");
+    inner.appendChild(el("div", "done-mark out-mark", "♡"));
+    inner.appendChild(el("h2", "q-title", escapeHtml(s.outT)));
+    inner.appendChild(el("p", "in-hint", escapeHtml(C.fmt(s.out, { n: HEARTS }))));
+    var row = el("div", "done-actions");
+    var close = el("button", "admin-btn out-close", escapeHtml(s.close)); close.type = "button";
+    close.addEventListener("click", closeLesson);
+    row.appendChild(close);
+    inner.appendChild(row);
+    body.appendChild(inner);
+    body.scrollTop = 0;
+    foot.dataset.state = ""; fb.hidden = true; fb.innerHTML = "";
+    primary.textContent = s.restart; primary.disabled = false;
+    primary.focus({ preventScroll: true });
+    S.restart = true;
+  }
+
   // Progress lives only in this browser: every few lessons, suggest a backup (core.js decides when).
   function backupNudge(s) {
     C.markBackup(false);            // shown: ask again in a few lessons, unless a backup is made now
@@ -476,6 +516,7 @@
   primary.addEventListener("click", function () {
     if (!S) return;
     if (S.finished) { closeLesson(); return; }
+    if (S.restart) { startSession(S.opts); return; }
     var it = S.queue[S.i];
     if (it.kind !== "learn" && !S.checked) check(); else next();
   });
