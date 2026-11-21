@@ -98,6 +98,15 @@ Platí $(-2)^2 = -2^2$.
 ? expr #vtbys | x^6
 Zjednodušte $(x^2)^3$.
 ! Při umocnění mocniny exponenty násobíme.
+? match #46za3
+Přiřaďte výrazům jejich zjednodušený tvar ($a\ne0$).
++ $a^2\cdot a^3$ :: $a^5$
++ $(a^2)^3$ :: $a^6$
++ $\dfrac{a^5}{a^2}$ :: $a^3$
++ $a^{-2}$ :: $\dfrac{1}{a^2}$
++ $a^0$ :: $1$
+- $a^8$
+! Při násobení se exponenty sčítají, při umocňování násobí: $a^2a^3 = a^5$, ale $(a^2)^3 = a^6$. $a^8 = a^{2^3}$ nevznikne z žádného výrazu; to je častá chyba u $(a^2)^3$.
 
 ### Rozklad a kvadratické rovnice | #1hpou
 ~ f=1.2*x^2-0.6; pt=-0.707,0; pt=0.707,0
@@ -309,6 +318,14 @@ Jakou směrnici má přímka kolmá k $y = 2x+3$?
 ? expr #kwsiv | 3x-2
 Napište rovnici přímky rovnoběžné s $y = 3x+1$, která prochází bodem $[1,1]$.
 ! Stejná směrnice $3$: $y = 1+3(x-1)$.
+? match #rymi8
+Přiřaďte funkcím jejich grafy.
++ $y = 2x+1$ :: @ x=-3..3; y=-3..4; f=2*x+1
++ $y = -x+2$ :: @ x=-3..3; y=-3..4; f=-x+2
++ $y = \frac12x-1$ :: @ x=-3..3; y=-3..4; f=0.5*x-1
++ $y = 3$ :: @ x=-3..3; y=-3..4; f=3
+- @ x=-3..3; y=-3..4; f=x+2
+! Směrnice $k$ určuje sklon, $q$ je průsečík s osou $y$. $y=-x+2$ klesá a protíná osu $y$ v bodě $2$; rostoucí přímka se stejným průsečíkem patří $y=x+2$. $y=3$ je vodorovná.
 
 ### Složená a inverzní funkce | #yom5k
 ~ dash=-1,-1,1,1; f=exp(1.6*x)/2.5-0.8; f=ln(2.5*(x+0.8))/1.6
@@ -412,6 +429,14 @@ Jakou souřadnici $x$ má vrchol paraboly $y = -x^2+4x+1$?
 ? tf #y8lm5 | true
 Parabola $y = x^2+x+1$ neprotíná osu $x$.
 ! $D = 1-4 = -3<0$.
+? match #t2cvh
+Přiřaďte funkcím jejich grafy.
++ $y = x^2-4$ :: @ x=-4..4; y=-5..6; f=x^2-4
++ $y = (x-2)^2$ :: @ x=-4..4; y=-5..6; f=(x-2)^2
++ $y = -x^2+1$ :: @ x=-4..4; y=-5..6; f=-x^2+1
++ $y = (x+1)^2-3$ :: @ x=-4..4; y=-5..6; f=(x+1)^2-3
+- @ x=-4..4; y=-5..6; f=(x+2)^2
+! Ve vrcholovém tvaru $a(x-m)^2+n$ je vrchol v bodě $(m,n)$: $(x-2)^2$ má vrchol $(2,0)$, $(x+1)^2-3$ vrchol $(-1,-3)$, $x^2-4$ vrchol $(0,-4)$. Záporné $a$ otevírá parabolu dolů. Parabola s vrcholem $(-2,0)$ patří $y=(x+2)^2$.
 
 ## Exponenciály a logaritmy | #7dte4
 ### Exponenciální funkce | #7t1ff
@@ -505,6 +530,13 @@ Vyřešte $\log x = 2$.
 ? input #0ok9u | 1/2; 0.5
 Vypočtěte $\log_42$.
 ! $4^{1/2} = 2$.
+? match #8mt20
+Přiřaďte funkcím jejich grafy.
++ $y = 2^x$ :: @ x=-3..3; y=-3..6; f=2^x
++ $y = \left(\tfrac12\right)^x$ :: @ x=-3..3; y=-3..6; f=0.5^x
++ $y = \log_2 x$ :: @ x=-3..3; y=-3..6; f=ln(x)/ln(2)
+- @ x=-3..3; y=-3..6; f=x^2
+! Exponenciála se základem větším než $1$ roste, se základem mezi $0$ a $1$ klesá a obě procházejí bodem $[0,1]$. Logaritmus je definovaný jen pro $x>0$ a prochází bodem $[1,0]$.
 
 ### Pravidla pro logaritmy | #y9bc0
 ~ noaxes; text=log; size=0.62
@@ -554,6 +586,14 @@ Vypočtěte $\log_2 40 - \log_2 5$.
 ? input #yq4nl | 6
 Vypočtěte $\log_3 9^3$.
 ! $3\log_39 = 3\cdot2$.
+? match #20faq
+Přiřaďte výrazům jejich rozepsaný tvar ($x, y > 0$).
++ $\log_b(xy)$ :: $\log_b x + \log_b y$
++ $\log_b\dfrac{x}{y}$ :: $\log_b x - \log_b y$
++ $\log_b(x^3)$ :: $3\log_b x$
++ $\log_b\sqrt{x}$ :: $\dfrac12\log_b x$
+- $\log_b x\cdot\log_b y$
+! Logaritmus součinu je součet logaritmů, ne jejich součin. $\sqrt x = x^{1/2}$, proto $\log_b\sqrt x = \frac12\log_b x$.
 
 ## Goniometrie | #f864b
 ### Pravoúhlý trojúhelník | #3svnn
@@ -602,6 +642,13 @@ Kolik je $\sin30^\circ$?
 ? input #l6zae | √3; 1.7321
 Kolik je $\operatorname{tg}60^\circ$?
 ! $\frac{\sin60^\circ}{\cos60^\circ} = \frac{\sqrt3/2}{1/2}$.
+? match #65rvm
+Přiřaďte funkcím ostrého úhlu $\alpha$ v pravoúhlém trojúhelníku jejich definice.
++ $\sin\alpha$ :: $\dfrac{\text{protilehlá}}{\text{přepona}}$
++ $\cos\alpha$ :: $\dfrac{\text{přilehlá}}{\text{přepona}}$
++ $\operatorname{tg}\alpha$ :: $\dfrac{\text{protilehlá}}{\text{přilehlá}}$
+- $\dfrac{\text{přepona}}{\text{protilehlá}}$
+! Sinus a kosinus dělí přeponou; tangens je jejich podíl, $\operatorname{tg}\alpha = \frac{\sin\alpha}{\cos\alpha}$.
 
 ### Oblouková míra a jednotková kružnice | #ppkt2
 ~ circle=0,0,0.8; line=0,0,0.566,0.566; pt=0.566,0.566
@@ -651,6 +698,15 @@ Kolik je $\cos\frac{2\pi}{3}$?
 ? input #ci0jp | 0
 Kolik je $\sin\pi$?
 ! Bod $(-1,0)$ na jednotkové kružnici.
+? match #x67tm
+Přiřaďte úhlům ve stupních jejich velikost v radiánech.
++ $30^\circ$ :: $\dfrac{\pi}{6}$
++ $45^\circ$ :: $\dfrac{\pi}{4}$
++ $90^\circ$ :: $\dfrac{\pi}{2}$
++ $120^\circ$ :: $\dfrac{2\pi}{3}$
++ $270^\circ$ :: $\dfrac{3\pi}{2}$
+- $\dfrac{\pi}{3}$
+! Násobíme $\frac{\pi}{180}$: $120^\circ = \frac{120\pi}{180} = \frac{2\pi}{3}$. Hodnota $\frac{\pi}{3}$ odpovídá $60^\circ$, ten tu není.
 
 ### Goniometrické vzorce | #14oa3
 ~ f=0.6*sin(3*x); fd=0.6*cos(3*x)
@@ -701,10 +757,18 @@ Který vzorec platí pro všechna $\alpha$, $\beta$?
 - $\sin(\alpha+\beta) = \sin\alpha + \sin\beta$
 - $\sin(\alpha+\beta) = \sin\alpha\sin\beta - \cos\alpha\cos\beta$
 - $\sin(\alpha+\beta) = \cos\alpha\cos\beta + \sin\alpha\sin\beta$
-! Poslední výraz je $\cos(\alpha-\beta)$.
+! Výraz $\cos\alpha\cos\beta + \sin\alpha\sin\beta$ je $\cos(\alpha-\beta)$, ne $\sin(\alpha+\beta)$.
 ? input #kboad | 1
 Zjednodušte $\cos^2x + \sin^2x$ pro $x = 5$.
 ! Pythagorova identita platí pro každé $x$.
 ? input #wyb42 | 1/4; 0.25
 Kolik je $\sin15^\circ\cos15^\circ$?
 ! Podle vzorce pro dvojnásobný úhel je $\sin15^\circ\cos15^\circ = \frac12\sin30^\circ = \frac14$.
+? match #ktcrb
+Přiřaďte výrazům jejich jiný zápis.
++ $\sin 2\alpha$ :: $2\sin\alpha\cos\alpha$
++ $\cos 2\alpha$ :: $\cos^2\alpha - \sin^2\alpha$
++ $\sin^2\alpha + \cos^2\alpha$ :: $1$
++ $\operatorname{tg}\alpha$ :: $\dfrac{\sin\alpha}{\cos\alpha}$
+- $2\sin\alpha$
+! $\sin 2\alpha$ není $2\sin\alpha$: pro $\alpha = 90^\circ$ je $\sin180^\circ = 0$, ale $2\sin90^\circ = 2$.
