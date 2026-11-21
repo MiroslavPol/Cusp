@@ -105,7 +105,8 @@
   function matches(e) { return st.filter === "all" || e.c.id === st.filter; }
   function deck(list) { return { list: C.shuffle(list), ptr: 0 }; }
   function newDecks() {
-    var mine = pool.all.filter(matches), today = C.dayNum(), P = C.P;
+    // "pin" puts a post at the top of its own course's feed; in "all" it is mixed in like any other post
+    var mine = pool.all.concat(st.filter === "all" ? pool.pinned : []).filter(matches), today = C.dayNum(), P = C.P;
     function focus(e) { return !e.theory && e.kind === "q" && (P.mistakes[e.id] || (P.srs[e.id] && P.srs[e.id][1] <= today)); }
     return {
       theoryNear: deck(mine.filter(function (e) { return e.theory && e.near; })),
@@ -189,7 +190,7 @@
     card.style.setProperty("--c", TYPE_COLOR[p.type]);
     card.appendChild(head(e, label));
     var cover = el("div", "post-cover", '<div class="cover-math">$$' + p.cover + '$$</div><span class="pop" aria-hidden="true">' + IC.heart + "</span>" +
-      (e.pinned ? '<span class="post-pin">' + IC.pin + "</span>" : ""));
+      (e.pinned && st.filter !== "all" ? '<span class="post-pin">' + IC.pin + "</span>" : ""));
     var acts = actions(e, p.anchor || C.guideAnchor(p.lect, e.c));
     cover.addEventListener("dblclick", function () {
       if (!liked.has(e.id)) toggle(acts.like, liked, LIKED, e.id);
@@ -394,6 +395,20 @@
       if (!loadMore(BATCH)) break;
     }
   }
+  // A short word about the whole feed at the top of "all", until the student hides it (×), once per browser
+  var INTRO_HIDDEN = "cusp.f.introHidden";
+  function introCard(s) {
+    try { if (localStorage.getItem(INTRO_HIDDEN)) return null; } catch (e) { /* show it */ }
+    var box = el("aside", "feed-intro");
+    box.appendChild(el("div", "fi-k", '<svg class="cusp-mark" viewBox="-0.75 -2.6 2.75 5.2" aria-hidden="true"><path class="tan" d="M-0.6 0H1.95"/>' +
+      '<path d="M1.8225 -2.4604C0.6075 0 0 0 0 0C0 0 0.6075 0 1.8225 2.4604"/><circle r="0.24"/></svg>' + esc(s.fIntroT)));
+    box.appendChild(el("p", null, esc(s.fIntro)));
+    var x = el("button", "fi-close", "×"); x.type = "button"; x.setAttribute("aria-label", s.fIntroHide); x.title = s.fIntroHide;
+    x.addEventListener("click", function () { try { localStorage.setItem(INTRO_HIDDEN, "1"); } catch (e) { /* ignore */ } box.remove(); });
+    box.appendChild(x);
+    return box;
+  }
+
   function reset() {
     if (!pool) return;
     feed.innerHTML = "";
@@ -406,7 +421,8 @@
       list.forEach(render);
       return;
     }
-    pool.pinned.filter(matches).forEach(render);
+    if (st.filter === "all") { var intro = introCard(s); if (intro) feed.appendChild(intro); }
+    else pool.pinned.filter(matches).forEach(render);
     st.decks = newDecks();
     var D = st.decks;
     if (!D.theoryNear.list.length && !D.theoryRest.list.length && !D.exFocus.list.length && !D.exRest.list.length && !feed.children.length) {
@@ -440,6 +456,7 @@
     if (visible()) window.CUSP_FEED.show();
   }
   C.on("admin", rebuild);
+  C.on("lang", rebuild);          // the posts' labels and buttons are in the interface language
   C.on("progress", function () { liked = load(LIKED); saved = load(SAVED); });
 
   window.CUSP_FEED = {
