@@ -247,6 +247,19 @@
     return back + '<button type="button" class="sing-core" data-id="sing"><span>' + (status === "done" ? "∎" : "∞") + "</span></button>" + front;
   }
 
+  // The backup constellation: stars in the shape of an arrow dropping into a tray, out in the open sky below and
+  // to the right of the spiral. Where it sits, in world pixels from the hole: a direction and a distance past the rim.
+  var BK_ANGLE = 62 * Math.PI / 180, BK_OUT = 165;
+  var BK_STARS = [[0, -36], [0, 6], [-14, -8], [14, -8], [-31, 2], [-31, 26], [31, 26], [31, 2]];
+  var BK_LINES = [[0, 1], [2, 1], [3, 1], [4, 5], [5, 6], [6, 7]];
+  function constellation() {
+    var s = '<svg class="const-svg" viewBox="-44 -48 88 86" aria-hidden="true">';
+    BK_LINES.forEach(function (l) { var a = BK_STARS[l[0]], b = BK_STARS[l[1]]; s += '<line x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '"/>'; });
+    BK_STARS.forEach(function (p, i) { s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + (i === 1 ? 3.6 : 2.7) + '"/>'; });
+    return s + "</svg>";
+  }
+  function bkPos(g) { var R = g.rOut + BK_OUT; return [g.C + R * Math.cos(BK_ANGLE), g.C + R * Math.sin(BK_ANGLE)]; }
+
   // ---------------------------------------------------------------- pan & zoom
   var views = {}, seenCurrent = {}, active = null, bgCache = {};
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -275,7 +288,7 @@
       root._sp = { key: key, n: items.length, metric: opts.metric, view: view, world: world };
     } else {
       view = old.view; world = old.world;
-      Array.prototype.forEach.call(world.querySelectorAll(".sp-node, .bh"), function (n) { n.remove(); });
+      Array.prototype.forEach.call(world.querySelectorAll(".sp-node, .bh, .sp-const"), function (n) { n.remove(); });
       Array.prototype.forEach.call(root.querySelectorAll(":scope > .hud"), function (n) { n.remove(); });
     }
     world.querySelector(".sp-fg").innerHTML = course(g, items, key);
@@ -294,6 +307,15 @@
     bh.querySelector(".sing-core").setAttribute("aria-label", opts.sing.title);
     world.appendChild(bh);
     byId.sing = { item: { id: "sing" }, x: g.C, y: g.C, btn: bh.querySelector(".sing-core") };
+    if (opts.backup) {
+      var bp = bkPos(g), cs = document.createElement("div");
+      cs.className = "sp-const" + (opts.backup.due ? " due" : "");
+      cs.style.left = f1(bp[0]) + "px"; cs.style.top = f1(bp[1]) + "px";
+      cs.innerHTML = '<button type="button" class="const-btn" data-id="bk" aria-label="' + esc(opts.backup.label + ". " + opts.backup.sub) + '">' + constellation() +
+        '<span class="const-k">' + esc(opts.backup.label) + '</span><span class="const-s">' + esc(opts.backup.sub) + "</span></button>";
+      world.appendChild(cs);
+      byId.bk = { item: { id: "bk" }, x: bp[0], y: bp[1], btn: cs.querySelector("button") };
+    }
 
     // HUD
     var top = document.createElement("div"); top.className = "hud hud-top";
@@ -318,7 +340,12 @@
       var topY = Math.max(0, t.bottom - vr.top), botY = card.offsetHeight ? Math.min(vr.height, c.top - vr.top) : vr.height;
       return { top: topY, bottom: botY, cx: vr.width / 2, cy: (topY + botY) / 2, h: Math.max(80, botY - topY) };
     }
-    function fitK() { var ins = insets(); return Math.min(size.w / (2 * (g.rOut + 70)), ins.h / (2 * (g.rOut + 70))); }
+    // "whole map": the spiral and, if there is one, the backup constellation
+    function fitK() {
+      var ins = insets(), hx = g.rOut + 70, hy = g.rOut + 70;
+      if (opts.backup) { var bp = bkPos(g); hx = Math.max(hx, Math.abs(bp[0] - g.C) + 70); hy = Math.max(hy, Math.abs(bp[1] - g.C) + 80); }
+      return Math.min(size.w / (2 * hx), ins.h / (2 * hy));
+    }
     function kMin() { return Math.min(fitK() * 0.85, 0.9); }
     function apply() {
       cam.k = Math.max(kMin(), Math.min(2.4, cam.k));

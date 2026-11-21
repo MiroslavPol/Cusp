@@ -1,0 +1,21 @@
+<section id="view-home" hidden>
+  <main class="home" id="home">
+    <header class="home-hero">
+      <!-- the cusp y² = x³ (as in the app icon): two branches leave the glowing point along one tangent -->
+      <svg class="hero-cusp" viewBox="0 0 320 200" aria-hidden="true">
+        <defs>
+          <pattern id="heroGrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none"/></pattern>
+          <radialGradient id="heroGlow"><stop offset="0" stop-color="#ffd27a" stop-opacity="0.9"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect class="hero-grid" width="320" height="200" fill="url(#heroGrid)"/>
+        <path class="hero-tan" d="M98 100H262"/>
+        <path class="hero-curve" pathLength="1" d="M185.6 11.4C141.9 100 120 100 120 100C120 100 141.9 100 185.6 188.6"/>
+        <circle class="hero-glow" cx="120" cy="100" r="30" fill="url(#heroGlow)"/>
+        <circle class="hero-dot" cx="120" cy="100" r="6.5"/>
+      </svg>
+      <h1 class="home-title">Cusp</h1>
+      <p class="home-tagline" id="homeTagline">the point where games and math meet</p>
+    </header>
+    <div class="home-body" id="homeBody"></div>
+  </main>
+</section>

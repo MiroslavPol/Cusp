@@ -65,6 +65,16 @@ python build.py
 The new course starts as a draft, visible only in admin mode, until you remove `"draft": true`
 from its `course.json`. The file formats are in [courses/README.md](courses/README.md).
 
+## Home
+
+The app opens on **Home** (the first tab; `#learn` and `#feed` in the address open those tabs
+directly). At the top are the cusp from the app icon, the name and the tagline *bod, kde se
+potkávají hry a matematika* ("the point where games and math meet"). Below it is the next lesson of the current course,
+which starts with one tap, then today's review, streak, XP and finished lessons, and a three-line
+"how it works" (Learn, Feed, review). A new student sees the explanation and the first lesson first.
+Everything is in `app/js/home.js`, `app/html/home.html` and `app/css/home.css`; the texts (`home`,
+`tagline`, `h…`) are in `app/js/strings.js`.
+
 ## The feed
 
 The Feed tab is one endless scroll over every course. It needs no setup: each course adds its
@@ -122,8 +132,11 @@ the browser), each save first takes in what the other one saved, so neither over
 If the browser refuses to save (storage full or blocked), the student is told once and asked to make
 a backup.
 
-**Backup:** the course picker has *Zálohovat* (a `.json` file; on phones it opens the share
-sheet, so you can send it to yourself) and *Obnovit* (from the file or pasted as text).
+**Backup:** a constellation in the sky next to the map's spiral (an arrow dropping into a tray,
+*Záloha*, with the date of the last backup; it glows when a backup is due) opens the backup card. The
+course picker has the same box. *Zálohovat* downloads a `.json` file on a computer and opens the
+share sheet on a phone or tablet, so you can send it to yourself or save it to Files. *Obnovit*
+restores from the file or from pasted text.
 Restoring merges: nothing on the device is lost, the backup only adds or moves things forward.
 After 5 finished lessons, and then every 10, the lesson's done screen suggests a backup (every 5 if
 the student skips it). The constants are `BK_FIRST`, `BK_EVERY` and `BK_SNOOZE` in `app/js/core.js`.

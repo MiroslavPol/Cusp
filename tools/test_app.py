@@ -275,6 +275,19 @@ def test_site(b, url, cs):
         return restored && keys.every(function (k) { return CUSP.P.done[k]; }) && !CUSP.restore({ nope: 1 }); }""")
     check("backup restores progress, and junk is refused", ok)
 
+    # the backup constellation on the map: its card saves a file (a download on a computer)
+    check("the map has the backup constellation", pg.locator("#path .sp-const .const-btn").count() == 1)
+    pg.evaluate("document.querySelector('#path .sp-const .const-btn').click()"); pg.wait_for_timeout(300)
+    check("tapping it shows the backup card", pg.locator(".hud-card .fc-bk .backup .admin-btn").count() >= 2)
+    try:
+        with pg.expect_download(timeout=3000) as dl:
+            pg.locator(".hud-card .fc-bk .backup .admin-btn").first.click()
+        name = dl.value.suggested_filename
+    except Exception as e:
+        name = "no download: " + str(e).splitlines()[0]
+    check("'Zálohovat' downloads the backup on a computer", name.startswith("cusp-") and name.endswith(".json"), name)
+    check("the constellation shows the new backup date", pg.text_content("#path .sp-const .const-s") == pg.text_content(".hud-card .bk-last"))
+
     # typed answers: messages in the course's language; a broken question is skipped, not a dead end
     pg.evaluate("""() => CUSP.answer({ kind: 'expr', answer: 'x^2', flags: [], html: '<p>t</p>', key: 'test:q:ok', cid: 'test' })""")
     pg.fill("#lessonBody input.answer-in", "x$"); pg.click("#primary"); pg.wait_for_timeout(100)
@@ -298,6 +311,16 @@ def test_site(b, url, cs):
               A.checkInterval('[0;2] ∪ (1;3)', '[0;3)').ok, A.checkInterval('(-∞; 0] ∪ [0; 1)', '(-∞; 1)').ok,
               !A.checkInterval('(0; 5)', '(0; ∞)').ok, !A.checkSet('{1; 1000000}', '{1; ∞}').ok]; }""")
     check("numbers, sets and intervals are judged correctly", all(r), "cases failing: " + str([i for i, x in enumerate(r) if not x]))
+
+    # typesetting: a sign minus is not spaced like a subtraction; a list of formulas too wide for a phone breaks into lines
+    r = pg.evaluate(r"""(t) => { function signs(tex) { var d = document.createElement('div'); d.textContent = '$' + tex + '$'; document.body.appendChild(d);
+          CUSP.typeset(d); var f = Array.prototype.map.call(d.querySelectorAll('mo'), function (m) { return m.textContent === '−' ? (m.getAttribute('form') || 'infix') : null; }).filter(Boolean); d.remove(); return f.join(','); }
+        var w = document.createElement('div'); w.style.width = '340px'; w.textContent = '$$' + t + '$$'; document.body.appendChild(w); CUSP.typeset(w);
+        var lines = w.querySelectorAll('mtable mtr').length; w.remove();
+        return [signs('(1+(-1)^n)'), signs('x - 1'), signs('|-x| - 1'), signs('r \\ne -1'), lines]; }""",
+        r"\int x^r dx = \frac{x^{r+1}}{r+1},\quad \int\frac{dx}{x} = \ln|x|,\quad\int e^x dx = e^x,\quad \int\frac{dx}{1+x^2} = \operatorname{arctg}x")
+    check("a sign minus is set as a sign, a subtraction as a subtraction", r[:4] == ["prefix", "infix", "prefix,infix", "prefix"], str(r[:4]))
+    check("formulas too wide for a phone go one per line", r[4] == 4, f"{r[4]} lines")
 
     # a question from another course (as the feed plays them) reports to that course; Back closes the player
     if len(cs) > 1:
@@ -363,6 +386,29 @@ def test_site(b, url, cs):
         pg.locator("#courseList .course-opt").nth(1).click(); pg.wait_for_timeout(1500)
         n2 = pg.locator("#path .node").count()
         check(f"course switch shows {cs[1][0]}", n2 == expected_nodes(cs[1][0]), f"{n2} != {expected_nodes(cs[1][0])}")
+    check("no errors in the page", not errors, "; ".join(errors[:3]))
+    pg.close()
+
+
+def test_home(b, url, cs):
+    print("home (where the app opens)")
+    errors = []
+    pg = new_page(b, errors)
+    pg.goto(url); pg.wait_for_timeout(2000)
+    check("the app opens on Home", pg.locator("#view-home").is_visible() and pg.locator("#view-learn").is_hidden())
+    check("Home shows the tagline", pg.text_content("#homeTagline") == pg.evaluate("CUSP.L().tagline"))
+    title = pg.inner_text(".h-next .h-title")
+    check("Home names the first lesson for a new student", title == pg.evaluate("CUSP.courseState(CUSP.course()).nextTitle"), title)
+    pg.click(".h-play"); pg.wait_for_timeout(300)
+    check("its button plays that lesson", not pg.locator("#lesson").is_hidden())
+    steps = solve_lesson(pg); pg.wait_for_timeout(500)
+    check("after the lesson Home moves on to the next one", steps > 0 and pg.locator("#view-home").is_visible()
+          and pg.inner_text(".h-next .h-title") != title and pg.locator(".h-tiles").count() == 1)
+    pg.locator(".h-how .h-row.h-learn").click(); pg.wait_for_timeout(500)
+    check("'how it works' leads to the map", pg.locator("#view-learn").is_visible() and pg.evaluate("location.hash") == "#learn")
+    pg.click('.tab[data-view="home"]'); pg.wait_for_timeout(300)
+    pg.click(".h-change"); pg.wait_for_timeout(200)
+    check("Home can change the course", not pg.locator("#courseSheet").is_hidden())
     check("no errors in the page", not errors, "; ".join(errors[:3]))
     pg.close()
 
@@ -438,6 +484,7 @@ def main():
         b = launch(p)
         site = (ROOT / "site" / "index.html").as_uri()
         test_site(b, site, cs)
+        test_home(b, site, cs)
         test_migration(b, site, cs)
         test_pwa(b, cs)
         b.close()

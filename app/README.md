@@ -10,7 +10,9 @@ css/
   learn.css         header, course picker, lesson player, keypad, guide reader, figures
   feed.css          feed posts, learn cards and questions in the feed
   path.css          the Learn view as a space map: spiral, twisted grid, black hole, HUD (always dark)
+  home.css          the Home view (always dark, like the map)
 html/
+  home.html         Home view: the cusp, name and tagline; home.js fills in the rest
   learn.html        Learn view, tab bar, course sheet
   feed.html         Feed view
   overlays.html     lesson player, guide reader, toast
@@ -27,7 +29,8 @@ js/                 loaded in this order (see build.py):
   guide.js          the guide reader
   player.js         the lesson player (all question kinds), also for single questions from the feed
   map.js            the Learn view: header, the map's stops and card, course picker, admin mode
-  main.js           tabs and start-up
+  home.js           the Home view: next lesson, today's review, stats, "how it works"
+  main.js           tabs (Home, Learn, Feed) and start-up
 pwa/                service worker template, app icons: the cusp, drawn by make_icons.py (needs Pillow)
 vendor/katex/       KaTeX 0.16.9 (MIT) for the offline app
 vendor/fonts/       the web fonts, self-hosted (SIL OFL), with fonts.css

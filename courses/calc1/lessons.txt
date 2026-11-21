@@ -4002,7 +4002,7 @@ Funkce $A(c)$ je spojitá a ryze klesající na $[-1,1]$, takže každá plocha 
 ### Obsah rovinných útvarů | P25 | #jt3f9
 ~ f=0.75-1.1*x^2; f=1.1*x^2-0.75; between=-0.826,0.826
 > Plocha pod grafem a mezi grafy
-Obsah mezi grafem a osou $x$ je $\int_a^b|f(x)|\,dx$, mezi grafy $f$ a $g$ je $\int_a^b|f(x)-g(x)|\,dx$. Pro křivku $x = \varphi(t)$, $y = \psi(t)$ je $S = \int_\alpha^\beta\psi(t)\,|\varphi'(t)|\,dt$.
+Obsah mezi grafem a osou $x$ je $\int_a^b|f(x)|\,dx$, mezi grafy $f$ a $g$ je $\int_a^b|f(x)-g(x)|\,dx$. Pro křivku zadanou parametricky, $x = \varphi(t)$, $y = \psi(t)$, $t\in[\alpha,\beta]$, kde $\varphi$ je monotónní a $\psi\ge0$, je obsah pod ní $S = \int_\alpha^\beta\psi(t)\,|\varphi'(t)|\,dt$.
 @@ x=-0.1..1.2; y=-0.1..1.2; f=x; f=x^2; shade=x,x^2,0,1
 ? input #ay40u | 1/6
 Jaký je obsah plochy mezi $y = x$ a $y = x^2$ na $[0,1]$?
@@ -4093,7 +4093,7 @@ Spočtěte délku grafu $y = 2x$ na $[0,1]$.
 Délka grafu funkce na $[a,b]$ je aspoň $b-a$.
 ! $\sqrt{1+f'^2}\ge1$.
 ? mc #be57l
-Jaký je vzorec pro délku křivky $x = \varphi(t)$, $y = \psi(t)$, $t\in[\alpha,\beta]$?
+Jaký je vzorec pro délku křivky zadané parametricky, $x = \varphi(t)$, $y = \psi(t)$, $t\in[\alpha,\beta]$?
 + $\int_\alpha^\beta\sqrt{\varphi'(t)^2+\psi'(t)^2}\,dt$
 - $\int_\alpha^\beta\left(\varphi'(t)+\psi'(t)\right)dt$
 - $\int_\alpha^\beta\psi(t)\varphi'(t)\,dt$
