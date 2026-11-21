@@ -1,4 +1,4 @@
-/* Lemma: answers that are formulas, intervals or sets.
+/* Answers that are formulas, intervals or sets.
    - parse(text, vars): safe recursive-descent parser for what students type on a phone
      ("2x cos(x^2)", "sin^2 x", "e^-x", "√(1-x²)", "1/(1+x^2)", "|x|", "ln x + 1") → AST
    - evaluate an AST, print it as TeX (live preview), compare two formulas by sampling
@@ -271,9 +271,27 @@
       if (isNaN(a) || isNaN(b)) fail("endpoint");
       out.push({ a: a, b: b, lc: m[1] === "[" && isFinite(a), rc: m[3] === "]" && isFinite(b) });
     }
-    return out.sort(function (x, y) { return x.a - y.a; });
+    return union(out);
   }
-  function close(x, y) { return x === y || Math.abs(x - y) <= 1e-6 * Math.max(1, Math.abs(y)); }
+  function close(x, y) {
+    if (!isFinite(x) || !isFinite(y)) return x === y;        // otherwise |5 − ∞| ≤ 1e-6·∞ would make 5 equal ∞
+    return Math.abs(x - y) <= 1e-6 * Math.max(1, Math.abs(y));
+  }
+  // The same set written in the simplest way: sorted, empty pieces dropped, overlapping or touching pieces
+  // joined, so (0; 1] ∪ (1; 2) equals (0; 2).
+  function union(list) {
+    var out = [];
+    list.filter(function (p) { return p.a < p.b || (close(p.a, p.b) && p.lc && p.rc); })
+      .sort(function (x, y) { return x.a - y.a || (y.lc ? 1 : 0) - (x.lc ? 1 : 0); })
+      .forEach(function (p) {
+        var q = out[out.length - 1];
+        if (q && (p.a < q.b && !close(p.a, q.b) || close(p.a, q.b) && (q.rc || p.lc))) {
+          if (p.b > q.b && !close(p.b, q.b)) { q.b = p.b; q.rc = p.rc; }
+          else if (close(p.b, q.b)) q.rc = q.rc || p.rc;
+        } else out.push({ a: p.a, b: p.b, lc: p.lc, rc: p.rc });
+      });
+    return out;
+  }
   function checkInterval(given, answer) {
     var g;
     var e;
@@ -288,7 +306,10 @@
   function parseSet(text) {
     var s = String(text).trim().replace(/^\{|\}$/g, "").trim();
     if (!s || s === "∅") return [];
-    var parts = s.indexOf(";") >= 0 ? s.split(";") : /,\s+/.test(s) ? s.split(/,\s+/) : s.split(","), out = [];
+    // Elements are separated by ";" (or ", " with a space). A comma with no space is a Czech decimal comma
+    // when it can be one: {0,5} is one half, not {0; 5}. Otherwise, as in {1,2,3}, it separates.
+    var parts = s.indexOf(";") >= 0 ? s.split(";") : /,\s+/.test(s) ? s.split(/,\s+/)
+      : /^[^,]*\d,\d[^,]*$/.test(s) ? [s] : s.split(","), out = [];
     parts.forEach(function (p) {
       p = p.trim(); if (!p) return;
       var pm = /^(±|\+-|\+\/-)(.*)$/.exec(p);
@@ -324,7 +345,7 @@
     return "\\{" + t.replace(/;\s*/g, ";\\ ").replace(/±/g, "\\pm ").replace(/π|pi/g, "\\pi").replace(/√(\w+)/g, "\\sqrt{$1}") + "\\}";
   }
 
-  window.LEMMA_ANS = {
+  window.CUSP_ANS = {
     parse: parse, evaluate: evaluate, tex: tex, previewTeX: previewTeX,
     checkExpr: checkExpr, exprSpec: exprSpec, answerTeX: function (spec) { return tex(parse(spec.answer, spec.vars)); },
     checkInterval: checkInterval, checkSet: checkSet, parseInterval: parseInterval, parseSet: parseSet,

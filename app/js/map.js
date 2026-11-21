@@ -108,7 +108,7 @@
         if (c.lectures && ln && ln > lastLect && !n.checkpoint) { tick = "P" + ln; lastLect = ln; }
         items.push({
           id: n.id, n: n, unit: u, status: status, color: color, checkpoint: !!n.checkpoint, bonus: !!n.bonus, tick: tick,
-          icon: n.checkpoint ? '<span class="qed">∎</span>' : n.icon ? window.LEMMA_PATH.icon(n.icon) : n.bonus ? ICON_SPARK : ICON_STAR,
+          icon: n.checkpoint ? '<span class="qed">∎</span>' : n.icon ? window.CUSP_PATH.icon(n.icon) : n.bonus ? ICON_SPARK : ICON_STAR,
           badge: status === "done" ? '<span class="nbadge ok">' + ICON_CHECK + "</span>" : status === "locked" ? '<span class="nbadge">' + ICON_LOCK + "</span>" : "",
           unitTitle: k === 0 ? u.title : null, unitKicker: kicker,
           aria: nodeTitle(n) + (status === "done" ? " ✓" : status === "locked" ? " 🔒" : "")
@@ -151,7 +151,7 @@
     }
 
     if (path.querySelector(".soon")) path.innerHTML = "";
-    window.LEMMA_PATH.space(path, {
+    window.CUSP_PATH.space(path, {
       key: c.id, items: items, hud: hud, card: card, currentId: cur ? cur.id : "sing",
       sing: { status: fstat, title: P.done[fid] ? s.singDoneTitle : s.singTitle },
       strings: { start: s.start, here: s.mapHere, fit: s.mapFit, zin: s.mapIn, zout: s.mapOut },

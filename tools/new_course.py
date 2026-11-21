@@ -70,7 +70,7 @@ Důkaz se zobrazí po klepnutí na tlačítko.
 
 write("generators.js", f"""/* Random question generators for this course. In lessons.txt, "? gen | name" calls G.name.
    Each generator returns a fresh question object (see app/js/genkit.js for the helpers in K). */
-LEMMA_GEN.define("{cid}", function (K, G) {{
+CUSP_GEN.define("{cid}", function (K, G) {{
   "use strict";
   var ri = K.ri, P = K.P, inp = K.inp;
 

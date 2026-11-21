@@ -1,7 +1,7 @@
 /* Question generators: shared helpers and the registry.
    Each course registers its own generators in courses/<id>/generators.js:
 
-     LEMMA_GEN.define("<course id>", function (K, G) {
+     CUSP_GEN.define("<course id>", function (K, G) {
        G.my_gen = function () { return K.inp(K.P("Kolik je $2+2$?"), "4", "Sečteme."); };
      });
 
@@ -52,7 +52,7 @@
 
   var K = { P: P, ans: ans, dec: dec, expr: expr, fr: fr, fs: fs, ft: ft, gcd: gcd, inp: inp, ivl: ivl, lin: lin, mc: mc, nz: nz, par: par, pick: pick, poly: poly, ri: ri, set: set, sgn: sgn, withFig: withFig };
   var REG = {};
-  window.LEMMA_GEN = {
+  window.CUSP_GEN = {
     kit: K,
     define: function (courseId, fn) {
       try { fn(K, REG[courseId] = REG[courseId] || {}); }

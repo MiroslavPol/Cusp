@@ -74,8 +74,9 @@ def check_course(d, probs):
     gp = d / "generators.js"
     if gp.exists():
         src = read(gp)
-        if f'LEMMA_GEN.define("{cid}"' not in src:
-            probs.add(rel(gp), f'must call LEMMA_GEN.define("{cid}", function (K, G) {{ ... }})')
+        if f'CUSP_GEN.define("{cid}"' not in src:
+            probs.add(rel(gp), f'must call CUSP_GEN.define("{cid}", function (K, G) {{ ... }})'
+                      + (" (LEMMA_GEN is the app's old name)" if "LEMMA_GEN" in src else ""))
         gens = set(re.findall(r"^\s*G\.(\w+)\s*=", src, re.M))
 
     report = meta.get("report")
@@ -234,8 +235,11 @@ def build():
     put("/* @CSS", read(APP / "vendor" / "fonts" / "fonts.css") + "\n".join(read(APP / "css" / n) for n in CSS))
     put("<!-- @HTML", "\n".join(read(APP / "html" / n) for n in HTML))
     put("<!-- @JS", "\n".join("<script>\n" + j + "</script>" for j in js))
-    reg = '<script type="application/json" id="courses">' + as_script_json(registry) + "</script>"
-    return s, courses, reg
+    return s, courses, registry
+
+
+def registry_tag(registry):
+    return '<script type="application/json" id="courses">' + as_script_json(registry) + "</script>"
 
 
 def copy_assets(courses, dest):
@@ -253,7 +257,8 @@ def copy_assets(courses, dest):
 
 
 def main():
-    page, courses, reg = build()
+    page, courses, registry = build()
+    reg = registry_tag(registry)
     head_marker = "<!-- @HEAD"
     datas = {d.name: course_data(d) for d, _ in courses}
 
@@ -274,8 +279,14 @@ def main():
     P.mkdir()
     copy_assets(courses, P)
     (P / "data").mkdir()
+    # The page asks for data/<id>.json?v=<hash of its content>, so a page always gets the data it was built with:
+    # the service worker matches these addresses exactly, and an unknown version goes to the network.
+    data_url = {}
     for cid, d in datas.items():
-        (P / "data" / f"{cid}.json").write_text(json.dumps(d, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        text = json.dumps(d, ensure_ascii=False, separators=(",", ":"))
+        (P / "data" / f"{cid}.json").write_text(text, encoding="utf-8")
+        data_url[cid] = f"data/{cid}.json?v=" + hashlib.sha256(text.encode()).hexdigest()[:10]
+    reg = registry_tag([dict(r, data=data_url[r["id"]]) for r in registry])
     shutil.copytree(APP / "vendor" / "katex", P / "katex")
     shutil.copytree(APP / "pwa" / "icons", P / "icons")
     CDN = "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/"
@@ -330,7 +341,9 @@ if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
     for f in files:
         h.update(f.encode()); h.update((P / f).read_bytes())
     sw = read(APP / "pwa" / "sw.js")
-    sw = sw.replace("__VERSION__", h.hexdigest()[:12]).replace("__PRECACHE__", json.dumps(["./"] + files, ensure_ascii=False))
+    by_path = {u.split("?")[0]: u for u in data_url.values()}
+    precache = ["./"] + [by_path.get(f, f) for f in files]
+    sw = sw.replace("__VERSION__", h.hexdigest()[:12]).replace("__PRECACHE__", json.dumps(precache, ensure_ascii=False))
     (P / "sw.js").write_text(sw, encoding="utf-8")
     size = sum((P / f).stat().st_size for f in files)
     print(f"pwa/             {len(files) + 1} files, {size / 1e6:.1f} MB, page {len(p):,} chars, version {h.hexdigest()[:12]}")

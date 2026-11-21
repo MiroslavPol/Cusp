@@ -31,11 +31,11 @@
   // ---------------------------------------------------------------- likes and saves (this browser only)
   function load(k) { try { return new Set(JSON.parse(localStorage.getItem(k) || "[]")); } catch (e) { return new Set(); } }
   function store(k, s) { try { localStorage.setItem(k, JSON.stringify(Array.from(s))); } catch (e) { /* ignore */ } }
-  var LIKED = "lemma.f.liked", SAVED = "lemma.f.saved";
+  var LIKED = "cusp.f.liked", SAVED = "cusp.f.saved";
   var liked = load(LIKED), saved = load(SAVED);
   // ids that changed (positions → stable ids, and the former MA I profile wall) are mapped by the courses' legacy-ids.json
   function migrateSets() {
-    [[liked, LIKED, "lemma.p.liked"], [saved, SAVED, "lemma.p.saved"]].forEach(function (m) {
+    [[liked, LIKED, "cusp.p.liked"], [saved, SAVED, "cusp.p.saved"]].forEach(function (m) {
       var set = m[0], changed = false;
       load(m[2]).forEach(function (id) { set.add(id); changed = true; });
       Array.from(set).forEach(function (id) { var n = C.newId(id); if (n) { set.delete(id); set.add(n); changed = true; } });
@@ -437,12 +437,12 @@
   function rebuild() {     // e.g. admin mode changes which courses are visible
     pool = null; feed.innerHTML = ""; st.decks = null;
     if (st.filter !== "all" && st.filter !== "saved" && !C.visibleCourses().some(function (c) { return c.id === st.filter; })) st.filter = "all";
-    if (visible()) window.LemmaFeed.show();
+    if (visible()) window.CUSP_FEED.show();
   }
   C.on("admin", rebuild);
   C.on("progress", function () { liked = load(LIKED); saved = load(SAVED); });
 
-  window.LemmaFeed = {
+  window.CUSP_FEED = {
     show: function () {
       ensurePool().then(function () {
         renderChips();
