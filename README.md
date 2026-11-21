@@ -35,6 +35,11 @@ Python, for example a conda environment). On Windows you can skip the Chromium d
 `set CUSP_BROWSER=msedge` (PowerShell: `$env:CUSP_BROWSER="msedge"`). GitHub runs the same tests
 on every pull request and before every deploy, so a failing test keeps the old version online.
 
+`python tools/playthrough.py [course ["Lesson" …]]` goes further, slower (about 25 minutes for all
+courses): it plays every lesson at phone width (375 px, `--width` to change), answers each question
+right and wrong, and lists what is cut off, judged wrongly or not typeset, with screenshots in
+`playthrough/`. Run it after adding many questions or changing how things are displayed.
+
 **Admin mode:** tap the XP pill (top right) 7 times within 3 s. Every lesson unlocks, draft courses
 appear, and you get a "Vynulovat postup" (reset progress) button.
 

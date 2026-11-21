@@ -10,7 +10,8 @@
    every course and points to `file:line` when something is wrong. If you have Playwright
    (see the README), `python tools/test_app.py` also checks every answer and generator.
    Most students use a phone: look at new questions at phone width too (in the browser F12, then
-   the phone icon, about 375 px wide). The writing rules for that are in
+   the phone icon, about 375 px wide), or let `python tools/playthrough.py <id> "Lesson title"`
+   play them and list what doesn't fit. The writing rules for that are in
    [courses/README.md](courses/README.md) (*Writing for a phone*, *Notation*).
 5. Open a pull request. GitHub runs the build, a JavaScript syntax check and the browser tests
    (`tools/test_app.py`) on it, and asks the course's owner to review (see `.github/CODEOWNERS`).

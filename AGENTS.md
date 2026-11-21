@@ -31,6 +31,9 @@ copy a question, delete the copied `#id` first. Don't edit `legacy-ids.json`.
   changes in `app/`. For course work it checks that every question's own answer is accepted and that
   every generator works.
 - If you changed `generators.js` and have Node, run `node --check courses/<id>/generators.js`.
+- After new questions or a change to how things are displayed, play them at phone width:
+  `python tools/playthrough.py <id> "Lesson title"` (the whole of calc1 takes about 20 minutes). It
+  answers each question right and wrong and lists anything cut off, misjudged or not typeset.
 
 ## Formats
 
@@ -43,6 +46,29 @@ than about half a line goes in `$$…$$`, points are `[1, 2]`, decimals take a c
 explanation ends with the result. The right sides of `? match` and the options are shuffled, so never
 refer to an option by its position ("the last one").
 
+## How changes reach the app
+
+`main` is protected: it changes only through a pull request whose check (build + tests) passes, and
+every push to `main` deploys to <https://miroslavpol.github.io/Cusp/>.
+
+- Work on a branch (`git switch -c <short-name>`), one topic per branch. Commit and push only when
+  the user asks; then give them the link `https://github.com/MiroslavPol/Cusp/compare/main...<branch>`
+  to open and merge the pull request themselves. Don't delete old branches.
+- Students report problems with the in-app *Nahlásit chybu* link, which opens a GitHub issue
+  titled `[course] Lesson · id` with the item's text. Read open issues with `gh issue list` or, without
+  the GitHub CLI, `curl -s https://api.github.com/repos/MiroslavPol/Cusp/issues?state=open`. Find the
+  item by its id in `courses/<id>/lessons.txt`. Write `Fixes #N` in the commit message so merging
+  closes the issue. If the item is correct after all, say why and make its explanation clearer.
+
+## On Windows
+
+- Run Python as `python` and install with `python -m pip`, so packages go to the Python that runs the
+  tests. Use Edge for the browser tests: `$env:CUSP_BROWSER="msedge"` (PowerShell) or
+  `CUSP_BROWSER=msedge` (Git Bash).
+- Node may be missing: skip `node --check`, GitHub runs it on the pull request.
+- A Python script that rewrites a repository file must write `\n` line endings
+  (`open(path, "w", encoding="utf-8", newline="\n")`); Windows would otherwise write CRLF.
+
 ## Useful commands
 
 ```bash
@@ -50,6 +76,7 @@ python build.py                                   # build + validate all courses
 python tools/new_course.py <id> "Title"           # start a new course (draft)
 python tools/assign_ids.py <id>                   # give new units / lessons / questions their ids
 python tools/test_app.py                          # build + browser tests (needs: python -m pip install playwright)
+python tools/playthrough.py [<id> ["Lesson" …]]   # play lessons at phone width, list what doesn't fit or judge right
 python tools/insert_icons.py <id>                 # write icons.py into lessons.txt
 python tools/insert_figs.py <id>                  # write figs.py into lessons.txt
 ```
