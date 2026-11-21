@@ -36,6 +36,9 @@
 .pa-btn.like[aria-pressed="true"] { color: var(--ex); }
 .pa-btn.save[aria-pressed="true"] { color: var(--ink); }
 .pa-btn[aria-pressed="true"] svg path { fill: currentColor; }
+.pa-btn.pa-report { color: var(--muted); align-items: center; }
+.pa-btn.pa-report svg { width: 21px; height: 21px; }
+.pa-btn.pa-report:hover { color: var(--ink); }
 .post-cap { padding: 2px 14px 0; display: flex; flex-direction: column; gap: 6px; }
 .post-title { margin: 0; font-size: 18px; line-height: 1.3; text-wrap: balance; }
 .post-body p, .post-reveal p { margin: 0 0 8px; }

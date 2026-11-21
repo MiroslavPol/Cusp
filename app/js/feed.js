@@ -23,6 +23,7 @@
     heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.3C1.6 7.8 3.9 4.5 7.3 4.5c2 0 3.5 1.1 4.7 2.8 1.2-1.7 2.7-2.8 4.7-2.8 3.4 0 5.7 3.3 4.5 6.7-1.7 4.7-9.2 9.3-9.2 9.3Z"/></svg>',
     saved: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h12v17l-6-4.2-6 4.2v-17Z"/></svg>',
     book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>',
+    flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>',
     pin: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 3l6 6-3 1-4 4 .5 4.5L13 20l-4-4-5 5-1-1 5-5-4-4 1.5-1.5L10 10l4-4 1-3Z"/></svg>'
   };
   var $ = C.$, el = C.el, esc = C.escapeHtml;
@@ -155,8 +156,13 @@
     store(key, set);
     b.setAttribute("aria-pressed", String(on));
   }
-  // like · guide · save
-  function actions(e, anchor) {
+  // what a report names: the post, or the lesson item (for a generated question, the instance on screen)
+  function reportInfo(e, q) {
+    if (e.kind === "post") return { id: e.id, where: e.post.title, text: e.post.title + "\n" + C.plain(e.post.body) };
+    return C.reportItem(q || e.it);
+  }
+  // like · guide · report · save
+  function actions(e, anchor, q) {
     var s = C.stringsFor(e.c);
     var acts = el("div", "post-acts");
     var like = iconBtn("like", IC.heart, s.fLike, liked, LIKED, e.id);
@@ -169,6 +175,10 @@
       acts.appendChild(a);
     }
     acts.appendChild(el("span", "sp"));
+    var rp = el("a", "pa-btn pa-report", IC.flag);
+    rp.href = C.reportUrl(e.c, reportInfo(e, q)); rp.target = "_blank"; rp.rel = "noopener";
+    rp.setAttribute("aria-label", s.report); rp.title = s.report;
+    acts.appendChild(rp);
     acts.appendChild(iconBtn("save", IC.saved, s.fSave, saved, SAVED, e.id));
     return { node: acts, like: like };
   }
@@ -324,7 +334,7 @@
       cap.appendChild(row);
     }
     card.appendChild(cap);
-    card.appendChild(actions(e, null).node);
+    card.appendChild(actions(e, null, q).node);
     return card;
   }
 

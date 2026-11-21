@@ -7,7 +7,8 @@
    [courses/README.md](courses/README.md).
 3. New units, lessons or questions get their ids: `python tools/assign_ids.py <id>`.
 4. Run `python build.py` and open `site/index.html` to check your change. The build validates
-   every course and points to `file:line` when something is wrong.
+   every course and points to `file:line` when something is wrong. If you have Playwright
+   (see the README), `python tools/test_app.py` also checks every answer and generator.
 5. Open a pull request. GitHub runs the build, a JavaScript syntax check and the browser tests
    (`tools/test_app.py`) on it, and asks the course's owner to review (see `.github/CODEOWNERS`).
 

@@ -27,7 +27,9 @@ copy a question, delete the copied `#id` first. Don't edit `legacy-ids.json`.
 ## Before you finish
 
 - Run `python build.py`. It validates every course and must end without "Build stopped".
-- If you changed anything in `app/`, run `python tools/test_app.py` (browser tests) too.
+- Run `python tools/test_app.py` (browser tests) too if Playwright is installed. It is required after
+  changes in `app/`. For course work it checks that every question's own answer is accepted and that
+  every generator works.
 - If you changed `generators.js` and have Node, run `node --check courses/<id>/generators.js`.
 
 ## Formats
@@ -42,7 +44,7 @@ course.json (`lang`); the existing courses are Czech.
 python build.py                                   # build + validate all courses
 python tools/new_course.py <id> "Title"           # start a new course (draft)
 python tools/assign_ids.py <id>                   # give new units / lessons / questions their ids
-python tools/test_app.py                          # build + browser tests (needs: pip install playwright)
+python tools/test_app.py                          # build + browser tests (needs: python -m pip install playwright)
 python tools/insert_icons.py <id>                 # write icons.py into lessons.txt
 python tools/insert_figs.py <id>                  # write figs.py into lessons.txt
 ```

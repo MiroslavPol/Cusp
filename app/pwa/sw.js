@@ -3,7 +3,8 @@
    that changes something installs a fresh cache and drops the old one. */
 var VERSION = "__VERSION__";
 var PRECACHE = __PRECACHE__;
-var APP = "lemma-app-" + VERSION;
+var APP = "lemma-app-" + VERSION;      // "lemma": the app's old name, kept so existing installs clean up their caches
+var NAV_TIMEOUT = 3000;                // ms to wait for the network before showing the cached page
 
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(APP).then(function (c) { return c.addAll(PRECACHE); }).then(function () { return self.skipWaiting(); }));
@@ -22,13 +23,24 @@ self.addEventListener("fetch", function (e) {
 
   if (url.origin !== self.location.origin) return;
 
-  // The page itself: network first (so updates arrive), cache when offline.
+  // The page itself: network first (so updates arrive), but on a slow connection (weak Wi-Fi, a train) don't
+  // wait longer than NAV_TIMEOUT: show the cached page and let the network answer update the cache for next time.
+  // Offline: the cached page right away.
   if (req.mode === "navigate") {
-    e.respondWith(fetch(req).then(function (res) {
-      if (res.ok) { var copy = res.clone(); caches.open(APP).then(function (c) { c.put("index.html", copy); }); }
+    var net = fetch(req).then(function (res) {
+      if (res.ok) { var copy = res.clone(); return caches.open(APP).then(function (c) { return c.put("index.html", copy); }).then(function () { return res; }); }
       return res;
-    }).catch(function () {
-      return caches.match("index.html", { ignoreSearch: true });
+    });
+    e.waitUntil(net.catch(function () { /* offline: nothing to update */ }));
+    e.respondWith(new Promise(function (resolve) {
+      var done = false;
+      function cached() { return caches.match("index.html", { ignoreSearch: true }); }
+      function give(res) { if (!done && res) { done = true; resolve(res); } }
+      var timer = setTimeout(function () { cached().then(give); }, NAV_TIMEOUT);
+      net.then(function (res) { clearTimeout(timer); give(res); }, function () {
+        clearTimeout(timer);
+        cached().then(function (hit) { give(hit || Response.error()); });
+      });
     }));
     return;
   }

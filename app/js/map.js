@@ -181,6 +181,8 @@
     var box = el("div", "backup");
     box.appendChild(el("h3", null, escapeHtml(s.bkTitle)));
     box.appendChild(el("p", null, escapeHtml(s.bkText)));
+    var last = C.lastBackup();
+    box.appendChild(el("p", "bk-last", escapeHtml(last ? fmt(s.bkLast, { d: new Date(last + "T12:00").toLocaleDateString(course().lang) }) : s.bkNever)));
     var row = el("div", "backup-row");
     var save = el("button", "admin-btn", escapeHtml(s.bkSave)); save.type = "button";
     save.addEventListener("click", function () { exportProgress(s); });
@@ -208,12 +210,13 @@
     var data = JSON.stringify(C.backup()), name = "cusp-" + C.today() + ".json", f = null;
     try { f = new File([data], name, { type: "application/json" }); } catch (e) { /* old browser */ }
     if (f && navigator.canShare && navigator.canShare({ files: [f] })) {        // phones: the share sheet (send it to yourself)
-      navigator.share({ files: [f], title: name }).catch(function () { /* cancelled */ });
+      navigator.share({ files: [f], title: name }).then(function () { C.markBackup(true); }).catch(function () { /* cancelled */ });
       return;
     }
     var a = el("a"); a.href = URL.createObjectURL(new Blob([data], { type: "application/json" })); a.download = name;
     document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    C.markBackup(true);
     C.toast(s.bkSaved);
   }
   function importText(text, s) {
@@ -238,4 +241,5 @@
   C.renderPath = renderPath;
   C.renderStats = renderStats;
   C.applyChrome = applyChrome;
+  C.exportProgress = function () { exportProgress(L()); };
 })();

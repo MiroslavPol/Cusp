@@ -274,3 +274,11 @@ math mo.prime { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math
 .backup-paste { display: flex; flex-direction: column; gap: 8px; }
 .backup-paste textarea { font-family: var(--font-mono); font-size: 12px; border: 1px solid var(--line); border-radius: 10px; padding: 8px; background: var(--card); color: var(--ink); resize: vertical; }
 .backup-paste .admin-btn { align-self: flex-start; }
+
+/* "Report a problem" (lesson player) and the backup reminder (done screen) */
+.report-link { display: inline-block; margin-top: 4px; font-size: 13px; color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.report-link:hover { color: var(--ink); }
+.report-row { margin-top: 18px; }
+.bk-nudge { margin-top: 22px; max-width: 360px; text-align: left; border: 1px dashed var(--line); border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.bk-nudge p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.backup .bk-last { font-family: var(--font-mono); font-size: 12px; }

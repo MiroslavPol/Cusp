@@ -371,6 +371,43 @@
     return true;
   }
 
+  // ---- backup reminder. lemma.bk = { date: day of the last backup, next: remind when this many lessons are done }.
+  // Progress lives only in this browser, so after a few finished lessons the done screen suggests a backup.
+  var BK_FIRST = 5, BK_EVERY = 10, BK_SNOOZE = 5;
+  function doneCount() { return Object.keys(P.done).length; }
+  function backupDue() { return doneCount() >= (loadJSON("lemma.bk", {}).next || BK_FIRST); }
+  function lastBackup() { return loadJSON("lemma.bk", {}).date || null; }
+  // saved: a backup was made (next reminder in BK_EVERY lessons); otherwise the reminder was shown (again in BK_SNOOZE)
+  function markBackup(saved) {
+    var b = loadJSON("lemma.bk", {});
+    if (saved) b.date = today();
+    b.next = doneCount() + (saved ? BK_EVERY : BK_SNOOZE);
+    saveJSON("lemma.bk", b);
+  }
+
+  // ---- "Report a problem": a pre-filled GitHub issue (or e-mail) that names the exact item.
+  // A course may send its reports elsewhere with "report" in course.json (https://… issues/new, or mailto:…).
+  var REPORT_URL = "https://github.com/MiroslavPol/Cusp/issues/new";
+  function plain(html) { return String(html || "").replace(/<[^>]+>/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/[ \t]+/g, " ").trim(); }
+  // what to quote from a lesson item: its source lines, or for generated questions the instance the student saw
+  function reportItem(it) {
+    var text = it.text && it.text.length ? it.text.join("\n").trim() : plain(it.html);
+    (it.options || []).forEach(function (o) { text += "\n" + (o.ok ? "+ " : "- ") + plain(o.html); });
+    if (it.generated) text += "\n[generator " + it.gen + "] answer: " + (it.answer || "");
+    return { id: it.key || it.cardId, where: it.lesson ? it.lesson.title : "", text: text };
+  }
+  function reportUrl(c, info) {
+    var title = "[" + c.id + "] " + (info.where ? info.where + " · " : "") + info.id;
+    var body = stringsFor(c).rpAsk + "\n\n\n---\ncourse: " + c.id + "\nwhere: " + (info.where || "") + "\nid: " + info.id +
+      "\n\n" + String(info.text || "").slice(0, 900);
+    var base = c.report || REPORT_URL, q = base.indexOf("?") < 0 ? "?" : "&";
+    if (/^mailto:/i.test(base)) return base + q + "subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(body);
+    return base + q + "title=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(body);
+  }
+  function reportLink(c, info) {
+    return '<a class="report-link" href="' + escapeHtml(reportUrl(c, info)) + '" target="_blank" rel="noopener">' + escapeHtml(stringsFor(c).report) + "</a>";
+  }
+
   var exports = {
     STR: STR, P: P, COURSES: COURSES, DAILY_Q: 10, FINAL_Q: 12,
     $: $, el: el, escapeHtml: escapeHtml, escMath: escMath, paras: paras, shuffle: shuffle, fmt: fmt, slug: slug,
@@ -381,7 +418,9 @@
     today: today, yesterday: yesterday, liveStreak: liveStreak, bumpStreak: bumpStreak,
     dayNum: dayNum, srsRecord: srsRecord, record: record, dueKeys: dueKeys,
     lectNums: lectNums, lectDate: lectDate, lectLabel: lectLabel, currentLecture: currentLecture, guideAnchor: guideAnchor, guideUrl: guideUrl,
-    backup: backup, restore: restore
+    backup: backup, restore: restore,
+    doneCount: doneCount, backupDue: backupDue, lastBackup: lastBackup, markBackup: markBackup,
+    plain: plain, reportItem: reportItem, reportUrl: reportUrl, reportLink: reportLink
   };
   Object.keys(exports).forEach(function (k) { C[k] = exports[k]; });
 })();
