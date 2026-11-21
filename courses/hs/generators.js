@@ -80,6 +80,19 @@ CUSP_GEN.define("hs", function (K, G) {
     var A = [[0, "0", "1"], [30, "1/2", "√3/2"], [45, "√2/2", "√2/2"], [60, "√3/2", "1/2"], [90, "1", "0"], [120, "√3/2", "-1/2"], [135, "√2/2", "-√2/2"], [150, "1/2", "-√3/2"], [180, "0", "-1"]];
     var r = pick(A), f = pick(["sin", "cos"]), v = f === "sin" ? r[1] : r[2];
     var num = Math.round((f === "sin" ? Math.sin : Math.cos)(r[0] * Math.PI / 180) * 10000) / 10000;
-    return inp(P("Kolik je $\\" + f + " " + r[0] + "^\\circ$?"), v + "; " + num, "Hodnota z jednotkové kružnice: bod v úhlu $" + r[0] + "^\\circ$ má souřadnice $(\\cos, \\sin)$.");
+    var tex = function (a) { return a.replace(/√(\d)\/(\d)/, "\\frac{\\sqrt$1}{$2}").replace(/^(-?)(\d)\/(\d)$/, "$1\\frac{$2}{$3}"); };
+    return inp(P("Kolik je $\\" + f + " " + r[0] + "^\\circ$?"), v + "; " + num,
+      "Bod jednotkové kružnice v úhlu $" + r[0] + "^\\circ$ je $[" + tex(r[2]) + ", " + tex(r[1]) + "]$. Kosinus je jeho souřadnice $x$, sinus souřadnice $y$, tedy $\\" + f + " " + r[0] + "^\\circ = " + tex(v) + "$.");
+  };
+  // right-triangle trigonometry: only acute angles (the unit circle comes two lessons later)
+  G.hs_trig_acute = function () {
+    var A = [[30, "1/2", "√3/2", "√3/3"], [45, "√2/2", "√2/2", "1"], [60, "√3/2", "1/2", "√3"]];
+    var r = pick(A), k = ri(0, 2), f = ["sin", "cos", "tg"][k], v = r[k + 1];
+    var num = Math.round([Math.sin, Math.cos, Math.tan][k](r[0] * Math.PI / 180) * 10000) / 10000;
+    var tex = function (a) { return a.replace(/√(\d)\/(\d)/, "\\frac{\\sqrt$1}{$2}").replace(/^√(\d)$/, "\\sqrt$1").replace(/^(\d)\/(\d)$/, "\\frac{$1}{$2}"); };
+    var why = r[0] === 45 ? "Rovnoramenný pravoúhlý trojúhelník s odvěsnami $1$ má přeponu $\\sqrt2$."
+      : "V trojúhelníku s úhly $30^\\circ$, $60^\\circ$, $90^\\circ$ a přeponou $2$ leží proti úhlu $30^\\circ$ odvěsna $1$ a proti úhlu $60^\\circ$ odvěsna $\\sqrt3$.";
+    return inp(P("Kolik je $" + (f === "tg" ? "\\operatorname{tg}" : "\\" + f) + " " + r[0] + "^\\circ$?"), v + "; " + num,
+      why + " Odtud $" + (f === "tg" ? "\\operatorname{tg}" : "\\" + f) + " " + r[0] + "^\\circ = " + tex(v) + "$.");
   };
 });

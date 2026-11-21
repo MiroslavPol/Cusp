@@ -22,7 +22,7 @@ body[data-view="home"] { background: #05080f; }      /* no light edge when a pho
 .hero-curve { fill: none; stroke: #eef1f8; stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
 .hero-dot { fill: #ffbf5c; }
 .home-title { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 68px; line-height: 1; margin: 0; letter-spacing: -0.01em; }
-.home-tagline { margin: 8px 0 0; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--thm); }
+.home-tagline { margin: 8px 0 0; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--thm); text-wrap: balance; }
 @media (prefers-reduced-motion: no-preference) {
   .hero-curve { stroke-dasharray: 1; stroke-dashoffset: 1; animation: herodraw 1.4s 0.15s ease-out forwards; }
   .hero-glow { transform-origin: 120px 100px; animation: heroglow 3.2s ease-in-out infinite; }

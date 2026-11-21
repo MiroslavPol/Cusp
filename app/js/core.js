@@ -28,7 +28,16 @@
     for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
     return a;
   }
-  function fmt(s, o) { return String(s).replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
+  // "{n}" is replaced by o.n; "{n|lekce|lekce|lekcí}" by the word that goes with the number o.n:
+  // two forms = English (1 | other), three = Czech (1 | 2–4 | 0 and 5+).
+  function fmt(s, o) {
+    return String(s).replace(/\{(\w+)((?:\|[^|}]*)+)?\}/g, function (_, k, forms) {
+      if (!forms) return o[k];
+      var f = forms.slice(1).split("|"), n = Math.abs(o[k]);
+      if (f.length === 2) return n === 1 ? f[0] : f[1];
+      return n === 1 ? f[0] : n >= 2 && n <= 4 ? f[1] : f[2];
+    });
+  }
   function slug(s) { return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48); }
   function figs(list) { return (list || []).map(function (sp) { return window.CUSP_FIG ? window.CUSP_FIG.html(sp) : ""; }).join(""); }
   function drawFigs(node) { if (window.CUSP_FIG) window.CUSP_FIG.renderAll(node); }
@@ -44,6 +53,7 @@
       fixMath(node);
       fitWide(node);
     }
+    tieShortWords(node);
   }
   function fixMath(node) { fixFnSpacing(node); fixVariants(node); fixPrimes(node); fixSigns(node); }
 
@@ -70,36 +80,94 @@
     });
   }
 
-  // Display formulas wider than the screen (a phone): a list of formulas joined by \quad / \qquad goes one per
-  // line; what still doesn't fit scrolls sideways, with a fade at the edge so it's clear there is more.
-  function topLevelParts(tex) {
-    var parts = [], depth = 0, env = 0, start = 0, m, re = /\\begin\{|\\end\{|\\left\b|\\right\b|\\qquad\b|\\quad\b|[{}]/g;
+  // Display formulas wider than the screen (a phone) are broken into lines, at the first of these that helps:
+  //   1. between formulas joined by \quad / \qquad,   2. before ⇒ ⇔ …,   3. before = ≤ ≥ ≈ ≠ →.
+  // Pieces are packed greedily, so a line holds as much as fits; an operator that starts a line stays visible
+  // ("= …"). What still doesn't fit scrolls sideways, with a fade at the edge so it's clear there is more.
+  var BREAK_RE = /\\begin\{[^}]*\}|\\end\{[^}]*\}|\\left(?![a-zA-Z])|\\right(?![a-zA-Z])|\\q?quad(?![a-zA-Z])|\\(?:Rightarrow|Leftarrow|Leftrightarrow|Longrightarrow|Longleftrightarrow|iff|implies)(?![a-zA-Z])|\\(?:le|leq|ge|geq|ne|neq|approx|to)(?![a-zA-Z])|[{}=]/g;
+  function topLevelParts(tex, level) {
+    var parts = [], depth = 0, env = 0, start = 0, sep = "", m, re = new RegExp(BREAK_RE.source, "g");
     while ((m = re.exec(tex))) {
       var k = m[0];
       if (k === "{") depth++; else if (k === "}") depth--;
-      else if (k === "\\begin{" || k === "\\left") env++; else if (k === "\\end{" || k === "\\right") env--;
-      else if (!depth && !env) { parts.push(tex.slice(start, m.index)); start = m.index + k.length; }
+      else if (k.indexOf("\\begin{") === 0 || k === "\\left") env++;
+      else if (k.indexOf("\\end{") === 0 || k === "\\right") env--;
+      else if (!depth && !env) {
+        var lv = /quad/.test(k) ? 1 : /^\\(Right|Left|Long|iff|implies)/.test(k) ? 2 : 3;
+        if (lv > (level || 1)) continue;
+        parts.push({ sep: sep, tex: tex.slice(start, m.index) });
+        if (lv === 1) { sep = k; start = m.index + k.length; } else { sep = ""; start = m.index; }
+      }
     }
-    parts.push(tex.slice(start));
-    return parts.map(function (p) { return p.trim(); }).filter(Boolean);
+    parts.push({ sep: sep, tex: tex.slice(start) });
+    return parts.map(function (p) { return { sep: p.sep, tex: p.tex.trim() }; }).filter(function (p) { return p.tex; });
   }
   function fitWide(node) {
     Array.prototype.forEach.call(node.querySelectorAll('math[display="block"]'), function (m) {
       if (m.closest(".cover-math")) return;                            // feed covers scale their formula themselves
       if (!m.clientWidth || m.scrollWidth <= m.clientWidth + 1) return;
       var ann = m.querySelector('annotation[encoding="application/x-tex"]'), tex = ann ? ann.textContent : "";
-      var parts = topLevelParts(tex), host = m.parentNode;              // host: KaTeX's <span class="katex">
-      if (parts.length > 1 && window.katex && host) {
+      var host = m.parentNode;                                          // host: KaTeX's <span class="katex">
+      function fits() { return m.scrollWidth <= m.clientWidth + 1; }
+      function show(lines) {                                            // render the lines in place of the formula
         var tmp = document.createElement("span");
         try {
-          katex.render("\\begin{gathered}" + parts.join("\\\\[3pt]") + "\\end{gathered}", tmp, { displayMode: true, output: "mathml", throwOnError: true, macros: MACROS });
-          var nk = tmp.firstElementChild;
-          host.parentNode.replaceChild(nk, host);
-          fixMath(nk);
-          m = nk.querySelector("math") || m;
-        } catch (e) { /* keep the one-line version */ }
+          katex.render("\\begin{gathered}" + lines.join("\\\\[3pt]") + "\\end{gathered}", tmp, { displayMode: true, output: "mathml", throwOnError: true, macros: MACROS });
+        } catch (e) { return false; }
+        var nk = tmp.firstElementChild;
+        host.parentNode.replaceChild(nk, host);
+        fixMath(nk);
+        host = nk; m = nk.querySelector("math") || m;
+        return true;
       }
-      if (m.scrollWidth > m.clientWidth + 1) m.classList.add("wide");
+      if (window.katex && host && host.parentNode) {
+        for (var level = 1; level <= 3 && !fits(); level++) {
+          var ps = topLevelParts(tex, level);
+          if (ps.length < 2) continue;
+          var lines = [ps[0].tex];
+          for (var i = 1; i < ps.length; i++) {
+            var joined = lines.slice(0, -1).concat(lines[lines.length - 1] + " " + ps[i].sep + " " + ps[i].tex);
+            if (show(joined) && fits()) lines = joined;
+            else lines.push((ps[i].sep ? "" : "{}") + ps[i].tex);
+          }
+          if (!show(lines)) break;
+        }
+      }
+      if (!fits()) m.classList.add("wide");
+    });
+    // An inline formula wider than its line can't wrap. On a button (an answer option) it is set a little smaller
+    // first; whatever still doesn't fit scrolls inside the line instead of being cut off.
+    Array.prototype.forEach.call(node.querySelectorAll('math:not([display="block"])'), function (m) {
+      var box = m.parentNode && m.parentNode.closest("p, li, .opt, .tile, .m-body, .m-left, div");
+      if (!box || !box.clientWidth) return;
+      var cs = getComputedStyle(box), room = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      var w = m.getBoundingClientRect().width;
+      if (w <= room + 1) return;
+      if (box.closest(".opt, .tile, .m-body, .m-left") && w * 0.8 <= room) { m.style.fontSize = Math.floor(room / w * 98) + "%"; return; }
+      m.classList.add("wide-inline");
+    });
+  }
+  // Czech typography: a one-letter word (v, k, s, z, o, u, a, i) never ends a line, so it is tied to what follows.
+  function tieShortWords(node) {
+    var w = document.createTreeWalker(node, NodeFilter.SHOW_TEXT), t, list = [];
+    while ((t = w.nextNode())) {
+      var p = t.parentElement;
+      if (p && !p.closest("math, script, style, textarea, input, code, annotation")) list.push(t);
+    }
+    list.forEach(function (t) {
+      var re = /(^|[\s(„“])([ksvzouaiKSVZOUAI]) +(?=\S|$)/g, s = t.nodeValue.replace(re, "$1$2 ").replace(re, "$1$2 ");   // twice: "a k tomu"
+      if (s !== t.nodeValue) t.nodeValue = s;
+      // a comma or full stop right after a formula stays on the formula's line: both go into one unbreakable span
+      var prev = t.previousSibling, m = /^[,.;:!?)]+/.exec(s);
+      if (m && prev && prev.nodeType === 1 && (prev.classList.contains("katex") || prev.querySelector(":scope > .katex")) &&
+          !prev.querySelector('math[display="block"]')) {                // auto-render wraps each formula in a plain <span>
+        var keep = document.createElement("span");
+        keep.className = "nobr";
+        prev.parentNode.insertBefore(keep, prev);
+        keep.appendChild(prev);
+        keep.appendChild(document.createTextNode(m[0]));
+        t.nodeValue = s.slice(m[0].length);
+      }
     });
   }
   // Chrome's MathML ignores mathvariant (ℝ would show as R): map letters to Unicode math alphanumerics.

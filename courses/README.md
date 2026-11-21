@@ -131,6 +131,14 @@ live preview ("Rozumím: …"). Intervals accept `( )`, `[ ]` and Czech `⟨ ⟩
 touching pieces are joined, so `(0; 1] ∪ (1; 2)` equals `(0; 2)`. In sets a comma with no space
 is a decimal comma (`{0,5}` is one half); separate elements with `;`.
 
+**Writing for a phone.** A phone shows about 340 px of text per line. A display formula (`$$…$$`) that
+doesn't fit is broken into lines automatically: between formulas joined by `\quad`, then before ⇒ ⇔,
+then before = ≤ ≥. An inline formula (`$…$`) can't break, so write anything longer than about half a
+line as `$$…$$`; an explanation (`!`) may contain one. Long answer options are set slightly smaller.
+
+**Notation** (the Czech courses): points `$[1, 2]$`, intervals `$(0, 1)$`, `$[0, 1]$`, decimals with a
+comma, `$0{,}5$` in TeX (also in feed posts). An explanation ends with the result, not one step before it.
+
 Learn cards are the *theory* of the feed and questions are its *exercises*, so a course with
 good learn cards also gets a good feed.
 

@@ -209,7 +209,7 @@
   function checkExpr(given, spec) {
     var g, e;
     try { e = parse(spec.answer, spec.vars); } catch (err) { return { broken: "answer \"" + spec.answer + "\": " + err.message }; }
-    var v = spec.vars[0], diffs = [];
+    var v = spec.vars[0], diffs = [], scale = 1;
     var pts = samples(spec.dom).filter(function (x) { var env = {}; env[v] = x; return isFinite(evaluate(e, env)); });
     if (pts.length < 4) return { broken: "answer \"" + spec.answer + "\" is undefined at most sample points of dom=" + spec.dom.join("..") };
     if (spec.plusC) given = String(given).replace(/\+\s*[cC]\s*$/, "");
@@ -218,11 +218,13 @@
       var env = {}; env[v] = pts[i];
       var ev = evaluate(e, env), gv = evaluate(g, env);
       if (!isFinite(gv)) return { ok: false };
-      if (spec.plusC) diffs.push(gv - ev);
+      if (spec.plusC) { diffs.push(gv - ev); scale = Math.max(scale, Math.abs(ev)); }
       else if (Math.abs(gv - ev) > 1e-6 * Math.max(1, Math.abs(ev))) return { ok: false };
     }
+    // "+C": the difference must be the same everywhere. The tolerance follows the size of the right answer, not of the
+    // difference: a huge constant (987654) would otherwise make any change of the function look like rounding.
     if (spec.plusC) {
-      for (var j = 1; j < diffs.length; j++) if (Math.abs(diffs[j] - diffs[0]) > 1e-6 * Math.max(1, Math.abs(diffs[0]))) return { ok: false };
+      for (var j = 1; j < diffs.length; j++) if (Math.abs(diffs[j] - diffs[0]) > 1e-6 * scale + 1e-12 * Math.abs(diffs[0])) return { ok: false };
     }
     return { ok: true };
   }
