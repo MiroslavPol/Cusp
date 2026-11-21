@@ -44,7 +44,9 @@ Interface texts are in `strings.js`; a course's `lang` picks the language, unles
 chosen one in the course menu (*Jazyk rozhraní*, stored as `cusp.lang`). The choice changes only the
 interface: lessons and posts stay in the language they are written in. A new language is a new block
 in `strings.js` with every key of the others, plus an entry in `LANGS` in `map.js`. That includes the messages
-for answers the app can't read (`ans`), which `answers.js` looks up when it needs one.
+for answers the app can't read (`ans`), which `answers.js` looks up when it needs one. A word that
+depends on a number names its forms: `{n|lesson|lessons}` in English (1 | other),
+`{n|lekce|lekce|lekcí}` in Czech (1 | 2–4 | 0 and 5+); `C.fmt` picks the right one.
 
 Besides `window.CUSP`, a few modules expose one global each: `CUSP_GEN` (genkit.js, which every
 course's `generators.js` calls), `CUSP_ANS` (answers.js), `CUSP_FIG` (fig.js), `CUSP_PATH` (path.js) and

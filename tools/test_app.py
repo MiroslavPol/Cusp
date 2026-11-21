@@ -368,12 +368,26 @@ def test_site(b, url, cs):
     # typesetting: a sign minus is not spaced like a subtraction; a list of formulas too wide for a phone breaks into lines
     r = pg.evaluate(r"""(t) => { function signs(tex) { var d = document.createElement('div'); d.textContent = '$' + tex + '$'; document.body.appendChild(d);
           CUSP.typeset(d); var f = Array.prototype.map.call(d.querySelectorAll('mo'), function (m) { return m.textContent === '−' ? (m.getAttribute('form') || 'infix') : null; }).filter(Boolean); d.remove(); return f.join(','); }
-        var w = document.createElement('div'); w.style.width = '340px'; w.textContent = '$$' + t + '$$'; document.body.appendChild(w); CUSP.typeset(w);
-        var lines = w.querySelectorAll('mtable mtr').length; w.remove();
-        return [signs('(1+(-1)^n)'), signs('x - 1'), signs('|-x| - 1'), signs('r \\ne -1'), lines]; }""",
-        r"\int x^r dx = \frac{x^{r+1}}{r+1},\quad \int\frac{dx}{x} = \ln|x|,\quad\int e^x dx = e^x,\quad \int\frac{dx}{1+x^2} = \operatorname{arctg}x")
+        function fit(tex) { var w = document.createElement('div'); w.style.width = '300px'; w.textContent = '$$' + tex + '$$'; document.body.appendChild(w); CUSP.typeset(w);
+          var r = [w.querySelectorAll('mtable mtr').length, !w.querySelector('.wide')]; w.remove(); return r; }
+        var p = document.createElement('p'); p.textContent = 'Leží v $\\mathbb R$ a k tomu i s nulou.'; document.body.appendChild(p); CUSP.typeset(p);
+        var tied = p.textContent.indexOf('v ') >= 0 && p.textContent.indexOf('a k tomu') >= 0 && p.textContent.indexOf('i s nulou') >= 0; p.remove();
+        return [signs('(1+(-1)^n)'), signs('x - 1'), signs('|-x| - 1'), signs('r \\ne -1'), fit(t[0]), fit(t[1]), fit(t[2]), tied]; }""",
+        [r"\int x^r dx = \frac{x^{r+1}}{r+1},\quad \int\frac{dx}{x} = \ln|x|,\quad\int e^x dx = e^x,\quad \int\frac{dx}{1+x^2} = \operatorname{arctg}x",
+         r"x^2 - 5x + 6 = (x-2)(x-3) = 0 \;\Rightarrow\; x = 2 \text{ nebo } x = 3",
+         r"f'(x_0) = \lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0} = \lim_{h\to0}\frac{f(x_0+h)-f(x_0)}{h}"])
     check("a sign minus is set as a sign, a subtraction as a subtraction", r[:4] == ["prefix", "infix", "prefix,infix", "prefix"], str(r[:4]))
-    check("formulas too wide for a phone go one per line", r[4] == 4, f"{r[4]} lines")
+    check("formulas too wide for a phone break into lines: between formulas, before ⇒, before =",
+          all(n >= 2 and ok for n, ok in r[4:7]), str(r[4:7]))
+    check("a one-letter word (v, a, k, i, s) never ends a line", r[7])
+
+    # "+C": the answer may differ by a constant, but not be a constant; Czech plurals
+    r = pg.evaluate("""() => { var A = window.CUSP_ANS, sp = A.exprSpec({ answer: 'x^3/3', flags: ['+C'] }), f = CUSP.fmt, w = '{n|den|dny|dní}';
+      return [A.checkExpr('x^3/3 + 1000', sp).ok, A.checkExpr('x^3/3 + C', sp).ok, !A.checkExpr('987654', sp).ok, !A.checkExpr('x^3', sp).ok,
+              f(w, { n: 1 }) === 'den', f(w, { n: 3 }) === 'dny', f(w, { n: 0 }) === 'dní', f(w, { n: 12 }) === 'dní',
+              f('{n} {n|lesson|lessons}', { n: 1 }) === '1 lesson', f('{n} {n|lesson|lessons}', { n: 2 }) === '2 lessons']; }""")
+    check("antiderivatives: any constant may be added, but a constant alone is wrong", all(r[:4]), str(r[:4]))
+    check("counts take the right plural form", all(r[4:]), str(r[4:]))
 
     # a question from another course (as the feed plays them) reports to that course; Back closes the player
     if len(cs) > 1:

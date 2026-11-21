@@ -115,9 +115,10 @@
       exRest: deck(mine.filter(function (e) { return !e.theory && !focus(e); }))
     };
   }
-  function draw(d) {
+  function draw(d, again) {
     if (!d.list.length) return null;
     if (d.ptr >= d.list.length) {
+      if (!again) return null;                          // used up: reshuffle only once every deck is used up
       var last = d.list[d.list.length - 1];
       d.list = C.shuffle(d.list); d.ptr = 0;
       if (d.list.length > 1 && d.list[0] === last) d.list.push(d.list.shift());
@@ -128,7 +129,9 @@
     var D = st.decks, theory = Math.random() < THEORY_SHARE, f = Math.random() < FOCUS;
     var order = theory ? (f ? ["theoryNear", "theoryRest"] : ["theoryRest", "theoryNear"]) : (f ? ["exFocus", "exRest"] : ["exRest", "exFocus"]);
     order = order.concat(theory ? ["exRest", "exFocus"] : ["theoryRest", "theoryNear"]);
-    for (var i = 0; i < order.length; i++) { var e = draw(D[order[i]]); if (e) return e; }
+    // a small deck (the few cards of this week's lecture) would otherwise repeat while others are still unseen
+    for (var pass = 0; pass < 2; pass++)
+      for (var i = 0; i < order.length; i++) { var e = draw(D[order[i]], pass > 0); if (e) return e; }
     return null;
   }
 

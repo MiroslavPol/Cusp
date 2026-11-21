@@ -53,7 +53,7 @@ Je-li $a_n\le c_n\le b_n$ od jistého indexu a $a_n\to L$, $b_n\to L$, pak i $c_
 Příklad: $\sqrt[n]{2^n+3^n}$. Platí $3\le\sqrt[n]{2^n+3^n}\le3\sqrt[n]2$ a $\sqrt[n]2\to1$, takže limita je $3$.
 
 === def | P5 | Eulerovo číslo | e
-$$e=\lim_{n\to\infty}\left(1+\frac1n\right)^n\approx2.718281828$$
+$$e=\lim_{n\to\infty}\left(1+\frac1n\right)^n\approx2{,}718281828$$
 Posloupnost je rostoucí a ohraničená, a proto konverguje. Interpretace: $1$ Kč úročená ročně $100\,\%$, ale připisováno $n$krát ročně. Při spojitém úročení máte na konci roku $e$ Kč.
 
 === exam | P6 | Hromadné body | 3\cos\frac{n\pi}{2}
@@ -106,7 +106,7 @@ Důsledek: spojitá funkce na intervalu nabývá všech hodnot mezi kterýmikoli
 === app | P9 | Půlení intervalu | x^3+x-1=0
 Ukažte, že rovnice $x^3+x-1=0$ má kořen v intervalu $(0,1)$, a zpřesněte ho.
 --- solution
-$f(0)=-1<0$ a $f(1)=1>0$, takže podle Bolzanovy věty existuje kořen. $f(0.5)=-0.375<0$, kořen leží v $(0.5;1)$; $f(0.75)\approx0.17>0$, kořen leží v $(0.5;0.75)$. Každým krokem se interval zkrátí na polovinu; kořen je přibližně $0.6823$.
+$f(0)=-1<0$ a $f(1)=1>0$, takže podle Bolzanovy věty existuje kořen. $f(0{,}5)=-0{,}375<0$, kořen leží v $(0{,}5;\ 1)$; $f(0{,}75)\approx0{,}17>0$, kořen leží v $(0{,}5;\ 0{,}75)$. Každým krokem se interval zkrátí na polovinu; kořen je přibližně $0{,}6823$.
 
 === def | P9 | Derivace | f'(x_0) | #geometrický-význam-derivácie
 $$f'(x_0)=\lim_{h\to0}\frac{f(x_0+h)-f(x_0)}{h}$$
@@ -127,12 +127,12 @@ Válcová nádrž má poloměr $2$ m. Čerpáme z ní $3\ \mathrm{m^3}$ za minut
 --- hint
 Objem a výška hladiny jsou funkce času: $V(t)=\pi r^2h(t)$. Zderivujte podle $t$.
 --- solution
-$V'(t)=4\pi\,h'(t)$ a $V'(t)=-3$, takže $h'(t)=-\frac{3}{4\pi}\approx-0.24$ m/min. Hladina klesá konstantní rychlostí asi $24$ cm za minutu.
+$V'(t)=4\pi\,h'(t)$ a $V'(t)=-3$, takže $h'(t)=-\frac{3}{4\pi}\approx-0{,}24$ m/min. Hladina klesá konstantní rychlostí asi $24$ cm za minutu.
 
 === app | P11 | Žebřík u zdi | x^2+y^2=25
 Žebřík délky $5$ m se opírá o zeď. Spodní konec klouže od zdi rychlostí $1$ m/s. Jak rychle klesá horní konec ve chvíli, kdy je spodní konec $3$ m od zdi?
 --- solution
-Pro vzdálenosti $x(t)$ a $y(t)$ platí $x^2+y^2=25$. Derivací $2xx'+2yy'=0$. Pro $x=3$ je $y=4$ a $x'=1$, takže $y'=-\frac{3\cdot1}{4}=-0.75$ m/s.
+Pro vzdálenosti $x(t)$ a $y(t)$ platí $x^2+y^2=25$. Derivací $2xx'+2yy'=0$. Pro $x=3$ je $y=4$ a $x'=1$, takže $y'=-\frac{3\cdot1}{4}=-0{,}75$ m/s.
 
 === thm | P12 | Lagrangeova věta | f'(\xi)
 Je-li $f$ spojitá na $[a,b]$ a má derivaci na $(a,b)$, existuje $\xi\in(a,b)$ s
@@ -155,7 +155,7 @@ L'Hospitalovo pravidlo je jen postačující podmínka: neexistence limity podí
 === app | P13 | Proč je duha ve 42° | 42^\circ
 Paprsek, který se v kapce jednou odrazí, se odchýlí o úhel $D(i)=180^\circ+2i-4r$, kde $\sin i=n\sin r$ a $n\approx\frac43$ je index lomu vody.
 
-Funkce $D$ má minimum pro $\cos^2 i=\frac{n^2-1}{3}$, tedy $i\approx59.4^\circ$, a $D_{\min}\approx138^\circ$. U stacionárního bodu se paprsky hromadí, a proto vidíme jasný oblouk pod úhlem $180^\circ-138^\circ=42^\circ$. Podrobně viz bakalářská práce J. Šmaka <i>Matematická analýza duhy</i> (MU, 2013).
+Funkce $D$ má minimum pro $\cos^2 i=\frac{n^2-1}{3}$, tedy $i\approx59{,}4^\circ$, a $D_{\min}\approx138^\circ$. U stacionárního bodu se paprsky hromadí, a proto vidíme jasný oblouk pod úhlem $180^\circ-138^\circ=42^\circ$. Podrobně viz bakalářská práce J. Šmaka <i>Matematická analýza duhy</i> (MU, 2013).
 
 === exam | P14 | Zahrada s maximální plochou | \max S
 Zkouška M1100, prosinec 2010: zahrada má tvar rovnoramenného trojúhelníka s obvodem $900$ m. Určete délky stran tak, aby plocha byla maximální.
@@ -165,7 +165,7 @@ Pro ramena $a$ a základnu $b=900-2a$ je $S=\frac b4\sqrt{4a^2-b^2}$. Maximalizu
 Maximum nastává pro $a=b=300$ m: rovnostranný trojúhelník s plochou $22\,500\sqrt3\approx38\,971\ \mathrm{m^2}$.
 
 === def | P15 | Konvexní funkce | f''\ge0
-$f$ je konvexní na $I$, jestliže sečna mezi libovolnými dvěma body grafu leží nad grafem. Pro dvakrát diferencovatelnou funkci to nastane, právě když $f''\ge0$ na $I$.
+$f$ je konvexní na $I$, jestliže sečna mezi libovolnými dvěma body grafu leží nad grafem nebo na něm. Pro dvakrát diferencovatelnou funkci to nastane, právě když $f''\ge0$ na $I$.
 
 Inflexní bod je místo, kde se konvexnost mění v konkávnost.
 
@@ -174,9 +174,9 @@ $$T_n(x)=\sum_{k=0}^{n}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$
 je jediný polynom stupně nejvýše $n$, který má v $x_0$ stejnou hodnotu a stejné derivace až do řádu $n$ jako $f$. Chyba $R_n(x)=f(x)-T_n(x)$ je v Lagrangeově tvaru $\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}$.
 
 === app | P16 | Odhad e bez kalkulačky | e\approx\frac{8}{3}
-$e^x\approx1+x+\frac{x^2}{2}+\frac{x^3}{6}$. Pro $x=1$: $e\approx\frac83\approx2.667$. S členem $\frac{x^4}{24}$ dostaneme $2.708$, s dalším $2.7167$.
+$e^x\approx1+x+\frac{x^2}{2}+\frac{x^3}{6}$. Pro $x=1$: $e\approx\frac83\approx2{,}667$. S členem $\frac{x^4}{24}$ dostaneme $2{,}708$, s dalším $2{,}7167$.
 --- solution
-Lagrangeův zbytek pro $T_3$: $R_3(1)=\frac{e^\xi}{24}$ s $\xi\in(0,1)$, tedy chyba je menší než $\frac{3}{24}=0.125$. Skutečná chyba je asi $0.052$.
+Lagrangeův zbytek pro $T_3$: $R_3(1)=\frac{e^\xi}{24}$ s $\xi\in(0,1)$, tedy chyba je menší než $\frac{3}{24}=0{,}125$. Skutečná chyba je asi $0{,}052$.
 
 === def | P17 | Primitivní funkce | F'=f
 $F$ je primitivní funkce k $f$ na intervalu $I$, jestliže $F'(x)=f(x)$ pro všechna $x\in I$. Primitivní funkce se liší jen o konstantu, proto píšeme $\int f(x)\,dx=F(x)+C$.
@@ -186,9 +186,9 @@ $\operatorname{sgn}x$ nemá na $\mathbb R$ primitivní funkci. Derivace má toti
 
 Každá spojitá funkce na intervalu primitivní funkci má.
 
-=== thm | P18 | Per partes | \int uv'
-$$\int u\,v'\,dx=uv-\int u'\,v\,dx$$
-Volíme tak, aby $\int u'v$ byl jednodušší. Typicky $u$ = polynom a $v'$ = $e^x$, $\sin x$, $\cos x$, nebo $u=\ln x$, $\operatorname{arctg}x$ a $v'$ = polynom.
+=== thm | P18 | Per partes | \int u'v
+$$\int u'v\,dx=uv-\int uv'\,dx$$
+Za $v$ volíme to, co se derivací zjednoduší, a za $u'$ to, co umíme integrovat, aby byl $\int uv'$ jednodušší. Typicky $v$ = polynom a $u'$ = $e^x$, $\sin x$, $\cos x$, nebo $v=\ln x$, $\operatorname{arctg}x$ a $u'$ = polynom.
 --- solution
 $\int x e^x\,dx = xe^x-\int e^x\,dx = (x-1)e^x+C$.
 
@@ -198,7 +198,7 @@ $$\sin x=\frac{2t}{1+t^2},\quad\cos x=\frac{1-t^2}{1+t^2},\quad dx=\frac{2\,dt}{
 Funguje vždy, ale často vede ke zdlouhavým výpočtům. Napřed zkuste jednodušší substituce, např. $t=\sin x$, pokud je integrand lichý v $\cos x$.
 
 === def | P20 | Riemannův integrál | \int_a^b f
-Pro dělení $D$ intervalu $[a,b]$ tvoří dolní součty $s(f,D)$ a horní součty $S(f,D)$ aproximace plochy zdola a shora. Je-li supremum dolních součtů rovno infimu horních, je $f$ integrovatelná a toto číslo je $\int_a^b f(x)\,dx$.
+Pro dělení $D$ intervalu $[a,b]$ tvoří dolní součty $s(D,f)$ a horní součty $S(D,f)$ aproximace plochy zdola a shora. Je-li supremum dolních součtů rovno infimu horních, je $f$ integrovatelná a toto číslo je $\int_a^b f(x)\,dx$.
 
 === cex | P21 | Dirichletova funkce | \chi_{\mathbb Q}
 $f(x)=1$ pro $x\in\mathbb Q$ a $f(x)=0$ pro $x\in\mathbb I$. V každém dílčím intervalu je racionální i iracionální číslo, takže každý dolní součet na $[0,1]$ je $0$ a každý horní $1$.
@@ -218,12 +218,12 @@ Kulatou čokoládu o poloměru $1$ chcete dvěma rovnoběžnými řezy rozdělit
 --- hint
 Krajní kus od $x=c$ do $x=1$ má plochu $\int_c^1 2\sqrt{1-x^2}\,dx$. Ta má být třetinou z $\pi$.
 --- solution
-Výpočet dává $\arccos c-c\sqrt{1-c^2}=\frac\pi3$. Rovnici nelze vyřešit vzorcem; numericky (půlením intervalu) $c\approx0.265$. Řezy vedeme ve vzdálenosti asi $0.265$ poloměru od středu, ne ve třetinách průměru.
+Výpočet dává $\arccos c-c\sqrt{1-c^2}=\frac\pi3$. Rovnici nelze vyřešit vzorcem; numericky (půlením intervalu) $c\approx0{,}265$. Řezy vedeme ve vzdálenosti asi $0{,}265$ poloměru od středu, ne ve třetinách průměru.
 
 === app | P25 | Délka řetězovky | \cosh x
 Zkouška M1100, prosinec 2010: vypočtěte délku oblouku $f(x)=\cosh x$ na $[-1,1]$.
 --- solution
-$$\ell=\int_{-1}^1\sqrt{1+\sinh^2x}\,dx=\int_{-1}^1\cosh x\,dx=2\sinh1=e-\frac1e\approx2.35.$$
+$$\ell=\int_{-1}^1\sqrt{1+\sinh^2x}\,dx=\int_{-1}^1\cosh x\,dx=2\sinh1=e-\frac1e\approx2{,}35.$$
 
 === app | P26 | Gabrielův roh | \pi<\infty
 Graf $y=\frac1x$ pro $x\ge1$ rotuje kolem osy $x$. Objem tělesa je
@@ -238,6 +238,6 @@ Srovnáváme nejčastěji s $\int_1^\infty\frac{dx}{x^p}$, který konverguje, pr
 === exam | P27 | Plocha pod arctg x / x³ | \int_1^\infty\frac{\operatorname{arctg}x}{x^3}
 Zkouška M1100, prosinec 2010: vypočtěte plochu mezi grafem $f(x)=\frac{\operatorname{arctg}x}{x^3}$ a osou $x$ na $[1,\infty)$.
 --- hint
-Per partes s $u=\operatorname{arctg}x$, $v'=x^{-3}$, pak rozklad $\frac{1}{x^2(1+x^2)}=\frac1{x^2}-\frac1{1+x^2}$.
+Per partes s $v=\operatorname{arctg}x$, $u'=x^{-3}$, pak rozklad $\frac{1}{x^2(1+x^2)}=\frac1{x^2}-\frac1{1+x^2}$.
 --- solution
 $$\int_1^\infty\frac{\operatorname{arctg}x}{x^3}dx=\left[-\frac{\operatorname{arctg}x}{2x^2}\right]_1^\infty+\frac12\int_1^\infty\left(\frac1{x^2}-\frac1{1+x^2}\right)dx=\frac\pi8+\frac12\left(1-\frac\pi4\right)=\frac12.$$

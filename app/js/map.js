@@ -15,7 +15,6 @@
     var s = L(), c = course();
     document.documentElement.lang = C.lang();
     $("courseKicker").textContent = s.course;
-    $("daysLabel").textContent = s.days;
     $("tabLearnLabel").textContent = s.learn;
     $("tabFeedLabel").textContent = s.feed;
     $("tabHomeLabel").textContent = s.home;
@@ -25,7 +24,9 @@
   }
   function renderStats() {
     var s = L();
-    $("streakN").textContent = C.liveStreak();
+    var days = C.liveStreak();
+    $("streakN").textContent = days;
+    $("daysLabel").textContent = C.fmt(s.days, { n: days });
     $("streakStat").classList.toggle("cold", P.last !== C.today());
     $("streakStat").title = P.last === C.today() ? s.streakToday : s.streakTodo;
     $("xpN").textContent = P.xp;
