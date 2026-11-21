@@ -77,6 +77,10 @@ console.log('node checks', jobs.length, 'failed', bad);
 '''
     import os
     build = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'app', 'js')   # answers.js
-    r = subprocess.run(['node', '-e', js, build], input=json.dumps(node_jobs), capture_output=True, text=True)
-    print(r.stdout.strip(), r.stderr.strip()[:500])
+    try:
+        r = subprocess.run(['node', '-e', js, build], input=json.dumps(node_jobs), capture_output=True, text=True)
+        print(r.stdout.strip(), r.stderr.strip()[:500])
+    except FileNotFoundError:
+        print(f"node not found: skipped {len(node_jobs)} formula checks (deriv/antider/inverse/same). "
+              "python tools/test_app.py still checks that every formula answer is valid.")
 print('py/num checks', total, 'failed (py)', bad)

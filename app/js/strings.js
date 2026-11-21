@@ -40,7 +40,15 @@
       fSolved: "Solved", fMissed: "Not this time", fFromLesson: "Lesson", fEmpty: "Nothing here yet.", fSavedEmpty: "Nothing saved yet. Tap the bookmark on any post to keep it here.",
       mapHere: "Where am I", mapFit: "Whole map", mapIn: "Zoom in", mapOut: "Zoom out", mapDone: "Done", mapAgain: "Play again",
       metric: "ds² = dr² + r² (dφ + ω(r) dr)²   ·   the space is flat, just slightly twisted",
-      fLike: "Like", fSave: "Save", fRound: "You've seen everything here · fresh shuffle", fDraft: "draft"
+      fLike: "Like", fSave: "Save", fRound: "You've seen everything here · fresh shuffle", fDraft: "draft",
+      bkNudgeT: "Back up your progress", bkNudge: "You've finished {n} lessons, and your progress is stored only in this browser. A backup takes a few seconds.",
+      bkLater: "Not now", bkLast: "Last backup: {d}.", bkNever: "No backup yet.",
+      report: "Report a problem", rpAsk: "What is wrong? Please describe it here:",
+      broken: "This question has a mistake in it, so we'll skip it. Reporting it helps us fix it.",
+      ans: { letter: "Unknown letter “{x}”", char: "Unknown character “{x}”", unexpected: "Unexpected “{x}”", empty: "The expression is empty",
+        end: "The expression ends too early", paren: "Missing “)”", bar: "Missing “|”", fnArg: "The function {x} needs an argument",
+        interval: "Write the interval as (a; b), [a; b] and so on.", endpoints: "Separate the endpoints with a semicolon: (a; b)",
+        endpoint: "I can't read an endpoint", element: "I can't read the element “{x}”" }
     },
     cs: {
       adminK: "Správce", adminText: "Všechny lekce jsou odemčené.", adminReset: "Vynulovat postup", adminSure: "Opravdu vynulovat?",
@@ -79,7 +87,15 @@
       fSolved: "Vyřešeno", fMissed: "Tentokrát ne", fFromLesson: "Lekce", fEmpty: "Tady zatím nic není.", fSavedEmpty: "Zatím nic uloženého. Uložte si příspěvek ikonou záložky.",
       mapHere: "Kde jsem", mapFit: "Celá mapa", mapIn: "Přiblížit", mapOut: "Oddálit", mapDone: "Hotovo", mapAgain: "Projít znovu",
       metric: "ds² = dr² + r² (dφ + ω(r) dr)²   ·   prostor je plochý, jen trochu zkroucený",
-      fLike: "To se mi líbí", fSave: "Uložit", fRound: "Všechno jste viděli · nové zamíchání", fDraft: "rozpracováno"
+      fLike: "To se mi líbí", fSave: "Uložit", fRound: "Všechno jste viděli · nové zamíchání", fDraft: "rozpracováno",
+      bkNudgeT: "Zálohujte si postup", bkNudge: "Máte hotových {n} lekcí a postup je uložený jen v tomto prohlížeči. Záloha zabere pár sekund.",
+      bkLater: "Teď ne", bkLast: "Poslední záloha: {d}.", bkNever: "Zatím jste nezálohovali.",
+      report: "Nahlásit chybu", rpAsk: "Co je špatně? Popište to prosím sem:",
+      broken: "Tahle otázka má chybu v zadání, takže ji přeskočíme. Pomůže nám, když ji nahlásíte.",
+      ans: { letter: "Neznámé písmeno „{x}“", char: "Neznámý znak „{x}“", unexpected: "Nečekaný znak „{x}“", empty: "Prázdný výraz",
+        end: "Výraz nečekaně končí", paren: "Chybí „)“", bar: "Chybí „|“", fnArg: "Funkce {x} potřebuje argument",
+        interval: "Interval zapište jako (a; b), [a; b] apod.", endpoints: "Krajní body oddělte středníkem: (a; b)",
+        endpoint: "Nerozumím krajnímu bodu", element: "Nerozumím prvku „{x}“" }
     }
   };
 })();

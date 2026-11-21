@@ -19,8 +19,10 @@
     if (!it || it.kind !== "gen") return it;
     var g = window.LEMMA_GEN && window.LEMMA_GEN.get(it.cid, it.answer);
     if (!g) return null;
-    var q = g();
-    q.key = it.key; q.lect = it.lect; q.cid = it.cid; q.lesson = it.lesson; q.generated = true;
+    var q;
+    try { q = g(); } catch (e) { console.error("courses/" + it.cid + "/generators.js: " + it.answer + ":", e); return null; }   // skip it, keep the lesson going
+    if (!q) return null;
+    q.key = it.key; q.lect = it.lect; q.cid = it.cid; q.lesson = it.lesson; q.generated = true; q.gen = it.answer;
     if (q.fig) q.figA = [].concat(q.fig);
     q.html = escMath(q.html || ""); q.explain = escMath(q.explain || "");
     if (q.options) q.options.forEach(function (o) { o.html = escMath(o.html); });
@@ -113,6 +115,7 @@
         gb.addEventListener("click", function () { openGuide(ga); });
         inner.appendChild(gb);
       }
+      inner.appendChild(el("div", "report-row", C.reportLink(c, C.reportItem(it))));
       primary.textContent = s.cont; primary.disabled = false;
       typeset(inner);
       drawFigs(inner);
@@ -301,7 +304,10 @@
   function answerTeX(it) {
     var A = window.LEMMA_ANS;
     if (it.show) return it.show;
-    if (it.kind === "expr") { var sp = A.exprSpec(it); return "$" + A.answerTeX(sp) + (sp.plusC ? " + C" : "") + "$"; }
+    if (it.kind === "expr") {
+      var sp = A.exprSpec(it);
+      try { return "$" + A.answerTeX(sp) + (sp.plusC ? " + C" : "") + "$"; } catch (e) { return escapeHtml(it.answer); }
+    }
     if (it.kind === "interval") return "$" + A.intervalTeX(it.answer) + "$";
     if (it.kind === "set") return "$" + A.setTeX(it.answer) + "$";
     return escapeHtml(it.answer.split(";")[0].trim());
@@ -337,6 +343,7 @@
       else if (it.kind === "interval") r = A.checkInterval(S.input.value, it.answer);
       else if (it.kind === "set") r = A.checkSet(S.input.value, it.answer);
       else r = { ok: inputCorrect(S.input.value, it.answer) };
+      if (r.broken) { brokenQuestion(it, r.broken); return; }
       if (r.error) { inputError(r.error); return; }
       var er = S.input.parentNode.querySelector(".in-error"); if (er) er.remove();
       ok = r.ok;
@@ -390,10 +397,26 @@
       (ok || !answerHtml ? "" : (it.kind === "order" ? "<p>" + s.answer + "</p>" + answerHtml : "<p>" + s.answer + " " + answerHtml + "</p>")) +
       (it.explain ? "<p>" + it.explain + "</p>" : "") +
       figs(it.figA) +
-      (ok || S.feed ? "" : '<p class="muted">' + s.again + "</p>");
+      (ok || S.feed ? "" : '<p class="muted">' + s.again + "</p>") +
+      C.reportLink(course(), C.reportItem(it));
     fb.hidden = false;
     typeset(fb);
     drawFigs(fb);
+    primary.textContent = s.cont; primary.disabled = false;
+    primary.focus({ preventScroll: true });
+  }
+  // The course's own answer can't be used (a typo in lessons.txt, a generator's bad output): not the student's
+  // fault, so skip the question without touching spaced repetition, and offer to report it.
+  function brokenQuestion(it, why) {
+    var s = L();
+    console.error("question " + (it.key || "?") + " can't be checked: " + why);
+    S.input.readOnly = true;
+    S.checked = true;
+    S.progress++;
+    setBar();
+    foot.dataset.state = "";
+    fb.innerHTML = "<p>" + escapeHtml(s.broken) + "</p>" + C.reportLink(course(), C.reportItem(it));
+    fb.hidden = false;
     primary.textContent = s.cont; primary.disabled = false;
     primary.focus({ preventScroll: true });
   }
@@ -427,10 +450,27 @@
       '<div class="tile"><div class="k">' + s.xp + '</div><div class="v">+' + xp + "</div></div>" +
       '<div class="tile"><div class="k">' + s.acc + '</div><div class="v">' + acc + "%</div></div>" +
       '<div class="tile"><div class="k">' + s.streak + '</div><div class="v">' + liveStreak() + "</div></div>"));
+    if (C.backupDue()) inner.appendChild(backupNudge(s));
     body.appendChild(inner);
     foot.dataset.state = ""; fb.hidden = true;
     primary.textContent = s.cont; primary.disabled = false;
     S.finished = true;
+  }
+
+  // Progress lives only in this browser: every few lessons, suggest a backup (core.js decides when).
+  function backupNudge(s) {
+    C.markBackup(false);            // shown: ask again in a few lessons, unless a backup is made now
+    var box = el("div", "bk-nudge");
+    box.appendChild(el("b", null, escapeHtml(s.bkNudgeT)));
+    box.appendChild(el("p", null, escapeHtml(C.fmt(s.bkNudge, { n: C.doneCount() }))));
+    var row = el("div", "backup-row");
+    var go = el("button", "admin-btn bk-go", escapeHtml(s.bkSave)); go.type = "button";
+    go.addEventListener("click", function () { C.exportProgress(); box.remove(); });
+    var later = el("button", "admin-btn bk-later", escapeHtml(s.bkLater)); later.type = "button";
+    later.addEventListener("click", function () { box.remove(); });
+    row.appendChild(go); row.appendChild(later);
+    box.appendChild(row);
+    return box;
   }
 
   primary.addEventListener("click", function () {

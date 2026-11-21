@@ -19,13 +19,16 @@ local server, **Run Task → Test** runs the browser tests.
 ### Tests
 
 ```bash
-pip install playwright && python -m playwright install chromium     # once
+python -m pip install playwright && python -m playwright install chromium     # once
 python tools/test_app.py                                            # builds, then tests both builds
 ```
 
 The tests use the app like a student would: the map, a whole lesson answered correctly, the
 feed, saving, the guide, backup and restore, the migration of old progress, and the installable
-app offline. On Windows you can skip the Chromium download and use Edge:
+app offline and on a slow network. They also check the content: every question's own answer must be
+accepted by the checker that judges the students, and every generator is run 200 times.
+`python -m pip` installs into the Python that runs the tests (a plain `pip` may belong to another
+Python, for example a conda environment). On Windows you can skip the Chromium download and use Edge:
 `set CUSP_BROWSER=msedge` (PowerShell: `$env:CUSP_BROWSER="msedge"`). GitHub runs the same tests
 on every pull request and before every deploy, so a failing test keeps the old version online.
 
@@ -103,12 +106,21 @@ the path.
 ## Storage
 
 All progress lives in the browser's `localStorage` under `lemma.*` keys: `lemma.learn` (progress,
-XP, spaced repetition), `lemma.course`, `lemma.admin`, `lemma.f.liked` and `lemma.f.saved`. It
+XP, spaced repetition), `lemma.course`, `lemma.admin`, `lemma.f.liked`, `lemma.f.saved` and `lemma.bk`
+(when the last backup was made). The `lemma` prefix is the app's old name; it stays so nobody's progress is lost. It
 belongs to one browser and origin, so localhost and the published app keep separate progress.
 
 **Backup:** the course picker has *Zálohovat* (a `.json` file; on phones it opens the share
 sheet, so you can send it to yourself) and *Obnovit* (from the file or pasted as text).
 Restoring merges: nothing on the device is lost, the backup only adds or moves things forward.
+After 5 finished lessons, and then every 10, the lesson's done screen suggests a backup (every 5 if
+the student skips it). The constants are `BK_FIRST`, `BK_EVERY` and `BK_SNOOZE` in `app/js/core.js`.
+
+**Report a problem:** every learn card, answered question and feed post has a *Nahlásit chybu*
+link. It opens a new GitHub issue with the course, the lesson, the item's id and its text filled in
+(students need a GitHub account). A course can send its reports elsewhere with `"report"` in
+`course.json`, for example a `mailto:` address. If a question's own answer can't be used (a typo
+the tests missed), the player says so, lets the student skip it and offers the same link.
 
 **Stable ids:** progress is stored under ids like `calc1:q:7hx0c`, which are written into
 `lessons.txt` by `tools/assign_ids.py` (see courses/README.md). Inserting or reordering

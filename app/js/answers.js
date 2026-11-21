@@ -25,6 +25,13 @@
   var NAMES = Object.keys(FUN).concat(["pi"]).sort(function (a, b) { return b.length - a.length; });
   var SUP = { "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4", "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9", "⁻": "-" };
 
+  // Messages for the student come from the open course's interface texts (app/js/strings.js, "ans"), so they
+  // follow its language; {x} is the offending character or name.
+  function fail(code, x) {
+    var C = window.CUSP, t = C && C.L ? C.L().ans : null;
+    throw new Error(String((t && t[code]) || code).replace("{x}", x == null ? "" : x));
+  }
+
   function normalize(s) {
     return String(s).toLowerCase()
       .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g, function (m) { return "^(" + m.split("").map(function (c) { return SUP[c]; }).join("") + ")"; })
@@ -51,12 +58,12 @@
           var ch = rest[0];
           if (ch === "e") t.push({ k: "const", v: "e" });
           else if (vars.indexOf(ch) >= 0) t.push({ k: "var", v: ch });
-          else throw new Error("Neznámé písmeno „" + ch + "“");
+          else fail("letter", ch);
           j++;
         }
         i += word.length; continue;
       }
-      throw new Error("Neznámý znak „" + c + "“");
+      fail("char", c);
     }
     return t;
   }
@@ -64,7 +71,7 @@
   function parse(text, vars) {
     vars = vars || ["x"];
     var src = normalize(text).trim();
-    if (!src) throw new Error("Prázdný výraz");
+    if (!src) fail("empty");
     var t = tokenize(src, vars), p = 0, absDepth = 0;
     function peek() { return t[p]; }
     function eat(k) { if (t[p] && t[p].k === k) return t[p++]; return null; }
@@ -99,28 +106,28 @@
     }
     function primary() {
       var tok = t[p++];
-      if (!tok) throw new Error("Výraz nečekaně končí");
+      if (!tok) fail("end");
       if (tok.k === "num") return { t: "num", v: tok.v };
       if (tok.k === "var") return { t: "var", v: tok.v };
       if (tok.k === "const") return { t: "const", v: tok.v };
-      if (tok.k === "(") { var e = expr(); if (!eat(")")) throw new Error("Chybí „)“"); return { t: "par", a: e }; }
-      if (tok.k === "|") { absDepth++; var a = expr(); absDepth--; if (!eat("|")) throw new Error("Chybí „|“"); return { t: "fn", f: "abs", a: a }; }
+      if (tok.k === "(") { var e = expr(); if (!eat(")")) fail("paren"); return { t: "par", a: e }; }
+      if (tok.k === "|") { absDepth++; var a = expr(); absDepth--; if (!eat("|")) fail("bar"); return { t: "fn", f: "abs", a: a }; }
       if (tok.k === "fn") {
         var pw = null;
         if (eat("^")) pw = unary();                    // sin^2 x
         var arg;
-        if (peek() && peek().k === "(") { p++; arg = expr(); if (!eat(")")) throw new Error("Chybí „)“"); }
+        if (peek() && peek().k === "(") { p++; arg = expr(); if (!eat(")")) fail("paren"); }
         else {                                         // sin 2x, ln x: the juxtaposed factors that follow (sin x/x = (sin x)/x)
-          if (!startsOperand(peek())) throw new Error("Funkce " + tok.v + " potřebuje argument");
+          if (!startsOperand(peek())) fail("fnArg", tok.v);
           arg = term(true);
         }
         var node = { t: "fn", f: tok.v, a: arg };
         return pw ? { t: "^", a: node, b: pw, fnpow: true } : node;
       }
-      throw new Error("Nečekaný znak „" + tok.k + "“");
+      fail("unexpected", tok.k);
     }
     var tree = expr();
-    if (p < t.length) throw new Error("Nečekaný znak „" + (t[p].k === "num" ? t[p].v : t[p].v || t[p].k) + "“");
+    if (p < t.length) fail("unexpected", t[p].k === "num" ? t[p].v : t[p].v || t[p].k);
     return tree;
   }
 
@@ -197,22 +204,23 @@
     for (var i = 0; i < 9; i++) out.push(a + (b - a) * (i + 0.37) / 9.13 + 0.0123 * Math.sin(7 * i + 1));
     return out;
   }
+  // The checkers return { ok }, { error } (the student's text can't be read: say why, let them retry), or
+  // { broken } (the course's own answer can't be used: a mistake in lessons.txt or a generator, not the student's).
   function checkExpr(given, spec) {
     var g, e;
+    try { e = parse(spec.answer, spec.vars); } catch (err) { return { broken: "answer \"" + spec.answer + "\": " + err.message }; }
+    var v = spec.vars[0], diffs = [];
+    var pts = samples(spec.dom).filter(function (x) { var env = {}; env[v] = x; return isFinite(evaluate(e, env)); });
+    if (pts.length < 4) return { broken: "answer \"" + spec.answer + "\" is undefined at most sample points of dom=" + spec.dom.join("..") };
     if (spec.plusC) given = String(given).replace(/\+\s*[cC]\s*$/, "");
     try { g = parse(given, spec.vars); } catch (err) { return { error: err.message }; }
-    e = parse(spec.answer, spec.vars);
-    var v = spec.vars[0], pts = samples(spec.dom), diffs = [], valid = 0;
     for (var i = 0; i < pts.length; i++) {
       var env = {}; env[v] = pts[i];
       var ev = evaluate(e, env), gv = evaluate(g, env);
-      if (!isFinite(ev)) continue;
       if (!isFinite(gv)) return { ok: false };
-      valid++;
       if (spec.plusC) diffs.push(gv - ev);
       else if (Math.abs(gv - ev) > 1e-6 * Math.max(1, Math.abs(ev))) return { ok: false };
     }
-    if (valid < 4) return { ok: false };
     if (spec.plusC) {
       for (var j = 1; j < diffs.length; j++) if (Math.abs(diffs[j] - diffs[0]) > 1e-6 * Math.max(1, Math.abs(diffs[0]))) return { ok: false };
     }
@@ -256,11 +264,11 @@
     var pieces = s.split("∪"), out = [];
     for (var i = 0; i < pieces.length; i++) {
       var m = /^\s*([\[(])(.*)([\])])\s*$/.exec(pieces[i]);
-      if (!m) throw new Error("Interval zapište jako (a; b), [a; b] apod.");
+      if (!m) fail("interval");
       var pr = splitPair(m[2]);
-      if (!pr || pr.length !== 2) throw new Error("Krajní body oddělte středníkem: (a; b)");
+      if (!pr || pr.length !== 2) fail("endpoints");
       var a = num(pr[0]), b = num(pr[1]);
-      if (isNaN(a) || isNaN(b)) throw new Error("Nerozumím krajnímu bodu");
+      if (isNaN(a) || isNaN(b)) fail("endpoint");
       out.push({ a: a, b: b, lc: m[1] === "[" && isFinite(a), rc: m[3] === "]" && isFinite(b) });
     }
     return out.sort(function (x, y) { return x.a - y.a; });
@@ -268,8 +276,9 @@
   function close(x, y) { return x === y || Math.abs(x - y) <= 1e-6 * Math.max(1, Math.abs(y)); }
   function checkInterval(given, answer) {
     var g;
+    var e;
+    try { e = parseInterval(answer); } catch (err) { return { broken: "answer \"" + answer + "\": " + err.message }; }
     try { g = parseInterval(given); } catch (err) { return { error: err.message }; }
-    var e = parseInterval(answer);
     if (g.length !== e.length) return { ok: false };
     for (var i = 0; i < e.length; i++) {
       if (!close(g[i].a, e[i].a) || !close(g[i].b, e[i].b) || g[i].lc !== e[i].lc || g[i].rc !== e[i].rc) return { ok: false };
@@ -283,9 +292,9 @@
     parts.forEach(function (p) {
       p = p.trim(); if (!p) return;
       var pm = /^(±|\+-|\+\/-)(.*)$/.exec(p);
-      if (pm) { var v = num(pm[2]); if (isNaN(v)) throw new Error("Nerozumím prvku „" + p + "“"); out.push(v, -v); return; }
+      if (pm) { var v = num(pm[2]); if (isNaN(v)) fail("element", p); out.push(v, -v); return; }
       var x = num(p);
-      if (isNaN(x)) throw new Error("Nerozumím prvku „" + p + "“");
+      if (isNaN(x)) fail("element", p);
       out.push(x);
     });
     out.sort(function (a, b) { return a - b; });
@@ -293,8 +302,9 @@
   }
   function checkSet(given, answer) {
     var g;
+    var e;
+    try { e = parseSet(answer); } catch (err) { return { broken: "answer \"" + answer + "\": " + err.message }; }
     try { g = parseSet(given); } catch (err) { return { error: err.message }; }
-    var e = parseSet(answer);
     if (g.length !== e.length) return { ok: false };
     for (var i = 0; i < e.length; i++) if (!close(g[i], e[i])) return { ok: false };
     return { ok: true };

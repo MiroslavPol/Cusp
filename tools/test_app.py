@@ -18,6 +18,7 @@ import socketserver
 import subprocess
 import sys
 import threading
+import time
 
 sys.stdout.reconfigure(encoding="utf-8")
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -69,16 +70,62 @@ def launch(p):
         raise
 
 
+DELAY = {"page": 0}       # seconds the test server waits before sending the page (a slow network)
+
+
 def serve(folder):
     class Quiet(http.server.SimpleHTTPRequestHandler):
         def log_message(self, *a): pass
-    srv = socketserver.TCPServer(("127.0.0.1", 0), functools.partial(Quiet, directory=str(folder)))
+        def do_GET(self):
+            if DELAY["page"] and self.path.split("?")[0].split("#")[0] in ("/", "/index.html"):
+                time.sleep(DELAY["page"])
+            super().do_GET()
+    class Server(socketserver.ThreadingMixIn, socketserver.TCPServer):
+        daemon_threads = True
+    srv = Server(("127.0.0.1", 0), functools.partial(Quiet, directory=str(folder)))
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     return srv, f"http://127.0.0.1:{srv.server_address[1]}/"
 
 
 SOLVE_ITEM = """() => { var i = CUSP.debugItem(); if (!i) return null;
   return { kind: i.kind, answer: i.answer || "", opts: (i.options || []).map(function (o) { return { h: o.html, ok: o.ok }; }) }; }"""
+
+
+# Every question's own answer must be accepted by the checker that will judge the students: a typo in an answer,
+# a formula undefined on its sample range or a generator that sometimes produces nonsense makes a question
+# impossible to answer. Generators are run 200 times each. Returns a list of "key: problem".
+SELF_CHECK = """() => CUSP.loadAll(CUSP.COURSES).then(function () {
+  var A = window.LEMMA_ANS, bad = [];
+  function problem(q) {
+    var r;
+    try {
+      if (q.kind === 'expr') r = A.checkExpr(q.answer, A.exprSpec(q));
+      else if (q.kind === 'interval') r = A.checkInterval(q.answer, q.answer);
+      else if (q.kind === 'set') r = A.checkSet(q.answer, q.answer);
+      else if (q.kind === 'input') {        // alternatives are spellings of one answer: "1/2; 0.5"
+        var alts = q.answer.split(';').map(function (a) { return a.trim(); });
+        r = { ok: alts.every(function (a) { return CUSP.inputCorrect(a, alts[0]); }), error: 'the alternatives in "' + q.answer + '" are not the same answer' };
+      }
+      else if (q.kind === 'mc') r = { ok: (q.options || []).length >= 2 && q.options.filter(function (o) { return o.ok; }).length === 1,
+                                      error: 'needs 2+ distinct options and exactly one correct' };
+      else r = { ok: true };
+    } catch (e) { r = { broken: 'throws ' + e }; }
+    return r.ok ? null : (r.broken || r.error || 'its own answer "' + q.answer + '" is judged wrong');
+  }
+  CUSP.COURSES.forEach(function (c) { c.units.forEach(function (u) { u.lessons.forEach(function (l) { l.items.forEach(function (it) {
+    if (!it.key) return;
+    if (it.kind !== 'gen') { var p = problem(it); if (p) bad.push(it.key + ': ' + p); return; }
+    for (var i = 0; i < 200; i++) {
+      var q = CUSP.instantiate(it);
+      if (!q) { bad.push(it.key + ' (' + it.answer + '): the generator fails'); return; }
+      var text = q.html + ' ' + (q.options || []).map(function (o) { return o.html; }).join(' ') + ' ' + (q.answer || '') + ' ' + (q.explain || '');
+      var m = /undefined|NaN/.exec(text);
+      var pr = m ? 'the text contains "' + m[0] + '"' : problem(q);
+      if (pr) { bad.push(it.key + ' (' + it.answer + '): ' + pr + ', e.g. answer "' + q.answer + '"'); return; }
+    }
+  }); }); }); });
+  return bad;
+})"""
 
 
 def solve_lesson(pg):
@@ -139,6 +186,8 @@ def test_site(b, url, cs):
     check("all generators produce questions", pg.evaluate("""() => CUSP.loadAll(CUSP.COURSES).then(function () { var bad = [];
         CUSP.COURSES.forEach(function (c) { (c.units || []).forEach(function (u) { u.lessons.forEach(function (l) { l.items.forEach(function (it) {
           if (it.kind === 'gen' && !CUSP.instantiate(it)) bad.push(it.key); }); }); }); }); return bad.length === 0; })"""))
+    bad = pg.evaluate(SELF_CHECK)
+    check("every answer is accepted by its own checker (generators: 200 runs each)", not bad, "; ".join(bad[:5]) + (f" (and {len(bad) - 5} more)" if len(bad) > 5 else ""))
     check("every question has a stable id", pg.evaluate("""() => CUSP.COURSES.every(function (c) { return Object.keys(c.byKey || {}).every(function (k) { return k.indexOf(':q:') > 0; }); })"""))
 
     # map: drag does not tap, tap shows the card
@@ -154,12 +203,17 @@ def test_site(b, url, cs):
 
     # play the first lesson correctly
     pg.click('.hud-btn[data-t="here"]'); pg.wait_for_timeout(800)
+    pg.evaluate("localStorage.setItem('lemma.bk', JSON.stringify({ next: 1 }))")     # remind after this lesson
     pg.click(".hud-card .fc-go"); pg.wait_for_timeout(300)
+    href = pg.get_attribute("#lessonBody .report-link", "href") or ""
+    check("a lesson item has a 'report a problem' link naming the course and the item", "issues/new?title=" in href and f"%5B{first}%5D" in href, href[:120])
     steps = solve_lesson(pg)
     check("first lesson can be played through with correct answers", steps > 0, f"solver returned {steps}")
     pg.wait_for_timeout(1200)
     check("finished lesson is marked done on the map", pg.locator("#path .node.done").count() == 1)
     check("the next lesson becomes the current one", pg.locator("#path .node.current").count() == 1)
+    bk = pg.evaluate("[JSON.parse(localStorage.getItem('lemma.bk')).next, CUSP.doneCount()]")
+    check("the done screen reminds about a backup, then waits a few lessons", bk[0] == bk[1] + 5, str(bk))
     check("progress is saved under stable ids", pg.evaluate("Object.keys(CUSP.P.done).every(function (k) { return k.indexOf(':l:') > 0 || k.indexOf(':u:') > 0; })"))
 
     # backup and restore
@@ -168,6 +222,20 @@ def test_site(b, url, cs):
         var restored = CUSP.restore(JSON.parse(JSON.stringify(b)));
         return restored && keys.every(function (k) { return CUSP.P.done[k]; }) && !CUSP.restore({ nope: 1 }); }""")
     check("backup restores progress, and junk is refused", ok)
+
+    # typed answers: messages in the course's language; a broken question is skipped, not a dead end
+    pg.evaluate("""() => CUSP.answer({ kind: 'expr', answer: 'x^2', flags: [], html: '<p>t</p>', key: 'test:q:ok', cid: 'test' })""")
+    pg.fill("#lessonBody input.answer-in", "x$"); pg.click("#primary"); pg.wait_for_timeout(100)
+    msg = pg.inner_text("#lessonBody .in-error") if pg.locator("#lessonBody .in-error").count() else ""
+    want = pg.evaluate("CUSP.L().ans.char.replace('{x}', '$')")
+    check("an unreadable answer is explained in the course's language", msg == want, f"{msg!r} != {want!r}")
+    pg.click("#lessonClose")
+    pg.evaluate("""() => CUSP.answer({ kind: 'expr', answer: 'x^', flags: [], html: '<p>t</p>', key: 'test:q:broken', cid: 'test' })""")
+    pg.fill("#lessonBody input.answer-in", "x"); pg.click("#primary"); pg.wait_for_timeout(100)
+    check("a question whose own answer is broken can be skipped and reported",
+          pg.locator("#fb .report-link").count() == 1 and not pg.is_disabled("#primary") and not pg.evaluate("!!CUSP.P.srs['test:q:broken']"))
+    pg.click("#primary"); pg.wait_for_timeout(100)
+    errors[:] = [e for e in errors if "can't be checked" not in e]      # that console.error was expected
 
     # feed
     pg.click('.tab[data-view="feed"]'); pg.wait_for_timeout(1500)
@@ -185,6 +253,7 @@ def test_site(b, url, cs):
         if q.locator(".fq-btn").count(): q.locator(".fq-btn").click(); pg.wait_for_timeout(200)
         if q.locator(".q-label.counter").count(): q.locator(".fq-options").last.locator(".opt").first.click(); pg.wait_for_timeout(200)
         check("a question can be answered inside the feed", q.locator(".fq-fb").count() == 1)
+        check("feed posts have a 'report a problem' link", "issues/new" in (q.locator(".pa-report").get_attribute("href") or ""))
         check("an answer in the feed updates spaced repetition", pg.evaluate(f"!!CUSP.P.srs['{key}']"))
     else:
         check("a question can be answered inside the feed", False, "no inline question rendered")
@@ -256,6 +325,13 @@ def test_pwa(b, cs):
     ctx.set_offline(True)
     pg.goto(url + "#learn"); pg.wait_for_timeout(2500)
     check("works offline", pg.locator("#path .node").count() == expected_nodes(first))
+    ctx.set_offline(False)
+    DELAY["page"] = 8
+    t0 = time.time()
+    pg.goto(url + "#learn"); pg.wait_for_selector("#path .node", timeout=7000)
+    took = time.time() - t0
+    DELAY["page"] = 0
+    check("a slow network shows the saved app after about 3 s", took < 6 and pg.locator("#path .node").count() == expected_nodes(first), f"{took:.1f} s")
     check("no errors in the page", not errors, "; ".join(errors[:3]))
     ctx.close(); srv.shutdown()
 

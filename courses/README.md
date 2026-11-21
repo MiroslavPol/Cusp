@@ -19,7 +19,13 @@ courses/<id>/
 Start a new course with `python tools/new_course.py <id> "Title"`, which writes an example of
 every file. Then run `python build.py`. The build checks every course and stops with
 `file:line` messages if something is wrong (an unknown question kind, a missing generator, a
-header without a space, invalid JSON …).
+header without a space, invalid JSON, an `mc` without exactly one `+`, a `tf` that isn't `true` or
+`false`, a question without a prompt or answer, a `P#` beyond the lecture dates …).
+
+The build reads the files but not the maths. `python tools/test_app.py` also checks that every
+question's own answer is accepted by the checker the students get (a formula that parses and is
+defined on its sample range, an interval or set that can be read, alternatives that agree), and
+runs every generator 200 times. Run it after adding questions if you can (see the main README).
 
 ### Ids: every unit, lesson and question has one
 
@@ -62,6 +68,7 @@ copied `#id` and run the tool again. Deleting a question deletes its history, wh
 | `default` | the course a new visitor sees first (only one course should have it) |
 | `lectures` | lecture dates. Lecture *n* is the *n*-th date. Turns on the `P1`, `P2` … labels |
 | `guide` | in-app reader. `anchors` maps lecture numbers to guide sections, shown as "Z Průvodce" buttons |
+| `report` | where "Nahlásit chybu" sends reports: an `https://…/issues/new` page or `mailto:address`. Default: this repository's GitHub issues |
 
 ## lessons.txt
 
@@ -84,7 +91,7 @@ Prompt text with $TeX$
 ? tf | false                          false statement; optional "+/-" lines = second step:
 + counterexample                        "which example disproves it?"
 - not a counterexample
-? input | 1/2; 0.5                    a number; alternatives separated by ";"
+? input | 1/2; 0.5                    a number; alternatives (spellings of the same answer) separated by ";"
 ? expr | 2x cos(x^2)                  a formula, compared with the answer at sample points
 ? expr | x^3/3 | +C                     … equal up to a constant (antiderivatives)
 ? expr | sqrt(1-x^2) | dom=-0.9..0.9    … sampled on a given range (default 0.4..2.6)
@@ -177,7 +184,11 @@ Write new items in a separate file under `### Lesson title` headers, optionally 
 `%% same: g` for formulas, then:
 
 ```bash
-python tools/verify.py my-additions.txt                                # needs sympy + node
+python tools/verify.py my-additions.txt                                # needs sympy (+ node for %% deriv etc.)
 python tools/merge.py courses/<id>/lessons.txt my-additions.txt [--counter counter.txt]
 python tools/assign_ids.py <id>
 ```
+
+Without Node, `verify.py` runs the `%% py` checks and skips the formula ones, and says how many it
+skipped. `python tools/test_app.py` still checks that every formula answer is valid, but not that it is
+the right derivative.

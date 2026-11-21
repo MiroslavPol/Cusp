@@ -22,7 +22,8 @@ js/                 loaded in this order (see build.py):
   path.js           the Learn map: spiral geometry, twisted coordinate grid, pan & zoom, lesson icons
   feed.js           the cross-course feed
   strings.js        every interface text, per language (cs, en)
-  core.js           courses and loading their data, stable ids, progress, spaced repetition, backup, helpers
+  core.js           courses and loading their data, stable ids, progress, spaced repetition, backup and its
+                    reminder, "report a problem" links, helpers
   guide.js          the guide reader
   player.js         the lesson player (all question kinds), also for single questions from the feed
   map.js            the Learn view: header, the map's stops and card, course picker, admin mode
@@ -36,4 +37,9 @@ The modules share one object, `window.CUSP` (defined in `core.js`), and talk thr
 `C.on("progress" | "admin" | "loaded", fn)` / `C.emit(...)`. The course registry is embedded in
 the page (`<script id="courses">`); a course's lessons, feed posts, guide and legacy-id map come
 from `<script id="data-<id>">` in `site/` or from `data/<id>.json` in `pwa/` (`C.load(course)`).
-Interface texts are in `strings.js`; a course's `lang` picks the language.
+Interface texts are in `strings.js`; a course's `lang` picks the language. That includes the messages
+for answers the app can't read (`ans`), which `answers.js` looks up when it needs one.
+
+**"Lemma" names.** `LEMMA_GEN`, `LEMMA_ANS`, `LEMMA_FIG`, `LEMMA_PATH`, the `lemma.*` storage keys and the
+`lemma-app-*` cache are from the app's old name. Leave them: renaming the storage keys would lose
+students' progress, and every course's `generators.js` calls `LEMMA_GEN.define`.

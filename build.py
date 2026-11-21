@@ -78,27 +78,48 @@ def check_course(d, probs):
             probs.add(rel(gp), f'must call LEMMA_GEN.define("{cid}", function (K, G) {{ ... }})')
         gens = set(re.findall(r"^\s*G\.(\w+)\s*=", src, re.M))
 
+    report = meta.get("report")
+    if report is not None and not (isinstance(report, str) and report.startswith(("https://", "mailto:"))):
+        probs.add(rel(meta_p), '"report" must be a link starting with https:// (e.g. a GitHub "issues/new" page) or mailto:')
+    n_lect = len(meta.get("lectures") or [])
+    def check_lectures(parts, at):
+        """P# labels must point to an existing lecture date (only for courses with "lectures")."""
+        if not n_lect: return
+        for p in parts:
+            if re.match(r"^P\d", p):
+                for k in map(int, re.findall(r"\d+", p)):
+                    if not 1 <= k <= n_lect:
+                        probs.add(at, f'"{p}": the course has {n_lect} lectures in course.json, so P{k} does not exist')
+
     lp = d / "lessons.txt"
     if not lp.exists():
         probs.add(rel(d), "missing lessons.txt"); return meta
     unit = lesson = False
     seen, missing = {}, []
+    q = None              # the question being read: its kind, answer, options and prompt, checked when it ends
     def note_id(i, at):
         if i is None: missing.append(at); return
         if i in seen: probs.add(at, f'id "#{i}" is already used at line {seen[i]}; delete this copy\'s id and run python tools/assign_ids.py {cid}')
         else: seen[i] = at.rsplit(":", 1)[1]
+    def end_question():
+        if q: check_question(q, probs)
     for n, line in enumerate(read(lp).split("\n"), 1):
         at = f"{rel(lp)}:{n}"
         if line.startswith("## "):
+            end_question(); q = None
             unit, lesson = True, False
             note_id(head_id(line[3:]), at)
+            check_lectures([p.strip() for p in line[3:].split("|")][1:], at)
         elif line.startswith("### "):
+            end_question(); q = None
             if not unit: probs.add(at, 'lesson before the first unit ("## Unit title")')
             lesson = True
             note_id(head_id(line[4:]), at)
+            check_lectures([p.strip() for p in line[4:].split("|")][1:], at)
         elif re.match(r"^#{1,3}[^# ]", line) or re.match(r"^#{1,3}$", line):
             probs.add(at, 'headers are "## Unit title" and "### Lesson title" (with a space)')
         elif line.startswith("> ") or line.startswith("? "):
+            end_question(); q = None
             if not lesson: probs.add(at, 'item before the first lesson ("### Lesson title")')
             if line.startswith("? "):
                 m = QLINE.match(line.rstrip())
@@ -106,10 +127,18 @@ def check_course(d, probs):
                     probs.add(at, f"unknown question kind; use one of: {', '.join(sorted(KINDS))}")
                     continue
                 note_id(m.group(2), at)
-                if m.group(1) == "gen":
-                    name = (m.group(3) or "").strip()
-                    if name not in gens:
-                        probs.add(at, f'generator "{name}" is not defined in {rel(gp)}')
+                kind, answer = m.group(1), (m.group(3) or "").strip()
+                if kind == "gen":
+                    if answer not in gens:
+                        probs.add(at, f'generator "{answer}" is not defined in {rel(gp)}')
+                else:
+                    q = {"kind": kind, "answer": answer, "at": at, "plus": 0, "minus": 0, "text": False}
+        elif q:
+            # the same rules as the app's reader (app/js/core.js parseCourse)
+            if line.startswith("+ "): q["plus"] += 1
+            elif line.startswith("- "): q["minus"] += 1
+            elif line.strip() and not re.match(r"^(@@?|!|=) ", line): q["text"] = True
+    end_question()
     if missing:
         more = f" (and {len(missing) - 3} more)" if len(missing) > 3 else ""
         probs.add(", ".join(missing[:3]) + more, f"no id yet; run  python tools/assign_ids.py {cid}")
@@ -122,12 +151,36 @@ def check_course(d, probs):
                     probs.add(f"{rel(fp)}:{n}", f"unknown post type '{head[0]}'; use one of: {', '.join(sorted(POST_TYPES))}")
                 if len(head) < 3:
                     probs.add(f"{rel(fp)}:{n}", "a post header is: === type | P# | Title | cover TeX")
+                check_lectures(head[1:2], f"{rel(fp)}:{n}")
     for name in ("legacy-ids.json",):
         p = d / name
         if p.exists():
             try: json.loads(read(p))
             except json.JSONDecodeError as e: probs.add(f"{rel(p)}:{e.lineno}", f"invalid JSON: {e.msg}")
     return meta
+
+
+def check_question(q, probs):
+    """A question that can't be answered correctly is worse than none: check its options and answer."""
+    k, at, plus, minus = q["kind"], q["at"], q["plus"], q["minus"]
+    if not q["text"]:
+        probs.add(at, f"? {k} has no prompt: write the question on the lines below it")
+    if k == "mc":
+        if plus != 1: probs.add(at, f'? mc needs exactly one correct option ("+ ..."), it has {plus}; use ? multi for several')
+        if minus < 1: probs.add(at, '? mc needs at least one wrong option ("- ...")')
+    elif k == "multi":
+        if plus < 1: probs.add(at, '? multi needs at least one correct option ("+ ...")')
+        if plus + minus < 2: probs.add(at, "? multi needs at least two options")
+    elif k == "tf":
+        if q["answer"] not in ("true", "false"):
+            probs.add(at, f'? tf needs "| true" or "| false", not "{q["answer"]}"')
+        elif plus or minus:
+            if q["answer"] != "false": probs.add(at, '"+/-" lines after ? tf are counterexamples, so the answer must be "| false"')
+            elif plus != 1 or minus < 1: probs.add(at, 'counterexamples after ? tf | false: exactly one "+ ..." and at least one "- ..."')
+    elif k in ("order", "build"):
+        if plus < 2: probs.add(at, f'? {k} needs at least two "+ ..." lines (the tiles in the right order)')
+    elif k in ("input", "expr", "interval", "set"):
+        if not q["answer"].split("|")[0].strip(): probs.add(at, f"? {k} needs an answer: ? {k} #id | answer")
 
 
 def course_data(d):
