@@ -168,6 +168,41 @@ def solve_lesson(pg):
     return -3
 
 
+def fail_lesson(pg):
+    """Answer wrongly until the lives run out; return the number of hearts lost (or a negative error)."""
+    lost = 0
+    for _ in range(60):
+        if pg.locator("#lessonBody .out-screen").count():
+            return lost
+        it = pg.evaluate(SOLVE_ITEM)
+        if not it: return -1
+        k = it["kind"]
+        if k == "learn":
+            pg.click("#primary"); pg.wait_for_timeout(50); continue
+        if k in ("mc", "multi", "tf"):
+            bs = pg.locator("#lessonBody .options .opt")
+            wrong = [i for i in range(bs.count()) if not pg.evaluate("(b) => b._opt.ok", bs.nth(i).element_handle())]
+            for i in (wrong[:1] if wrong else [0]): bs.nth(i).click()
+        elif k in ("order", "build"):
+            for o in reversed([o for o in it["opts"] if o["ok"]]):
+                tiles = pg.locator("#lessonBody .tiles-bank .tile:not(.used)")
+                for i in range(tiles.count()):
+                    if pg.evaluate("(b) => b._opt.html", tiles.nth(i).element_handle()) == o["h"]:
+                        tiles.nth(i).click(); break
+        else:
+            pg.fill("#lessonBody input.answer-in", {"interval": "(987654, 987655)", "set": "{987654}"}.get(k, "987654"))
+        pg.wait_for_timeout(40)
+        if pg.is_disabled("#primary"): return -2
+        before = pg.locator("#lessonHearts svg:not(.lost)").count()
+        pg.click("#primary"); pg.wait_for_timeout(60)
+        if pg.locator("#lessonBody .q-label.counter").count() and pg.locator("#fb").is_hidden():
+            pg.locator("#lessonBody .options").last.locator(".opt").first.click()
+            pg.click("#primary"); pg.wait_for_timeout(60)
+        lost += before - pg.locator("#lessonHearts svg:not(.lost)").count()
+        pg.click("#primary"); pg.wait_for_timeout(60)
+    return -3
+
+
 def new_page(b, errors, **kw):
     pg = b.new_page(viewport={"width": 420, "height": 860}, **kw)
     pg.on("pageerror", lambda e: errors.append("pageerror: " + str(e)))
@@ -215,6 +250,23 @@ def test_site(b, url, cs):
     bk = pg.evaluate("[JSON.parse(localStorage.getItem('cusp.bk')).next, CUSP.doneCount()]")
     check("the done screen reminds about a backup, then waits a few lessons", bk[0] == bk[1] + 5, str(bk))
     check("progress is saved under stable ids", pg.evaluate("Object.keys(CUSP.P.done).every(function (k) { return k.indexOf(':l:') > 0 || k.indexOf(':u:') > 0; })"))
+
+    # lives: three wrong answers end the lesson, which then starts again and is not marked done
+    pg.click('.hud-btn[data-t="here"]'); pg.wait_for_timeout(800)
+    pg.click(".hud-card .fc-go"); pg.wait_for_timeout(300)
+    full = pg.locator("#lessonHearts svg:not(.lost)").count()
+    check("a lesson starts with 3 lives", full == 3 and pg.locator("#lessonHearts").is_visible(), str(full))
+    lost = fail_lesson(pg)
+    check("after 3 mistakes the lesson is out of lives", lost == 3, f"lost {lost}")
+    pg.click("#primary"); pg.wait_for_timeout(300)
+    check("'start again' restarts the lesson with full lives",
+          pg.locator("#lessonBody .out-screen").count() == 0 and pg.locator("#lessonHearts svg:not(.lost)").count() == 3 and pg.evaluate("!!CUSP.debugItem()"))
+    pg.click("#lessonClose"); pg.wait_for_timeout(500)
+    check("a lesson that ran out of lives is not marked done", pg.locator("#path .node.done").count() == 1)
+    pg.evaluate("() => { Object.keys(CUSP.P.srs).forEach(function (k) { CUSP.P.srs[k][1] = 0; }); CUSP.startSession({ review: true }); }")
+    pg.wait_for_timeout(200)
+    check("the daily review has no lives", pg.evaluate("!!CUSP.debugItem()") and pg.locator("#lessonHearts").is_hidden())
+    pg.click("#lessonClose"); pg.wait_for_timeout(200)
 
     # backup and restore
     ok = pg.evaluate("""() => { var b = CUSP.backup(); var keys = Object.keys(CUSP.P.done);

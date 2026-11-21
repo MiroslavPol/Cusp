@@ -101,6 +101,12 @@ A lesson shows `LESSON_Q = 7` questions drawn from its pool (at most 3 generated
 review questions from finished lessons. These constants are in `app/js/player.js`. Each unit ends
 with a checkpoint.
 
+Lessons, checkpoints and the final test give `HEARTS = 3` lives (also in `player.js`). Each wrong
+answer costs one. After the last one the student sees the correct answer, then an "out of lives"
+screen: the lesson isn't marked done and starts again from the beginning with a fresh draw of
+questions. The mistakes still go to spaced repetition. The daily review and the feed have no lives,
+and a question whose own answer is broken never costs one.
+
 Each answered question gets a Leitner box (`P.srs[key] = [box, dueDay]`). Answering correctly on
 the first try moves it up a box (due again in 1, 3, 7, 16 or 35 days). A mistake sends it back to
 box 0, due tomorrow. Questions due today appear behind the **"Opakování na dnes · N"** button on
