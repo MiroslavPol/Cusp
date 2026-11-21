@@ -78,6 +78,7 @@
 /* questions answered right in the post */
 .post-q .fq-options { margin: 4px 0 2px; }
 .post-q .fq-options .opt { font-size: 16px; padding: 10px 14px; }
+.post-q .fq-options .opt.check { padding-left: 46px; }     /* room for the checkbox (learn.css .opt.check) */
 .post-q > .post-cap > .fq-btn { align-self: flex-start; }
 .post-q .fq-btn:disabled { opacity: 0.45; cursor: default; }
 .fq-fb { border-left: 3px solid var(--good); padding: 4px 0 2px 12px; font-size: 15.5px; }

@@ -429,6 +429,14 @@ def test_site(b, url, cs):
         check("an answer in the feed updates spaced repetition", pg.evaluate(f"!!CUSP.P.srs['{key}']"))
     else:
         check("a question can be answered inside the feed", False, "no inline question rendered")
+    # a multiple-choice option in the feed keeps the room for its checkbox (the text starts after the box)
+    clear = pg.evaluate("""() => { var post = document.createElement('div'); post.className = 'post-q';
+        post.innerHTML = '<div class="fq-options"><button class="opt check" role="checkbox">reflexivita</button></div>';
+        document.getElementById('feedList').appendChild(post);
+        var b = post.querySelector('.opt'), box = getComputedStyle(b, '::before');
+        var r = parseFloat(box.left) + parseFloat(box.width) + 2 * parseFloat(box.borderLeftWidth) <= parseFloat(getComputedStyle(b).paddingLeft);
+        post.remove(); return r; }""")
+    check("feed: a checkbox doesn't cover the text of its option", clear)
     first_id = ids[0]
     pg.locator(f'#feedList .post[data-id="{first_id}"] .pa-btn.save').click()
     pg.locator("#feedChips .chip").last.click(); pg.wait_for_timeout(300)

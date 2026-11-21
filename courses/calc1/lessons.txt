@@ -673,7 +673,7 @@ Funkce $\lfloor x\rfloor$ (celá část) je na $\mathbb R$
 - rostoucí
 - klesající
 - periodická
-! Na intervalech $[k,k+1)$ je konstantní, takže není rostoucí; nikde ale neklesá.
+! Rostoucí znamená $f(x_1)<f(x_2)$ pro <b>každou</b> dvojici $x_1<x_2$. To celá část nesplňuje: $0<\frac12$, ale $\lfloor 0\rfloor = \lfloor \frac12\rfloor = 0$. Že celkově roste, nestačí. Neklesající je, protože $x_1<x_2$ dává vždy $\lfloor x_1\rfloor\le\lfloor x_2\rfloor$: na každém $[k,k+1)$ je konstantní a v celých číslech skočí nahoru.
 ? build #zvqz5
 Sestavte definici liché funkce: $f$ je lichá, jestliže
 + $\forall x\in D(f)$
