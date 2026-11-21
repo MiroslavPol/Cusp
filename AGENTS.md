@@ -38,6 +38,11 @@ All file formats are in `courses/README.md`. Follow the existing course files as
 (`courses/calc1/` is the largest). Keep each course in its own language as set in
 course.json (`lang`); the existing courses are Czech.
 
+Follow the writing rules in `courses/README.md` (*Writing for a phone*, *Notation*): a formula longer
+than about half a line goes in `$$…$$`, points are `[1, 2]`, decimals take a comma (`0{,}5`), and an
+explanation ends with the result. The right sides of `? match` and the options are shuffled, so never
+refer to an option by its position ("the last one").
+
 ## Useful commands
 
 ```bash
