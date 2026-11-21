@@ -23,10 +23,10 @@ APP = ROOT / "app"
 COURSES = ROOT / "courses"
 
 # Order matters: later files may use what earlier ones define.
-CSS = ["base.css", "learn.css", "feed.css", "path.css"]
-HTML = ["learn.html", "feed.html", "overlays.html"]
+CSS = ["base.css", "learn.css", "feed.css", "path.css", "home.css"]
+HTML = ["home.html", "learn.html", "feed.html", "overlays.html"]
 JS_BEFORE_COURSES = ["fig.js", "answers.js", "genkit.js"]
-JS_AFTER_COURSES = ["strings.js", "core.js", "guide.js", "path.js", "player.js", "map.js", "feed.js", "main.js"]
+JS_AFTER_COURSES = ["strings.js", "core.js", "guide.js", "path.js", "player.js", "map.js", "home.js", "feed.js", "main.js"]
 
 KINDS = {"mc", "multi", "tf", "input", "expr", "interval", "set", "order", "build", "gen"}
 POST_TYPES = {"def", "thm", "proof", "cex", "app", "exam", "hist", "tip"}

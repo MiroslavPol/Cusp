@@ -34,17 +34,73 @@
   function drawFigs(node) { if (window.CUSP_FIG) window.CUSP_FIG.renderAll(node); }
 
   // ---- math: KaTeX → MathML, then small fixes for how browsers draw MathML
+  var MACROS = { "\\lowint": "\\underline{\\int}", "\\upint": "\\overline{\\int}" };
   function typeset(node) {
     if (window.renderMathInElement) {
       renderMathInElement(node, {
         delimiters: [{ left: "$$", right: "$$", display: true }, { left: "$", right: "$", display: false }],
-        throwOnError: false, output: "mathml",
-        macros: { "\\lowint": "\\underline{\\int}", "\\upint": "\\overline{\\int}" }
+        throwOnError: false, output: "mathml", macros: MACROS
       });
-      fixFnSpacing(node);
-      fixVariants(node);
-      fixPrimes(node);
+      fixMath(node);
+      fitWide(node);
     }
+  }
+  function fixMath(node) { fixFnSpacing(node); fixVariants(node); fixPrimes(node); fixSigns(node); }
+
+  // A sign is not a subtraction: in (−1)ⁿ, x = −1 or r ≠ −1 the minus comes right after a bracket or another
+  // operator, but KaTeX's MathML leaves it as an infix operator, which browsers space like a − b.
+  var OPENS = "([{⟨⌊⌈", CLOSES = ")]}⟩⌋⌉!′″";
+  function fixSigns(node) {
+    Array.prototype.forEach.call(node.querySelectorAll("math mo"), function (mo) {
+      var t = mo.textContent.trim();
+      if (t !== "−" && t !== "+" && t !== "±" && t !== "∓") return;
+      var prev = mo.previousElementSibling;
+      function isBar(e) { var x = e.textContent.trim(); return x === "|" || x === "∣"; }    // KaTeX writes | as <mi>∣</mi>
+      if (!prev) return;
+      if (isBar(prev)) {                                                // |−x| or |x| − 1: is this bar opening?
+        var bars = 0;
+        for (var s = prev; s; s = s.previousElementSibling) if (isBar(s)) bars++;
+        if (bars % 2 === 0) return;
+      } else {
+        if (prev.tagName.toLowerCase() !== "mo") return;                 // after a number, letter, fraction…: subtraction
+        var p = prev.textContent.trim();
+        if (p && CLOSES.indexOf(p) >= 0) return;                        // (a) − b
+      }
+      mo.setAttribute("form", "prefix"); mo.setAttribute("lspace", "0"); mo.setAttribute("rspace", "0");
+    });
+  }
+
+  // Display formulas wider than the screen (a phone): a list of formulas joined by \quad / \qquad goes one per
+  // line; what still doesn't fit scrolls sideways, with a fade at the edge so it's clear there is more.
+  function topLevelParts(tex) {
+    var parts = [], depth = 0, env = 0, start = 0, m, re = /\\begin\{|\\end\{|\\left\b|\\right\b|\\qquad\b|\\quad\b|[{}]/g;
+    while ((m = re.exec(tex))) {
+      var k = m[0];
+      if (k === "{") depth++; else if (k === "}") depth--;
+      else if (k === "\\begin{" || k === "\\left") env++; else if (k === "\\end{" || k === "\\right") env--;
+      else if (!depth && !env) { parts.push(tex.slice(start, m.index)); start = m.index + k.length; }
+    }
+    parts.push(tex.slice(start));
+    return parts.map(function (p) { return p.trim(); }).filter(Boolean);
+  }
+  function fitWide(node) {
+    Array.prototype.forEach.call(node.querySelectorAll('math[display="block"]'), function (m) {
+      if (m.closest(".cover-math")) return;                            // feed covers scale their formula themselves
+      if (!m.clientWidth || m.scrollWidth <= m.clientWidth + 1) return;
+      var ann = m.querySelector('annotation[encoding="application/x-tex"]'), tex = ann ? ann.textContent : "";
+      var parts = topLevelParts(tex), host = m.parentNode;              // host: KaTeX's <span class="katex">
+      if (parts.length > 1 && window.katex && host) {
+        var tmp = document.createElement("span");
+        try {
+          katex.render("\\begin{gathered}" + parts.join("\\\\[3pt]") + "\\end{gathered}", tmp, { displayMode: true, output: "mathml", throwOnError: true, macros: MACROS });
+          var nk = tmp.firstElementChild;
+          host.parentNode.replaceChild(nk, host);
+          fixMath(nk);
+          m = nk.querySelector("math") || m;
+        } catch (e) { /* keep the one-line version */ }
+      }
+      if (m.scrollWidth > m.clientWidth + 1) m.classList.add("wide");
+    });
   }
   // Chrome's MathML ignores mathvariant (ℝ would show as R): map letters to Unicode math alphanumerics.
   var MV = {

@@ -4,12 +4,16 @@
   var C = window.CUSP, $ = C.$;
 
   var scrollMemo = {}, currentView = null;
+  // The app opens on Home (no #… or an unknown one); #learn and #feed open those views directly.
   function show(view, force) {
-    if (view !== "feed") view = "learn";
+    if (view !== "feed" && view !== "learn") view = "home";
     if (currentView && !force) scrollMemo[currentView] = window.scrollY;
     currentView = view;
+    $("view-home").hidden = view !== "home";
     $("view-learn").hidden = view !== "learn";
     $("view-feed").hidden = view !== "feed";
+    document.body.setAttribute("data-view", view);
+    if (view === "home") C.renderHome();
     Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) {
       if (t.dataset.view === view) t.setAttribute("aria-current", "page"); else t.removeAttribute("aria-current");
     });

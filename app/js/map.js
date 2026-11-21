@@ -18,6 +18,7 @@
     $("daysLabel").textContent = s.days;
     $("tabLearnLabel").textContent = s.learn;
     $("tabFeedLabel").textContent = s.feed;
+    $("tabHomeLabel").textContent = s.home;
     $("lessonClose").setAttribute("aria-label", s.close);
     $("guideClose").setAttribute("aria-label", s.closeGuide);
     $("sheetTitle").textContent = s.chooseCourse;
@@ -136,6 +137,11 @@
         box.appendChild(foot);
         return box;
       }
+      if (id === "bk") {                     // the backup constellation: the same backup and restore as the course picker
+        box.classList.add("fc-bk");
+        box.appendChild(backupBox(s));
+        return box;
+      }
       var it = byId[id];
       box.style.setProperty("--u", it.color);
       var lect = c.lectures && it.n && it.n.lect && !it.checkpoint ? C.lectLabel(it.n.lect) : it.unitKicker;
@@ -154,6 +160,7 @@
     window.CUSP_PATH.space(path, {
       key: c.id, items: items, hud: hud, card: card, currentId: cur ? cur.id : "sing",
       sing: { status: fstat, title: P.done[fid] ? s.singDoneTitle : s.singTitle },
+      backup: { label: s.bkConst, sub: lastBackupText(s), due: C.backupDue() },
       strings: { start: s.start, here: s.mapHere, fit: s.mapFit, zin: s.mapIn, zout: s.mapOut },
       metric: s.metric
     });
@@ -169,7 +176,7 @@
       b.type = "button";
       b.setAttribute("aria-pressed", String(c.id === course().id));
       if (!c.hasLessons) b.disabled = true;
-      b.addEventListener("click", function () { C.setCourse(c.id); closeSheet(); renderPath(); });
+      b.addEventListener("click", function () { C.setCourse(c.id); closeSheet(); renderPath(); C.emit("course", c); });
       list.appendChild(b);
     });
     list.appendChild(backupBox(s));
@@ -177,12 +184,15 @@
   }
   function closeSheet() { $("courseSheet").hidden = true; }
 
+  function lastBackupText(s) {
+    var last = C.lastBackup();
+    return last ? fmt(s.bkLast, { d: new Date(last + "T12:00").toLocaleDateString(course().lang) }) : s.bkNever;
+  }
   function backupBox(s) {
     var box = el("div", "backup");
     box.appendChild(el("h3", null, escapeHtml(s.bkTitle)));
     box.appendChild(el("p", null, escapeHtml(s.bkText)));
-    var last = C.lastBackup();
-    box.appendChild(el("p", "bk-last", escapeHtml(last ? fmt(s.bkLast, { d: new Date(last + "T12:00").toLocaleDateString(course().lang) }) : s.bkNever)));
+    box.appendChild(el("p", "bk-last", escapeHtml(lastBackupText(s))));
     var row = el("div", "backup-row");
     var save = el("button", "admin-btn", escapeHtml(s.bkSave)); save.type = "button";
     save.addEventListener("click", function () { exportProgress(s); });
@@ -208,16 +218,29 @@
   }
   function exportProgress(s) {
     var data = JSON.stringify(C.backup()), name = "cusp-" + C.today() + ".json", f = null;
+    function saved() {
+      C.markBackup(true);
+      C.toast(s.bkSaved);
+      // the date under the constellation and in the backup boxes, and the constellation stops asking for a backup
+      Array.prototype.forEach.call(document.querySelectorAll(".bk-last, .sp-const .const-s"), function (n) { n.textContent = lastBackupText(s); });
+      Array.prototype.forEach.call(document.querySelectorAll(".sp-const"), function (n) { n.classList.remove("due"); });
+    }
+    function download() {
+      var a = el("a"); a.href = URL.createObjectURL(new Blob([data], { type: "application/json" })); a.download = name;
+      document.body.appendChild(a); a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      saved();
+    }
     try { f = new File([data], name, { type: "application/json" }); } catch (e) { /* old browser */ }
-    if (f && navigator.canShare && navigator.canShare({ files: [f] })) {        // phones: the share sheet (send it to yourself)
-      navigator.share({ files: [f], title: name }).then(function () { C.markBackup(true); }).catch(function () { /* cancelled */ });
+    // Phones and tablets: the share sheet (send it to yourself, save it to Files). Computers download the file:
+    // Windows also claims it can share files, but its share dialog is not where anyone looks for a backup.
+    var touch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    if (f && touch && navigator.canShare && navigator.canShare({ files: [f] })) {
+      navigator.share({ files: [f], title: name }).then(saved)
+        .catch(function (e) { if (!e || e.name !== "AbortError") download(); });     // cancelled: nothing; failed: download instead
       return;
     }
-    var a = el("a"); a.href = URL.createObjectURL(new Blob([data], { type: "application/json" })); a.download = name;
-    document.body.appendChild(a); a.click();
-    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-    C.markBackup(true);
-    C.toast(s.bkSaved);
+    download();
   }
   function importText(text, s) {
     var b = null; try { b = JSON.parse(text); } catch (e) { /* not JSON */ }
@@ -236,8 +259,19 @@
     });
   })();
 
+  // Where a student stands in a (loaded) course, for the home page: the stop to play next (the current lesson or
+  // checkpoint; null once every core lesson is done), core stops done / total, and the final test.
+  function courseState(c) {
+    var st = nodeStatuses(c), core = allNodes(c).filter(function (n) { return !n.bonus; });
+    var next = core.filter(function (n) { return st[n.id] === "current"; })[0] || null;
+    return { next: next, nextTitle: next ? nodeTitle(next) : null, done: core.filter(function (n) { return P.done[n.id]; }).length,
+      total: core.length, finalDone: !!P.done[C.finalId(c)] };
+  }
+
   C.on("progress", renderPath);
   C.on("admin", renderPath);
+  C.courseState = courseState;
+  C.openCourseSheet = openSheet;
   C.renderPath = renderPath;
   C.renderStats = renderStats;
   C.applyChrome = applyChrome;
