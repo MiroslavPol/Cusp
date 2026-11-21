@@ -3,6 +3,9 @@
 A math learning app that ships as a single page: a Duolingo-style **Learn** path for each course, plus
 one Instagram-style **Feed** that mixes theory and exercises from all courses.
 
+**Open the app: <https://miroslavpol.github.io/Cusp/>** (installable on a phone, see
+[Install on a phone](#install-on-a-phone)).
+
 ## Quick start
 
 ```bash
@@ -105,10 +108,13 @@ the path.
 
 ## Storage
 
-All progress lives in the browser's `localStorage` under `lemma.*` keys: `lemma.learn` (progress,
-XP, spaced repetition), `lemma.course`, `lemma.admin`, `lemma.f.liked`, `lemma.f.saved` and `lemma.bk`
-(when the last backup was made). The `lemma` prefix is the app's old name; it stays so nobody's progress is lost. It
-belongs to one browser and origin, so localhost and the published app keep separate progress.
+All progress lives in the browser's `localStorage` under `cusp.*` keys: `cusp.learn` (progress,
+XP, spaced repetition), `cusp.course`, `cusp.admin`, `cusp.f.liked`, `cusp.f.saved` and `cusp.bk`
+(when the last backup was made). It belongs to one browser and origin, so localhost and the
+published app keep separate progress. If the app is open twice (two tabs, or the installed app and
+the browser), each save first takes in what the other one saved, so neither overwrites the other.
+If the browser refuses to save (storage full or blocked), the student is told once and asked to make
+a backup.
 
 **Backup:** the course picker has *Zálohovat* (a `.json` file; on phones it opens the share
 sheet, so you can send it to yourself) and *Obnovit* (from the file or pasted as text).
@@ -133,8 +139,10 @@ questions doesn't touch anyone's history. Progress saved under the old positiona
 
 - `site/` has every course inside `index.html` (KaTeX from a CDN), plus `img/` and `fonts/`.
 - `pwa/` is the **installable app**. Each course's data is its own file (`data/<id>.json`),
-  loaded when that course is opened (the feed loads all of them). It bundles KaTeX, the fonts,
-  a manifest, icons and a service worker, so it works offline after the first visit.
+  loaded when that course is opened (the feed loads all of them). The page asks for it as
+  `data/<id>.json?v=<hash>`, so after an update it never gets the previous version's lessons. It
+  bundles KaTeX, the fonts, a manifest, icons and a service worker, so it works offline after the
+  first visit, and asks the browser to keep its data (`navigator.storage.persist()`).
 
 The fonts (Instrument Serif, Literata, IBM Plex Mono; SIL Open Font License) are in
 `app/vendor/fonts/`, so the app makes no requests to Google or other third parties.
@@ -144,7 +152,8 @@ The fonts (Instrument Serif, Literata, IBM Plex Mono; SIL Open Font License) are
 1. Create a GitHub repository and push this folder to the `main` branch.
 2. On GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 3. `.github/workflows/pages.yml` builds and deploys. After a minute or so the app is at
-   `https://<you>.github.io/<repo>/`. Check the **Actions** tab if it doesn't appear.
+   `https://<you>.github.io/<repo>/` (this one: <https://miroslavpol.github.io/Cusp/>). Check the
+   **Actions** tab if it doesn't appear.
 
 After that, every push to `main` updates the app, after the tests pass. Installed copies pick
 up the new version the next time they're opened online. Pull requests are checked by

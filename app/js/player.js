@@ -17,7 +17,7 @@
   var LESSON_Q = 7, REVIEW_Q = 2, CHECKPOINT_Q = 8;
   function instantiate(it) {
     if (!it || it.kind !== "gen") return it;
-    var g = window.LEMMA_GEN && window.LEMMA_GEN.get(it.cid, it.answer);
+    var g = window.CUSP_GEN && window.CUSP_GEN.get(it.cid, it.answer);
     if (!g) return null;
     var q;
     try { q = g(); } catch (e) { console.error("courses/" + it.cid + "/generators.js: " + it.answer + ":", e); return null; }   // skip it, keep the lesson going
@@ -79,23 +79,39 @@
     };
     $("lesson").hidden = false;
     document.body.style.overflow = "hidden";
+    pushLessonState();
     renderItem();
   }
 
-  function closeLesson() {
+  // Back (Android's button, a swipe, the browser's arrow) closes the lesson instead of leaving the app: an open
+  // lesson has its own history entry. Back while the guide is open over a lesson closes just the guide.
+  function pushLessonState() {
+    try { if (!(history.state && history.state.cuspLesson)) history.pushState({ cuspLesson: 1 }, ""); } catch (e) { /* ignore */ }
+  }
+  window.addEventListener("popstate", function () {
+    if (!S) return;
+    if (!$("guide").hidden) { $("guideClose").click(); pushLessonState(); return; }
+    closeLesson(true);
+  });
+
+  function closeLesson(byBack) {
     var done = S && S.onDone, result = S && S.result;
     S = null;
     $("lesson").hidden = true;
     document.body.style.overflow = "";
+    if (byBack !== true) { try { if (history.state && history.state.cuspLesson) history.back(); } catch (e) { /* ignore */ } }
     C.emit("progress");
     if (done) done(result);
   }
-  $("lessonClose").addEventListener("click", closeLesson);
+  $("lessonClose").addEventListener("click", function () { closeLesson(); });
+
+  // the course an item belongs to: the feed plays questions from every course, whichever course is selected
+  function itemCourse(it) { return (it && it.cid && C.courseById(it.cid)) || course(); }
 
   function setBar() { $("lessonBar").style.width = Math.round(100 * S.progress / S.goal) + "%"; }
 
   function renderItem() {
-    var it = S.queue[S.i], s = L(), c = course();
+    var it = S.queue[S.i], c = itemCourse(it), s = C.stringsFor(c);
     S.choice = null; S.checked = false; S.stage = 1; S.tiles = null; S.inputKind = null; S.spec = null; S.input = null;
     setBar();
     foot.dataset.state = ""; fb.hidden = true; fb.innerHTML = "";
@@ -212,7 +228,7 @@
   };
   function buildInput(inner, it, s) {
     var kind = KEYS[it.kind] ? it.kind : "input";
-    var spec = kind === "expr" ? window.LEMMA_ANS.exprSpec(it) : null;
+    var spec = kind === "expr" ? window.CUSP_ANS.exprSpec(it) : null;
     var inp = el("input", "answer-in" + (kind === "expr" ? " formula" : ""));
     inp.id = "answerInput";
     inp.type = "text"; inp.autocomplete = "off"; inp.setAttribute("autocapitalize", "off"); inp.setAttribute("autocorrect", "off"); inp.spellcheck = false;
@@ -226,7 +242,7 @@
     function showPreview() {
       var v = inp.value.trim();
       if (!v) { prev.innerHTML = ""; return; }
-      try { prev.innerHTML = '<span class="pv-k">' + s.seeAs + ':</span> $' + window.LEMMA_ANS.previewTeX(v, spec.vars, spec.plusC) + "$"; prev.classList.remove("bad"); typeset(prev); }
+      try { prev.innerHTML = '<span class="pv-k">' + s.seeAs + ':</span> $' + window.CUSP_ANS.previewTeX(v, spec.vars, spec.plusC) + "$"; prev.classList.remove("bad"); typeset(prev); }
       catch (e) { prev.textContent = e.message; prev.classList.add("bad"); }
     }
     inp.addEventListener("input", changed);
@@ -289,20 +305,32 @@
       return typeof v === "number" ? v : NaN;
     } catch (e) { return NaN; }
   }
+  // Numbers must match exactly (1209 is not 1210), except for rounding: a decimal with at least 2 places counts
+  // if it is the value rounded to that many places (3.14 for π), and so does any value that rounds to an answer
+  // the course itself wrote as such a decimal ("π; 3.1416" accepts 3.14159). Alternatives after ";" are the same
+  // value written differently.
+  function places(s) {
+    var m = String(s).trim().replace(/^[a-z]\s*=\s*/i, "").replace(/\s+/g, "").match(/^[-+−–]?\d*[.,](\d+)$/);
+    return m ? m[1].length : 0;
+  }
   function inputCorrect(given, answer) {
-    var g = toNum(given);
+    var g = toNum(given), dg = places(given);
     return answer.split(";").some(function (a) {
-      var v = toNum(a);
+      var v = toNum(a), da = places(a);
       if (!isNaN(g) && !isNaN(v)) {
         if (!isFinite(g) || !isFinite(v)) return g === v;
-        return Math.abs(g - v) <= 1e-3 * Math.max(1, Math.abs(v));
+        var tol = 1e-9 * Math.max(1, Math.abs(v));
+        if (dg >= 2) tol = Math.max(tol, 0.5 * Math.pow(10, -dg));
+        if (da >= 2) tol = Math.max(tol, 0.5 * Math.pow(10, -da));
+        var d = Math.abs(g - v);
+        return d <= tol * (1 + 1e-9) && (d <= 1e-9 * Math.max(1, Math.abs(v)) || d <= 0.02 * Math.abs(v));   // 0.00 is no rounding of 0.001
       }
       return given.trim().toLowerCase().replace(/\s+/g, "") === a.trim().toLowerCase().replace(/\s+/g, "");
     });
   }
 
   function answerTeX(it) {
-    var A = window.LEMMA_ANS;
+    var A = window.CUSP_ANS;
     if (it.show) return it.show;
     if (it.kind === "expr") {
       var sp = A.exprSpec(it);
@@ -336,7 +364,7 @@
   }
 
   function check() {
-    var it = S.queue[S.i], s = L(), ok, answerHtml = "", A = window.LEMMA_ANS;
+    var it = S.queue[S.i], s = C.stringsFor(itemCourse(it)), ok, answerHtml = "", A = window.CUSP_ANS;
     if (S.inputKind && (it.kind === "input" || it.kind === "expr" || it.kind === "interval" || it.kind === "set")) {
       var r;
       if (it.kind === "expr") r = A.checkExpr(S.input.value, S.spec);
@@ -398,7 +426,7 @@
       (it.explain ? "<p>" + it.explain + "</p>" : "") +
       figs(it.figA) +
       (ok || S.feed ? "" : '<p class="muted">' + s.again + "</p>") +
-      C.reportLink(course(), C.reportItem(it));
+      C.reportLink(itemCourse(it), C.reportItem(it));
     fb.hidden = false;
     typeset(fb);
     drawFigs(fb);
@@ -408,14 +436,14 @@
   // The course's own answer can't be used (a typo in lessons.txt, a generator's bad output): not the student's
   // fault, so skip the question without touching spaced repetition, and offer to report it.
   function brokenQuestion(it, why) {
-    var s = L();
+    var s = C.stringsFor(itemCourse(it));
     console.error("question " + (it.key || "?") + " can't be checked: " + why);
     S.input.readOnly = true;
     S.checked = true;
     S.progress++;
     setBar();
     foot.dataset.state = "";
-    fb.innerHTML = "<p>" + escapeHtml(s.broken) + "</p>" + C.reportLink(course(), C.reportItem(it));
+    fb.innerHTML = "<p>" + escapeHtml(s.broken) + "</p>" + C.reportLink(itemCourse(it), C.reportItem(it));
     fb.hidden = false;
     primary.textContent = s.cont; primary.disabled = false;
     primary.focus({ preventScroll: true });

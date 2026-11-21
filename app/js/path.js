@@ -6,7 +6,7 @@
    Called from map.js (renderPath), which supplies the items, the HUD and the card contents. */
 (function () {
   "use strict";
-  var F = function () { return window.LEMMA_FIG; };
+  var F = function () { return window.CUSP_FIG; };
   var NS = "http://www.w3.org/2000/svg";
 
   // ---------------------------------------------------------------- icons
@@ -448,5 +448,5 @@
   window.addEventListener("pointerup", function (e) { if (active) active.up(e); });
   window.addEventListener("pointercancel", function (e) { if (active) active.up(e); });
 
-  window.LEMMA_PATH = { icon: icon, space: space, refresh: function () { if (active) active.refresh(); } };
+  window.CUSP_PATH = { icon: icon, space: space, refresh: function () { if (active) active.refresh(); } };
 })();

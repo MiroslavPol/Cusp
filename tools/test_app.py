@@ -95,7 +95,7 @@ SOLVE_ITEM = """() => { var i = CUSP.debugItem(); if (!i) return null;
 # a formula undefined on its sample range or a generator that sometimes produces nonsense makes a question
 # impossible to answer. Generators are run 200 times each. Returns a list of "key: problem".
 SELF_CHECK = """() => CUSP.loadAll(CUSP.COURSES).then(function () {
-  var A = window.LEMMA_ANS, bad = [];
+  var A = window.CUSP_ANS, bad = [];
   function problem(q) {
     var r;
     try {
@@ -203,7 +203,7 @@ def test_site(b, url, cs):
 
     # play the first lesson correctly
     pg.click('.hud-btn[data-t="here"]'); pg.wait_for_timeout(800)
-    pg.evaluate("localStorage.setItem('lemma.bk', JSON.stringify({ next: 1 }))")     # remind after this lesson
+    pg.evaluate("localStorage.setItem('cusp.bk', JSON.stringify({ next: 1 }))")     # remind after this lesson
     pg.click(".hud-card .fc-go"); pg.wait_for_timeout(300)
     href = pg.get_attribute("#lessonBody .report-link", "href") or ""
     check("a lesson item has a 'report a problem' link naming the course and the item", "issues/new?title=" in href and f"%5B{first}%5D" in href, href[:120])
@@ -212,7 +212,7 @@ def test_site(b, url, cs):
     pg.wait_for_timeout(1200)
     check("finished lesson is marked done on the map", pg.locator("#path .node.done").count() == 1)
     check("the next lesson becomes the current one", pg.locator("#path .node.current").count() == 1)
-    bk = pg.evaluate("[JSON.parse(localStorage.getItem('lemma.bk')).next, CUSP.doneCount()]")
+    bk = pg.evaluate("[JSON.parse(localStorage.getItem('cusp.bk')).next, CUSP.doneCount()]")
     check("the done screen reminds about a backup, then waits a few lessons", bk[0] == bk[1] + 5, str(bk))
     check("progress is saved under stable ids", pg.evaluate("Object.keys(CUSP.P.done).every(function (k) { return k.indexOf(':l:') > 0 || k.indexOf(':u:') > 0; })"))
 
@@ -236,6 +236,36 @@ def test_site(b, url, cs):
           pg.locator("#fb .report-link").count() == 1 and not pg.is_disabled("#primary") and not pg.evaluate("!!CUSP.P.srs['test:q:broken']"))
     pg.click("#primary"); pg.wait_for_timeout(100)
     errors[:] = [e for e in errors if "can't be checked" not in e]      # that console.error was expected
+
+    # how typed answers are judged: exact numbers but rounding allowed, decimal commas, joined intervals, ∞
+    r = pg.evaluate("""() => { var A = window.CUSP_ANS, I = CUSP.inputCorrect;
+      return [I('1210', '1210'), !I('1209', '1210'), !I('0', '0.001'), !I('0.00', '0.001'), I('3.14', 'π'), I('3,14', 'π'),
+              !I('3.1', 'π'), !I('2.26', '2.25'), I('3.14159', 'π; 3.1416'), I('1.1052', '1.105'), I('x = 2', '2'),
+              A.checkSet('{0,5}', '{1/2}').ok, A.checkSet('{1,2,3}', '{1; 2; 3}').ok, A.checkSet('{2, 5}', '{2; 5}').ok,
+              A.checkInterval('(0;1] ∪ (1;2)', '(0;2)').ok, !A.checkInterval('(0;1) ∪ (1;2)', '(0;2)').ok,
+              A.checkInterval('[0;2] ∪ (1;3)', '[0;3)').ok, A.checkInterval('(-∞; 0] ∪ [0; 1)', '(-∞; 1)').ok,
+              !A.checkInterval('(0; 5)', '(0; ∞)').ok, !A.checkSet('{1; 1000000}', '{1; ∞}').ok]; }""")
+    check("numbers, sets and intervals are judged correctly", all(r), "cases failing: " + str([i for i, x in enumerate(r) if not x]))
+
+    # a question from another course (as the feed plays them) reports to that course; Back closes the player
+    if len(cs) > 1:
+        other = cs[1][0]
+        pg.evaluate(f"() => CUSP.answer({{ kind: 'input', answer: '2', flags: [], html: '<p>t</p>', key: '{other}:q:t', cid: '{other}' }})")
+        pg.fill("#lessonBody input.answer-in", "2"); pg.click("#primary"); pg.wait_for_timeout(100)
+        href = pg.get_attribute("#fb .report-link", "href") or ""
+        check("a question from another course reports to its own course", f"%5B{other}%5D" in href, href[:80])
+        pg.evaluate("history.back()"); pg.wait_for_timeout(300)
+        check("Back closes the lesson and stays in the app", pg.locator("#lesson").is_hidden() and pg.evaluate("location.hash") == "#learn")
+        pg.evaluate("() => CUSP.answer({ kind: 'input', answer: '2', flags: [], html: '<p>t</p>', key: 'test:q:t', cid: 'test' })")
+        pg.click("#lessonClose"); pg.wait_for_timeout(300)
+        check("closing a lesson removes its history entry", not pg.evaluate("history.state && history.state.cuspLesson"))
+
+    # the browser refuses to save: say so (once)
+    ok = pg.evaluate("""() => { var set = Storage.prototype.setItem;
+        Storage.prototype.setItem = function () { throw new Error('QuotaExceededError'); };
+        CUSP.P.xp += 1; CUSP.save(); Storage.prototype.setItem = set; CUSP.save();
+        return document.getElementById('toast').textContent === CUSP.L().saveFail; }""")
+    check("a failed save is reported to the student", ok)
 
     # feed
     pg.click('.tab[data-view="feed"]'); pg.wait_for_timeout(1500)
@@ -286,7 +316,7 @@ def test_site(b, url, cs):
 
 
 def test_migration(b, url, cs):
-    print("old progress (positional keys) is moved to the stable ids")
+    print("old progress (positional keys, the old lemma.* storage) is moved to the stable ids and cusp.*")
     cid = next((c for c, _ in cs if (ROOT / "courses" / c / "legacy-ids.json").exists()), None)
     if not cid:
         print("  (no course has legacy-ids.json)"); return
@@ -303,6 +333,8 @@ def test_migration(b, url, cs):
     check("done lesson moved", P["done"].get(legacy[old_l]) is True and old_l not in P["done"])
     check("spaced repetition moved", P["srs"].get(legacy[old_q]) == [3, 99999] and old_q not in P["srs"])
     check("the map shows the migrated lesson as done", pg.locator("#path .node.done").count() == 1)
+    check("the old lemma.* keys are moved to cusp.*", pg.evaluate("""() => !Object.keys(localStorage).some(function (k) { return k.indexOf('lemma.') === 0; })
+        && JSON.parse(localStorage.getItem('cusp.learn')).xp === 10 && localStorage.getItem('cusp.course') === '""" + cid + "'"))
     check("no errors in the page", not errors, "; ".join(errors[:3]))
     pg.close()
 
@@ -317,6 +349,7 @@ def test_pwa(b, cs):
     pg.goto(url + "#learn"); pg.wait_for_timeout(2500)
     first = cs[0][0]
     check("course data is a separate file", pg.evaluate("!document.getElementById('data-" + first + "')"))
+    check("course data is asked for by version", pg.evaluate("CUSP.COURSES.every(function (c) { return /^data\\/[\\w-]+\\.json\\?v=[0-9a-f]{10}$/.test(c.data); })"))
     check("map loads its course on demand", pg.locator("#path .node").count() == expected_nodes(first))
     pg.click('.tab[data-view="feed"]'); pg.wait_for_timeout(2500)
     check("feed loads every course", pg.evaluate("CUSP.COURSES.every(function (c) { return !!c.units; })"))
@@ -332,6 +365,13 @@ def test_pwa(b, cs):
     took = time.time() - t0
     DELAY["page"] = 0
     check("a slow network shows the saved app after about 3 s", took < 6 and pg.locator("#path .node").count() == expected_nodes(first), f"{took:.1f} s")
+    # the app open twice: what one copy saved is not overwritten by the other
+    pg2 = ctx.new_page(); pg2.goto(url + "#learn"); pg2.wait_for_timeout(1500)
+    pg2.evaluate("() => { CUSP.P.done['tab:two'] = true; CUSP.save(); }")
+    pg.evaluate("() => { CUSP.P.done['tab:one'] = true; CUSP.save(); }")
+    both = pg.evaluate("(function () { var d = JSON.parse(localStorage.getItem('cusp.learn')).done; return !!(d['tab:one'] && d['tab:two']); })()")
+    check("two open copies of the app don't overwrite each other's progress", both)
+    pg2.close()
     check("no errors in the page", not errors, "; ".join(errors[:3]))
     ctx.close(); srv.shutdown()
 

@@ -30,8 +30,8 @@
   }
   function fmt(s, o) { return String(s).replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
   function slug(s) { return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48); }
-  function figs(list) { return (list || []).map(function (sp) { return window.LEMMA_FIG ? window.LEMMA_FIG.html(sp) : ""; }).join(""); }
-  function drawFigs(node) { if (window.LEMMA_FIG) window.LEMMA_FIG.renderAll(node); }
+  function figs(list) { return (list || []).map(function (sp) { return window.CUSP_FIG ? window.CUSP_FIG.html(sp) : ""; }).join(""); }
+  function drawFigs(node) { if (window.CUSP_FIG) window.CUSP_FIG.renderAll(node); }
 
   // ---- math: KaTeX → MathML, then small fixes for how browsers draw MathML
   function typeset(node) {
@@ -149,7 +149,8 @@
   function rawData(c) {
     var node = $("data-" + c.id);
     if (node) { try { return Promise.resolve(JSON.parse(node.textContent)); } catch (e) { return Promise.reject(e); } }
-    return fetch("data/" + c.id + ".json").then(function (r) { if (!r.ok) throw new Error("data/" + c.id + ".json: " + r.status); return r.json(); });
+    var url = c.data || "data/" + c.id + ".json";        // build.py adds ?v=<content hash>: see sw.js
+    return fetch(url).then(function (r) { if (!r.ok) throw new Error(url + ": " + r.status); return r.json(); });
   }
   function load(c) {
     if (!c) return Promise.resolve(null);
@@ -232,15 +233,57 @@
   function finalId(c) { return c.id + ":final"; }
 
   // ---------------------------------------------------------------- progress (kept in this browser)
-  function loadJSON(k, d) { try { var v = JSON.parse(localStorage.getItem(k)); return v && typeof v === "object" ? v : d; } catch (e) { return d; } }
-  function saveJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
-  var P = loadJSON("lemma.learn", {});          // never reassigned: the other modules keep a reference
+  // Keys: cusp.learn (P below), cusp.course, cusp.admin, cusp.f.liked, cusp.f.saved, cusp.bk.
+  // The app used to be called Lemma and stored the same things under lemma.*: move them over once.
+  (function () {
+    try {
+      var old = [];
+      for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf("lemma.") === 0) old.push(k); }
+      old.forEach(function (k) {
+        var n = "cusp." + k.slice(6);
+        if (localStorage.getItem(n) === null) localStorage.setItem(n, localStorage.getItem(k));
+        localStorage.removeItem(k);
+      });
+    } catch (e) { /* storage unavailable */ }
+  })();
+  function getRaw(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function setRaw(k, s) { try { localStorage.setItem(k, s); return true; } catch (e) { return false; } }
+  function loadJSON(k, d) { try { var v = JSON.parse(getRaw(k)); return v && typeof v === "object" ? v : d; } catch (e) { return d; } }
+  function saveJSON(k, v) { return setRaw(k, JSON.stringify(v)); }
+
+  // P: { v, done, mistakes, srs, xp, streak, last }. v is the format version: change it (and convert old data
+  // in normalize) if the shape of P ever changes.
+  var LEARN = "cusp.learn", P_VERSION = 1;
+  var stored = getRaw(LEARN);                   // what this copy of the app last read or wrote
+  var P = loadJSON(LEARN, {});                  // never reassigned: the other modules keep a reference
   function normalize() {
     P.done = P.done || {}; P.mistakes = P.mistakes || {}; P.srs = P.srs || {};
     P.xp = P.xp || 0; P.streak = P.streak || 0; P.last = P.last || null;
+    P.v = P_VERSION;
   }
   normalize();
-  function save() { saveJSON("lemma.learn", P); }
+  // Merges progress from elsewhere (a backup, or another tab of the app) into P: nothing in P is lost, the other
+  // copy only adds or moves things forward.
+  function mergeLearn(o) {
+    Object.keys(o.done || {}).forEach(function (k) { P.done[k] = true; });
+    Object.keys(o.mistakes || {}).forEach(function (k) { if (!(P.srs[k] && o.srs && o.srs[k] && P.srs[k][1] > o.srs[k][1])) P.mistakes[k] = true; });
+    Object.keys(o.srs || {}).forEach(function (k) {
+      var r = o.srs[k]; if (!Array.isArray(r) || r.length !== 2) return;
+      if (!P.srs[k] || r[1] > P.srs[k][1]) P.srs[k] = r;
+    });
+    P.xp = Math.max(P.xp, +o.xp || 0);
+    if (o.last && (!P.last || o.last > P.last)) { P.last = o.last; P.streak = +o.streak || 0; }
+    else if (o.last === P.last) P.streak = Math.max(P.streak, +o.streak || 0);
+  }
+  var saveWarned = false;
+  function save() {
+    // Another tab or window of the app saved since we last did (the app left open in the background while the
+    // student carried on in the browser): take its progress in first instead of overwriting it.
+    var now = getRaw(LEARN);
+    if (now && now !== stored) { try { var o = JSON.parse(now); if (o && typeof o === "object") mergeLearn(o); } catch (e) { /* not ours */ } }
+    stored = JSON.stringify(P);
+    if (!setRaw(LEARN, stored) && !saveWarned) { saveWarned = true; toast(L().saveFail); }
+  }
 
   // Old keys were positions ("calc1-u3-l2-q5"); courses/<id>/legacy-ids.json maps them to the stable ids.
   function migrate(c) {
@@ -262,22 +305,22 @@
     return null;
   }
 
-  var ADMIN = (function () { try { return localStorage.getItem("lemma.admin") === "1"; } catch (e) { return false; } })();
+  var ADMIN = getRaw("cusp.admin") === "1";
   function isAdmin() { return ADMIN; }
   function setAdmin(on) {
     ADMIN = on;
-    try { if (on) localStorage.setItem("lemma.admin", "1"); else localStorage.removeItem("lemma.admin"); } catch (e) { /* ignore */ }
+    try { if (on) localStorage.setItem("cusp.admin", "1"); else localStorage.removeItem("cusp.admin"); } catch (e) { /* ignore */ }
     toast(on ? L().adminOnToast : L().adminOffToast);
     emit("admin", on);
   }
   // Courses with "draft": true in course.json are only listed in admin mode.
   function visibleCourses() { return COURSES.filter(function (c) { return ADMIN || !c.draft; }); }
-  var courseId = (function () { try { return localStorage.getItem("lemma.course"); } catch (e) { return null; } })();
+  var courseId = getRaw("cusp.course");
   function course() {
     var vis = visibleCourses();
     return vis.filter(function (c) { return c.id === courseId; })[0] || vis.filter(function (c) { return c["default"]; })[0] || vis[0] || COURSES[0];
   }
-  function setCourse(id) { courseId = id; try { localStorage.setItem("lemma.course", id); } catch (e) { /* ignore */ } }
+  function setCourse(id) { courseId = id; setRaw("cusp.course", id); }
   function stringsFor(c) { return STR[c && c.lang] || STR.en; }
   function L() { return stringsFor(course()); }
 
@@ -345,24 +388,15 @@
   function readSet(k) { try { return JSON.parse(localStorage.getItem(k) || "[]"); } catch (e) { return []; } }
   function backup() {
     return { app: "cusp", v: 2, date: new Date().toISOString(), learn: JSON.parse(JSON.stringify(P)),     // a copy, not the live object
-      liked: readSet("lemma.f.liked"), saved: readSet("lemma.f.saved"), course: courseId };
+      liked: readSet("cusp.f.liked"), saved: readSet("cusp.f.saved"), course: courseId };
   }
   // Restoring merges: nothing you have here is lost, the backup only adds or moves forward.
   function restore(b) {
     if (!b || b.app !== "cusp" || !b.learn || typeof b.learn !== "object") return false;
-    var o = b.learn;
-    Object.keys(o.done || {}).forEach(function (k) { P.done[k] = true; });
-    Object.keys(o.mistakes || {}).forEach(function (k) { if (!(P.srs[k] && o.srs && o.srs[k] && P.srs[k][1] > o.srs[k][1])) P.mistakes[k] = true; });
-    Object.keys(o.srs || {}).forEach(function (k) {
-      var r = o.srs[k]; if (!Array.isArray(r) || r.length !== 2) return;
-      if (!P.srs[k] || r[1] > P.srs[k][1]) P.srs[k] = r;
-    });
-    P.xp = Math.max(P.xp, +o.xp || 0);
-    if (o.last && (!P.last || o.last > P.last)) { P.last = o.last; P.streak = +o.streak || 0; }
-    else if (o.last === P.last) P.streak = Math.max(P.streak, +o.streak || 0);
+    mergeLearn(b.learn);
     COURSES.forEach(function (c) { if (c.units) migrate(c); });
     save();
-    [["lemma.f.liked", b.liked], ["lemma.f.saved", b.saved]].forEach(function (x) {
+    [["cusp.f.liked", b.liked], ["cusp.f.saved", b.saved]].forEach(function (x) {
       if (!Array.isArray(x[1])) return;
       var s = readSet(x[0]); x[1].forEach(function (id) { if (s.indexOf(id) < 0) s.push(id); });
       try { localStorage.setItem(x[0], JSON.stringify(s)); } catch (e) { /* ignore */ }
@@ -371,18 +405,18 @@
     return true;
   }
 
-  // ---- backup reminder. lemma.bk = { date: day of the last backup, next: remind when this many lessons are done }.
+  // ---- backup reminder. cusp.bk = { date: day of the last backup, next: remind when this many lessons are done }.
   // Progress lives only in this browser, so after a few finished lessons the done screen suggests a backup.
   var BK_FIRST = 5, BK_EVERY = 10, BK_SNOOZE = 5;
   function doneCount() { return Object.keys(P.done).length; }
-  function backupDue() { return doneCount() >= (loadJSON("lemma.bk", {}).next || BK_FIRST); }
-  function lastBackup() { return loadJSON("lemma.bk", {}).date || null; }
+  function backupDue() { return doneCount() >= (loadJSON("cusp.bk", {}).next || BK_FIRST); }
+  function lastBackup() { return loadJSON("cusp.bk", {}).date || null; }
   // saved: a backup was made (next reminder in BK_EVERY lessons); otherwise the reminder was shown (again in BK_SNOOZE)
   function markBackup(saved) {
-    var b = loadJSON("lemma.bk", {});
+    var b = loadJSON("cusp.bk", {});
     if (saved) b.date = today();
     b.next = doneCount() + (saved ? BK_EVERY : BK_SNOOZE);
-    saveJSON("lemma.bk", b);
+    saveJSON("cusp.bk", b);
   }
 
   // ---- "Report a problem": a pre-filled GitHub issue (or e-mail) that names the exact item.

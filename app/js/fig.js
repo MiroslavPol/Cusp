@@ -228,5 +228,5 @@
   }
   function html(spec) { return '<div class="fig" data-spec="' + String(spec).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;") + '"></div>'; }
 
-  window.LEMMA_FIG = { render: render, renderAll: renderAll, html: html, compile: compile, num: num };
+  window.CUSP_FIG = { render: render, renderAll: renderAll, html: html, compile: compile, num: num };
 })();

@@ -1,6 +1,6 @@
 /* Random question generators for this course. In lessons.txt, "? gen | name" calls G.name.
    Each generator returns a fresh question object (see app/js/genkit.js for the helpers in K). */
-LEMMA_GEN.define("hs", function (K, G) {
+CUSP_GEN.define("hs", function (K, G) {
   "use strict";
   var P = K.P, ans = K.ans, dec = K.dec, expr = K.expr, fr = K.fr, fs = K.fs, ft = K.ft, gcd = K.gcd, inp = K.inp, ivl = K.ivl, lin = K.lin, mc = K.mc, nz = K.nz, par = K.par, pick = K.pick, poly = K.poly, ri = K.ri, set = K.set, sgn = K.sgn, withFig = K.withFig;
 

@@ -51,7 +51,7 @@ for f in sys.argv[1:]:
             node_jobs.append({'typ': typ, 'f': body, 'answer': cur['answer'], 'flags': cur['flags'], 'where': f"{f}:{i}"})
 if node_jobs:
     js = r'''
-global.window = {}; require(require('path').join(process.argv[1] || '', 'answers.js')); const A = window.LEMMA_ANS;
+global.window = {}; require(require('path').join(process.argv[1] || '', 'answers.js')); const A = window.CUSP_ANS;
 const jobs = JSON.parse(require('fs').readFileSync(0, 'utf8')); let bad = 0;
 for (const j of jobs) {
   try {

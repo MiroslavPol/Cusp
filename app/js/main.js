@@ -13,10 +13,10 @@
     Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) {
       if (t.dataset.view === view) t.setAttribute("aria-current", "page"); else t.removeAttribute("aria-current");
     });
-    if (view === "feed" && window.LemmaFeed) window.LemmaFeed.show();
-    if (view === "learn") window.LEMMA_PATH.refresh();
+    if (view === "feed" && window.CUSP_FEED) window.CUSP_FEED.show();
+    if (view === "learn") window.CUSP_PATH.refresh();
     window.scrollTo(0, force ? 0 : (scrollMemo[view] || 0));
-    if (view === "feed" && window.LemmaFeed) window.LemmaFeed.fill();
+    if (view === "feed" && window.CUSP_FEED) window.CUSP_FEED.fill();
   }
   Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) {
     t.addEventListener("click", function () {
@@ -26,7 +26,6 @@
   });
   window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
 
-  window.LEMMA = C;      // older name, handy in the browser console
   C.show = show;
   C.renderPath();        // loads the current course first if needed
   show(location.hash.slice(1));

@@ -40,6 +40,11 @@ from `<script id="data-<id>">` in `site/` or from `data/<id>.json` in `pwa/` (`C
 Interface texts are in `strings.js`; a course's `lang` picks the language. That includes the messages
 for answers the app can't read (`ans`), which `answers.js` looks up when it needs one.
 
-**"Lemma" names.** `LEMMA_GEN`, `LEMMA_ANS`, `LEMMA_FIG`, `LEMMA_PATH`, the `lemma.*` storage keys and the
-`lemma-app-*` cache are from the app's old name. Leave them: renaming the storage keys would lose
-students' progress, and every course's `generators.js` calls `LEMMA_GEN.define`.
+Besides `window.CUSP`, a few modules expose one global each: `CUSP_GEN` (genkit.js, which every
+course's `generators.js` calls), `CUSP_ANS` (answers.js), `CUSP_FIG` (fig.js), `CUSP_PATH` (path.js) and
+`CUSP_FEED` (feed.js).
+
+**Storage.** Everything a student has is in `localStorage` under `cusp.*` (see the main README).
+`cusp.learn` carries a format version `v`: if its shape ever changes, raise `P_VERSION` in `core.js`
+and convert old data in `normalize()`. The app used to be called Lemma; `core.js` moves the old
+`lemma.*` keys to `cusp.*` once, and the service worker deletes the old `lemma-app-*` caches.
