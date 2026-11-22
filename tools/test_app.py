@@ -545,10 +545,10 @@ def test_pwa(b, cs):
     pg.on("pageerror", lambda e: errors.append("pageerror: " + str(e)))
     pg.goto(url + "#learn"); pg.wait_for_timeout(2500)
     first = cs[0][0]
-    # the phone's system bars are dark like the app, and the page may draw under them (with room left for them)
+    # installed, the app is fullscreen (Android hides its bars until a swipe); where bars show, they are dark like the app
     bars = pg.evaluate("""() => fetch(document.querySelector('link[rel=manifest]').href).then(function (r) { return r.json(); }).then(function (m) {
-        return [m.theme_color, document.querySelector('meta[name=theme-color]').content, document.querySelector('meta[name=viewport]').content.indexOf('viewport-fit=cover') >= 0]; })""")
-    check("the system bars are dark, like the app", bars[0] == bars[1] == "#080c1a" and bars[2], str(bars))
+        return [m.theme_color, document.querySelector('meta[name=theme-color]').content, document.querySelector('meta[name=viewport]').content.indexOf('viewport-fit=cover') >= 0, m.display]; })""")
+    check("the installed app is fullscreen, with dark bars where they show", bars[0] == bars[1] == "#080c1a" and bars[2] and bars[3] == "fullscreen", str(bars))
     check("course data is a separate file", pg.evaluate("!document.getElementById('data-" + first + "')"))
     check("course data is asked for by version", pg.evaluate("CUSP.COURSES.every(function (c) { return /^data\\/[\\w-]+\\.json\\?v=[0-9a-f]{10}$/.test(c.data); })"))
     check("map loads its course on demand", pg.locator("#path .node").count() == expected_nodes(first))

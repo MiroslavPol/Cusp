@@ -192,7 +192,11 @@ up the new version the next time they're opened online. Pull requests are checke
 - **Android (Chrome):** open the link → menu ⋮ → **Install app**.
 - **iPhone (Safari):** open the link → Share → **Add to Home Screen**.
 
-The app opens full screen and works offline after the first visit. On iPhone, the home-screen
+The app opens full screen and works offline after the first visit. On Android the installed app
+hides the system bars (`"display": "fullscreen"` in the manifest, written by `build.py`); a swipe from
+the top or bottom edge shows them for a moment. iPhone keeps its status bar. A change to these
+settings reaches an installed app only when it is installed again (or after Android's own update,
+up to a day later). On iPhone, the home-screen
 app keeps its progress separate from Safari (the backup moves it across).
 
 ### Test locally

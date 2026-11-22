@@ -333,7 +333,7 @@ if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
         "id": "./",
         "start_url": "./",
         "scope": "./",
-        "display": "standalone",
+        "display": "fullscreen",
         "background_color": "#080c1a",
         "theme_color": "#080c1a",
         "icons": [
