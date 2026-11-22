@@ -903,7 +903,8 @@ Který graf patří funkci $\operatorname{arctg}$?
 ! $\operatorname{arctg}$ je rostoucí na celém $\mathbb R$ s vodorovnými asymptotami $y=\pm\frac\pi2$.
 ? expr #eqsuz | sqrt(1-x^2) | dom=-0.9..0.9
 Zjednodušte $\sin(\arccos x)$ pro $x\in[-1,1]$.
-! Pro $t = \arccos x\in[0,\pi]$ je $\sin t\ge0$, takže $\sin t = \sqrt{1-\cos^2t}$.
+! Označme $t = \arccos x$. Pak $\cos t = x$ a $t\in[0,\pi]$. Z $\sin^2t + \cos^2t = 1$ plyne $\sin t = \pm\sqrt{1-x^2}$. Pro $t\in[0,\pi]$ leží bod $[\cos t, \sin t]$ na horní polovině jednotkové kružnice, takže $\sin t\ge0$ a platí znaménko plus: $\sin(\arccos x) = \sqrt{1-x^2}$.
+@ x=-1.3..1.3; y=-0.35..1.25; aspect=equal; param=cos(t),sin(t),0,pi; poly=0,0,0.6,0.8; poly=0.6,0,0.6,0.8; pt=0.6,0.8; pt=0.6,0; label=0.79,0.4,sin t; label=0.6,-0.15,x; label=0.34,0.09,t
 ? match #faqfz
 Přiřaďte funkcím jejich grafy.
 + $\arcsin x$ :: @ x=-2.5..2.5; y=-2..3.5; f=asin(x)

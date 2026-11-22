@@ -194,7 +194,8 @@ up the new version the next time they're opened online. Pull requests are checke
 
 The app opens full screen and works offline after the first visit. On Android the installed app
 hides the system bars (`"display": "fullscreen"` in the manifest, written by `build.py`); a swipe from
-the top or bottom edge shows them for a moment. iPhone keeps its status bar. A change to these
+the top or bottom edge shows them for a moment. If an older install still shows the bars, the
+first tap in the app hides them (`app/js/main.js`). iPhone keeps its status bar. A change to these
 settings reaches an installed app only when it is installed again (or after Android's own update,
 up to a day later). On iPhone, the home-screen
 app keeps its progress separate from Safari (the backup moves it across).

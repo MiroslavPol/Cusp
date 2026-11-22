@@ -47,6 +47,16 @@ self.addEventListener("fetch", function (e) {
     return;
   }
 
+  // The manifest: network first. Android reads it when the app is (re)installed; from the cache it could still
+  // be the previous version's (an old "display" or colour) until this worker has replaced the old cache.
+  if (/\.webmanifest$/.test(url.pathname)) {
+    e.respondWith(fetch(req).then(function (res) {
+      if (res.ok) { var copy = res.clone(); caches.open(APP).then(function (c) { c.put(req, copy); }); }
+      return res;
+    }, function () { return caches.match(req, { ignoreSearch: true }); }));
+    return;
+  }
+
   // Everything else (course data, KaTeX, fonts, images, icons): cache first. A new version brings a new cache.
   // Course data is asked for as data/<id>.json?v=<hash>: match that exactly, so a newer page never gets the older
   // data from this cache (it goes to the network instead). Offline, any cached version beats nothing.
