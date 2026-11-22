@@ -125,7 +125,8 @@ Typed numbers accept fractions, decimal commas, π, e, √, ln, ∞, powers (`e^
 ½-style fractions. Numbers must match exactly, except for rounding: a decimal with at least 2
 places is accepted when it is the answer rounded to that many places (`3.14` for `π`, but not
 `1209` for `1210`). If you add a rounded alternative yourself (`π; 3.1416`), values that round to it
-count too. Formulas accept implicit multiplication
+count too. The same holds for interval endpoints and set elements (`[0; 3.14]` for `[0; π]`), where
+`π` can also be typed as `pi`. Formulas accept implicit multiplication
 (`2x cos x`), `sin^2 x`, `e^-x`, `√(1-x²)`, `|x|`, `tg`, `arctg`, `ln`, `log` (base 10) and show a
 live preview ("Rozumím: …"). Intervals accept `( )`, `[ ]` and Czech `⟨ ⟩`, separated by `;`;
 touching pieces are joined, so `(0; 1] ∪ (1; 2)` equals `(0; 2)`. In sets a comma with no space

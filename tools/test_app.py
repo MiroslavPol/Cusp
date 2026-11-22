@@ -362,7 +362,10 @@ def test_site(b, url, cs):
               A.checkSet('{0,5}', '{1/2}').ok, A.checkSet('{1,2,3}', '{1; 2; 3}').ok, A.checkSet('{2, 5}', '{2; 5}').ok,
               A.checkInterval('(0;1] ∪ (1;2)', '(0;2)').ok, !A.checkInterval('(0;1) ∪ (1;2)', '(0;2)').ok,
               A.checkInterval('[0;2] ∪ (1;3)', '[0;3)').ok, A.checkInterval('(-∞; 0] ∪ [0; 1)', '(-∞; 1)').ok,
-              !A.checkInterval('(0; 5)', '(0; ∞)').ok, !A.checkSet('{1; 1000000}', '{1; ∞}').ok]; }""")
+              !A.checkInterval('(0; 5)', '(0; ∞)').ok, !A.checkSet('{1; 1000000}', '{1; ∞}').ok,
+              A.checkInterval('[0; pi]', '[0; π]').ok, A.checkInterval('[0; 3.14]', '[0; π]').ok, A.checkInterval('[0; 3,14]', '[0; π]').ok,
+              !A.checkInterval('[0; 3.1]', '[0; π]').ok, !A.checkInterval('[0; 3]', '[0; π]').ok,
+              A.checkSet('{0; 3.14}', '{0; π}').ok, !A.checkSet('{0; 3}', '{0; π}').ok, !A.checkInterval('[0; 0.00]', '[0; 0.001]').ok]; }""")
     check("numbers, sets and intervals are judged correctly", all(r), "cases failing: " + str([i for i, x in enumerate(r) if not x]))
 
     # typesetting: a sign minus is not spaced like a subtraction; a list of formulas too wide for a phone breaks into lines
@@ -555,6 +558,14 @@ def test_pwa(b, cs):
     pg.click('.tab[data-view="feed"]'); pg.wait_for_timeout(2500)
     check("feed loads every course", pg.evaluate("CUSP.visibleCourses().every(function (c) { return !!c.units; })"))
     check("service worker is active", pg.evaluate("navigator.serviceWorker.ready.then(function (r) { return !!r.active; })"))
+    # a reinstall must read the current manifest, even while an older version's copy is still in a cache
+    fresh = pg.evaluate("""() => caches.keys().then(function (keys) {          // as on a phone where only the old version's cache has it
+        return Promise.all(keys.map(function (k) { return caches.open(k).then(function (c) { return c.delete('manifest.webmanifest', { ignoreSearch: true }); }); }));
+      }).then(function () { return caches.open('cusp-app-older'); }).then(function (c) {
+        return c.put(new URL('manifest.webmanifest', location.href).href, new Response('{"display": "standalone"}', { headers: { 'Content-Type': 'application/manifest+json' } }));
+      }).then(function () { return fetch('manifest.webmanifest'); }).then(function (r) { return r.json(); })
+      .then(function (m) { return caches.delete('cusp-app-older').then(function () { return m.display; }); })""")
+    check("the manifest comes fresh from the network, not from an old cache", fresh == "fullscreen", str(fresh))
     pg.wait_for_timeout(1500)
     ctx.set_offline(True)
     pg.goto(url + "#learn"); pg.wait_for_timeout(2500)

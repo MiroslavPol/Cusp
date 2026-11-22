@@ -250,6 +250,15 @@
     if (/^-(∞|inf|infinity|nekonečno)$/i.test(s)) return -Infinity;
     try { return evaluate(parse(s, []), {}); } catch (e) { return NaN; }
   }
+  // A decimal with 2 or more places may be the right value rounded (3.14 for π, not 3.1 or 3), as with typed
+  // numbers (inputCorrect in player.js). Intervals and sets keep how many places each number was typed with.
+  function places(s) { var m = String(s).trim().replace(/\s+/g, "").match(/^[-+−–]?\d*[.,](\d+)$/); return m ? m[1].length : 0; }
+  function same(g, gp, e) {
+    if (close(g, e)) return true;
+    if (!(gp >= 2) || !isFinite(g) || !isFinite(e)) return false;
+    var d = Math.abs(g - e);
+    return d <= 0.5 * Math.pow(10, -gp) * (1 + 1e-9) && d <= 0.02 * Math.abs(e);   // 0.00 is no rounding of 0.001
+  }
   // "a; b" always works; "a, b" too, and with decimal commas "0,5, 1,5" (the separator is the comma before a space)
   function splitPair(inner) {
     if (inner.indexOf(";") >= 0) return inner.split(";");
@@ -271,7 +280,7 @@
       if (!pr || pr.length !== 2) fail("endpoints");
       var a = num(pr[0]), b = num(pr[1]);
       if (isNaN(a) || isNaN(b)) fail("endpoint");
-      out.push({ a: a, b: b, lc: m[1] === "[" && isFinite(a), rc: m[3] === "]" && isFinite(b) });
+      out.push({ a: a, b: b, lc: m[1] === "[" && isFinite(a), rc: m[3] === "]" && isFinite(b), pa: places(pr[0]), pb: places(pr[1]) });
     }
     return union(out);
   }
@@ -288,9 +297,9 @@
       .forEach(function (p) {
         var q = out[out.length - 1];
         if (q && (p.a < q.b && !close(p.a, q.b) || close(p.a, q.b) && (q.rc || p.lc))) {
-          if (p.b > q.b && !close(p.b, q.b)) { q.b = p.b; q.rc = p.rc; }
+          if (p.b > q.b && !close(p.b, q.b)) { q.b = p.b; q.rc = p.rc; q.pb = p.pb; }
           else if (close(p.b, q.b)) q.rc = q.rc || p.rc;
-        } else out.push({ a: p.a, b: p.b, lc: p.lc, rc: p.rc });
+        } else out.push({ a: p.a, b: p.b, lc: p.lc, rc: p.rc, pa: p.pa, pb: p.pb });
       });
     return out;
   }
@@ -301,7 +310,7 @@
     try { g = parseInterval(given); } catch (err) { return { error: err.message }; }
     if (g.length !== e.length) return { ok: false };
     for (var i = 0; i < e.length; i++) {
-      if (!close(g[i].a, e[i].a) || !close(g[i].b, e[i].b) || g[i].lc !== e[i].lc || g[i].rc !== e[i].rc) return { ok: false };
+      if (!same(g[i].a, g[i].pa, e[i].a) || !same(g[i].b, g[i].pb, e[i].b) || g[i].lc !== e[i].lc || g[i].rc !== e[i].rc) return { ok: false };
     }
     return { ok: true };
   }
@@ -315,13 +324,16 @@
     parts.forEach(function (p) {
       p = p.trim(); if (!p) return;
       var pm = /^(±|\+-|\+\/-)(.*)$/.exec(p);
-      if (pm) { var v = num(pm[2]); if (isNaN(v)) fail("element", p); out.push(v, -v); return; }
+      if (pm) { var v = num(pm[2]); if (isNaN(v)) fail("element", p); out.push({ v: v, p: places(pm[2]) }, { v: -v, p: places(pm[2]) }); return; }
       var x = num(p);
       if (isNaN(x)) fail("element", p);
-      out.push(x);
+      out.push({ v: x, p: places(p) });
     });
-    out.sort(function (a, b) { return a - b; });
-    return out.filter(function (v, i) { return i === 0 || !close(v, out[i - 1]); });
+    out.sort(function (a, b) { return a.v - b.v; });
+    out = out.filter(function (x, i) { return i === 0 || !close(x.v, out[i - 1].v); });
+    var vals = out.map(function (x) { return x.v; });
+    vals.places = out.map(function (x) { return x.p; });          // how many decimal places each was typed with
+    return vals;
   }
   function checkSet(given, answer) {
     var g;
@@ -329,7 +341,7 @@
     try { e = parseSet(answer); } catch (err) { return { broken: "answer \"" + answer + "\": " + err.message }; }
     try { g = parseSet(given); } catch (err) { return { error: err.message }; }
     if (g.length !== e.length) return { ok: false };
-    for (var i = 0; i < e.length; i++) if (!close(g[i], e[i])) return { ok: false };
+    for (var i = 0; i < e.length; i++) if (!same(g[i], g.places ? g.places[i] : 0, e[i])) return { ok: false };
     return { ok: true };
   }
   function numTeX(v) {
