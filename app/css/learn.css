@@ -62,7 +62,7 @@
   display: flex; justify-content: center; gap: 8px;
   background: color-mix(in srgb, var(--card) 94%, transparent);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border-top: 1px solid var(--line); padding: 6px 16px 8px;
+  border-top: 1px solid var(--line); padding: 6px 16px calc(8px + env(safe-area-inset-bottom));
 }
 .tab {
   flex: 0 1 160px; display: flex; flex-direction: column; align-items: center; gap: 2px;
@@ -75,7 +75,7 @@ main#feed { padding-bottom: 100px; }
 
 /* Toast */
 .toast {
-  position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); z-index: 60;
+  position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 60;
   background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 10px; font-size: 14.5px;
   max-width: calc(100% - 32px); text-align: center; box-shadow: 0 8px 24px -8px rgba(0,0,0,0.4);
 }
@@ -83,7 +83,7 @@ main#feed { padding-bottom: 100px; }
 /* Course sheet */
 .sheet-wrap { position: fixed; inset: 0; z-index: 40; background: rgba(10, 14, 22, 0.45); display: flex; align-items: flex-end; justify-content: center; }
 .sheet {
-  background: var(--card); width: 100%; max-width: 560px; border-radius: 18px 18px 0 0; padding: 18px 16px 28px;
+  background: var(--card); width: 100%; max-width: 560px; border-radius: 18px 18px 0 0; padding: 18px 16px calc(28px + env(safe-area-inset-bottom));
   display: flex; flex-direction: column; gap: 10px; max-height: 85%; overflow: auto;
 }
 .sheet h2 { margin: 0 0 4px; font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 28px; }
@@ -167,7 +167,7 @@ main#feed { padding-bottom: 100px; }
 .answer-in.wrong { border-color: var(--bad); }
 .in-hint { font-size: 14px; color: var(--muted); }
 
-.lesson-foot { border-top: 1px solid var(--line); background: var(--card); }
+.lesson-foot { border-top: 1px solid var(--line); background: var(--card); padding-bottom: env(safe-area-inset-bottom); }
 .lesson-foot[data-state="good"] { background: color-mix(in srgb, var(--good) 14%, var(--card)); border-color: transparent; }
 .lesson-foot[data-state="bad"] { background: color-mix(in srgb, var(--bad) 12%, var(--card)); border-color: transparent; }
 .foot-inner { max-width: 600px; margin: 0 auto; padding: 14px 20px 18px; display: flex; flex-direction: column; gap: 12px; }
@@ -253,7 +253,7 @@ main#feed { padding-bottom: 100px; }
 .guide-h { display: flex; flex-direction: column; min-width: 0; }
 .guide-k { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--hist); }
 .guide-h h2 { margin: 0; font-size: 18px; line-height: 1.25; text-wrap: balance; }
-.guide-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.guide-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: env(safe-area-inset-bottom); }
 .guide-inner { max-width: 640px; margin: 0 auto; padding: 14px 18px 40px; font-size: 16.5px; line-height: 1.6; }
 .guide-inner p { margin: 0 0 12px; }
 .guide-inner h4 { font-size: 17px; margin: 18px 0 8px; }

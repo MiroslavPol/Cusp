@@ -90,7 +90,7 @@ button { font: inherit; color: inherit; }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
 /* Page column, buttons, math */
-main { max-width: 640px; margin: 0 auto; padding: 16px 16px 80px; display: flex; flex-direction: column; gap: 16px; }
+main { max-width: 640px; margin: 0 auto; padding: 16px 16px calc(80px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 16px; }
 .qed { display: block; text-align: right; margin-top: -4px; font-size: 18px; line-height: 1; color: var(--c); }
 .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0; margin: 10px 0; }
 /* a display formula that still doesn't fit (core.js fitWide) scrolls sideways; the faded edge shows there is more */
