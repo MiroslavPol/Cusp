@@ -737,7 +737,7 @@ Který výraz se rovná $1 - 2\sin^2\alpha$?
 + $\cos 2\alpha$
 - $\cos^2\alpha$
 - $2\cos\alpha$
-! $\cos 2\alpha = \cos^2\alpha - \sin^2\alpha = (1 - \sin^2\alpha) - \sin^2\alpha$.
+! $$\cos 2\alpha = \cos^2\alpha - \sin^2\alpha = (1 - \sin^2\alpha) - \sin^2\alpha = 1 - 2\sin^2\alpha.$$
 ? gen #ocvjq | hs_trig
 ? input #7xlbr | -7/25; -0.28
 Je-li $\cos\alpha = \frac35$, kolik je $\cos2\alpha$?

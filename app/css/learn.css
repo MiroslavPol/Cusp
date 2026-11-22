@@ -296,6 +296,12 @@ math mo.prime { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math
 .opt { overflow-x: auto; }
 .lesson-body, .guide-body { overflow-x: hidden; }
 .learn-text li, .q-prompt li, .post-body li, .reveal li, .stmt li, .guide-inner li, .guide-inner p, .g-callout p { overflow-x: auto; overflow-y: hidden; }
+/* A list item that scrolls (above) loses the browser's own bullet or number, which is drawn outside its box.
+   So the marker is drawn inside the item's left padding instead, with a hanging indent. */
+:is(.learn-text, .q-prompt, .post-body, .post-reveal, .reveal, .stmt, .fb, .guide-inner) :is(ul, ol) { list-style: none; padding-left: 0.2em; counter-reset: cusp-li; }
+:is(.learn-text, .q-prompt, .post-body, .post-reveal, .reveal, .stmt, .fb, .guide-inner) li { position: relative; padding-left: 1.35em; margin-bottom: 4px; }
+:is(.learn-text, .q-prompt, .post-body, .post-reveal, .reveal, .stmt, .fb, .guide-inner) ul > li::before { content: "•"; position: absolute; left: 0.3em; color: var(--muted); }
+:is(.learn-text, .q-prompt, .post-body, .post-reveal, .reveal, .stmt, .fb, .guide-inner) ol > li::before { counter-increment: cusp-li; content: counter(cusp-li) "."; position: absolute; left: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .g-toc h4 { margin: 18px 0 6px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--hist); }
 .g-toc ol { margin: 0; padding-left: 22px; }
