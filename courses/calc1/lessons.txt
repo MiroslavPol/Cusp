@@ -208,11 +208,12 @@ Každé uspořádání na konečné množině je úplné.
 - $\le$ na $\{1,2,3\}$
 - $\ge$ na $\{1,2,3\}$
 ? mc #e94xm
-Relace „$x-y$ je sudé číslo“ na $\mathbb Z$ je reflexivní a tranzitivní. Která vlastnost uspořádání jí chybí?
-+ antisymetrie
-- reflexivita
-- tranzitivita
-- žádná, je to uspořádání
+Je relace „$x-y$ je sudé číslo“ na $\mathbb Z$ uspořádáním? Pokud ne, kterou vlastnost uspořádání nemá?
++ nemá antisymetrii
+- nemá reflexivitu
+- nemá tranzitivitu
+- nemá reflexivitu ani tranzitivitu
+- je to uspořádání
 ! Reflexivní je, protože $x-x = 0$ je sudé. Tranzitivní také: jsou-li $x-y$ i $y-z$ sudá, je sudý i jejich součet $(x-y)+(y-z) = x-z$. Antisymetrie ale chybí: $2-4$ i $4-2$ jsou sudá, tedy $2$ a $4$ jsou v relaci oběma směry, a přitom $2\ne4$. Jde o ekvivalenci (stejná parita), ne o uspořádání.
 ? build #vj3bg
 Sestavte definici antisymetrie relace $\le$:
@@ -864,7 +865,8 @@ Pro všechna $x\in\mathbb R$ platí $\arcsin(\sin x) = x$.
 @ x=-7..7; y=-4..4; f=asin(sin(x)); f=x
 ? input #xs0a7 | 4/5; 0.8
 Spočtěte $\cos\left(\arcsin\tfrac35\right)$.
-! Pro $t = \arcsin\tfrac35\in[-\tfrac\pi2,\tfrac\pi2]$ je $\cos t\ge0$, tedy $\cos t = \sqrt{1-\tfrac{9}{25}} = \tfrac45$.
+! Označme $t = \arcsin\tfrac35$. Je to úhel z $[-\tfrac\pi2,\tfrac\pi2]$, pro který $\sin t = \tfrac35$. Hledáme $\cos t$. Z $\sin^2t+\cos^2t = 1$: $$\cos^2t = 1 - \tfrac{9}{25} = \tfrac{16}{25}.$$ Na intervalu $[-\tfrac\pi2,\tfrac\pi2]$ je kosinus nezáporný, takže z $\pm\frac45$ platí kladná hodnota. Na obrázku: pravoúhlý trojúhelník s protilehlou odvěsnou $3$ a přeponou $5$ má přilehlou odvěsnu $4$. Tedy $\cos\left(\arcsin\tfrac35\right) = \tfrac45$.
+@ x=-0.5..4.8; y=-0.6..3.6; aspect=equal; axes=off; poly=0,0,4,0,4,3,0,0; poly=3.7,0,3.7,0.3,4,0.3; label=2,-0.4,4; label=4.3,1.5,3; label=1.7,1.9,5; label=0.8,0.18,t
 ? input #m3gcb | 0
 Spočtěte $\operatorname{arctg} 7 + \operatorname{arctg}(-7)$.
 ! $\operatorname{arctg}$ je lichá funkce.
@@ -918,7 +920,11 @@ Přiřaďte funkcím jejich grafy.
 > Exponenciála a logaritmus
 Pro $a>0$, $a\ne1$ je $a^x$ definovaná na $\mathbb R$ s oborem hodnot $(0,\infty)$; pro $a>1$ roste, pro $0<a<1$ klesá. Inverzní funkcí je $\log_a x$ na $(0,\infty)$. Speciálně $\ln x = \log_e x$ a $a^x = e^{x\ln a}$.
 > Mocninné a hyperbolické funkce
-Mocninná funkce je $x^r = e^{r\ln x}$ pro $x>0$, $r\in\mathbb R$. Hyperbolické funkce:
+Pro přirozené $n$ je $x^n = x\cdot x\cdots x$ a pro racionální exponent $x^{p/q} = \sqrt[q]{x^p}$. Jak ale spočítat třeba $2^{\sqrt2}$? Obecnou mocninu definujeme pomocí exponenciály a logaritmu:
+$$x^r = e^{r\ln x}\qquad (x>0,\ r\in\mathbb R).$$
+Pro racionální $r$ dává totéž co odmocniny, protože $e^{\ln x} = x$ a $e^{a+b} = e^ae^b$; například $e^{2\ln x} = \left(e^{\ln x}\right)^2 = x^2$. Z tohoto zápisu také hned plyne $(x^r)' = e^{r\ln x}\cdot\frac rx = rx^{r-1}$.
+
+Hyperbolické funkce:
 $$\sinh x = \frac{e^x-e^{-x}}{2},\qquad \cosh x = \frac{e^x+e^{-x}}{2},\qquad \cosh^2x-\sinh^2x = 1.$$
 ? input #t2tvb | 1
 Spočtěte $\cosh^2 5 - \sinh^2 5$.
@@ -1045,7 +1051,7 @@ Sestavte definici: $\lim\limits_{n\to\infty}a_n = A$, jestliže
 Seřaďte důkaz jednoznačnosti limity.
 + Nechť $a_n\to A$ a $a_n\to B$, kde $A\ne B$; zvolme $\varepsilon = \frac{|A-B|}{2}$.
 + Od jistého indexu je $|a_n - A|<\varepsilon$ i $|a_n - B|<\varepsilon$.
-+ Pak $|A - B| \le |A - a_n| + |a_n - B| < 2\varepsilon = |A-B|$.
++ Trojúhelníková nerovnost dá $|A - B| < 2\varepsilon$, ale $2\varepsilon = |A-B|$.
 + To je spor, tedy $A = B$.
 ! Klíčem je trojúhelníková nerovnost.
 ? order #ps4we

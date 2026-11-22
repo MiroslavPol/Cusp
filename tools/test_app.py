@@ -237,6 +237,27 @@ def test_site(b, url, cs):
     bad = pg.evaluate(SELF_CHECK)
     check("every answer is accepted by its own checker (generators: 200 runs each)", not bad, "; ".join(bad[:5]) + (f" (and {len(bad) - 5} more)" if len(bad) > 5 else ""))
     check("every question has a stable id", pg.evaluate("""() => CUSP.COURSES.every(function (c) { return Object.keys(c.byKey || {}).every(function (k) { return k.indexOf(':q:') > 0; }); })"""))
+    # every figure of every course draws without an error (cards, prompts, explanations, figure options)
+    bad = pg.evaluate("""() => { var box = document.createElement('div'), out = [], n = 0; document.body.appendChild(box);
+        CUSP.COURSES.forEach(function (c) {
+          var specs = [];          // "@@"/"@" lines are kept as figQ / figA, a figure option is an option "@ spec"
+          (c.units || []).forEach(function (u) { u.lessons.forEach(function (l) { l.items.forEach(function (it) {
+            specs = specs.concat(it.figQ || [], it.figA || []);
+            (it.options || []).forEach(function (o) { var t = o.right || o.html || ''; if (/^@ /.test(t)) specs.push(t.slice(2)); });
+          }); }); });
+          specs.forEach(function (s) {
+            box.innerHTML = CUSP_FIG.html(s); CUSP_FIG.renderAll(box); n++;
+            var f = box.querySelector('.fig'); if (f.dataset.err || !f.querySelector('svg')) out.push(c.id + ': ' + (f.dataset.err || 'empty') + ' in ' + s.slice(0, 60));
+          }); });
+        box.remove(); return n ? out : ['no figures found']; }""")
+    check("every figure of every course draws without an error", not bad, "; ".join(bad[:3]))
+    # the vector primitives: arrows with a head, a segment, a whole line, a filled polygon, a transformed grid
+    parts = pg.evaluate("""() => { var box = document.createElement('div'); document.body.appendChild(box);
+        box.innerHTML = CUSP_FIG.html('x=-1..3; y=-1..3; aspect=equal; grid=1,1,0,1; fill=0,0,1,0,2,1,1,1,ex; vec=1,0,prf; vec=1,1,2,2,ex; seg=0,0,1,1; line=0,0,1,2,thm');
+        CUSP_FIG.renderAll(box); var f = box.querySelector('.fig'), r = { err: f.dataset.err || '', grid: f.querySelectorAll('g line').length,
+          fill: f.querySelectorAll('polygon').length, heads: f.querySelectorAll('polyline').length, lines: f.querySelectorAll('svg > line').length,
+          green: !!f.querySelector('[style*="--prf"]'), orange: !!f.querySelector('[style*="--thm"]') }; box.remove(); return r; }""")
+    check("vec, seg, line, fill and grid draw what they should", not parts["err"] and parts["grid"] >= 8 and parts["fill"] == 1 and parts["heads"] == 2 and parts["green"] and parts["orange"], str(parts))
 
     # map: drag does not tap, tap shows the card
     card0 = pg.inner_text(".hud-card .fc-t")

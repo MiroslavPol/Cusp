@@ -11,9 +11,22 @@
    *   rect=upper,f,a,b,n   Riemann rectangles (upper|lower)
    *   tan=f,x0   sec=f,x1,x2   pt=x,y   hole=x,y   vline=x   hline=y
    *   band=y1,y2   vband=x1,x2   poly=x1,y1,x2,y2,...   circle=cx,cy,r   label=x,y,text
+   * Vectors and linear maps (an optional last argument def|ex|prf|thm|ink|muted picks the colour; default def):
+   *   vec=x,y          arrow from the origin to [x,y]      vec=x0,y0,x1,y1   arrow from [x0,y0] to [x1,y1]
+   *   seg=x0,y0,x1,y1  segment                            line=x0,y0,x1,y1  the whole line through both points
+   *   fill=x1,y1,x2,y2,...   filled polygon (translucent)
+   *   grid=a,b,c,d[,k]  image of the lines x = i, y = j (integers, |i|,|j| <= k) under the matrix (a b; c d);
+   *                    without k, enough lines to cover the window
    */
   var W = 320, H = 200, PAD = 6;
   var COLORS = ["var(--def)", "var(--ex)", "var(--prf)", "var(--thm)"];
+  var NAMED = { def: "var(--def)", ex: "var(--ex)", prf: "var(--prf)", thm: "var(--thm)", ink: "var(--ink)", muted: "var(--muted)" };
+  // an optional colour name as the last argument: returns [numbers, css colour]
+  function colourArgs(args) {
+    var col = NAMED.def;
+    if (args.length && NAMED.hasOwnProperty(args[args.length - 1])) col = NAMED[args.pop()];
+    return [args.map(num), col];
+  }
   var FN = "sin,cos,tan,asin,acos,atan,sinh,cosh,tanh,exp,ln,log,sqrt,abs,floor,sign,cbrt,min,max,pow".split(",");
   var ALLOWED = FN.concat(["x", "n", "a", "t", "PI", "E", "NaN"]);
   var cache = {};
@@ -209,6 +222,41 @@
           body.push('<polyline points="' + pp.join(" ") + '" fill="none" style="stroke:var(--ink)" stroke-width="2" stroke-linejoin="round"/>');
           break;
         case "circle": a = splitArgs(it.v).map(num); body.push('<ellipse cx="' + r2(px(a[0])) + '" cy="' + r2(py(a[1])) + '" rx="' + r2(px(a[0] + a[2]) - px(a[0])) + '" ry="' + r2(py(a[1]) - py(a[1] + a[2])) + '" fill="none" style="stroke:var(--def)" stroke-width="2"/>'); break;
+        case "vec": case "seg": case "line":
+          a = colourArgs(splitArgs(it.v)); c = a[1]; a = a[0];
+          if (a.length === 2) a = [0, 0, a[0], a[1]];
+          var sx0 = px(a[0]), sy0 = py(a[1]), sx1 = px(a[2]), sy1 = py(a[3]), sdx = sx1 - sx0, sdy = sy1 - sy0, slen = Math.sqrt(sdx * sdx + sdy * sdy);
+          if (!(slen > 0.5)) break;
+          if (it.k === "line") { var ext = 2 * (W + H) / slen; sx0 -= sdx * ext; sy0 -= sdy * ext; sx1 += sdx * ext; sy1 += sdy * ext; }
+          body.push('<line x1="' + r2(sx0) + '" y1="' + r2(sy0) + '" x2="' + r2(sx1) + '" y2="' + r2(sy1) + '" style="stroke:' + c + '" stroke-width="2" stroke-linecap="round" ' + clip + "/>");
+          if (it.k === "vec") {     // the head has the same size in every figure: 9 px, 24 degrees to each side
+            var hl = Math.min(9, slen * 0.45), ux = sdx / slen, uy = sdy / slen, ca = Math.cos(0.42), sa = Math.sin(0.42);
+            var hp = [[sx1 - hl * (ux * ca - uy * sa), sy1 - hl * (uy * ca + ux * sa)], [sx1, sy1], [sx1 - hl * (ux * ca + uy * sa), sy1 - hl * (uy * ca - ux * sa)]];
+            body.push('<polyline points="' + hp.map(function (q) { return r2(q[0]) + "," + r2(q[1]); }).join(" ") + '" fill="none" style="stroke:' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ' + clip + "/>");
+          }
+          break;
+        case "fill":
+          a = colourArgs(splitArgs(it.v)); c = a[1]; a = a[0]; var fp = [];
+          for (k = 0; k + 1 < a.length; k += 2) fp.push(r2(px(a[k])) + "," + r2(py(a[k + 1])));
+          body.unshift('<polygon points="' + fp.join(" ") + '" style="fill:' + c + ';fill-opacity:.18;stroke:' + c + ';stroke-opacity:.45" stroke-width="1" ' + clip + "/>");
+          break;
+        case "grid":
+          a = colourArgs(splitArgs(it.v)); c = a[1]; a = a[0];
+          var ga = a[0], gb = a[1], gc = a[2], gd = a[3], gdet = ga * gd - gb * gc, gk = a.length > 4 ? Math.round(a[4]) : 30;
+          var lo = [-gk, -gk], hi = [gk, gk], slo = [-60, -60], shi = [60, 60];
+          if (Math.abs(gdet) > 1e-9) {      // which grid lines can be seen: the preimage of the window's corners
+            var pre = [[X[0], Y[0]], [X[0], Y[1]], [X[1], Y[0]], [X[1], Y[1]]].map(function (q) { return [(gd * q[0] - gb * q[1]) / gdet, (-gc * q[0] + ga * q[1]) / gdet]; });
+            for (var gi = 0; gi < 2; gi++) {
+              var vs = pre.map(function (q) { return q[gi]; });
+              slo[gi] = Math.min.apply(null, vs) - 1; shi[gi] = Math.max.apply(null, vs) + 1;
+              lo[gi] = Math.max(-gk, Math.ceil(slo[gi])); hi[gi] = Math.min(gk, Math.floor(shi[gi]));
+            }
+          }
+          var gl = [], gline = function (p, q) { gl.push('<line x1="' + r2(px(ga * p[0] + gb * p[1])) + '" y1="' + r2(py(gc * p[0] + gd * p[1])) + '" x2="' + r2(px(ga * q[0] + gb * q[1])) + '" y2="' + r2(py(gc * q[0] + gd * q[1])) + '"/>'); };
+          for (var gx2 = lo[0]; gx2 <= hi[0] && gl.length < 200; gx2++) gline([gx2, slo[1]], [gx2, shi[1]]);
+          for (var gy2 = lo[1]; gy2 <= hi[1] && gl.length < 400; gy2++) gline([slo[0], gy2], [shi[0], gy2]);
+          body.unshift('<g style="stroke:' + c + ';stroke-opacity:.5" stroke-width="1" ' + clip + ">" + gl.join("") + "</g>");
+          break;
         case "label":
           a = splitArgs(it.v);
           body.push('<text class="fig-label" x="' + r2(px(num(a[0]))) + '" y="' + r2(py(num(a[1]))) + '" text-anchor="middle">' + String(a.slice(2).join(",")).replace(/[&<>]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[ch]; }) + "</text>");

@@ -1,0 +1,89 @@
+=== tip | P1 | Vítejte v LAG I | Ax=b | pin
+Tady najdete definice, věty, protipříklady a úlohy k přednášce M1110 Lineární algebra a geometrie I. Kurz v záložce <b>Učit se</b> jde podle přednášek: soustavy rovnic, matice, vektorové prostory, lineární zobrazení, determinanty. Bonusové lekce jsou navíc.
+
+Skoro všechno v kurzu se nakonec převede na jednu úlohu: vyřešit soustavu $Ax=b$.
+
+=== hist | P1 | Eliminace před dvěma tisíci lety | \text{fangcheng}
+Čínská sbírka <i>Devět kapitol o umění počítat</i> (Ťiou-čang suan-šu), sestavená kolem přelomu letopočtu, řeší v osmé kapitole <i>Fang-čcheng</i> soustavy lineárních rovnic. Koeficienty se kladly počítacími tyčinkami do obdélníkového schématu a odečítáním násobků sloupců se převáděly na „schodovitý“ tvar.
+
+V Evropě se postup ustálil mnohem později. Gauss ho na počátku 19. století používal při výpočtech drah planetek, a proto dnes nese jeho jméno.
+
+=== hist | P2 | Proč se matice násobí tak divně | (AB)_{ij}=\sum_p a_{ip}b_{pj}
+Arthur Cayley v roce 1858 definoval součin matic tak, aby odpovídal <b>skládání</b> lineárních substitucí: dosadíme-li $y = Bx$ do $z = Ay$, dostaneme $z = (AB)x$.
+
+Odtud je hned vidět, proč je násobení asociativní (skládání zobrazení je asociativní) a proč není komutativní (záleží na pořadí, ve kterém zobrazení provedeme).
+
+=== cex | P2 | Matice spolu nekomutují | AB\ne BA
+$$\begin{pmatrix}0&1\\0&0\end{pmatrix}\begin{pmatrix}0&0\\1&0\end{pmatrix} = \begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad \begin{pmatrix}0&0\\1&0\end{pmatrix}\begin{pmatrix}0&1\\0&0\end{pmatrix} = \begin{pmatrix}0&0\\0&1\end{pmatrix}.$$
+Proto neplatí ani středoškolské vzorce: obecně $(A+B)^2 \ne A^2+2AB+B^2$ a $(AB)^2\ne A^2B^2$.
+
+=== hist | P3 | Kdo vymyslel vektorový prostor | \mathbb K^n
+Hermann Grassmann popsal v knize <i>Die lineale Ausdehnungslehre</i> (1844) počítání s vektory v libovolném počtu rozměrů, včetně lineární nezávislosti a dimenze. Současníci knihu skoro nečetli.
+
+Axiomatickou definici vektorového prostoru, téměř stejnou jako dnes, napsal Giuseppe Peano v roce 1888. Běžnou součástí matematiky se stala až ve 20. století.
+
+=== tip | P3 | Lineární algebra očima | Ae_1,\ Ae_2
+Seriál videí <a href="https://www.3blue1brown.com/topics/linear-algebra" target="_blank" rel="noopener">Essence of linear algebra</a> (3Blue1Brown) ukazuje vektory, lineární kombinace, matice a determinanty jako pohyby roviny a prostoru. Doporučovala ho i přednáška M1110.
+
+Hlavní myšlenka: matice je zobrazení a její sloupce říkají, kam dopadnou vektory $e_1$, $e_2$. Obrázky v tomto kurzu používají stejné barvy: $e_1$ zeleně, $e_2$ růžově.
+
+=== cex | P4 | Sjednocení podprostorů | U\cup V
+Osy $x$ a $y$ jsou podprostory $\mathbb R^2$, ale jejich sjednocení není: $(1,0)^T+(0,1)^T = (1,1)^T$ neleží na žádné z os.
+
+Nejmenší podprostor, který obsahuje oba, je <b>součet</b> $U+V$, tady celá rovina. Sjednocení je podprostorem jen tehdy, když jeden podprostor obsahuje druhý.
+
+=== thm | P5 | Každý prostor konečné dimenze má bázi | (u_1,\dots,u_n)
+Z konečně mnoha generátorů lze vybrat lineárně nezávislé, které generují totéž. Ty tvoří bázi.
+
+Silnější tvrzení: každý lineárně nezávislý seznam lze <b>doplnit</b> na bázi. V $\mathbb K^n$ to uděláme algoritmem: zapíšeme nezávislé vektory a za ně standardní bázi do sloupců matice a vybereme sloupce s vedoucími koeficienty.
+
+=== hist | P6 | Proč žijeme ve třech rozměrech? | \dim = 3
+Pavol Zlatoš ve své učebnici lineární algebry (oddíl 5.6) přemýšlí, jak by vypadala fyzika v prostoru jiné dimenze. Gravitace se šíří do všech směrů, a v $n$-rozměrném prostoru by proto slábla jako $\frac{1}{r^{n-1}}$, nepřímo úměrně „povrchu koule“.
+
+Paul Ehrenfest v roce 1917 ukázal, že při takovém zákoně jsou stabilní oběžné dráhy planet možné jen pro $n\le3$. Ve čtyřech a více rozměrech by planeta při sebemenší poruše spadla do Slunce, nebo uletěla. Trojrozměrnost prostoru je tak vepsaná do podoby fyzikálních zákonů.
+
+=== hist | P6 | Steinitzova věta | k\le n
+Ernst Steinitz publikoval výměnnou větu v roce 1913, v práci o podmíněně konvergentních řadách. Říká, že nezávislých vektorů nemůže být víc než generátorů.
+
+Bez ní bychom nevěděli, že všechny báze mají stejný počet prvků, a dimenze by nebyla dobře definovaná.
+
+=== thm | P7 | Věta o dimenzi jádra a obrazu | \dim U = \dim\ker\varphi+\dim\operatorname{im}\varphi
+Pro lineární $\varphi\colon U\to V$ s $\dim U<\infty$ platí
+$$\dim U = \dim\ker\varphi+\dim\operatorname{im}\varphi.$$
+Co se „ztratí“ v jádře, chybí v obrazu. Důsledek: pro $\dim U = \dim V$ je $\varphi$ prosté, právě když je na. Pro matice: $Ax = o$ má jen nulové řešení, právě když má $Ax = b$ řešení pro každé $b$.
+
+=== tip | P8 | Jak si pamatovat indexy | (\psi)_{\gamma,\beta}(\varphi)_{\beta,\alpha}
+Indexy u matic zobrazení se čtou zprava doleva, „odkud“ je vpravo a „kam“ vlevo. Při násobení se sousední indexy musí shodovat a vypadnou, jako u domina:
+$$(\psi)_{\gamma,\beta}\,(\varphi)_{\beta,\alpha} = (\psi\circ\varphi)_{\gamma,\alpha},\qquad (\mathrm{id})_{\beta,\alpha}\,(u)_\alpha = (u)_\beta.$$
+Když se indexy nepotkají, vzorec je špatně.
+
+=== hist | P8 | Determinanty jsou starší než matice | \det
+Determinanty se objevily dřív než matice: japonský matematik Seki Takakazu je popsal v roce 1683 a Leibniz nezávisle v dopise z roku 1693. Gabriel Cramer publikoval své pravidlo v roce 1750.
+
+Slovo <i>matice</i> (matrix) zavedl James Joseph Sylvester až v roce 1850, jako „lůno“, ze kterého se rodí determinanty menších řádů.
+
+=== cex | P9 | Determinant není lineární | \det(A+B)\ne\det A+\det B
+$$\det(E_2+E_2) = \det\begin{pmatrix}2&0\\0&2\end{pmatrix} = 4,\qquad \det E_2+\det E_2 = 2.$$
+Determinant je lineární v <b>každém řádku zvlášť</b>, ne jako funkce celé matice. Proto $\det(cA) = c^n\det A$ pro matici $n\times n$. Multiplikativní ale je: $\det(AB) = \det A\det B$.
+
+=== app | P10 | Obsah trojúhelníku determinantem | \tfrac12\left|\det\left(\overrightarrow{AB}\ \overrightarrow{AC}\right)\right|
+Jaký obsah má trojúhelník $A = [1,2]$, $B = [3,5]$, $C = [-1,8]$?
+--- solution
+$\overrightarrow{AB} = (2,3)^T$, $\overrightarrow{AC} = (-2,6)^T$ a
+$$\det\begin{pmatrix}2&-2\\3&6\end{pmatrix} = 12+6 = 18.$$
+Znaménko $+$ říká, že $C$ leží vlevo od $AB$. Obsah je $\frac12\cdot18 = 9$.
+
+=== thm | P11 | Frobeniova věta | h(A)=h(A\,|\,b)
+Soustava $Ax = b$ má řešení, právě když $h(A) = h(A\,|\,b)$. Pak má obecné řešení $n-h(A)$ parametrů.
+
+Jinde se věta jmenuje Rouchého–Capelliho nebo Kroneckerova–Capelliho. Říká jen, že $b$ leží v obalu sloupců $A$: přidáním sloupce $b$ se hodnost nezvětší.
+
+=== exam | P12 | Je to podprostor? | A^2 = 0
+Je množina všech matic $A\in\mathrm{Mat}_{2\times2}(\mathbb R)$ s $A^2 = 0$ podprostorem? Odpověď zdůvodněte.
+--- solution
+Není. Matice $\begin{pmatrix}0&1\\0&0\end{pmatrix}$ a $\begin{pmatrix}0&0\\1&0\end{pmatrix}$ do ní patří, ale jejich součet $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ má druhou mocninu $E$. Množina tedy není uzavřená na sčítání.
+
+=== tip | P12 | U zkoušky se hodnotí zdůvodnění | \Rightarrow
+V teoretické části zkoušky se body dávají za zdůvodnění, ne za samotné „ano“ či „ne“. Stačí většinou jedna z těchto věcí:
+<ul><li>protipříklad (konkrétní matice, vektory, zobrazení),</li><li>odkaz na větu: o dimenzi jádra a obrazu, o dimenzi součtu a průniku, Steinitzovu, Frobeniovu,</li><li>výpočet z definice (obecná kombinace rovná $o$).</li></ul>
+Z opravených řešení: „Odvolávání na něco, co se někde počítalo, nestačí.“ Zdůvodnění musí stát v řešení samo.
