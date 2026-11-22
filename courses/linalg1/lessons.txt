@@ -275,7 +275,7 @@ $$\begin{aligned} bx + y + 2z &= 1\\ x + by + z &= 1\\ 2x - y + bz &= 1\end{alig
 žádné řešení?
 ! Determinant je $b^3-4b = b(b-2)(b+2)$, mimo $0$, $\pm2$ je tedy řešení jediné. Pro $b=2$ dá rozdíl první a třetí rovnice $y=0$ a pak $2x+2z = 1$ i $x+z = 1$, spor. Pro $b=-2$ dá součet první a třetí rovnice $0 = 2$, spor. Pro $b = 0$ řešení existuje. Odpověď: $b\in\{-2, 2\}$.
 ? set #zkp9c | 0
-Pro která $b\in\mathbb R$ má soustava z předchozí úlohy,
+Pro která $b\in\mathbb R$ má soustava
 $$bx + y + 2z = 1,\quad x + by + z = 1,\quad 2x - y + bz = 1,$$
 nekonečně mnoho řešení?
 ! Determinant $b(b-2)(b+2)$ je nulový pro $b\in\{0,\pm2\}$ a pro $b=\pm2$ řešení není. Pro $b=0$: $x = 1-z$, $y = 1-2z$, a první rovnice $y+2z = 1$ platí pro každé $z$. Odpověď: $b=0$.
@@ -611,7 +611,7 @@ Pro každou matici $A$ je $AA^T$ symetrická matice.
 ! $(AA^T)^T = (A^T)^TA^T = AA^T$.
 ? input #ta1a6 | 1
 Pro $A = \begin{pmatrix} 0 & x & y\\ 0 & 0 & z\\ 0 & 0 & 0\end{pmatrix}$ spočtěte $A^2$. Kolik nejvýše nenulových prvků může mít?
-! $A^2 = \begin{pmatrix} 0&0&xz\\0&0&0\\0&0&0\end{pmatrix}$, jediný případně nenulový prvek je $xz$. Navíc $A^3 = 0$.
+! $A^2 = \begin{pmatrix} 0&0&xz\\0&0&0\\0&0&0\end{pmatrix}$, jediný případně nenulový prvek je $xz$ (a $A^3 = 0$). Nenulové prvky jsou tedy nejvýše $1$.
 ? input #v0lq8 | 270
 Pro $B = \begin{pmatrix} 1&2&0\\0&1&3\\0&0&1\end{pmatrix}$ lze indukcí dokázat $B^n = \begin{pmatrix} 1&2n&3n(n-1)\\0&1&3n\\0&0&1\end{pmatrix}$. Kolik je prvek $(B^{10})_{13}$?
 ! $3\cdot10\cdot9 = 270$.
@@ -1743,7 +1743,7 @@ Jaká je dimenze prostoru horních trojúhelníkových matic $3\times3$?
 ! Volné jsou prvky na diagonále a nad ní: $3 + 2 + 1 = 6$.
 ? input #gwhli | 2
 Jaká je dimenze prostoru symetrických matic $2\times2$ s nulovou stopou?
-! $\begin{pmatrix}a&b\\b&-a\end{pmatrix}$: volná jsou dvě čísla.
+! $\begin{pmatrix}a&b\\b&-a\end{pmatrix}$: volná jsou dvě čísla $a$, $b$, dimenze je $2$.
 ? input #z5kqc | 2
 Jakou dimenzi má obal funkcí $\sin^2x$, $\cos^2x$, $1$?
 ! $1 = \sin^2x + \cos^2x$, takže obal je $[\sin^2x, \cos^2x]$, a tyto dvě funkce jsou nezávislé (nejsou násobky). Dimenze je $2$.
@@ -2511,7 +2511,7 @@ Jaký je determinant zkosení $\begin{pmatrix}1&5\\0&1\end{pmatrix}$?
 @ x=-0.6..6.6; y=-0.6..1.8; aspect=equal; fill=0,0,1,0,6,1,5,1,def; vec=1,0,prf; label=1.504,0,Ae₁; vec=5,1,ex; label=5.494,1.099,Ae₂
 ? input #0p43b | 0
 Matice $A$ tvaru $4\times4$ má třetí řádek rovný dvojnásobku prvního. Kolik je $\det A$?
-! Odečtením dvojnásobku prvního řádku od třetího (determinant se nezmění) vznikne nulový řádek.
+! Odečtením dvojnásobku prvního řádku od třetího (determinant se nezmění) vznikne nulový řádek, takže $\det A = 0$.
 ? gen #t608z | la_det2
 ? gen #5dyv3 | la_det3
 ? input #tbhrn | 5
@@ -2774,7 +2774,7 @@ Prohození dvou prvků v permutaci změní její paritu.
 ! Prohození sousedních prvků změní počet inverzí přesně o $1$. Prohození prvků na místech $i<j$ lze složit z $2(j-i)-1$ sousedních prohození, tedy lichého počtu.
 ? input #oah6l | -1
 Permutace množiny $\{1,\dots,6\}$ je $(4, 5, 6, 1, 2, 3)$. Jaké má znaménko?
-! Každé z čísel $4,5,6$ tvoří inverzi s každým z čísel $1,2,3$, které stojí za ním: $3\cdot3 = 9$ inverzí, permutace je lichá. Obecně má $(n+1,\dots,2n,1,\dots,n)$ právě $n^2$ inverzí.
+! Každé z čísel $4,5,6$ tvoří inverzi s každým z čísel $1,2,3$, které stojí za ním: $3\cdot3 = 9$ inverzí (obecně má $(n+1,\dots,2n,1,\dots,n)$ právě $n^2$ inverzí). Permutace je lichá, znaménko je $(-1)^9 = -1$.
 ? input #2bv98 | 1
 Kolik nenulových sčítanců má Leibnizův vzorec pro diagonální matici s nenulovou diagonálou?
 ! Mimo diagonálu jsou nuly, takže nenulový je jen součin pro identickou permutaci: $a_{11}a_{22}\cdots a_{nn}$.
@@ -3061,7 +3061,7 @@ Pro která $a$ má matice $\begin{pmatrix}1&1&1\\1&a&1\\1&1&a\end{pmatrix}$ hodn
 ! Odečtením prvního řádku dostaneme $\begin{pmatrix}1&1&1\\0&a-1&0\\0&0&a-1\end{pmatrix}$. Pro $a\ne1$ je hodnost $3$, pro $a = 1$ je $1$.
 ? input #a5t7a | 1
 Jakou hodnost má matice $xy^T$ pro nenulové sloupcové vektory $x$, $y$?
-! Každý řádek je násobek $y^T$ (řádek $i$ je $x_iy^T$) a aspoň jeden je nenulový.
+! Každý řádek je násobek $y^T$ (řádek $i$ je $x_iy^T$) a aspoň jeden je nenulový: hodnost je $1$.
 ? tf #7jzj7 | false
 Pro matice stejného tvaru platí $h(A+B) = h(A) + h(B)$.
 ! Hodnost součtu může být i menší.
@@ -3099,11 +3099,11 @@ $B$ je matice $30\times50$ a řešení $Bx = o$ tvoří prostor dimenze $32$. Ja
 Pro $A = \begin{pmatrix}1&2&3&0&1\\2&3&4&-1&2\\1&3&5&1&1\end{pmatrix}$ a $b = (4,7,5)^T$ má soustava $Ax = b$ řešení.
 ! Třetí řádek $A$ je $3r_1-r_2$ a také $3\cdot4-7 = 5$. Proto $h(A) = h(A|b) = 2$ a podle Frobeniovy věty řešení existuje.
 ? tf #ttseg | false
-Pro tutéž matici $A = \begin{pmatrix}1&2&3&0&1\\2&3&4&-1&2\\1&3&5&1&1\end{pmatrix}$ a $c = (5,6,4)^T$ má soustava $Ax = c$ řešení.
+Pro $A = \begin{pmatrix}1&2&3&0&1\\2&3&4&-1&2\\1&3&5&1&1\end{pmatrix}$ a $c = (5,6,4)^T$ má soustava $Ax = c$ řešení.
 ! $3\cdot5-6 = 9\ne4$, takže třetí rovnice odporuje kombinaci prvních dvou: $h(A) = 2$, ale $h(A|c) = 3$.
 ? input #s86cn | 3
-Jakou dimenzi má prostor řešení homogenní soustavy $Ax = o$ pro tuto matici $A$ tvaru $3\times5$ s hodností $2$?
-! $5-2 = 3$.
+Jakou dimenzi má prostor řešení homogenní soustavy $Ax = o$ pro matici $A = \begin{pmatrix}1&2&3&0&1\\2&3&4&-1&2\\1&3&5&1&1\end{pmatrix}$?
+! Třetí řádek je $3r_1 - r_2$ a první dva jsou nezávislé, takže $h(A) = 2$. Neznámých je $5$, dimenze je $5 - 2 = 3$.
 ? tf #34szz | true
 Rozdíl dvou řešení soustavy $Ax = b$ je řešením $Ax = o$.
 ! $A(x-z) = Ax-Az = b-b = o$.

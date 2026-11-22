@@ -549,8 +549,8 @@ Na čem stojí krok „$p^2$ je sudé, tedy $p$ je sudé“?
 - Na hustotě $\mathbb Q$
 ! Je-li $p=2k+1$, pak $p^2 = 4k^2+4k+1$ je liché. Obměnou: je-li $p^2$ sudé, je sudé i $p$.
 ? tf #ovl7f | false
-Stejným postupem lze dokázat, že $\sqrt4$ je iracionální.
-! Z $p^2 = 4q^2$ plyne jen $p=2q$, což ke sporu nevede. Důkaz pro $\sqrt2$ využívá, že $2$ není druhou mocninou celého čísla.
+Důkaz iracionality $\sqrt2$ (z $p^2 = 2q^2$ plyne, že $p$ i $q$ jsou sudá, spor) lze stejně provést i pro $\sqrt4$.
+! Z $p^2 = 4q^2$ plyne jen $p=2q$, což ke sporu nevede. Důkaz pro $\sqrt2$ využívá, že $2$ není druhou mocninou celého čísla. A opravdu: $\sqrt4 = 2$ je racionální.
 ? tf #hvbrv | true
 $\sqrt3$ je iracionální.
 ! Stejně jako pro $\sqrt2$: z $p^2=3q^2$ plyne $3\mid p$, pak $3\mid q$, spor.
@@ -1279,12 +1279,12 @@ $$e = \lim_{n\to\infty}\left(1+\frac1n\right)^n \approx 2{,}71828.$$
 Neklesající shora ohraničená posloupnost konverguje.
 ! Konverguje k supremu svých členů. Existenci suprema zaručuje axiom (R13).
 ? mc #bvfe5
-Posloupnost $a_1 = 1$, $a_{n+1} = \sqrt{2 + a_n}$ je rostoucí a shora ohraničená číslem $2$. Jaká je její limita?
+Posloupnost $a_1 = 1$, $a_{n+1} = \sqrt{2 + a_n}$ je monotónní a ohraničená, takže má limitu. Jaká je?
 + $2$
 - $1$
 - $\sqrt 2$
-- $+\infty$
-! Limita $L$ existuje a musí splňovat $L = \sqrt{2+L}$, tj. $L^2 - L - 2 = 0$. Kořen $-1$ nevyhovuje, protože členy jsou kladné.
+- $\sqrt 3$
+! Limitním přechodem v rekurenci dostaneme $L = \sqrt{2+L}$, tj. $L^2 - L - 2 = 0$ s kořeny $2$ a $-1$. Kořen $-1$ nevyhovuje, protože členy jsou kladné. Limita je $2$.
 @ x=0..12; y=0.8..2.2; rec=1; sqrt(2+a); hline=2
 ? input #1477y | 9/4; 2.25
 Spočtěte $a_2$ pro $a_n = \left(1+\tfrac1n\right)^n$.
