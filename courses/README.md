@@ -185,6 +185,15 @@ app keeps working, and the browser console names the file.
 Expressions use `^`, `pi`, `E`, `sin cos tan asin acos atan sinh cosh exp ln sqrt abs floor sign cbrt`
 and ternaries (`x<0?-1:1`, `NaN` = gap). If `y` is omitted, the range is chosen automatically.
 
+For vectors and linear maps there are also these primitives; each takes an optional last argument, a colour
+`def` (blue), `ex` (pink), `prf` (green), `thm` (orange), `ink` or `muted`, default `def`:
+`vec=x,y` (arrow from the origin) or `vec=x0,y0,x1,y1` · `seg=x0,y0,x1,y1` (segment) ·
+`line=x0,y0,x1,y1` (the whole line through both points) · `fill=x1,y1,x2,y2,...` (filled polygon) ·
+`grid=a,b,c,d` (the image of the integer grid under the matrix $\begin{pmatrix}a&b\\c&d\end{pmatrix}$, as far as the
+window reaches; `grid=a,b,c,d,k` only the lines $|i|,|j|\le k$). Example: `x=-1..3; y=-1..3; aspect=equal;
+grid=1,1,0,1; fill=0,0,1,0,2,1,1,1; vec=1,0,prf; vec=1,1,ex` shows a shear the way 3Blue1Brown does.
+`courses/linalg1/figs.py` builds its figures (including simple 3D pictures) with small Python helpers on top.
+
 Usually you write `@`/`@@` lines straight into lessons.txt (MA I does). Optionally, a course can
 keep its figures in a table, `figs.py`, which `python tools/insert_figs.py <id>` writes into
 lessons.txt. It removes all `@`/`@@` lines first, so use it only if the table is the source of

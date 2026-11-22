@@ -1,0 +1,8 @@
+{
+  "title": "Lineární algebra a geometrie I",
+  "short": "LAG I",
+  "handle": "m1110.algebra",
+  "lang": "cs",
+  "order": 15,
+  "blurb": "M1110, PřF MU. Soustavy rovnic, matice, vektorové prostory, lineární zobrazení a determinanty. Lekce jdou podle přednášek; bonusové lekce jsou navíc a nic neblokují."
+}
