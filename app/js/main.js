@@ -30,21 +30,10 @@
   });
   window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
 
-  // Installed on Android, the manifest asks for fullscreen (the system bars appear only after a swipe). If the
-  // phone still shows the app with its bars (an install made before that, or Android didn't apply it), the first
-  // tap asks for fullscreen itself: browsers allow it only after a tap. In a browser tab nothing changes.
-  // Only once per launch: every request makes Android show its "swipe to exit full screen" banner again, and
-  // someone who swiped the bars back wants to keep them.
-  (function () {
-    var root = document.documentElement, mm = window.matchMedia, asked = false;
-    if (!root.requestFullscreen || !mm || !/Android/i.test(navigator.userAgent)) return;
-    if (!mm("(display-mode: standalone)").matches && !mm("(display-mode: minimal-ui)").matches) return;
-    document.addEventListener("pointerup", function () {
-      if (asked || document.fullscreenElement) return;
-      asked = true;
-      root.requestFullscreen({ navigationUI: "hide" }).catch(function () { /* refused: keep the bars */ });
-    }, true);
-  })();
+  // Full screen on Android comes only from the manifest ("display": "fullscreen"). There is deliberately no
+  // requestFullscreen() here: every such request makes Android show a "swipe to exit full screen" banner, and
+  // after a swipe the app could not get back without another tap and banner. An app installed before the
+  // manifest asked for full screen gets it when Chrome updates the install, or right away after reinstalling.
 
   C.show = show;
   C.renderPath();        // loads the current course first if needed

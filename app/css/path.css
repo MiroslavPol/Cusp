@@ -28,7 +28,6 @@
 .g-arrow { fill: none; stroke: rgba(190, 210, 255, 0.6); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .g-name { font-family: var(--font-display); font-style: italic; font-size: 28px; fill: rgba(212, 224, 255, 0.8); }
 .g-tick { font-family: var(--font-mono); font-size: 11px; fill: rgba(170, 190, 235, 0.55); }
-.sp-metric { font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.03em; fill: rgba(175, 195, 240, 0.6); }
 
 /* the course: dotted ahead, glowing where you've been */
 .sp-path { fill: none; stroke: rgba(205, 215, 245, 0.42); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.5 8; }

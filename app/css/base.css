@@ -106,8 +106,10 @@ math.wide-inline {
   -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
 }
 .katex { font-size: 1.08em; }
-math { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math", math; }
+math { font-family: "STIX Two Math", "Latin Modern Math", "Cambria Math", math; }
 math[display="block"] { margin: 0; }
+/* \bar and \overline (core.js fixBars): the accent glyph is too thin to show, so the bar is a border of the base */
+math mrow.math-bar { border-top: 0.065em solid currentColor; padding-top: 0.08em; overflow: visible; }
 
 .act {
   background: none; border: 1px solid var(--line); border-radius: 999px;

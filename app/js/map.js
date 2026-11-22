@@ -162,8 +162,7 @@
       key: c.id, items: items, hud: hud, card: card, currentId: cur ? cur.id : "sing",
       sing: { status: fstat, title: P.done[fid] ? s.singDoneTitle : s.singTitle },
       backup: { label: s.bkConst, sub: lastBackupText(s), due: C.backupDue() },
-      strings: { start: s.start, here: s.mapHere, fit: s.mapFit, zin: s.mapIn, zout: s.mapOut },
-      metric: s.metric
+      strings: { start: s.start, here: s.mapHere, fit: s.mapFit, zin: s.mapIn, zout: s.mapOut }
     });
   }
 

@@ -1,4 +1,4 @@
-/* Self-hosted web fonts (SIL Open Font License 1.1, see OFL-*.txt): latin + latin-ext subsets. */
+/* Self-hosted web fonts (SIL Open Font License 1.1, see OFL-*.txt): latin + latin-ext subsets, and a math font. */
 /* latin-ext */
 @font-face {
   font-family: 'IBM Plex Mono';
@@ -106,4 +106,13 @@
   font-display: swap;
   src: url(fonts/literata-latin.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Math: STIX Two Math 2.13 b171 (SIL OFL 1.1, see OFL-STIXTwo.txt), unmodified, from github.com/stipub/stixfonts.
+   Browsers stretch brackets, roots and integrals only with a font that has an OpenType MATH table; phones have none. */
+@font-face {
+  font-family: 'STIX Two Math';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('STIX Two Math'), local('STIXTwoMath-Regular'), url(fonts/stix-two-math.woff2) format('woff2');
 }
