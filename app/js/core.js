@@ -55,7 +55,39 @@
     }
     tieShortWords(node);
   }
-  function fixMath(node) { fixFnSpacing(node); fixVariants(node); fixPrimes(node); fixSigns(node); }
+  function fixMath(node) { fixFnSpacing(node); fixVariants(node); fixPrimes(node); fixSigns(node); fixBars(node); fixTableLines(node); }
+
+  // \bar z and \overline{AB} come out as an accent <mo> (ˉ ‾ ¯) over the base, which Chromium draws 1 px tall,
+  // that is, not at all. Replace the <mover> by an <mrow> around the base whose top border is the bar
+  // (base.css: mrow.math-bar); no invisible accent is left to push limits and exponents up.
+  function fixBars(node) {
+    Array.prototype.forEach.call(node.querySelectorAll("mover"), function (m) {
+      var base = m.children[0], acc = m.children[1];
+      if (!base || !acc || !/^mo$/i.test(acc.tagName) || !/^[ˉ‾¯̅]$/.test(acc.textContent.trim())) return;
+      var row = document.createElementNS(m.namespaceURI, "mrow");
+      row.setAttribute("class", "math-bar");
+      row.appendChild(base);
+      m.parentNode.replaceChild(row, m);
+    });
+  }
+  // Lines in arrays ({cc|c}, \hline) come out as columnlines / rowlines attributes, which browsers' MathML ignores.
+  // Draw them as borders of the cells; as in MathML, the last value applies to all remaining gaps.
+  function fixTableLines(node) {
+    function kids(e, tag) { return Array.prototype.filter.call(e.children, function (c) { return c.tagName.toLowerCase() === tag; }); }
+    function at(list, i) { return list.length ? list[Math.min(i, list.length - 1)] : "none"; }
+    Array.prototype.forEach.call(node.querySelectorAll("mtable[columnlines], mtable[rowlines]"), function (t) {
+      var cl = (t.getAttribute("columnlines") || "").split(/\s+/).filter(Boolean), rl = (t.getAttribute("rowlines") || "").split(/\s+/).filter(Boolean);
+      var rows = kids(t, "mtr");
+      rows.forEach(function (r, ri) {
+        var cells = kids(r, "mtd");
+        cells.forEach(function (c, ci) {
+          var v = ci < cells.length - 1 ? at(cl, ci) : "none", h = ri < rows.length - 1 ? at(rl, ri) : "none";
+          if (v === "solid" || v === "dashed") c.style.borderRight = "0.06em " + v + " currentColor";
+          if (h === "solid" || h === "dashed") c.style.borderBottom = "0.06em " + h + " currentColor";
+        });
+      });
+    });
+  }
 
   // A sign is not a subtraction: in (−1)ⁿ, x = −1 or r ≠ −1 the minus comes right after a bracket or another
   // operator, but KaTeX's MathML leaves it as an infix operator, which browsers space like a − b.

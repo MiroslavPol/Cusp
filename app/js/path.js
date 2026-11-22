@@ -115,7 +115,7 @@
       D = 132,       // distance between two turns of the spiral
       R_IN = 178,    // radius of the last node
       R_HOLE = 62,   // the path falls in here
-      MARGIN = 330,  // space around the spiral (axis labels, stars, the metric on the rim)
+      MARGIN = 330,  // space around the spiral (axis labels, stars)
       UNIT = 120,    // one unit of the coordinate grid, in world pixels
       PHI0 = -Math.PI / 2;
   var B = D / (2 * Math.PI);
@@ -200,10 +200,6 @@
       });
     }
     out.push('<g class="sp-axes">' + arrow(lim, 0, 1, 0, "x") + arrow(0, -lim, 0, -1, "y") + ticks + "</g>");
-    // the metric, around the rim
-    var rr = g.rOut + 150;
-    out.push('<path id="spRim-' + key + '" d="M' + f1(C - rr * Math.cos(0.5)) + " " + f1(C - rr * Math.sin(0.5)) + "A" + f1(rr) + " " + f1(rr) + " 0 0 1 " + f1(C + rr * Math.cos(0.5)) + " " + f1(C - rr * Math.sin(0.5)) + '" fill="none"/>' +
-      '<text class="sp-metric"><textPath href="#spRim-' + key + '" startOffset="50%" text-anchor="middle">' + esc(opts.metric) + "</textPath></text>");
     var defs = '<defs><radialGradient id="spFadeG-' + key + '"><stop offset="0" stop-color="#fff"/><stop offset="' + ((g.rOut + 60) / H).toFixed(3) + '" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0.15"/></radialGradient>' +
       '<mask id="spFade-' + key + '"><rect width="' + 2 * H + '" height="' + 2 * H + '" fill="url(#spFadeG-' + key + ')"/></mask></defs>';
     return defs + out.join("");
@@ -267,7 +263,7 @@
   function space(root, opts) {
     var key = opts.key, items = opts.items, g = geometry(items.length), H = g.H;
     if (active && active.stop) active.stop();
-    var old = root._sp, fresh = !(old && old.key === key && old.n === items.length && old.metric === opts.metric && old.view.parentNode === root);
+    var old = root._sp, fresh = !(old && old.key === key && old.n === items.length && old.view.parentNode === root);
     var view, world;
     if (fresh) {
       root.innerHTML = "";
@@ -276,7 +272,7 @@
       world = document.createElement("div"); world.className = "sp-world";
       world.style.width = world.style.height = 2 * H + "px";
       var svg = '<svg class="sp-svg CLS" width="' + 2 * H + '" height="' + 2 * H + '" viewBox="0 0 ' + 2 * H + " " + 2 * H + '" aria-hidden="true">';
-      var bkey = key + ":" + items.length + ":" + opts.metric;
+      var bkey = key + ":" + items.length;
       if (!bgCache[bkey]) bgCache[bkey] = background(g, key, opts);       // stars + twisted grid: built once per course
       world.innerHTML = svg.replace("CLS", "sp-bg") + bgCache[bkey] + "</svg>" + svg.replace("CLS", "sp-fg") + "</svg>";
       view.appendChild(world);
@@ -285,7 +281,7 @@
       view.addEventListener("click", function (e) { if (active) active.click(e); }, true);
       view.addEventListener("focusin", function (e) { if (active) active.focusin(e); });
       view.addEventListener("wheel", function (e) { if (active) active.wheel(e); }, { passive: false });
-      root._sp = { key: key, n: items.length, metric: opts.metric, view: view, world: world };
+      root._sp = { key: key, n: items.length, view: view, world: world };
     } else {
       view = old.view; world = old.world;
       Array.prototype.forEach.call(world.querySelectorAll(".sp-node, .bh, .sp-const"), function (n) { n.remove(); });

@@ -258,6 +258,16 @@ def test_site(b, url, cs):
           fill: f.querySelectorAll('polygon').length, heads: f.querySelectorAll('polyline').length, lines: f.querySelectorAll('svg > line').length,
           green: !!f.querySelector('[style*="--prf"]'), orange: !!f.querySelector('[style*="--thm"]') }; box.remove(); return r; }""")
     check("vec, seg, line, fill and grid draw what they should", not parts["err"] and parts["grid"] >= 8 and parts["fill"] == 1 and parts["heads"] == 2 and parts["green"] and parts["orange"], str(parts))
+    # browsers' MathML draws neither the bar of \bar z / \overline{AB} nor the line of an array {cc|c}: core.js draws them
+    tex = pg.evaluate(r"""() => { var d = document.createElement('div'); document.body.appendChild(d);
+        d.textContent = '$\\bar z$ $\\overline{AB}$ $\\left(\\begin{array}{cc|c} 1 & 2 & 3\\\\ 4 & 5 & 6\\end{array}\\right)$'; CUSP.typeset(d);
+        var bars = Array.from(d.querySelectorAll('mrow.math-bar')).map(function (m) { return getComputedStyle(m).borderTopStyle; });
+        var lines = Array.from(d.querySelectorAll('mtd')).map(function (c) { return getComputedStyle(c).borderRightStyle; });
+        d.remove(); return { bars: bars, lines: lines }; }""")
+    check("bars over letters and lines in arrays are drawn", tex["bars"] == ["solid", "solid"] and tex["lines"] == ["none", "solid", "none", "none", "solid", "none"], str(tex))
+    # phones have no font with a MATH table, without which brackets don't stretch: the app brings STIX Two Math
+    font = pg.evaluate("""() => document.fonts.load('16px "STIX Two Math"').then(function (f) { return f.length ? f[0].status : 'missing'; })""")
+    check("the bundled math font loads", font == "loaded", font)
 
     # map: drag does not tap, tap shows the card
     card0 = pg.inner_text(".hud-card .fc-t")
