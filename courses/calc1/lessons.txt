@@ -5443,11 +5443,11 @@ Funkce $A(c)$ je spojitá a ryze klesající na $[-1,1]$, takže každá plocha 
 > Plocha pod grafem a mezi grafy
 Obsah mezi grafem a osou $x$ je $\int_a^b|f(x)|\,dx$, mezi grafy $f$ a $g$ je $\int_a^b|f(x)-g(x)|\,dx$. Pro křivku zadanou parametricky, $x = \varphi(t)$, $y = \psi(t)$, $t\in[\alpha,\beta]$, kde $\varphi$ je monotónní a $\psi\ge0$, je obsah pod ní $S = \int_\alpha^\beta\psi(t)\,|\varphi'(t)|\,dt$.
 @@ x=-0.1..1.2; y=-0.1..1.2; f=x; f=x^2; shade=x,x^2,0,1
-? input #ay40u | 1/6
+?! input #ay40u | 1/6
 Jaký je obsah plochy mezi $y = x$ a $y = x^2$ na $[0,1]$?
 ! $\int_0^1(x - x^2)\,dx = \frac12-\frac13 = \frac16$.
 @ x=-0.1..1.2; y=-0.1..1.2; f=x; f=x^2; shade=x,x^2,0,1
-? input #cgsn9 | 4
+?! input #cgsn9 | 4
 Jaký je obsah plochy mezi grafem $\sin x$ a osou $x$ na $[0,2\pi]$?
 ! $\int_0^{2\pi}|\sin x|\,dx = 4$, zatímco $\int_0^{2\pi}\sin x\,dx = 0$.
 @ x=-0.3..6.6; y=-1.3..1.3; f=sin(x); shade=sin(x),0,0,2*pi
@@ -5459,7 +5459,7 @@ Jaký je obsah plochy mezi parabolou $y=4-x^2$ a osou $x$?
 Jaký je obsah elipsy $x = 2\cos t$, $y = \sin t$?
 ! Horní polovina: $\int_0^\pi\sin t\cdot2\sin t\,dt = \pi$, celkem $2\pi = \pi ab$.
 @ x=-2.5..2.5; y=-1.3..1.3; aspect=equal; param=2*cos(t),sin(t),0,2*pi
-? tf #yal7q | false
+?! tf #yal7q | false
 $\int_a^b f(x)\,dx$ je vždy obsah plochy mezi grafem a osou $x$.
 ! Části pod osou se počítají záporně.
 + $\sin x$ na $[\pi, 2\pi]$
@@ -5492,6 +5492,23 @@ Která šrafovaná plocha má obsah $\int_0^1(x-x^2)\,dx$?
 - @ x=-0.1..1.2; y=-0.1..1.2; f=x; f=x^2; shade=x,0,0,1
 - @ x=-0.1..2.2; y=-0.2..4.2; f=x; f=x^2; shade=x^2,x,1,2
 ! Plocha mezi přímkou $y=x$ (nahoře) a parabolou $y=x^2$ (dole) na $[0,1]$.
+?! input #e4jif | 9/2; 4.5
+Jaký je obsah plochy ohraničené parabolou $y = 6-x^2$ a přímkou $x+y-4 = 0$?
+! Přímka je $y = 4-x$. Průsečíky: $6-x^2 = 4-x$, tedy $x^2-x-2 = 0$, $x = -1$ a $x = 2$. Obsah je $$\int_{-1}^2(2+x-x^2)\,dx = \left[2x+\frac{x^2}2-\frac{x^3}3\right]_{-1}^2 = \frac{10}3+\frac76 = \frac92.$$
+@ x=-2.5..3.5; y=-1..7; f=6-x^2; f=4-x; between=-1,2; pt=-1,5; pt=2,2
+? input #dxb2p | ln(2)/2; 0.3466
+Jaký je obsah plochy pod grafem $\operatorname{tg}x$ na $\left[0,\frac\pi4\right]$?
+! $\int_0^{\pi/4}\operatorname{tg}x\,dx = [-\ln\cos x]_0^{\pi/4} = -\ln\frac{\sqrt2}2 = \frac{\ln2}2$.
+? input #jt8ov | √3 - π/3; 0.6849
+Jaký je obsah plochy mezi grafem $\sin x$ a přímkou $y = \frac12$ (část nad přímkou) na $[0,\pi]$?
+! $\sin x\ge\frac12$ na $\left[\frac\pi6,\frac{5\pi}6\right]$. Obsah je $$\int_{\pi/6}^{5\pi/6}\left(\sin x-\frac12\right)dx = \left[-\cos x-\frac x2\right]_{\pi/6}^{5\pi/6} = \sqrt3-\frac\pi3.$$
+@ x=-0.3..3.5; y=-0.3..1.3; f=sin(x); f=0.5; pt=0.5236,0.5; pt=2.618,0.5
+? input #nyc0o | 4/15
+Jaký je obsah plochy mezi grafy $y = x^2$ a $y = x^4$?
+! Grafy se protínají v $-1$, $0$ a $1$ a na $[-1,1]$ je $x^4\le x^2$. Obsah je $2\int_0^1(x^2-x^4)\,dx = 2\left(\frac13-\frac15\right) = \frac4{15}$.
+? input #21i33 | 8/15
+Jaký je obsah plochy ohraničené smyčkou křivky $x = t^2-1$, $y = t^3-t$?
+! Smyčka odpovídá $t\in[-1,1]$ (pro $t = \pm1$ je to bod $[0,0]$). Obsah je $$\left|\int_{-1}^1y\,x'\,dt\right| = \left|\int_{-1}^1(t^3-t)\,2t\,dt\right| = 2\cdot2\left(\frac13-\frac15\right) = \frac8{15}.$$
 
 ### Délka křivky | P25 | #no7k8
 ~ noaxes; f=0.45*sin(3.2*x); pt=-0.85,0.45*sin(-2.72); pt=0.85,0.45*sin(2.72)
@@ -5512,7 +5529,7 @@ Spočtěte délku grafu $y = \frac43x$ na $[0,3]$.
 Spočtěte délku asteroidy $x = \cos^3t$, $y = \sin^3t$, $t\in[0,2\pi]$.
 ! $\sqrt{\varphi'^2+\psi'^2} = 3|\sin t\cos t|$; na čtvrtině $\int_0^{\pi/2}3\sin t\cos t\,dt = \frac32$, celkem $6$.
 @ x=-1.3..1.3; y=-1.3..1.3; aspect=equal; param=cos(t)^3,sin(t)^3,0,2*pi
-? mc #wc1tm
+?! mc #wc1tm
 Odkud se ve vzorci pro délku grafu bere $\sqrt{1+f'(x)^2}$?
 + Z Pythagorovy věty pro malý kousek grafu: $\sqrt{dx^2 + dy^2}$
 - Je to derivace funkce $\sqrt{1+f(x)^2}$ podle $x$
@@ -5528,10 +5545,10 @@ Spočtěte délku křivky $x = 2\cos t$, $y = 2\sin t$, $t\in\left[0,\frac\pi2\r
 ? input #uavta | √5; 2.2361
 Spočtěte délku grafu $y = 2x$ na $[0,1]$.
 ! $\int_0^1\sqrt{1+4}\,dx = \sqrt5$.
-? tf #8wiu4 | true
+?! tf #8wiu4 | true
 Délka grafu funkce na $[a,b]$ je aspoň $b-a$.
 ! $\sqrt{1+f'^2}\ge1$.
-? mc #be57l
+?! mc #be57l
 Jaký je vzorec pro délku křivky zadané parametricky, $x = \varphi(t)$, $y = \psi(t)$, $t\in[\alpha,\beta]$?
 + $\int_\alpha^\beta\sqrt{\varphi'(t)^2+\psi'(t)^2}\,dt$
 - $\int_\alpha^\beta\left(\varphi'(t)+\psi'(t)\right)dt$
@@ -5544,6 +5561,15 @@ Spočtěte délku křivky $x = 3t$, $y = 4t$, $t\in[0,1]$.
 ? input #qffdw | 3/4; 0.75
 Spočtěte délku grafu $y = \cosh x$ na $[0,\ln2]$.
 ! $\sqrt{1+\sinh^2x} = \cosh x$, takže $L = \sinh(\ln2) = \frac{2-\frac12}{2} = \frac34$.
+? input #yhnjt | ln(1+√2); 0.8814
+Spočtěte délku grafu $y = \ln\cos x$ na $\left[0,\frac\pi4\right]$.
+! $\sqrt{1+y'^2} = \sqrt{1+\operatorname{tg}^2x} = \frac1{\cos x}$ a $$\int_0^{\pi/4}\frac{dx}{\cos x} = \left[\ln\left(\frac1{\cos x}+\operatorname{tg}x\right)\right]_0^{\pi/4} = \ln\left(\sqrt2+1\right).$$
+? input #mho0s | (√2 + ln(1+√2))/2; 1.1478
+Spočtěte délku grafu $y = \frac{x^2}2$ na $[0,1]$.
+! $$\int_0^1\sqrt{1+x^2}\,dx = \left[\frac{x\sqrt{1+x^2}}2+\frac{\ln\left(x+\sqrt{1+x^2}\right)}2\right]_0^1 = \frac{\sqrt2+\ln\left(1+\sqrt2\right)}2.$$
+? input #x3jyo | 8
+Spočtěte délku jednoho oblouku cykloidy $x = t-\sin t$, $y = 1-\cos t$, $t\in[0,2\pi]$.
+! $x'^2+y'^2 = 2-2\cos t = 4\sin^2\frac t2$. Délka je $$\int_0^{2\pi}2\sin\frac t2\,dt = \left[-4\cos\frac t2\right]_0^{2\pi} = 8.$$
 
 ### Objem rotačních těles | P26 | #y4buy
 ~ noaxes; f=x>-0.8&&x<0.8?0.25+0.4*(x+0.8)/1.6:NaN; f=x>-0.8&&x<0.8?-0.25-0.4*(x+0.8)/1.6:NaN; ell=-0.8,0,0.1,0.25; ell=0.8,0,0.18,0.65; dash=-1.05,0,1.05,0
@@ -5551,11 +5577,11 @@ Spočtěte délku grafu $y = \cosh x$ na $[0,\ln2]$.
 Rotací podgrafu nezáporné $f$ na $[a,b]$ vznikne těleso s objemem
 $$V_x = \pi\int_a^b f(x)^2\,dx\quad\text{(kolem osy } x),\qquad V_y = 2\pi\int_a^b x f(x)\,dx\quad\text{(kolem osy } y,\ a\ge0).$$
 @@ x=-0.2..2.2; y=-1.7..1.7; aspect=equal; f=sqrt(x); f=0-sqrt(x); shade=sqrt(x),0-sqrt(x),0,2; vline=2
-? input #d4a80 | 4π/3; 4.1888
+?! input #d4a80 | 4π/3; 4.1888
 Spočtěte objem koule o poloměru $1$ rotací $y=\sqrt{1-x^2}$ kolem osy $x$.
 ! $\pi\int_{-1}^1(1-x^2)\,dx = \pi\cdot\frac43 = \frac{4\pi}{3}$.
 @ x=-1.4..1.4; y=-1.2..1.2; aspect=equal; param=cos(t),sin(t),0,2*pi; shade=sqrt(1-x^2),0-sqrt(1-x^2),-1,1
-? input #btt5k | π/3; 1.0472
+?! input #btt5k | π/3; 1.0472
 Spočtěte objem kužele vzniklého rotací $y = x$, $x\in[0,1]$, kolem osy $x$.
 ! $\pi\int_0^1x^2\,dx = \frac\pi3$, tedy $\frac13\pi r^2h$.
 @ x=-0.2..1.3; y=-1.2..1.2; aspect=equal; f=x; f=0-x; shade=x,0-x,0,1; vline=1
@@ -5582,7 +5608,7 @@ Spočtěte objem válce vzniklého rotací $y = 2$, $x\in[0,3]$, kolem osy $x$.
 ? input #6h7l3 | π/2; 1.5708
 Spočtěte objem tělesa vzniklého rotací podgrafu $y = x^2$, $x\in[0,1]$, kolem osy $y$.
 ! $2\pi\int_0^1x\cdot x^2\,dx = \frac{2\pi}{4}$.
-? tf #luoxa | false
+?! tf #luoxa | false
 Objem tělesa vzniklého rotací grafu $f\ge0$ na $[a,b]$ kolem osy $x$ je $\pi\left(\int_a^bf\,dx\right)^2$.
 ! Správně je $\pi\int_a^b f^2\,dx$: sčítáme kruhové řezy.
 + $f = 1$ na $[0,2]$
@@ -5591,13 +5617,25 @@ Objem tělesa vzniklého rotací grafu $f\ge0$ na $[a,b]$ kolem osy $x$ je $\pi\
 ? input #ggfdk | π(e^2-1)/2; 10.0359
 Spočtěte objem tělesa vzniklého rotací grafu $y = e^x$, $x\in[0,1]$, kolem osy $x$.
 ! $\pi\int_0^1e^{2x}\,dx = \frac\pi2(e^2-1)$.
+?! input #qkrb7 | 16π/3; 16.7552
+Spočtěte objem tělesa vzniklého rotací plochy mezi grafy $y = 2-x^2$ a $y = x^2$, $x\in[-1,1]$, kolem osy $x$.
+! Objem je rozdíl objemů: $$\pi\int_{-1}^1\left((2-x^2)^2-x^4\right)dx = \pi\int_{-1}^1(4-4x^2)\,dx = \pi\left(8-\frac83\right) = \frac{16\pi}3.$$
+? input #hzr97 | π/2; 1.5708
+Spočtěte objem tělesa vzniklého rotací grafu $y = \sqrt{\sin x\cos x}$, $x\in\left[0,\frac\pi2\right]$, kolem osy $x$.
+! $\pi\int_0^{\pi/2}\sin x\cos x\,dx = \pi\left[\frac{\sin^2x}2\right]_0^{\pi/2} = \frac\pi2$.
+? input #mgqvy | π/2; 1.5708
+Spočtěte objem tělesa vzniklého rotací grafu $y = e^{-x}$, $x\in[0,\infty)$, kolem osy $x$.
+! $\pi\int_0^\infty e^{-2x}\,dx = \pi\cdot\frac12 = \frac\pi2$. Nekonečně dlouhé těleso má konečný objem.
+? input #a5yt9 | 8π; 25.1327
+Spočtěte objem tělesa vzniklého rotací grafu $y = \sqrt x$, $x\in[0,4]$, kolem osy $x$.
+! $\pi\int_0^4x\,dx = \pi\cdot8 = 8\pi$.
 
 ### Povrch rotačních těles | P26 | #ee05w
 ~ noaxes; circle=0,0,0.82; ell=0,0,0.82,0.24
 > Plášť
 $$S_x = 2\pi\int_a^b f(x)\sqrt{1+f'(x)^2}\,dx,\qquad S_y = 2\pi\int_a^b x\sqrt{1+f'(x)^2}\,dx.$$
 Kousek grafu délky $\sqrt{1+f'^2}\,dx$ opíše kružnici délky $2\pi f(x)$.
-? input #cwozj | 4π; 12.566
+?! input #cwozj | 4π; 12.566
 Spočtěte povrch koule o poloměru $1$.
 ! Pro $f = \sqrt{1-x^2}$ je $f\sqrt{1+f'^2} = 1$, takže $S = 2\pi\cdot2 = 4\pi$.
 @ x=-1.4..1.4; y=-1.2..1.2; aspect=equal; param=cos(t),sin(t),0,2*pi
@@ -5607,7 +5645,7 @@ Spočtěte obsah pláště kužele vzniklého rotací $y=x$, $x\in[0,1]$, kolem 
 ? tf #tcanj | true
 Povrch tělesa vzniklého rotací $\frac1x$ na $[1,\infty)$ kolem osy $x$ je nekonečný.
 ! $\sqrt{1+x^{-4}}\ge1$, integrand je aspoň $\frac1x$ a $\int_1^\infty\frac{dx}{x}$ diverguje.
-? mc #irhun
+?! mc #irhun
 Proč nestačí vzorec $S = 2\pi\int f(x)\,dx$?
 + Nezohledňuje sklon grafu
 - Protože $f$ může být záporná
@@ -5647,6 +5685,12 @@ Rotací které křivky kolem osy $x$ vznikne povrch koule?
 - $y = x$, $x\in[0,r]$
 - $y = r - |x|$, $x\in[-r,r]$
 ! Horní půlkružnice. Ostatní dávají válec, kužel a dvojkužel.
+? input #kxc5b | π(10√10-1)/27; 3.5631
+Spočtěte obsah plochy vzniklé rotací grafu $y = x^3$, $x\in[0,1]$, kolem osy $x$.
+! $2\pi\int_0^1x^3\sqrt{1+9x^4}\,dx$. Substitucí $t = 1+9x^4$, $dt = 36x^3\,dx$: $\frac{2\pi}{36}\int_1^{10}\sqrt t\,dt = \frac\pi{18}\cdot\frac23\left(10\sqrt{10}-1\right) = \frac{\pi\left(10\sqrt{10}-1\right)}{27}$.
+? input #vl0s3 | π; 3.1416
+Spočtěte obsah kulového pásu, který vznikne rotací $y = \sqrt{1-x^2}$, $x\in\left[0,\frac12\right]$, kolem osy $x$.
+! $y\sqrt{1+y'^2} = \sqrt{1-x^2}\cdot\frac1{\sqrt{1-x^2}} = 1$, takže obsah je $2\pi\int_0^{1/2}1\,dx = \pi$. Obsah pásu závisí jen na jeho výšce, jak zjistil už Archimédés.
 
 ### Nevlastní integrál přes neohraničený interval | P27 | #gayyv
 ~ ax=-0.85,-0.8; f=0.13/(x+1.05)^2-0.8; shade=-0.55,1.1
@@ -5655,11 +5699,11 @@ $$\int_a^\infty f(x)\,dx = \lim_{b\to\infty}\int_a^b f(x)\,dx.$$
 Je-li limita vlastní, integrál <b>konverguje</b>; jinak <b>diverguje</b> (určitě k $\pm\infty$, nebo osciluje). Klíčový příklad:
 $$\int_1^\infty\frac{dx}{x^p}\ \text{konverguje}\iff p>1.$$
 @@ x=0..10; y=-0.1..1.1; f=1/x^2; shade=1/x^2,0,1,10; vline=1
-? input #eq07g | 1
+?! input #eq07g | 1
 Spočtěte $\displaystyle\int_1^\infty \frac{dx}{x^2}$.
 ! $\left[-\frac1x\right]_1^\infty = 0 + 1 = 1$.
 @ x=0..10; y=-0.1..1.2; f=1/x^2; shade=1/x^2,0,1,10
-? mc #au6yq
+?! mc #au6yq
 Integrál $\displaystyle\int_1^\infty\frac{dx}{x}$
 - konverguje k $1$
 + diverguje k $+\infty$
@@ -5704,7 +5748,7 @@ Integrál $\displaystyle\int_0^\infty\frac{dx}{1+x}$
 - konverguje k $\ln2$
 - osciluje
 ! $[\ln(1+x)]_0^b = \ln(1+b)\to\infty$.
-? build #o3k8q
+?! build #o3k8q
 Sestavte definici nevlastního integrálu:
 + $\displaystyle\int_a^\infty f(x)\,dx$
 + $=$
@@ -5713,6 +5757,21 @@ Sestavte definici nevlastního integrálu:
 - $\lim\limits_{b\to a}$
 - $\sum\limits_{n=a}^\infty f(n)$
 ! Integrujeme přes rostoucí omezené intervaly a přejdeme k limitě.
+?! input #yuaeu | π/3; 1.0472
+Spočtěte $\displaystyle\int_{-\infty}^{\infty}\frac{x^2}{x^6+1}\,dx$.
+! Substitucí $t = x^3$, $dt = 3x^2\,dx$: $\frac13\int_{-\infty}^\infty\frac{dt}{t^2+1} = \frac13\left(\frac\pi2+\frac\pi2\right) = \frac\pi3$.
+? input #xf1o0 | 1/2; 0.5
+Spočtěte $\displaystyle\int_0^\infty e^{-2x}\,dx$.
+! $\lim\limits_{b\to\infty}\left[-\frac{e^{-2x}}2\right]_0^b = 0+\frac12 = \frac12$.
+? input #yhdvy | 1
+Spočtěte $\displaystyle\int_1^\infty\frac{\ln x}{x^2}\,dx$.
+! Per partes: $\left[-\frac{\ln x}x\right]_1^\infty+\int_1^\infty\frac{dx}{x^2} = 0+1 = 1$, protože $\frac{\ln x}x\to0$.
+? input #61v0f | 1
+Spočtěte $\displaystyle\int_e^\infty\frac{dx}{x\ln^2x}$.
+! Substitucí $t = \ln x$ s mezemi $1$ a $\infty$: $\int_1^\infty\frac{dt}{t^2} = 1$.
+? tf #m2ueg | false
+$\displaystyle\int_{-\infty}^{\infty}x\,dx = 0$, protože integrand je lichý.
+! Integrál přes $\mathbb R$ konverguje, jen když konvergují oba integrály $\int_{-\infty}^0$ a $\int_0^\infty$. Tady oba divergují, takže $\int_{-\infty}^\infty x\,dx$ diverguje, i když $\int_{-b}^bx\,dx = 0$ pro každé $b$.
 
 ### Kritéria konvergence | P27 | #13pyz
 ~ ax=-0.85,-0.8; f=0.4/(x+1.15)-0.8; f=0.14/(x+1.05)^2-0.8
@@ -5750,13 +5809,13 @@ Integrál $\displaystyle\int_1^\infty\frac{\sin x}{x}\,dx$
 - osciluje
 ! Konvergenci dá Dirichletovo kritérium, ale $\int\frac{|\sin x|}{x}$ diverguje.
 @ x=0..30; y=-0.5..1.1; f=sin(x)/x; f=1/x; f=0-1/x; vline=1
-? tf #fnb8q | false
+?! tf #fnb8q | false
 Konverguje-li $\int_a^\infty f$, je $\lim\limits_{x\to\infty}f(x) = 0$.
 ! Platí jen tehdy, když limita existuje. Funkce s čím dál užšími „špičkami“ výšky $1$ kolem celých čísel má konvergentní integrál, ale limitu nemá.
 + funkce s čím dál užšími „špičkami“ výšky $1$ u celých čísel
 - $\frac{1}{x^2}$
 - $e^{-x}$
-? mc #rg114
+?! mc #rg114
 Pro jaká $p$ konverguje $\displaystyle\int_1^\infty\frac{dx}{x^p}$?
 + $p>1$
 - $p\ge1$
@@ -5791,7 +5850,7 @@ Integrál $\displaystyle\int_2^\infty\frac{dx}{x\ln x}$
 - konverguje k $\ln2$
 - osciluje
 ! $[\ln\ln x]_2^b\to\infty$.
-? tf #1qbp0 | false
+?! tf #1qbp0 | false
 Konverguje-li $\int_1^\infty f$, konverguje i $\int_1^\infty|f|$.
 ! Absolutní konvergence je silnější než konvergence.
 + $\frac{\sin x}{x}$
@@ -5803,6 +5862,21 @@ Seřaďte důkaz konvergence $\displaystyle\int_1^\infty\frac{dx}{x^2+x}$.
 + Integrál $\int_1^\infty\frac{dx}{x^2}$ konverguje, protože exponent $2>1$.
 + Podle srovnávacího kritéria konverguje i $\int_1^\infty\frac{dx}{x^2+x}$.
 ! Srovnáváme s integrálem, o kterém konvergenci už víme.
+? mc #sc4jp
+Integrál $\displaystyle\int_1^\infty\frac{dx}{\sqrt{x^3+1}}$
++ konverguje
+- diverguje
+! $\frac1{\sqrt{x^3+1}}<\frac1{x^{3/2}}$ a $\int_1^\infty x^{-3/2}\,dx$ konverguje, protože $\frac32>1$. Podle srovnávacího kritéria konverguje i daný integrál.
+? mc #shdrf
+Integrál $\displaystyle\int_1^\infty\frac{\ln x}{x}\,dx$
+- konverguje
++ diverguje
+! $\int_1^b\frac{\ln x}x\,dx = \frac{\ln^2b}2\to\infty$. Integrál diverguje.
+? mc #ci1fz
+Integrál $\displaystyle\int_1^\infty x^2e^{-x}\,dx$
++ konverguje
+- diverguje
+! $x^2e^{-x}\le\frac{C}{x^2}$ pro velká $x$, protože $x^4e^{-x}\to0$. Srovnáním s $\int_1^\infty\frac{dx}{x^2}$ integrál konverguje (jeho hodnota je $\frac5e$).
 
 ### Integrál z neohraničené funkce | P27 | #vtmqy
 ~ ax=-0.85,-0.8; f=0.15/sqrt(x+0.85)-0.8; shade=-0.83,0.85; dash=-0.85,-0.8,-0.85,1.1
@@ -5811,11 +5885,11 @@ Je-li $b$ singulární bod $f$ (funkce je u něj neohraničená), definujeme
 $$\int_a^b f(x)\,dx = \lim_{x\to b^-}\int_a^x f(t)\,dt.$$
 Klíčový příklad:
 $$\int_0^1\frac{dx}{x^p}\ \text{konverguje}\iff p<1.$$
-? input #mdo94 | 2
+?! input #mdo94 | 2
 Spočtěte $\displaystyle\int_0^1\frac{dx}{\sqrt x}$.
 ! $[2\sqrt x]_0^1 = 2$.
 @ x=-0.1..1.3; y=-0.2..6; f=1/sqrt(x); shade=1/sqrt(x),0,0.0001,1; vline=0
-? mc #zd2w6
+?! mc #zd2w6
 Integrál $\displaystyle\int_0^1\frac{dx}{x}$
 - konverguje k $1$
 + diverguje
@@ -5835,7 +5909,7 @@ Spočtěte $\displaystyle\int_0^1\frac{dx}{\sqrt{1-x^2}}$.
 $\displaystyle\int_{-1}^1\frac{dx}{x}$ konverguje k $0$, protože integrand je lichý.
 ! Oba integrály $\int_{-1}^0$ i $\int_0^1$ divergují. Hodnotu $0$ dává jen hlavní hodnota (v.p.).
 @ x=-1.2..1.2; y=-10..10; f=1/x; vline=0
-? mc #qxnyn
+?! mc #qxnyn
 Pro jaká $p$ konverguje $\displaystyle\int_0^1\frac{dx}{x^p}$?
 + $p<1$
 - $p>1$
@@ -5875,6 +5949,18 @@ Přiřaďte nevlastním integrálům jejich hodnoty.
 + $\int_1^\infty\frac{dx}{x}$ :: diverguje
 - $0$
 ! $\left[-\frac1x\right]_1^\infty = 1$, $\left[-\frac12e^{-2x}\right]_0^\infty = \frac12$, $\left[2\sqrt x\right]_0^1 = 2$. $\int_1^\infty\frac{dx}{x} = \lim\limits_{x\to\infty}\ln x = +\infty$.
+?! input #lbmg4 | 9/2; 4.5
+Spočtěte $\displaystyle\int_{-1}^{8}\frac{dx}{\sqrt[3]x}$.
+! Integrand je neohraničený u nuly, rozdělíme v ní: $\int_{-1}^0x^{-1/3}\,dx = \left[\frac32x^{2/3}\right]_{-1}^0 = -\frac32$ a $\int_0^8x^{-1/3}\,dx = \frac32\cdot4 = 6$. Oba konvergují a součet je $\frac92$.
+? input #7j211 | -1/4; -0.25
+Spočtěte $\displaystyle\int_0^1x\ln x\,dx$.
+! $\int x\ln x\,dx = \frac{x^2}2\ln x-\frac{x^2}4$ a $\frac{x^2}2\ln x\to0$ pro $x\to0^+$. Výsledek je $-\frac14$.
+? input #4xtth | π; 3.1416
+Spočtěte $\displaystyle\int_0^1\frac{dx}{\sqrt{x(1-x)}}$.
+! $x(1-x) = \frac14-\left(x-\frac12\right)^2$, takže primitivní funkce je $\arcsin(2x-1)$. Integrál je $\frac\pi2-\left(-\frac\pi2\right) = \pi$.
+? input #g65i0 | ∞
+Spočtěte $\displaystyle\int_0^{\pi/2}\operatorname{tg}x\,dx$.
+! $\int_0^b\operatorname{tg}x\,dx = -\ln\cos b\to+\infty$ pro $b\to\frac\pi2^-$. Integrál diverguje k $+\infty$.
 
 ### Bonus: Gabrielův roh a paradoxy nekonečna | P27 | bonus | #zgbt2
 ~ noaxes; f=x>-0.65?0.25/(x+1.1):NaN; f=x>-0.65?-0.25/(x+1.1):NaN; ell=-0.65,0,0.1,0.555
