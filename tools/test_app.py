@@ -265,6 +265,14 @@ def test_site(b, url, cs):
         var lines = Array.from(d.querySelectorAll('mtd')).map(function (c) { return getComputedStyle(c).borderRightStyle; });
         d.remove(); return { bars: bars, lines: lines }; }""")
     check("bars over letters and lines in arrays are drawn", tex["bars"] == ["solid", "solid"] and tex["lines"] == ["none", "solid", "none", "none", "solid", "none"], str(tex))
+    # Chromium's roots have a bar that doesn't meet the sign, and its vector arrows sit off to the side: core.js draws both
+    tex = pg.evaluate(r"""() => { var d = document.createElement('div'); document.body.appendChild(d);
+        d.textContent = '$\\sqrt2$ $\\sqrt[3]{x}$ $\\overrightarrow{AB}$ $\\vec u$'; CUSP.typeset(d);
+        var r = { left: d.querySelectorAll('msqrt, mroot').length + d.querySelectorAll('mover').length,
+          roots: Array.from(d.querySelectorAll('mspace.math-rad')).map(function (m) { var s = getComputedStyle(m); return s.position + ' ' + (s.maskImage || s.webkitMaskImage).split('url(').length; }),
+          arrows: Array.from(d.querySelectorAll('mspace.math-arr')).map(function (m) { return m.getBoundingClientRect().width > 0; }) };
+        d.remove(); return r; }""")
+    check("roots and vector arrows are drawn by the app", tex["left"] == 0 and tex["roots"] == ["absolute 2", "absolute 2"] and tex["arrows"] == [True, True], str(tex))
     # phones have no font with a MATH table, without which brackets don't stretch: the app brings STIX Two Math
     font = pg.evaluate("""() => document.fonts.load('16px "STIX Two Math"').then(function (f) { return f.length ? f[0].status : 'missing'; })""")
     check("the bundled math font loads", font == "loaded", font)
