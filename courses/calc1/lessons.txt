@@ -3535,7 +3535,7 @@ Je-li $f'(x_0)>0$, je $f$ rostoucí v bodě $x_0$; je-li $f'(x_0)<0$, je klesaj�
 <b>Lagrange:</b> je-li $f\in C[a,b]$ s derivací na $(a,b)$, existuje $c\in(a,b)$ s
 $$f'(c) = \frac{f(b)-f(a)}{b-a}.$$
 @@ x=-0.2..2.4; y=-0.5..4.6; f=x^2; sec=x^2,0,2; tan=x^2,1; pt=0,0; pt=2,4; pt=1,1
-? input #q60f9 | 1
+?! input #q60f9 | 1
 Najděte $c$ z Lagrangeovy věty pro $f(x) = x^2$ na $[0,2]$.
 ! $\frac{4-0}{2} = 2 = 2c$, tedy $c = 1$.
 @ x=-0.2..2.4; y=-0.5..4.6; f=x^2; sec=x^2,0,2; tan=x^2,1; pt=1,1
@@ -3568,7 +3568,7 @@ Bod $c$ z Lagrangeovy věty je vždy střed intervalu $[a,b]$.
 ? input #hztwv | √3; 1.7321
 Najděte $c$ z Lagrangeovy věty pro $f(x) = x^3$ na $[0,3]$.
 ! $\frac{27-0}{3} = 9 = 3c^2$, tedy $c = \sqrt3\in(0,3)$.
-? tf #0lvru | false
+?! tf #0lvru | false
 Je-li $f$ spojitá na $[a,b]$ a $f(a) = f(b)$, existuje $c\in(a,b)$ s $f'(c) = 0$.
 ! Chybí předpoklad existence derivace na $(a,b)$.
 + $|x|$ na $[-1,1]$
@@ -3591,6 +3591,18 @@ Na kterém obrázku jsou na vyznačeném intervalu splněny předpoklady Rolleov
 ? tf #3xfm5 | true
 Pro všechna $a,b\in\mathbb R$ platí $|\sin a - \sin b|\le|a-b|$.
 ! Z Lagrangeovy věty $\sin a-\sin b = \cos c\,(a-b)$ a $|\cos c|\le1$.
+?! tf #2qtlv | true
+Má-li polynom $p$ tři různé reálné kořeny, má jeho derivace $p'$ aspoň dva různé reálné kořeny.
+! Mezi sousedními kořeny $x_1<x_2<x_3$ platí $p(x_1) = p(x_2)$ a $p(x_2) = p(x_3)$. Podle Rolleovy věty má $p'$ kořen v $(x_1,x_2)$ i v $(x_2,x_3)$, tedy aspoň dva různé.
+? input #5t470 | e-1; 1.7183
+Najděte $c$ z Lagrangeovy věty pro $f(x) = \ln x$ na $[1,e]$.
+! $\frac{f(e)-f(1)}{e-1} = \frac1{e-1}$ a $f'(c) = \frac1c$. Rovnost $\frac1c = \frac1{e-1}$ dává $c = e-1$.
+? input #5lt1w | √2; 1.4142
+Najděte $c$ z Lagrangeovy věty pro $f(x) = \dfrac1x$ na $[1,2]$.
+! $\frac{f(2)-f(1)}{2-1} = -\frac12$ a $f'(c) = -\frac1{c^2}$. Z $c^2 = 2$ a $c\in(1,2)$ plyne $c = \sqrt2$.
+? tf #1y5tx | true
+Pro $0<a<b$ platí $\dfrac{b-a}{b}<\ln\dfrac ba<\dfrac{b-a}{a}$.
+! Podle Lagrangeovy věty je $\ln b-\ln a = \frac{b-a}{c}$ pro nějaké $c\in(a,b)$. Protože $\frac1b<\frac1c<\frac1a$, nerovnosti platí.
 
 ### Cauchyova věta a stejné derivace | P12 | #knrfk
 ~ f=0.45*sin(3*x)+0.4; f=0.45*sin(3*x)-0.4
@@ -3600,10 +3612,10 @@ $$[f(b)-f(a)]\,g'(c) = [g(b)-g(a)]\,f'(c).$$
 Pro $g(x) = x$ dostaneme Lagrangeovu větu.
 > Funkce se stejnou derivací
 Je-li $f' = g'$ na otevřeném intervalu, liší se $f$ a $g$ o konstantu. Je-li $f' = 0$ na intervalu, je $f$ konstantní.
-? tf #rwp4f | true
+?! tf #rwp4f | true
 Je-li $f'(x) = 0$ pro všechna $x\in(a,b)$, je $f$ na $(a,b)$ konstantní.
 ! Z Lagrangeovy věty: $f(x_2) - f(x_1) = f'(c)(x_2-x_1) = 0$.
-? tf #1tgnu | false
+?! tf #1tgnu | false
 Je-li $f'(x) = 0$ pro všechna $x\ne0$, je $f$ konstantní na $\mathbb R\setminus\{0\}$.
 ! $\operatorname{sgn}x$ má nulovou derivaci, ale $\mathbb R\setminus\{0\}$ není interval.
 + $\operatorname{sgn}x$
@@ -3630,7 +3642,7 @@ Funkce $F(x) = \operatorname{arctg}x + \operatorname{arctg}\frac1x$ je na $(0,\i
 ? tf #i812z | true
 Je-li $f' = g'$ na intervalu $I\ni0$ a $f(0) = g(0)$, je $f = g$ na celém $I$.
 ! Funkce se liší o konstantu a ta je podle hodnoty v nule nulová.
-? input #zhx8i | 13
+?! input #zhx8i | 13
 Funkce $f$ má na $\mathbb R$ derivaci $f'(x) = 2x$ a $f(1) = 5$. Kolik je $f(3)$?
 ! $f(x) = x^2 + C$ a $1 + C = 5$, tedy $f(3) = 9+4 = 13$.
 ? expr #kpf0r | sin x + 2
@@ -3660,6 +3672,16 @@ Přiřaďte větám jejich znění.
 + Lagrangeova věta :: Je-li $f\in C[a,b]$ s derivací na $(a,b)$, existuje $c\in(a,b)$ s $f'(c)=\frac{f(b)-f(a)}{b-a}$.
 - Je-li $f$ spojitá na $(a,b)$, nabývá na něm své největší i nejmenší hodnoty.
 ! Tvrzení o funkci spojité na otevřeném intervalu $(a,b)$ neplatí: $\frac1x$ je spojitá na $(0,1)$, ale není tam ohraničená. Weierstrassova věta potřebuje uzavřený interval.
+? input #xybrm | 3
+Funkce $f$ má na $(0,\infty)$ derivaci $f'(x) = \dfrac1x$ a $f(1) = 2$. Kolik je $f(e)$?
+! Funkce $f$ a $\ln x$ mají na $(0,\infty)$ stejnou derivaci, liší se tedy o konstantu: $f(x) = \ln x+C$. Z $f(1) = 2$ plyne $C = 2$, takže $f(e) = 1+2 = 3$.
+? expr #kv61q | e^x - 1
+Funkce $f$ má na $\mathbb R$ derivaci $e^x$ a $f(0) = 0$. Zapište $f(x)$.
+= $e^x-1$
+! $f(x) = e^x+C$ a $f(0) = 1+C = 0$, tedy $C = -1$ a $f(x) = e^x-1$.
+? input #fgsr0 | π/4; 0.7854
+Kolik je $\operatorname{arctg}\dfrac{1+x}{1-x}-\operatorname{arctg}x$ pro $x<1$?
+! Derivace prvního členu je $\frac{2/(1-x)^2}{1+\left(\frac{1+x}{1-x}\right)^2} = \frac{2}{(1-x)^2+(1+x)^2} = \frac1{1+x^2}$, stejně jako derivace $\operatorname{arctg}x$. Rozdíl je na $(-\infty,1)$ konstantní a v $x = 0$ je roven $\operatorname{arctg}1 = \frac\pi4$.
 
 ### L'Hospitalovo pravidlo | P13 | #3bh2w
 ~ noaxes; text=0⁄0; size=0.75
@@ -3667,15 +3689,15 @@ Přiřaďte větám jejich znění.
 Je-li limita typu $\frac00$ nebo $\frac{\ast}{\pm\infty}$ a existuje $\lim\frac{f'}{g'}$ (vlastní nebo nevlastní), pak
 $$\lim_{x\to x_0}\frac{f(x)}{g(x)} = \lim_{x\to x_0}\frac{f'(x)}{g'(x)}.$$
 Implikace platí jen jedním směrem. Typy $0\cdot\infty$, $\infty-\infty$, $1^\infty$ a $0^0$ nejdřív převedeme na podíl.
-? input #6fm2b | 1/2; 0.5
+?! input #6fm2b | 1/2; 0.5
 Určete $\lim\limits_{x\to0}\dfrac{e^x - 1 - x}{x^2}$.
 ! Dvakrát L'Hospital: $\frac{e^x-1}{2x}\to\frac{e^x}{2}\to\frac12$.
 @ x=-3..2; y=-0.1..1.3; f=(exp(x)-1-x)/x^2; hole=0,0.5
-? input #hva9l | 0
+?! input #hva9l | 0
 Určete $\lim\limits_{x\to\infty}\dfrac{\ln x}{x}$.
 ! $\frac{1/x}{1}\to0$.
 @ x=0..20; y=-1..0.5; f=ln(x)/x; hline=0; pt=E,1/E
-? input #8v41y | 0
+?! input #8v41y | 0
 Určete $\lim\limits_{x\to0^+} x\ln x$.
 ! $x\ln x = \frac{\ln x}{1/x}$ a L'Hospital dá $\frac{1/x}{-1/x^2} = -x\to0$.
 @ x=-0.05..1.2; y=-0.5..0.2; f=x*ln(x); hole=0,0
@@ -3686,7 +3708,7 @@ Určete $\lim\limits_{x\to0}\dfrac{x-\sin x}{x^3}$.
 Určete $\lim\limits_{x\to0^+} x^x$.
 ! $x^x = e^{x\ln x}\to e^0 = 1$, protože $x\ln x\to0$.
 @ x=-0.05..1.6; y=0.5..1.3; f=x^x; hole=0,1
-? tf #x2yqn | false
+?! tf #x2yqn | false
 Neexistuje-li $\lim\frac{f'}{g'}$, neexistuje ani $\lim\frac fg$.
 ! $\frac{x+\sin x}{x}\to1$ pro $x\to\infty$, ale $\frac{1+\cos x}{1}$ limitu nemá.
 @ x=0..40; y=0..2.2; f=(x+sin(x))/x; f=1+cos(x); hline=1
@@ -3717,6 +3739,24 @@ Seřaďte výpočet $\lim\limits_{x\to0^+}x\ln x$.
 + L'Hospitalovo pravidlo dá $\frac{1/x}{-1/x^2} = -x$.
 + Limita je $\lim\limits_{x\to0^+}(-x) = 0$.
 ! Součin převádíme na podíl tak, aby se derivace zjednodušily.
+? input #h41k8 | 3
+Určete $\lim\limits_{x\to\infty}\dfrac{6x-\cos x}{2x}$.
+! L'Hospitalovo pravidlo tu nepomůže: $\frac{6+\sin x}{2}$ limitu nemá. Vydělíme ale $x$: $\frac{6-\frac{\cos x}x}{2}\to\frac62 = 3$.
+? input #25qob | 1
+Určete $\lim\limits_{x\to\infty}x^{1/x}$.
+! $x^{1/x} = e^{\frac{\ln x}x}$ a $\frac{\ln x}x\to0$ (L'Hospital: $\frac{1/x}{1}\to0$). Limita je $e^0 = 1$.
+? input #dbyvu | e^(-2/π); 0.5291
+Určete $\lim\limits_{x\to\infty}\left(\dfrac2\pi\operatorname{arctg}x\right)^x$.
+! Logaritmus výrazu je $\frac{\ln\left(\frac2\pi\operatorname{arctg}x\right)}{1/x}$, typ $\frac00$. L'Hospital dá $\frac{\frac{1}{\operatorname{arctg}x}\cdot\frac1{1+x^2}}{-1/x^2}\to\frac{1}{\pi/2}\cdot(-1) = -\frac2\pi$. Limita je $e^{-2/\pi}$.
+? input #5ploh | 1/2; 0.5
+Určete $\lim\limits_{x\to1}\left(\dfrac1{\ln x}-\dfrac1{x-1}\right)$.
+! Na společném jmenovateli je to $\frac{x-1-\ln x}{(x-1)\ln x}$, typ $\frac00$. Dvakrát L'Hospital: $\frac{1-1/x}{\ln x+1-1/x} = \frac{x-1}{x\ln x+x-1}$ a pak $\frac{1}{\ln x+2}\to\frac12$.
+? input #0okq1 | 1/2; 0.5
+Určete $\lim\limits_{x\to0}\left(\dfrac1{\sin x}-\dfrac1{e^x-1}\right)$.
+! Na společném jmenovateli $\frac{e^x-1-\sin x}{\sin x\,(e^x-1)}$. Čitatel se chová jako $\frac{x^2}2$ a jmenovatel jako $x^2$, takže limita je $\frac12$.
+? input #aldtm | e^3; 20.0855
+Určete $\lim\limits_{x\to0}\left(1+3\operatorname{tg}^2x\right)^{\operatorname{cotg}^2x}$.
+! Pro $t = 3\operatorname{tg}^2x\to0$ je exponent $\operatorname{cotg}^2x = \frac3t$, takže výraz je $\left[(1+t)^{1/t}\right]^3\to e^3$.
 
 ### Monotonie a lokální extrémy | P13 | #zjguz
 ~ f=1.2*x^3-0.9*x; pt=-0.5,0.3; pt=0.5,-0.3
@@ -3724,7 +3764,7 @@ Seřaďte výpočet $\lim\limits_{x\to0^+}x\ln x$.
 Má-li $f$ derivaci na otevřeném intervalu $I$: $f'>0$ na $I$ ⟹ $f$ roste, $f'<0$ ⟹ $f$ klesá; $f$ je neklesající, právě když $f'\ge0$.
 > Lokální extrémy
 Má-li $f$ v $x_0$ lokální extrém a $f'(x_0)$ existuje, je $f'(x_0) = 0$ (<b>stacionární bod</b>). Extrém nastane, mění-li $f'$ v $x_0$ znaménko; nemění-li ho, extrém tam není.
-? multi #y5cxt
+?! multi #y5cxt
 Ve kterých bodech má $f(x) = x^3 - 3x$ lokální extrém?
 + $x = -1$
 + $x = 1$
@@ -3740,7 +3780,7 @@ Jaký extrém má $f(x)=x^3-3x$ v bodě $x=-1$?
 - neostré minimum
 ! $f'>0$ vlevo od $-1$ a $f'<0$ mezi $-1$ a $1$.
 @ x=-2.4..2.4; y=-3..3; f=x^3-3*x; pt=-1,2
-? tf #6m89x | false
+?! tf #6m89x | false
 Je-li $f'(x_0) = 0$, má $f$ v $x_0$ lokální extrém.
 ! $x^3$ v nule: $f'(0) = 0$, ale funkce roste.
 @ x=-1.6..1.6; y=-2..2; f=x^3; tan=x^3,0; pt=0,0
@@ -3785,6 +3825,24 @@ Který graf patří derivaci funkce $f(x) = x^2-2x$?
 ? input #yxm0c | 3
 Kolik lokálních extrémů má funkce $f(x) = x^4-2x^2$?
 ! V $\pm1$ minima, v $0$ maximum: derivace mění znaménko ve všech třech stacionárních bodech.
+?! tf #zkrpq | false
+Lokální maximum funkce je vždy větší než její lokální minimum.
+! U $f(x) = \frac{x^2}{x+3}$ je $f'(x) = \frac{x(x+6)}{(x+3)^2}$: lokální maximum v $-6$ má hodnotu $f(-6) = -12$, lokální minimum v $0$ má hodnotu $0$. Lokální maximum tak může být menší než lokální minimum.
++ $f(x) = \frac{x^2}{x+3}$
+- $f(x) = x^3-3x$
+- $f(x) = \sin x$
+? input #l1e16 | -4
+Ve kterém bodě má funkce $x^3+6x^2$ lokální maximum?
+! $f'(x) = 3x^2+12x = 3x(x+4)$ mění znaménko z $+$ na $-$ v bodě $-4$ a z $-$ na $+$ v bodě $0$. Lokální maximum je v bodě $-4$.
+? input #7tqsr | -6
+Ve kterém bodě má funkce $\dfrac{x^2}{x+3}$ lokální maximum?
+! $f'(x) = \frac{2x(x+3)-x^2}{(x+3)^2} = \frac{x(x+6)}{(x+3)^2}$ mění znaménko z $+$ na $-$ v bodě $-6$. Lokální maximum je tam.
+? interval #ebrxp | (0; e]
+Na jakém největším intervalu tvaru $(0, b]$ je funkce $\dfrac{\ln x}{x}$ rostoucí?
+! $f'(x) = \frac{1-\ln x}{x^2}>0$ pro $x<e$ a $f'(e) = 0$. Funkce roste na $(0,e]$.
+? input #x3q6l | 2
+Kolik lokálních extrémů má funkce $xe^{-x^2}$?
+! $f'(x) = e^{-x^2}(1-2x^2)$ mění znaménko v $\pm\frac1{\sqrt2}$: v $-\frac1{\sqrt2}$ je minimum, v $\frac1{\sqrt2}$ maximum. Extrémy jsou $2$.
 
 ### Druhá derivace a globální extrémy | P14 | #3dpcr
 ~ f=0.6-1.3*x^2; pt=0,0.6; dash=-0.6,0.6,0.6,0.6
@@ -3800,7 +3858,7 @@ Funkce $f(x) = x^4 - 2x^2$ má v bodě $x=1$
 - nic
 ! $f'(x) = 4x^3-4x$ a $f''(x) = 12x^2-4$.
 @ x=-1.8..1.8; y=-1.5..2; f=x^4-2*x^2; pt=1,-1; pt=-1,-1; pt=0,0
-? input #qbcr7 | 2
+?! input #qbcr7 | 2
 Najděte maximum funkce $f(x) = x^3 - 3x$ na intervalu $[-2, 2]$.
 ! Kandidáti: $f(-2) = -2$, $f(-1) = 2$, $f(1) = -2$, $f(2) = 2$.
 @ x=-2.4..2.4; y=-2.6..2.6; f=x^3-3*x; vband=-2,2; pt=-1,2; pt=2,2; pt=1,-2; pt=-2,-2
@@ -3836,7 +3894,7 @@ Spojitá funkce na otevřeném intervalu má vždy největší hodnotu.
 + $x$ na $(0,1)$
 - $x(1-x)$ na $(0,1)$
 - $\sin x$ na $(0,\pi)$
-? mc #woeh8
+?! mc #woeh8
 Je-li $f'(x_0) = 0$ a $f''(x_0)<0$, má $f$ v bodě $x_0$
 + ostré lokální maximum
 - ostré lokální minimum
@@ -3850,6 +3908,24 @@ Na kterém obrázku má funkce v bodě $0$ lokální minimum, ačkoli $f''(0) = 
 - @ x=-1.5..1.5; y=-3..3; f=x^3
 - @ x=-1.5..1.5; y=-3..0.5; f=0-x^4
 ! $(x^4)'' = 12x^2$ je v nule nulová, přesto je tam minimum. U $x^2$ je $f''(0) = 2$.
+?! input #qipi9 | 2
+Válcová nádoba s víkem má daný objem $V$ a co nejmenší povrch. Jaký je poměr její výšky k poloměru, $h:r$?
+! $V = \pi r^2h$, takže $h = \frac V{\pi r^2}$ a povrch je $S = 2\pi r^2+\frac{2V}r$. Z $S'(r) = 4\pi r-\frac{2V}{r^2} = 0$ plyne $V = 2\pi r^3$, tedy $h = \frac{2\pi r^3}{\pi r^2} = 2r$. Poměr $h:r$ je $2$.
+? input #9ytbp | √2; 1.4142
+Jaká je největší hodnota funkce $\cos x+\sin x$ na intervalu $[0,2\pi]$?
+! $f'(x) = \cos x-\sin x = 0$ pro $x = \frac\pi4$ a $\frac{5\pi}4$. Hodnoty: $f\left(\frac\pi4\right) = \sqrt2$, $f\left(\frac{5\pi}4\right) = -\sqrt2$, $f(0) = f(2\pi) = 1$. Největší hodnota je $\sqrt2$.
+? input #dagsu | 2
+Ze čtvercového plechu o straně $12$ vystřihneme v rozích čtverce o straně $x$ a ohneme krabici bez víka. Pro jaké $x$ má největší objem?
+! $V(x) = x(12-2x)^2$ pro $x\in(0,6)$. $V'(x) = (12-2x)(12-6x) = 0$ dává $x = 2$ (bod $6$ do intervalu nepatří) a $V'$ tam mění znaménko z $+$ na $-$. Maximum je pro $x = 2$.
+? input #cn82m | -2^(1/3); -1.2599
+Pro které záporné $x$ je výraz $x-\dfrac1{x^2}$ největší?
+! $f'(x) = 1+\frac2{x^3} = 0$ dává $x^3 = -2$, tedy $x = -\sqrt[3]2$. Pro $x<-\sqrt[3]2$ je $f'>0$ a pro $-\sqrt[3]2<x<0$ je $f'<0$, takže v $-\sqrt[3]2$ je maximum.
+? input #q1wg7 | 4/e^2; 0.5413
+Jaká je největší hodnota funkce $x^2e^{-x}$ na $[0,\infty)$?
+! $f'(x) = e^{-x}(2x-x^2) = 0$ pro $x = 0$ a $x = 2$. $f(0) = 0$, $f(2) = \frac4{e^2}$ a pro $x\to\infty$ jde $f$ k $0$. Největší hodnota je $\frac4{e^2}$.
+? tf #iqxuo | true
+Má-li diferencovatelná funkce na intervalu jediný stacionární bod $x_0$ a je v něm ostré lokální maximum, je $f(x_0)$ i největší hodnota funkce na celém intervalu.
+! Kdyby pro nějaké $b>x_0$ bylo $f(b)>f(x_0)$, nabyla by $f$ na $[x_0,b]$ minima. Hodnoty těsně za $x_0$ jsou menší než $f(x_0)<f(b)$, takže minimum leží uvnitř intervalu a je tam druhý stacionární bod, spor. Pro $b<x_0$ stejně. $f(x_0)$ je proto největší hodnota.
 
 ### Konvexní a konkávní funkce | P14 | #qs29i
 ~ f=1.3*x^2-0.7; sec=-0.65,0.6
