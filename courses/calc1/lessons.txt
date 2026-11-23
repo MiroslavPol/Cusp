@@ -2225,7 +2225,7 @@ Pro $x_0=+\infty$ nahradíme okolí $(x_0-\delta,x_0+\delta)$ intervalem $(A,\in
 ? input #dlnrm | 7
 Určete $\lim\limits_{x\to 2}(x^2+3)$.
 ! Funkce je spojitá, stačí dosadit: $4+3 = 7$.
-? input #g3qaf | 4
+?! input #g3qaf | 4
 Určete $\lim\limits_{x\to 2}\dfrac{x^2-4}{x-2}$.
 ! Pro $x\ne2$ je $\dfrac{x^2-4}{x-2} = x+2\to4$. Hodnota v bodě $2$ neexistuje, limita ano.
 @ x=-1..4.5; y=-1..7; f=(x^2-4)/(x-2); hole=2,4
@@ -2247,7 +2247,7 @@ Jak zní definice $\lim\limits_{x\to+\infty} f(x) = L\in\mathbb R$?
 Určete $\lim\limits_{x\to0}\dfrac{1}{x^2}$.
 ! Pro $0<|x|<\delta$ je $\tfrac1{x^2}>\tfrac1{\delta^2}$, což je libovolně velké.
 @ x=-3..3; y=-1..12; f=1/x^2; vline=0
-? build #4d3yb
+?! build #4d3yb
 Sestavte $\varepsilon$–$\delta$ definici: $\lim\limits_{x\to x_0}f(x) = L$, jestliže
 + $\forall\varepsilon>0$
 + $\exists\delta>0$
@@ -2267,7 +2267,7 @@ Určete $\lim\limits_{x\to 1}\dfrac{x^3-1}{x-1}$.
 ? input #wehsh | 1/10; 0.1
 Pro $f(x) = 3x$, $x_0 = 2$, $L = 6$ a $\varepsilon = \frac{3}{10}$: jaké největší $\delta$ v definici vyhovuje?
 ! $|3x-6| = 3|x-2|<\frac3{10}\iff|x-2|<\frac1{10}$.
-? tf #w6vqi | false
+?! tf #w6vqi | false
 Má-li $f$ v bodě $x_0$ limitu $L$ a je v $x_0$ definovaná, pak $f(x_0) = L$.
 ! Limita nezávisí na hodnotě v samotném bodě; rovnost $f(x_0) = L$ je právě spojitost.
 + $f(x) = 0$ pro $x\ne0$, $f(0) = 1$, v bodě $0$
@@ -2280,13 +2280,35 @@ Na kterém obrázku má funkce v bodě $1$ limitu $2$?
 - @ x=-0.5..2.5; y=-6..6; f=1/(x-1)
 - @ x=-0.5..2.5; y=-0.5..4; f=x^2; pt=1,1
 ! Limitu $2$ má funkce, jejíž graf je přímka $y=x+1$ s dírou v bodě $[1, 2]$: hodnoty se u bodu $1$ blíží ke $2$ z obou stran a hodnota $f(1)$ na tom nic nemění. U grafu se skokem se jednostranné limity liší.
+?! mc #jtyly
+Co znamená zápis $\lim\limits_{x\to1}f(x) = +\infty$?
++ $\forall M\ \exists\delta>0:\ 0<|x-1|<\delta\Rightarrow f(x)>M$
+- $\exists M\ \forall\delta>0:\ 0<|x-1|<\delta\Rightarrow f(x)>M$
+- $\forall M\ \exists\delta>0:\ 0<|x-1|<\delta\Rightarrow f(x)<M$
+- $\forall\varepsilon>0\ \exists\delta>0:\ 0<|x-1|<\delta\Rightarrow |f(x)-M|<\varepsilon$
+! Nevlastní limita ve vlastním bodě: ať je mez $M$ jakkoli velká, blízko bodu $1$ (kromě něj samotného) leží hodnoty $f$ nad ní.
+? input #3r340 | -5
+Určete $\lim\limits_{x\to-2}\dfrac{x^2-x-6}{x+2}$.
+! $x^2-x-6 = (x-3)(x+2)$, takže pro $x\ne-2$ je zlomek roven $x-3\to-5$.
+? input #5qd4y | 6
+Určete $\lim\limits_{x\to6}\dfrac{x-6}{\sqrt{x+3}-3}$.
+! Rozšíříme výrazem $\sqrt{x+3}+3$: jmenovatel je pak $x+3-9 = x-6$ a zlomek je roven $\sqrt{x+3}+3\to6$.
+? input #1cc67 | 4
+Určete $\lim\limits_{x\to0}\dfrac{\sqrt{x^2+1}-1}{\sqrt{x^2+16}-4}$.
+! Rozšířením je čitatel $\frac{x^2}{\sqrt{x^2+1}+1}$ a jmenovatel $\frac{x^2}{\sqrt{x^2+16}+4}$. Podíl je $\frac{\sqrt{x^2+16}+4}{\sqrt{x^2+1}+1}\to\frac82 = 4$.
+? input #ms2gq | -1/12
+Určete $\lim\limits_{x\to1}\dfrac{2-\sqrt{x+3}}{x^3-1}$.
+! Čitatel rozšíříme: $2-\sqrt{x+3} = \frac{1-x}{2+\sqrt{x+3}}$, a $x^3-1 = (x-1)(x^2+x+1)$. Po zkrácení $x-1$ zbude $\frac{-1}{(2+\sqrt{x+3})(x^2+x+1)}\to\frac{-1}{4\cdot3} = -\frac1{12}$.
+? tf #0i327 | true
+$\lim\limits_{x\to a}f(x) = 0$ platí právě tehdy, když $\lim\limits_{x\to a}|f(x)| = 0$.
+! Obě podmínky říkají totéž: $\bigl||f(x)|-0\bigr| = |f(x)-0|$. Tvrzení tedy platí.
 
 ### Jednostranné limity | P7 | #ha94s
 ~ f=x<0?0.35*x-0.25:0.35*x+0.45; hole=0,-0.25; pt=0,0.45
 > Limita zleva a zprava
 $\lim\limits_{x\to x_0^+} f(x) = L$, jestliže ke každému $\mathcal O(L)$ existuje $\delta>0$ s $f(x)\in\mathcal O(L)$ pro všechna $x\in(x_0,\ x_0+\delta)$. Analogicky zleva.
 $$\lim_{x\to x_0}f(x) = L \iff \lim_{x\to x_0^-}f(x) = L = \lim_{x\to x_0^+}f(x).$$
-? mc #uryra
+?! mc #uryra
 Určete $\lim\limits_{x\to0^+}\dfrac1x$ a $\lim\limits_{x\to0^-}\dfrac1x$.
 + $+\infty$ a $-\infty$
 - obě jsou $+\infty$
@@ -2302,7 +2324,7 @@ Určete $\lim\limits_{x\to0^+}\dfrac{|x|}{x}$.
 Určete $\lim\limits_{x\to0^-}\dfrac{|x|}{x}$.
 ! Pro $x<0$ je $|x| = -x$.
 @ x=-3..3; y=-2..2; f=abs(x)/x; hole=0,1; hole=0,-1
-? tf #x7652 | false
+?! tf #x7652 | false
 Existuje $\lim\limits_{x\to0}\operatorname{sgn} x$.
 ! Zleva je limita $-1$, zprava $1$.
 @ x=-3..3; y=-2..2; f=sign(x); hole=0,1; hole=0,-1; pt=0,0
@@ -2337,12 +2359,27 @@ Na kterém obrázku je limita v bodě $0$ zleva rovna $1$ a zprava $-1$?
 - @ x=-2..2; y=-5..5; f=1/x
 - @ x=-2..2; y=-2..2; f=1-x/2
 ! Zleva (pro $x<0$) se graf blíží k výšce $1$, zprava k výšce $-1$.
-? tf #io64n | false
+?! tf #io64n | false
 Existují-li v bodě $x_0$ obě jednostranné limity, existuje i limita.
 ! Musí se navíc rovnat.
 + $\operatorname{sgn}x$ v bodě $0$
 - $x^2$ v bodě $0$
 - $|x|$ v bodě $0$
+? input #55o6w | 1
+Určete $\lim\limits_{x\to0^+}\dfrac{e^{1/x}+1}{e^{1/x}-1}$.
+! Pro $x\to0^+$ je $e^{1/x}\to+\infty$. Vydělíme $e^{1/x}$: $\frac{1+e^{-1/x}}{1-e^{-1/x}}\to\frac11 = 1$.
+? input #7mi7y | -1
+Určete $\lim\limits_{x\to0^-}\dfrac{e^{1/x}+1}{e^{1/x}-1}$.
+! Pro $x\to0^-$ je $\frac1x\to-\infty$ a $e^{1/x}\to0$, takže zlomek jde k $\frac{0+1}{0-1} = -1$.
+? input #4mjp3 | -π/2; -1.5708
+Určete $\lim\limits_{x\to1^+}\operatorname{arctg}\dfrac1{1-x}$.
+! Pro $x\to1^+$ je $1-x$ malé záporné, takže $\frac1{1-x}\to-\infty$ a $\operatorname{arctg}\frac1{1-x}\to-\frac\pi2$.
+? input #24jlz | -1
+Určete $\lim\limits_{x\to0^-}\dfrac{x}{|x|+x^2}$.
+! Pro $x<0$ je $|x| = -x$ a zlomek je $\frac{x}{-x+x^2} = \frac1{x-1}\to-1$.
+? tf #q3ngh | true
+Má-li $f$ v bodě $x_0$ limitu $L$, má tam i obě jednostranné limity a obě jsou rovny $L$.
+! Podmínka z definice limity platí na celém ryzím okolí, tedy i na jeho levé a pravé polovině. Obě jednostranné limity proto existují a jsou rovny $L$.
 
 ### Počítání s limitami funkcí | P7 | #4ntju
 ~ f=(x^2-0.25)/(x-0.5)*0.8-0.5; hole=0.5,0.3
@@ -2354,7 +2391,7 @@ $$\lim_{x\to x_0}(f\pm g) = L_1\pm L_2,\quad \lim_{x\to x_0}fg = L_1L_2,\quad \l
 <b>Nula krát ohraničená je nula:</b> je-li $\lim\limits_{x\to x_0}f(x) = 0$ a $g$ je na ryzím okolí $x_0$ ohraničená, pak $\lim\limits_{x\to x_0}f(x)g(x) = 0$.
 > Limita složené funkce
 Je-li $\lim\limits_{x\to x_0}\varphi(x) = \alpha$, $\lim\limits_{y\to\alpha}f(y) = L$ a $\varphi(x)\ne\alpha$ na ryzím okolí $x_0$, pak $\lim\limits_{x\to x_0}f(\varphi(x)) = L$. Podmínku $\varphi(x)\neq\alpha$ lze vynechat, je-li $f$ spojitá v $\alpha$.
-? input #ivu45 | 0
+?! input #ivu45 | 0
 Určete $\lim\limits_{x\to0} x\sin\dfrac1x$.
 ! $x\to0$ a $\sin\frac1x$ je ohraničená.
 @ x=-0.5..0.5; y=-0.5..0.5; f=x*sin(1/x); f=abs(x); f=0-abs(x)
@@ -2365,7 +2402,7 @@ Taková úloha může přijít u zkoušky: určete $\lim\limits_{x\to\infty}\dfr
 Určete $\lim\limits_{x\to\infty}\dfrac{3x^2+x}{2x^2-7}$.
 ! Rozhodují nejvyšší mocniny: $\frac{3}{2}$.
 @ x=-12..12; y=-4..6; f=(3*x^2+x)/(2*x^2-7); hline=1.5; vline=sqrt(3.5); vline=0-sqrt(3.5)
-? input #qta8b | 1/4; 0.25
+?! input #qta8b | 1/4; 0.25
 Určete $\lim\limits_{x\to 4}\dfrac{\sqrt x-2}{x-4}$.
 ! $x - 4 = (\sqrt x-2)(\sqrt x+2)$, výraz je $\frac{1}{\sqrt x+2}\to\frac14$.
 @ x=-0.2..10; y=-0.05..0.6; f=(sqrt(x)-2)/(x-4); hole=4,0.25
@@ -2373,7 +2410,7 @@ Určete $\lim\limits_{x\to 4}\dfrac{\sqrt x-2}{x-4}$.
 Určete $\lim\limits_{x\to\infty}\dfrac{\sin x}{x}$.
 ! $\frac1x\to0$ a $\sin x$ je ohraničená.
 @ x=0..40; y=-0.4..1.1; f=sin(x)/x; f=1/x; f=0-1/x; hline=0
-? tf #7ie8z | true
+?! tf #7ie8z | true
 Je-li $f$ spojitá v $\alpha$ a $\varphi(x)\to\alpha$, pak $f(\varphi(x))\to f(\alpha)$.
 ! Spojitou funkci lze zaměnit s limitou: $\lim f(\varphi(x)) = f(\lim\varphi(x))$.
 ? gen #gbpun | lim_factor
@@ -2399,6 +2436,30 @@ Seřaďte výpočet $\lim\limits_{x\to2}\dfrac{x^2-4}{x-2}$.
 + Pro $x\ne2$ zkrátíme: $\frac{x^2-4}{x-2} = x+2$.
 + Limita nezávisí na hodnotě v bodě $2$, je tedy $\lim\limits_{x\to2}(x+2) = 4$.
 ! Krácení je oprávněné, protože v definici limity bereme jen $x\ne2$.
+?! input #5s459 | 1/2; 0.5
+Určete $\lim\limits_{x\to\infty}x\left(\sqrt{x^2+1}-x\right)$.
+! Rozšíříme součtem: $$x\left(\sqrt{x^2+1}-x\right) = \frac{x}{\sqrt{x^2+1}+x} = \frac1{\sqrt{1+1/x^2}+1}\to\frac12.$$
+? input #4svdc | 1/3
+Určete $\lim\limits_{x\to0}\dfrac{\sqrt[3]{1+x^2}-1}{x^2}$.
+! Pro $u = \sqrt[3]{1+x^2}$ je $u^3-1 = x^2$ a $u^3-1 = (u-1)(u^2+u+1)$. Zlomek je tedy $\frac1{u^2+u+1}\to\frac13$.
+? input #mgykh | 2/3
+Určete $\lim\limits_{x\to0}\dfrac{\sqrt[3]{1+x}-\sqrt[3]{1-x}}{x}$.
+! Pro $a = \sqrt[3]{1+x}$, $b = \sqrt[3]{1-x}$ je $a-b = \frac{a^3-b^3}{a^2+ab+b^2} = \frac{2x}{a^2+ab+b^2}$. Zlomek je tedy $\frac{2}{a^2+ab+b^2}\to\frac23$.
+? input #rhi55 | 0
+Určete $\lim\limits_{x\to-\infty}\left(\sqrt{x^4+1}-x^2\right)$.
+! Rozšíříme součtem: $\sqrt{x^4+1}-x^2 = \frac{1}{\sqrt{x^4+1}+x^2}\to0$.
+? input #r49qu | 0
+Určete $\lim\limits_{x\to+\infty}\left(\sqrt[3]{1-x^3}+x\right)$.
+! Pro $a = \sqrt[3]{1-x^3}$ a $b = x$ je $a+b = \frac{a^3+b^3}{a^2-ab+b^2} = \frac{1}{a^2-ab+b^2}$ a jmenovatel roste nade všechny meze. Limita je $0$.
+? input #ust7z | 2
+Určete $\lim\limits_{x\to\infty}\left(\sqrt{(x+1)(x+3)}-x\right)$.
+! Rozšíříme součtem: $$\frac{(x+1)(x+3)-x^2}{\sqrt{(x+1)(x+3)}+x} = \frac{4x+3}{\sqrt{(x+1)(x+3)}+x}\to\frac42 = 2.$$
+? input #gh31o | 36
+Určete $\lim\limits_{x\to3}\dfrac{x^2-9}{\sqrt{x+6}-3}$.
+! Rozšíříme výrazem $\sqrt{x+6}+3$: jmenovatel je pak $x-3$ a zlomek je $(x+3)\left(\sqrt{x+6}+3\right)\to6\cdot6 = 36$.
+? input #olu7w | 8
+Určete $\lim\limits_{x\to\infty}2^{\frac{3x}{x+2}}$.
+! Exponent $\frac{3x}{x+2}\to3$ a $2^t$ je spojitá, takže limita je $2^3 = 8$.
 
 ### Spojitost v bodě | P8 | #00taj
 ~ f=0.55*sin(2.5*x)+0.1; pt=0.25,0.1+0.55*sin(0.625)
@@ -2412,11 +2473,11 @@ $$f(x)=\begin{cases} x^2, & x<2\\ a, & x\ge 2\end{cases}$$
 spojitá v bodě $2$?
 ! Limita zleva je $4$, takže potřebujeme $a = 4$.
 @ x=-0.5..3.5; y=-0.5..6; f=x<2?x^2:4; pt=2,4
-? input #qswy3 | 2
+?! input #qswy3 | 2
 Jakou hodnotu musíme přiřadit funkci $\dfrac{x^2-1}{x-1}$ v bodě $1$, aby tam byla spojitá?
 ! Pro $x\ne1$ je to $x+1\to2$.
 @ x=-2..3; y=-1..4; f=(x^2-1)/(x-1); hole=1,2
-? tf #w7t7y | false
+?! tf #w7t7y | false
 Je-li $|f|$ spojitá v $x_0$, je spojitá i $f$.
 ! $f(x) = 1$ pro $x\ge0$ a $-1$ pro $x<0$: $|f| = 1$ je spojitá, $f$ v nule ne.
 @ x=-3..3; y=-2..2; f=x<0?-1:1; f=1; pt=0,1; hole=0,-1
@@ -2441,7 +2502,7 @@ Funkce $f(x) = x\cdot\chi(x)$, kde $\chi$ je Dirichletova funkce, je spojitá
 - ve všech racionálních bodech
 ! Pro racionální $x$ leží graf na přímce $y=x$, pro iracionální na ose $x$. V nule platí $|f(x)|\le|x|\to0 = f(0)$; v bodě $x_0\ne0$ funkce skáče mezi $0$ a hodnotami blízkými $x_0$. Spojitá je tedy jen v bodě $0$.
 @ x=-2..2; y=-2..2; fd=x; f=abs(x); f=0-abs(x); pt=0,0
-? build #3sgej
+?! build #3sgej
 Sestavte definici: $f$ je spojitá v bodě $x_0$, jestliže
 + $\forall\varepsilon>0$
 + $\exists\delta>0$
@@ -2477,6 +2538,18 @@ Která funkce je spojitá v bodě $0$?
 ? tf #5jit1 | true
 Funkce $\sqrt x$ je spojitá na celém svém definičním oboru $[0,\infty)$.
 ! V nule je spojitá zprava, což na hranici definičního oboru stačí.
+?! input #u8fx9 | 3
+Pro jaké $a$ je funkce $f(x) = \dfrac{\sin ax}{x}$ pro $x\ne0$, $f(0) = 3$ spojitá v bodě $0$?
+! $\frac{\sin ax}{x} = a\cdot\frac{\sin ax}{ax}\to a$ (pro $a\ne0$). Spojitost vyžaduje $a = f(0) = 3$.
+? input #zvc0n | 2/3
+Jakou hodnotu musíme přiřadit funkci $\dfrac{x^2-1}{x^3-1}$ v bodě $1$, aby tam byla spojitá?
+! Pro $x\ne1$ je $\frac{(x-1)(x+1)}{(x-1)(x^2+x+1)} = \frac{x+1}{x^2+x+1}\to\frac23$.
+? tf #zfe0m | true
+Jsou-li $f$ a $g$ spojité v bodě $x_0$, je v něm spojitá i funkce $\max\{f,g\}$.
+! $\max\{f,g\} = \frac{f+g+|f-g|}2$ a součet, rozdíl i absolutní hodnota spojitých funkcí jsou spojité. Proto je spojité i maximum.
+? tf #chbg2 | true
+Složená funkce $g\circ f$ může být spojitá v bodě $x_0$, i když $f$ v něm spojitá není.
+! Stačí $g$ konstantní: pak je $g(f(x))$ konstantní, a tedy spojitá, ať je $f$ jakákoli. Tvrzení platí.
 
 ### Weierstrassova věta | P8 | #f2kya
 ~ f=0.7*sin(4*x); dash=-0.8,-1.05,-0.8,1.05; dash=0.8,-1.05,0.8,1.05; pt=-0.393,-0.7; pt=0.393,0.7
@@ -2485,7 +2558,7 @@ Funkce $\sqrt x$ je spojitá na celém svém definičním oboru $[0,\infty)$.
 
 Všechny předpoklady jsou nutné: interval musí být uzavřený a ohraničený a funkce spojitá.
 @@ x=-0.2..3.8; y=-1..2.2; f=0.5*x^3-2.6*x^2+3*x+0.6; vband=0.3,3.4; pt=0.731,1.599; pt=2.736,-0.414
-? multi #m79q6
+?! multi #m79q6
 U kterých funkcí Weierstrassova věta zaručuje existenci maxima?
 + $x^2$ na $[-1,2]$
 + $\sin x$ na $[0,10]$
@@ -2497,7 +2570,7 @@ U kterých funkcí Weierstrassova věta zaručuje existenci maxima?
 Jaká je největší hodnota funkce $x^2$ na intervalu $[-1,2]$?
 ! Na $[-1,0]$ funkce $x^2$ klesá a na $[0,2]$ roste, takže největší hodnotu má v jednom z krajních bodů: $f(-1) = 1$, $f(2) = 4$. Největší hodnota je $4$.
 @ x=-1.6..2.6; y=-0.6..5; f=x^2; vband=-1,2; pt=2,4; pt=-1,1; pt=0,0
-? tf #8eqqz | false
+?! tf #8eqqz | false
 Funkce $f(x)=x$ nabývá na intervalu $(0,1)$ maxima.
 ! Supremum $1$ se nenabývá, protože $1\notin(0,1)$.
 @ x=-0.3..1.4; y=-0.3..1.4; f=x>0&&x<1?x:NaN; hole=0,0; hole=1,1; hline=1
@@ -2554,6 +2627,23 @@ Na kterých intervalech nabývá funkce $\frac1x$ své největší hodnoty?
 - $(0,1]$
 - $(1,2)$
 ! Na uzavřených intervalech bez nuly je funkce spojitá a Weierstrassova věta platí. Na $(0,1]$ není ohraničená, na $(1,2)$ se supremum $1$ nenabývá.
+?! tf #2h6nz | false
+Spojitá funkce na intervalu $[0,\infty)$ nabývá svého minima.
+! Weierstrassova věta potřebuje i ohraničený interval. $\frac1{1+x}$ je na $[0,\infty)$ spojitá, má obor hodnot $(0,1]$ a hodnoty $0$ nenabývá, takže minimum nemá.
++ $\frac1{1+x}$
+- $x$
+- $x^2$
+? input #xtena | 2
+Jaká je největší hodnota funkce $|x-1|$ na intervalu $[-1,2]$?
+! Na $[-1,1]$ funkce klesá z $2$ na $0$, na $[1,2]$ roste z $0$ na $1$. Největší hodnota je $f(-1) = 2$.
+@ x=-1.6..2.6; y=-0.4..2.6; f=abs(x-1); vband=-1,2; pt=-1,2
+? multi #movez
+Které funkce nabývají na intervalu $[0,1]$ maxima?
++ $x^2$
++ $\lfloor 2x\rfloor$
+- $f(x) = x$ pro $x<1$, $f(1) = 0$
+- $f(x) = \frac1x$ pro $x>0$, $f(0) = 0$
+! $x^2$ je spojitá. $\lfloor2x\rfloor$ spojitá není, ale maxima $2$ nabývá v bodě $1$. Funkce $x$ s $f(1) = 0$ se k $1$ jen blíží a $\frac1x$ není shora ohraničená. Maxima nabývají $x^2$ a $\lfloor2x\rfloor$.
 
 ### Bolzanova věta | P9 | #2x9qw
 ~ f=0.9*x^3+0.35*x; pt=0,0; pt=-0.75,-0.64; pt=0.75,0.64
@@ -2562,7 +2652,7 @@ Na kterých intervalech nabývá funkce $\frac1x$ své největší hodnoty?
 @@ x=-0.3..1.3; y=-1.4..1.6; f=x^3+x-1; vband=0.5,0.75; pt=0,-1; pt=1,1; pt=0.682,0
 > Spojitost inverzní funkce
 Je-li $f$ ryze monotónní a spojitá na intervalu $I$, je $f^{-1}$ spojitá a ryze monotónní na $f(I)$. Odtud plyne spojitost $\arcsin$, $\ln$, $\sqrt[n]{x}$ a dalších.
-? tf #x1tpv | true
+?! tf #x1tpv | true
 Rovnice $x^3 + x - 1 = 0$ má kořen v intervalu $(0,1)$.
 ! $f(0) = -1<0$, $f(1) = 1>0$ a $f$ je spojitá.
 ? mc #utuqh
@@ -2573,7 +2663,7 @@ V jakém intervalu leží kořen $x^3+x-1=0$ po dvou krocích půlení intervalu
 - $(0{,}75;\ 1)$
 ! $f(0{,}5) = -0{,}375 < 0$, kořen je v $(0{,}5;\ 1)$; $f(0{,}75)\approx0{,}17>0$, tedy v $(0{,}5;\ 0{,}75)$.
 @ x=-0.1..1.1; y=-1.2..1.2; f=x^3+x-1; vband=0.5,0.75; pt=0.5,-0.375; pt=0.75,0.172; pt=0.682,0
-? tf #ogu1y | true
+?! tf #ogu1y | true
 Každý polynom lichého stupně s reálnými koeficienty má reálný kořen.
 ! Pro $x\to\pm\infty$ má polynom lichého stupně limity opačných znamének; pak stačí Bolzanova věta.
 ? tf #y0xat | false
@@ -2618,6 +2708,21 @@ Kolik reálných kořenů má polynom $x^3-3x+1$?
 ? tf #2ftza | true
 Spojitá funkce $f\colon[0,1]\to[0,1]$ má pevný bod, tedy $f(c) = c$ pro nějaké $c$.
 ! Pro $g(x) = f(x)-x$ je $g(0)\ge0$ a $g(1)\le0$; Bolzanova věta dá nulový bod $g$.
+?! tf #ad1z0 | false
+Je-li $f(a)\cdot f(b)<0$, má $f$ na $(a,b)$ kořen.
+! Bez spojitosti to neplatí: funkce $-1$ pro $x<0$ a $1$ pro $x\ge0$ má na $[-1,1]$ v krajních bodech opačná znaménka, ale nikde není nulová.
++ $f(x) = -1$ pro $x<0$, $f(x) = 1$ pro $x\ge0$, na $[-1,1]$
+- $f(x) = x$ na $[-1,1]$
+- $f(x) = x^3$ na $[-1,1]$
+? tf #nyi1k | true
+Rovnice $e^x = 3-x$ má řešení v intervalu $(0,1)$.
+! $g(x) = e^x+x-3$ je spojitá, $g(0) = -2<0$ a $g(1) = e-2>0$. Podle Bolzanovy věty má $g$ v $(0,1)$ kořen, tedy rovnice má řešení.
+? input #r7eut | 3
+Kolik reálných kořenů má polynom $x^3-6x^2+9x-1$?
+! $p(0) = -1$, $p(1) = 3$, $p(3) = -1$, $p(4) = 3$: znaménko se mění na $(0,1)$, $(1,3)$ i $(3,4)$, takže každý z nich obsahuje kořen. Polynom třetího stupně víc kořenů nemá, má jich tedy $3$.
+? tf #gzvf3 | true
+Spojitá funkce na intervalu, která nabývá jen racionálních hodnot, je konstantní.
+! Kdyby nabývala dvou různých hodnot, nabývala by podle Bolzanovy věty i všech hodnot mezi nimi, tedy i nějaké iracionální. Musí být proto konstantní.
 
 ### Body nespojitosti | P9 | #6riqq
 ~ f=0.25/x
@@ -2625,7 +2730,7 @@ Spojitá funkce $f\colon[0,1]\to[0,1]$ má pevný bod, tedy $f(c) = c$ pro něja
 Je-li $f$ nespojitá v $x_0$:
 <ul><li><b>odstranitelná nespojitost</b>: existuje vlastní $\lim\limits_{x\to x_0}f(x)$, ale je různá od $f(x_0)$ nebo $f(x_0)$ není definovaná,</li><li><b>skok</b>: obě jednostranné limity jsou vlastní, ale různé,</li><li><b>nespojitost 2. druhu</b>: některá jednostranná limita neexistuje nebo je nevlastní.</li></ul>
 Odstranitelná nespojitost a skok jsou <b>nespojitosti 1. druhu</b>.
-? mc #z2xc0
+?! mc #z2xc0
 Jaký typ nespojitosti má $\dfrac{\sin x}{x}$ v bodě $0$?
 + odstranitelnou
 - skok
@@ -2633,7 +2738,7 @@ Jaký typ nespojitosti má $\dfrac{\sin x}{x}$ v bodě $0$?
 - je tam spojitá
 ! $\lim\limits_{x\to0}\frac{\sin x}{x} = 1$ existuje, ale $f(0)$ není definovaná.
 @ x=-12..12; y=-0.4..1.2; f=sin(x)/x; hole=0,1
-? mc #xcfbo
+?! mc #xcfbo
 Jaký typ nespojitosti má $\operatorname{sgn} x$ v bodě $0$?
 - odstranitelnou
 + skok
@@ -2641,7 +2746,7 @@ Jaký typ nespojitosti má $\operatorname{sgn} x$ v bodě $0$?
 - je tam spojitá
 ! Jednostranné limity jsou $-1$ a $1$.
 @ x=-3..3; y=-2..2; f=sign(x); hole=0,1; hole=0,-1; pt=0,0
-? mc #mfzd5
+?! mc #mfzd5
 Jaký typ nespojitosti má $\dfrac1x$ v bodě $0$?
 - odstranitelnou
 - skok
@@ -2698,17 +2803,41 @@ Na kterém obrázku má funkce v bodě $0$ odstranitelnou nespojitost?
 - @ x=-2..2; y=-5..5; f=1/x
 - @ x=-2..2; y=-1..3; f=1+x^2/2
 ! Limita existuje a je vlastní, jen hodnota v bodě je „jinde“. Stačí ji předefinovat.
+? mc #p8rvp
+Jaký typ nespojitosti má $\dfrac{e^{1/x}+1}{e^{1/x}-1}$ v bodě $0$?
+- odstranitelnou
++ skok
+- druhého druhu
+- je v nule spojitá
+! Zprava je limita $1$ (vydělením $e^{1/x}$), zleva $-1$ (protože $e^{1/x}\to0$). Jednostranné limity jsou konečné a různé, jde o skok.
+? mc #e3mjh
+Jaký typ nespojitosti má $x\sin\dfrac1x$ v bodě $0$?
++ odstranitelnou
+- skok
+- druhého druhu
+- je v nule spojitá
+! Funkce v nule není definovaná, ale $\left|x\sin\frac1x\right|\le|x|\to0$, takže limita je $0$. Nespojitost je odstranitelná, stačí doplnit $f(0) = 0$.
+? input #n2e45 | 2
+Funkce $\dfrac{\sin^2x}{1-\cos x}$ má v bodě $0$ odstranitelnou nespojitost. Jakou hodnotu je třeba doplnit?
+! $\sin^2x = (1-\cos x)(1+\cos x)$, takže pro $x\ne0$ je funkce rovna $1+\cos x\to2$.
+? mc #ll62k
+Jaký typ nespojitosti má $\dfrac{x-1}{x^2-3x+2}$ v bodě $1$?
++ odstranitelnou
+- skok
+- druhého druhu
+- je v bodě $1$ spojitá
+! $x^2-3x+2 = (x-1)(x-2)$, takže pro $x\ne1$ je funkce rovna $\frac1{x-2}\to-1$. Limita existuje a je konečná, nespojitost je odstranitelná. (V bodě $2$ je nespojitost druhého druhu.)
 
 ### Speciální limity | P9 | #6k7m0
 ~ f=0.9*sin(7*x)/(7*x); hole=0,0.9
 > Dvě důležité limity
 $$\lim_{x\to0}\frac{\sin x}{x} = 1,\qquad \lim_{x\to0}\frac{e^x-1}{x} = 1.$$
 Z nich odvodíme derivace funkcí $\sin$ a $e^x$. Dále platí $\lim\limits_{x\to0}\frac{\ln(1+x)}{x} = 1$ a $\lim\limits_{x\to\pm\infty}\left(1+\frac1x\right)^x = e$.
-? input #b8w3p | 3
+?! input #b8w3p | 3
 Určete $\lim\limits_{x\to0}\dfrac{\sin 3x}{x}$.
 ! $\dfrac{\sin3x}{x} = 3\cdot\dfrac{\sin 3x}{3x}\to3$.
 @ x=-3..3; y=-1..3.5; f=sin(3*x)/x; hole=0,3
-? input #cx13k | 1/2; 0.5
+?! input #cx13k | 1/2; 0.5
 Určete $\lim\limits_{x\to0}\dfrac{1-\cos x}{x^2}$.
 ! $1-\cos x = 2\sin^2\frac x2$, výraz je $\frac12\left(\frac{\sin(x/2)}{x/2}\right)^2\to\frac12$.
 @ x=-8..8; y=-0.1..0.6; f=(1-cos(x))/x^2; hole=0,0.5
@@ -2720,7 +2849,7 @@ Určete $\lim\limits_{x\to0}\dfrac{e^{2x}-1}{x}$.
 Určete $\lim\limits_{x\to0}\dfrac{\operatorname{tg}x}{x}$.
 ! $\dfrac{\operatorname{tg}x}{x} = \dfrac{\sin x}{x}\cdot\dfrac{1}{\cos x}\to1$.
 @ x=-1.4..1.4; y=0..4; f=tan(x)/x; hole=0,1
-? mc #uy84r
+?! mc #uy84r
 Určete $\lim\limits_{x\to\infty}\left(1+\dfrac{2}{x}\right)^x$.
 - $e$
 + $e^2$
@@ -2760,16 +2889,34 @@ Přiřaďte limitám jejich hodnoty.
 + $\lim\limits_{x\to0}(1+x)^{1/x}$ :: $e$
 - $0$
 ! $\frac{e^{2x}-1}{x} = 2\cdot\frac{e^{2x}-1}{2x}\to2$. $\frac{1-\cos x}{x^2} = \frac{2\sin^2(x/2)}{x^2}\to\frac12$. Pro $y=\frac1x\to\pm\infty$ je $(1+x)^{1/x} = \left(1+\frac1y\right)^y\to e$.
+?! input #jrwrl | ln 2; 0.6931
+Určete $\lim\limits_{x\to0}\dfrac{2^x-1}{x}$.
+! $2^x = e^{x\ln2}$, takže $\frac{2^x-1}{x} = \ln2\cdot\frac{e^{x\ln2}-1}{x\ln2}\to\ln2\cdot1 = \ln2$.
+? input #wxdj1 | 2/5; 0.4
+Určete $\lim\limits_{x\to0}\dfrac{\sin 2x}{\sin 5x}$.
+! $\frac{\sin2x}{\sin5x} = \frac{\sin2x}{2x}\cdot\frac{5x}{\sin5x}\cdot\frac25\to1\cdot1\cdot\frac25 = \frac25$.
+? input #bzvf8 | e^2; 7.3891
+Určete $\lim\limits_{x\to0}(1+2x)^{1/x}$.
+! Pro $t = 2x$ je $(1+2x)^{1/x} = \left[(1+t)^{1/t}\right]^2\to e^2$.
+? input #x65qn | 1
+Určete $\lim\limits_{x\to0}\dfrac{\arcsin x}{x}$.
+! Substitucí $t = \arcsin x$, tedy $x = \sin t$ a $t\to0$: $\frac{\arcsin x}{x} = \frac{t}{\sin t}\to1$.
+? input #7lwl3 | 1
+Určete $\lim\limits_{x\to0}\dfrac{\ln(1+x)}{\sin x}$.
+! $\frac{\ln(1+x)}{\sin x} = \frac{\ln(1+x)}{x}\cdot\frac{x}{\sin x}\to1\cdot1 = 1$.
+? input #rosnv | 2
+Určete $\lim\limits_{x\to0}\dfrac{e^x-e^{-x}}{x}$.
+! $\frac{e^x-e^{-x}}x = \frac{e^x-1}x+\frac{e^{-x}-1}{-x}\to1+1 = 2$.
 
 ### Bonus: Protipříklady ke spojitosti | P8 | bonus | #i6yyk
 ~ f=0.95*x*sin(0.6/x)
 > Funkce, které překvapí
 Dirichletova funkce $\chi$ ($0$ na $\mathbb Q$, $1$ na $\mathbb I$) není spojitá nikde. Funkce $\sin\frac1x$ u nuly nekonečněkrát kmitá. A $x\sin\frac1x$ doplněná nulou v nule je v nule spojitá, přestože také kmitá.
-? tf #db83k | true
+?! tf #db83k | true
 Funkce $f(x) = x\sin\frac1x$, $f(0) = 0$ je spojitá v bodě $0$.
 ! $|f(x)|\le|x|\to0$.
 @ x=-0.4..0.4; y=-0.4..0.4; f=x*sin(1/x); f=abs(x); f=0-abs(x); pt=0,0
-? tf #ik3sx | false
+?! tf #ik3sx | false
 Je-li $f+g$ spojitá, jsou spojité $f$ i $g$.
 ! $f = \chi$ a $g = 1-\chi$: součet je konstantní $1$.
 + $f = \chi$, $g = 1-\chi$ (Dirichletova funkce)
@@ -2817,6 +2964,9 @@ Která funkce je spojitá v nule, ale v žádném okolí nuly není monotónní?
 ? tf #tgvul | true
 Existuje funkce, která je v každém bodě nespojitá, a přesto má na každém intervalu všechny mezihodnoty (Darbouxovu vlastnost).
 ! Takové funkce existují, například Conwayova funkce „základu 13“. Darbouxova vlastnost tedy spojitost nezaručuje.
+? tf #0kto2 | true
+Existují funkce $f$ a $g$, které jsou nespojité v každém bodě, a přesto je $g\circ f$ spojitá na $\mathbb R$.
+! Pro Dirichletovu funkci $\chi$ ($1$ na racionálních, $0$ na iracionálních číslech) je $\chi(x)\in\{0,1\}\subset\mathbb Q$, takže $\chi(\chi(x)) = 1$ pro všechna $x$. Složení je konstantní, tedy spojité.
 
 ## Derivace | P9–P11 | #sp594
 ### Derivace a tečna | P9 | #yq4h0
