@@ -3928,7 +3928,7 @@ $f$ je <b>konvexní</b> na intervalu $I$, jestliže pro $x_1<x_2<x_3$ z $I$ lež
 $$f(\lambda x_1 + (1-\lambda)x_3)\le\lambda f(x_1)+(1-\lambda)f(x_3),\quad\lambda\in(0,1).$$
 Konkávní je opačně. Funkce je konvexní, právě když je její <b>nadgraf</b> $\{(x,y): y\ge f(x)\}$ konvexní množina.
 @@ x=-0.3..3.3; y=-0.3..5; f=0.45*x^2+0.3; sec=0.45*x^2+0.3,0.4,2.9; pt=0.4,0.372; pt=2.9,4.08; pt=1.8,1.758
-? multi #nkm5o
+?! multi #nkm5o
 Které funkce jsou konvexní na $\mathbb R$?
 + $x^2$
 + $e^x$
@@ -3938,7 +3938,7 @@ Které funkce jsou konvexní na $\mathbb R$?
 ? tf #2m5yy | true
 Lineární funkce je konvexní i konkávní.
 ! Sečna splývá s grafem, nerovnost platí s rovností.
-? tf #0fsd9 | false
+?! tf #0fsd9 | false
 Součin dvou konvexních funkcí je konvexní.
 ! $x$ i $x^2$ jsou konvexní, ale $x^3$ na $(-\infty,0)$ konvexní není.
 @ x=-2..2; y=-4..4; f=x; f=x^2; f=x^3
@@ -3975,7 +3975,7 @@ Konvexní funkce na $\mathbb R$ je zdola ohraničená.
 + $f(x) = x$
 - $f(x) = x^2$
 - $f(x) = e^x$
-? build #pzaru
+?! build #pzaru
 Sestavte definici konvexity: pro $x_1,x_2\in I$ a $\lambda\in(0,1)$ platí
 + $f(\lambda x_1+(1-\lambda)x_2)$
 + $\le$
@@ -3993,6 +3993,26 @@ Který graf patří funkci konvexní na celém zobrazeném intervalu?
 ? tf #qd9qi | true
 Je-li $f$ konvexní a $g$ konvexní a neklesající, je $g\circ f$ konvexní.
 ! První nerovnost plyne z konvexity $f$ a monotonie $g$, druhá z konvexity $g$: $$g(f(\lambda x+(1-\lambda)y))\le g(\lambda f(x)+(1-\lambda)f(y))\le\lambda g(f(x))+(1-\lambda)g(f(y)).$$ Například $e^{x^2}$ je konvexní.
+?! tf #qwtjb | true
+Lokální minimum konvexní funkce na intervalu je zároveň její nejmenší hodnotou.
+! Kdyby $f(y)<f(x_0)$ pro nějaké $y$, ležely by body úsečky mezi $[x_0,f(x_0)]$ a $[y,f(y)]$ níž než $f(x_0)$ a graf konvexní funkce pod ní, tedy by $f$ byla menší než $f(x_0)$ libovolně blízko $x_0$. To je spor s lokálním minimem, takže jde o nejmenší hodnotu.
+? tf #089ec | true
+Konvexní funkce nabývá na intervalu $[a,b]$ největší hodnoty v jednom z krajních bodů.
+! Pro $x = \lambda a+(1-\lambda)b$ je $$f(x)\le\lambda f(a)+(1-\lambda)f(b)\le\max\{f(a),f(b)\}.$$ Největší hodnota je tedy v $a$ nebo v $b$.
+? tf #gpmsf | false
+Je-li $f$ konvexní, je konvexní i $|f|$.
+! Pro $f(x) = x^2-1$ má $|f|$ v nule lokální maximum $1$ a v bodech $\pm1$ hodnotu $0$, takže konvexní není.
++ $f(x) = x^2-1$
+- $f(x) = x^2$
+- $f(x) = e^x$
+? mc #9dqf8
+Pro konvexní funkci $f$ a body $x_1<x_2$ leží graf na intervalu $[x_1,x_2]$
++ pod sečnou spojující body $[x_1,f(x_1)]$ a $[x_2,f(x_2)]$, nebo na ní
+- nad touto sečnou
+- vždy přesně na této sečně
+- pod tečnou v bodě $x_1$
+! To je definice konvexity: hodnota v bodě $\lambda x_1+(1-\lambda)x_2$ je nejvýš $\lambda f(x_1)+(1-\lambda)f(x_2)$, tedy graf leží pod sečnou nebo na ní.
+@ x=-1.5..2.5; y=-0.5..5; f=x^2; f=x+2; pt=-1,1; pt=2,4
 
 ### Konvexnost pomocí derivací a inflexe | P15 | #uoy0n
 ~ f=0.9*x^3; tan=0; pt=0,0
@@ -4013,14 +4033,14 @@ Na kterém intervalu je $f(x) = xe^{-x}$ konvexní?
 - $\mathbb R$
 ! $f''(x) = (x-2)e^{-x}>0$ pro $x>2$.
 @ x=-0.5..7; y=-0.6..0.5; f=x*exp(-x); pt=2,2/E^2; vline=2
-? tf #jwzyg | false
+?! tf #jwzyg | false
 Je-li $f''(x_0) = 0$, je $x_0$ inflexní bod.
 ! $x^4$: $f''(0) = 0$, ale funkce je konvexní na celém $\mathbb R$.
 @ x=-1.5..1.5; y=-0.3..2; f=x^4; pt=0,0
 + $x^4$ v bodě $0$
 - $x^3$ v bodě $0$
 - $\sin x$ v bodě $0$
-? multi #6zjro
+?! multi #6zjro
 Kde má $f(x) = x^4 - 6x^2$ inflexní body?
 + $x=-1$
 + $x=1$
@@ -4028,7 +4048,7 @@ Kde má $f(x) = x^4 - 6x^2$ inflexní body?
 - $x=\sqrt3$
 ! $f''(x) = 12x^2-12$ mění znaménko v $\pm1$.
 @ x=-3..3; y=-10..8; f=x^4-6*x^2; pt=-1,-5; pt=1,-5
-? tf #4ra99 | true
+?! tf #4ra99 | true
 Konvexní diferencovatelná funkce leží nad každou svou tečnou.
 ! $f(x)\ge f(x_0) + f'(x_0)(x-x_0)$.
 ? input #idji5 | π; 3.1416
@@ -4068,6 +4088,19 @@ Co plyne z derivací na otevřeném intervalu $I$?
 + $f''<0$ na $I$ :: $f$ je na $I$ ostře konkávní
 - $f$ je na $I$ konstantní
 ! Znaménko první derivace určuje monotonii, znaménko druhé derivace konvexnost. Konstantní je $f$, je-li $f'=0$ na celém intervalu.
+? interval #ti1m2 | (-∞; -√2/2) ∪ (√2/2; ∞)
+Na jaké množině je funkce $e^{-x^2}$ ryze konvexní? Zapište otevřené intervaly.
+! $f''(x) = (4x^2-2)e^{-x^2}>0 \iff x^2>\frac12$. Funkce je ryze konvexní na $\left(-\infty,-\frac{\sqrt2}2\right)\cup\left(\frac{\sqrt2}2,\infty\right)$.
+@ x=-3..3; y=-0.2..1.2; f=exp(-x^2); pt=-0.7071,0.6065; pt=0.7071,0.6065
+? interval #fnnl0 | (-√3/3; √3/3)
+Na jakém intervalu je funkce $\dfrac1{1+x^2}$ ryze konkávní?
+! $f''(x) = \frac{6x^2-2}{(1+x^2)^3}<0 \iff x^2<\frac13$. Funkce je ryze konkávní na $\left(-\frac{\sqrt3}3,\frac{\sqrt3}3\right)$.
+? set #64scs | 0; 2
+Najděte inflexní body funkce $x^4-4x^3$.
+! $f''(x) = 12x^2-24x = 12x(x-2)$ mění znaménko v $0$ i ve $2$. Inflexní body jsou $0$ a $2$.
+? set #ild5h | e^(3/2); -e^(3/2)
+Najděte inflexní body funkce $\dfrac{\ln x^2}{x}$.
+! $f''(x) = \frac{2(\ln x^2-3)}{x^3}$ mění znaménko tam, kde $\ln x^2 = 3$, tedy $x = \pm e^{3/2}$.
 
 ### Asymptoty | P16 | #ikb33
 ~ f=0.15/(x-0.1)+0.25; dash=0.1,-1.1,0.1,1.1; dash=-1.1,0.25,1.1,0.25
@@ -4076,14 +4109,14 @@ Přímka $x = x_0$ je <b>asymptota bez směrnice</b>, je-li některá jednostran
 $$a = \lim_{x\to\infty}\frac{f(x)}{x},\qquad b = \lim_{x\to\infty}\big(f(x)-ax\big)$$
 jsou vlastní. Analogicky pro $-\infty$.
 @@ x=-6..6; y=-8..8; f=(x^2+1)/x; f=x; vline=0
-? input #mw82s | 1
+?! input #mw82s | 1
 Funkce $f(x) = \dfrac{x^2+1}{x}$ má pro $x\to\infty$ asymptotu $y = ax+b$. Určete $a$.
 ! $\frac{f(x)}{x} = \frac{x^2+1}{x^2}\to1$.
 @ x=-6..6; y=-8..8; f=(x^2+1)/x; f=x; vline=0
 ? input #q2i3z | 0
 Funkce $f(x) = \dfrac{x^2+1}{x}$ má pro $x\to\infty$ asymptotu $y = ax+b$. Určete $b$.
 ! $f(x) - x = \frac1x\to0$, asymptota je $y=x$.
-? input #budwg | 2
+?! input #budwg | 2
 Funkce $\dfrac{3x+1}{x-2}$ má svislou asymptotu $x = c$. Určete $c$.
 ! Ve $2$ je jmenovatel nulový a čitatel $7\ne0$.
 @ x=-8..12; y=-10..14; f=(3*x+1)/(x-2); vline=2; hline=3
@@ -4099,7 +4132,7 @@ Taková úloha může přijít u zkoušky: asymptoty funkce $f(x) = \dfrac{3-x}{
 - $x = 3$ a $y = -1$
 ! Pro $x\to\infty$ je $\sqrt{x^2+1}\approx x$, pro $x\to-\infty$ je $\sqrt{x^2+1}\approx -x$.
 @ x=-15..15; y=-2..4; f=(3-x)/sqrt(x^2+1); hline=1; hline=-1
-? tf #ddx0i | false
+?! tf #ddx0i | false
 Graf funkce nemůže svou asymptotu protnout.
 ! $\frac{\sin x}{x}$ protíná asymptotu $y=0$ nekonečněkrát.
 @ x=0..30; y=-0.4..1.1; f=sin(x)/x; hline=0
@@ -4136,6 +4169,29 @@ Přiřaďte funkcím všechny jejich asymptoty.
 + $e^{-x}$ :: jen $y=0$ pro $x\to+\infty$
 - $x=0$ a $y=0$
 ! $\frac{x^2+1}{x} = x+\frac1x$, odtud $y=x$. U $e^{-x}$ je pro $x\to-\infty$ podíl $\frac{e^{-x}}{x}\to-\infty$, takže tam asymptota není. Asymptoty $x=0$ a $y=0$ má třeba $\frac1x$, ta tu ale není.
+?! expr #x8yi5 | -x-1
+Najděte asymptotu funkce $\sqrt{x^2+2x}$ pro $x\to-\infty$. Zapište $y = \dots$
+= $y = -x-1$
+! Pro $x<0$ je $\sqrt{x^2+2x} = |x|\sqrt{1+\frac2x} = -x\sqrt{1+\frac2x}$, takže $a = \lim\frac{f(x)}x = -1$ a $$b = \lim\left(\sqrt{x^2+2x}+x\right) = \lim\frac{2x}{\sqrt{x^2+2x}-x} = -1.$$ Asymptota je $y = -x-1$ (pro $x\to+\infty$ je to $y = x+1$).
+@ x=-6..4; y=-1..6; f=sqrt(x^2+2*x); f=x<0?-x-1:NaN; f=x>0?x+1:NaN
+? expr #atjgg | x
+Najděte asymptotu se směrnicí funkce $\dfrac{x^3}{x^2+1}$ pro $x\to\infty$. Zapište $y = \dots$
+= $y = x$
+! $\frac{x^3}{x^2+1} = x-\frac{x}{x^2+1}$ a $\frac{x}{x^2+1}\to0$. Asymptota je $y = x$.
+? expr #fhfmw | x+1
+Najděte asymptotu se směrnicí funkce $xe^{1/x}$ pro $x\to\infty$. Zapište $y = \dots$
+= $y = x+1$
+! $a = \lim e^{1/x} = 1$ a $b = \lim x\left(e^{1/x}-1\right) = \lim\frac{e^{1/x}-1}{1/x} = 1$. Asymptota je $y = x+1$.
+? input #kqirv | -1/3
+Jakou vodorovnou asymptotu $y = b$ má funkce $\dfrac{2e^x+1}{e^x-3}$ pro $x\to-\infty$? Zadejte $b$.
+! Pro $x\to-\infty$ je $e^x\to0$, takže $f(x)\to\frac{0+1}{0-3} = -\frac13$. (Pro $x\to+\infty$ je asymptota $y = 2$.)
+? tf #k9hw5 | false
+Funkce $x\ln x$ má svislou asymptotu $x = 0$.
+! $\lim\limits_{x\to0^+}x\ln x = 0$ je konečná limita, takže svislá asymptota v nule není.
+? expr #zyn7h | x
+Najděte asymptotu se směrnicí funkce $x+\dfrac{\sin x}{x}$ pro $x\to\infty$. Zapište $y = \dots$
+= $y = x$
+! $\frac{\sin x}x\to0$, takže asymptota je $y = x$. Graf ji protíná nekonečně mnohokrát, a to všude, kde $\sin x = 0$.
 
 ### Průběh funkce | P16 | #fwn5v
 ~ f=2*x*exp(-4*x^2); pt=0.354,0.429; pt=-0.354,-0.429
@@ -4143,14 +4199,14 @@ Přiřaďte funkcím všechny jejich asymptoty.
 <ol><li>$D(f)$, sudost a lichost, periodicita, body nespojitosti, nulové body a znaménko.</li><li>$f'$: intervaly monotonie a lokální extrémy.</li><li>$f''$: konvexnost, konkávnost a inflexní body.</li><li>Asymptoty.</li><li>Hodnoty ve významných bodech a graf.</li></ol>
 Vyšetříme $f(x) = \dfrac{x}{1+x^2}$.
 @@ x=-6..6; y=-0.7..0.7; f=x/(1+x^2); pt=1,0.5; pt=-1,-0.5; pt=0,0; pt=sqrt(3),sqrt(3)/4; pt=0-sqrt(3),0-sqrt(3)/4
-? mc #nr1id
+?! mc #nr1id
 Funkce $f(x) = \dfrac{x}{1+x^2}$ je
 + lichá
 - sudá
 - periodická
 - ani sudá, ani lichá
 ! $f(-x) = -f(x)$.
-? multi #7skht
+?! multi #7skht
 Kde má $f(x) = \dfrac{x}{1+x^2}$ lokální extrémy?
 + $x=1$ (maximum)
 + $x=-1$ (minimum)
@@ -4193,13 +4249,37 @@ Jaká je limita funkce $x^2e^{-x}$ pro $x\to-\infty$?
 - $-\infty$
 - neexistuje
 ! Oba činitelé jdou do $+\infty$.
-? order #vt9we
+?! order #vt9we
 Seřaďte postup vyšetření průběhu funkce.
 + Určíme definiční obor, paritu, nulové body a znaménko.
 + Z první derivace zjistíme monotonii a lokální extrémy.
 + Z druhé derivace zjistíme konvexnost a inflexní body.
 + Najdeme asymptoty a nakreslíme graf.
 ! Každý krok využívá předchozí: extrémy z derivace potřebují znát definiční obor.
+? input #7e2q7 | 0
+Jakou hodnotu má lokální minimum funkce $x^3-3x+2$?
+! $f'(x) = 3(x-1)(x+1)$ mění znaménko z $-$ na $+$ v bodě $1$. Lokální minimum je $f(1) = 0$.
+? multi #9sfd7
+Co platí pro funkci $x^3-3x+2 = (x-1)^2(x+2)$?
++ $1$ je dvojnásobný kořen
++ v bodě $0$ má inflexi
++ v bodě $-1$ má lokální maximum $4$
+- má šikmou asymptotu
+! $f'' = 6x$ mění znaménko v nule, $f'(-1) = 0$ a $f(-1) = 4$ je lokální maximum. Polynom třetího stupně asymptotu nemá.
+@ x=-3..3; y=-3..6; f=x^3-3*x+2; pt=-1,4; pt=1,0; pt=0,2
+? input #x1txx | e; 2.7183
+Ve kterém kladném bodě má funkce $\dfrac{\ln x^2}{x}$ lokální maximum?
+! $f'(x) = \frac{2-\ln x^2}{x^2}$ mění znaménko z $+$ na $-$ tam, kde $\ln x^2 = 2$, tedy v $x = e$.
+? mc #i8dqz
+Který graf patří funkci $\dfrac{\ln x^2}{x}$?
++ @ x=-9..9; y=-1.3..1.3; f=ln(x^2)/x
+- @ x=-9..9; y=-1.3..1.3; f=0-ln(x^2)/x
+- @ x=-9..9; y=-1.3..1.3; f=ln(x^2)/abs(x)
+- @ x=-9..9; y=-1.3..1.3; f=x/(1+x^2)
+! Funkce je lichá s nulovými body $\pm1$; pro $x\to0^+$ jde k $-\infty$ a pro $x\to\infty$ k $0$ shora. Maximum má v $x = e$.
+? input #vbtmb | -11/12
+Jakou souřadnici $y$ má vrchol paraboly $y = -3x^2+x-1$?
+! $f'(x) = -6x+1 = 0$ pro $x = \frac16$ a $f\left(\frac16\right) = -\frac1{12}+\frac16-1 = -\frac{11}{12}$.
 
 ### Diferenciál a Taylorův polynom | P16 | #e3tg8
 ~ f=0.75*cos(3*x); fd=0.75*(1-4.5*x^2)
@@ -4209,11 +4289,11 @@ $f(x_0+h)\approx f(x_0) + f'(x_0)h$: graf nahradíme tečnou. Výraz $df(x_0)(h)
 $$T_n(x) = \sum_{k=0}^n\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k,\qquad R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}.$$
 Pro $x_0 = 0$ (Maclaurin): $e^x\approx 1+x+\frac{x^2}{2}+\dots$, $\sin x\approx x - \frac{x^3}{6}+\dots$, $\cos x\approx1-\frac{x^2}{2}+\dots$
 @@ x=-4..4; y=-1.6..1.6; f=cos(x); f=1-x^2/2; f=1-x^2/2+x^4/24
-? input #m9s7f | 2.01
+?! input #m9s7f | 2.01
 Pomocí diferenciálu odhadněte $\sqrt{4{,}04}$.
 ! $f(x) = \sqrt x$, $f'(4) = \frac14$: $\sqrt{4{,}04}\approx2 + \frac14\cdot0{,}04 = 2{,}01$.
 @ x=0..8; y=0..3.2; f=sqrt(x); tan=sqrt(x),4; pt=4,2
-? mc #2nd4f
+?! mc #2nd4f
 Maclaurinův polynom 2. stupně funkce $\cos x$ je
 + $1 - \frac{x^2}{2}$
 - $1 + \frac{x^2}{2}$
@@ -4239,7 +4319,7 @@ Taylorův polynom 1. stupně je
 Jaký je koeficient u $x^3$ v Maclaurinově polynomu funkce $\sinh x$?
 ! $\sinh'''(0) = \cosh 0 = 1$, dělíme $3! = 6$.
 @ x=-3..3; y=-8..8; f=sinh(x); f=x+x^3/6
-? expr #n7y0p | x - x^3/6
+?! expr #n7y0p | x - x^3/6
 Napište Maclaurinův polynom 3. stupně funkce $\sin x$.
 ! $\sin0 = 0$, $\sin'0 = 1$, $\sin''0 = 0$, $\sin'''0 = -1$.
 ? expr #lmsvx | 1 + x + x^2/2
@@ -4265,6 +4345,29 @@ Přiřaďte funkcím začátek jejich Taylorova polynomu v bodě $0$.
 + $\ln(1+x)$ :: $x - \frac{x^2}{2} + \dots$
 - $1 - x + \frac{x^2}{2} + \dots$
 ! Lichá funkce $\sin$ má jen liché mocniny, sudá $\cos$ jen sudé. U $\ln(1+x)$ je $f(0)=0$, $f'(0)=1$ a $f''(0)=-1$. Polynom $1 - x + \frac{x^2}{2}+\dots$ patří funkci $e^{-x}$, ta tu není.
+?! expr #xzbd9 | 1 + x + x^2 | dom=-0.5..0.5
+Napište Maclaurinův polynom 2. stupně funkce $\dfrac1{1-x}$.
+= $1+x+x^2$
+! $f(0) = 1$, $f'(x) = \frac1{(1-x)^2}$ a $f''(x) = \frac2{(1-x)^3}$, takže $f'(0) = 1$ a $\frac{f''(0)}2 = 1$. Polynom je $1+x+x^2$.
+? input #o2era | 19.55
+Pomocí diferenciálu odhadněte $\sqrt{382}$.
+! Pro $f(x) = \sqrt x$, $x_0 = 400$ a $h = -18$ je $$f(382)\approx f(400)+f'(400)h = 20-\frac{18}{40} = 19{,}55.$$
+? input #pa0ie | 0.1; 1/10
+Spočtěte diferenciál funkce $x\ln x+1$ v bodě $1$ pro přírůstek $h = 0{,}1$.
+! $f'(x) = \ln x+1$, takže $f'(1) = 1$ a $\mathrm df(1)(0{,}1) = f'(1)\cdot0{,}1 = 0{,}1$.
+? expr #wgeym | (x-1) - (x-1)^2/2
+Napište Taylorův polynom 2. stupně funkce $\ln x$ v bodě $1$.
+= $(x-1)-\dfrac{(x-1)^2}2$
+! $f(1) = 0$, $f'(1) = 1$ a $f''(1) = -1$. Polynom je $(x-1)-\frac{(x-1)^2}2$.
+? input #gpi8i | 1/2; 0.5
+Jaký je koeficient u $x^4$ v Maclaurinově polynomu funkce $e^{-x^2}$?
+! Dosadíme $-x^2$ do $e^t = 1+t+\frac{t^2}2+\dots$: $1-x^2+\frac{x^4}2-\dots$ Koeficient u $x^4$ je $\frac12$.
+? input #nitsf | 0.995
+Odhadněte $\cos0{,}1$ Maclaurinovým polynomem 2. stupně.
+! $\cos x\approx1-\frac{x^2}2$, takže $\cos0{,}1\approx1-0{,}005 = 0{,}995$.
+? tf #3m8rg | true
+Pro $x\in[0,1]$ je chyba odhadu $e^x\approx1+x+\frac{x^2}2$ menší než $\frac e6$.
+! Lagrangeův tvar zbytku je $\frac{e^\xi}{3!}x^3$ pro nějaké $\xi\in(0,x)$, a ten je nejvýš $\frac e6$. Tvrzení platí.
 
 ### Bonus: Optimalizace v praxi | P16 | bonus | #laxyz
 ~ f=0.7-1.6*x^2; pt=0,0.7; dash=0,-1.05,0,0.7
@@ -4287,7 +4390,7 @@ Ze čtverce $12\times12$ cm vystřihneme v rozích čtverečky a ohneme krabici 
 ? input #rqszi | 42
 Pod jakým úhlem (ve stupních, zaokrouhleně) vidíme duhu?
 ! Minimum úhlu odchylky paprsku v kapce je asi $138^\circ$, tedy $180^\circ-138^\circ\approx42^\circ$ (bakalářská práce J. Šmaka).
-? input #slz37 | 25
+?! input #slz37 | 25
 Dvě nezáporná čísla mají součet $10$. Jaký největší může být jejich součin?
 ! $x(10-x)$ má maximum v $x = 5$.
 ? input #hyyys | 16
@@ -4299,9 +4402,15 @@ Který bod paraboly $y = x^2$ je nejblíž bodu $[0, 2]$? Zadejte jeho souřadni
 ? input #zt44b | 2
 Do kružnice o poloměru $1$ vepíšeme obdélník s největším obsahem. Jaký je jeho obsah?
 ! Obsah $4\sin t\cos t = 2\sin2t$ je největší pro $t = \frac\pi4$: čtverec s úhlopříčkou $2$ a obsahem $2$.
-? input #78adk | 10
+?! input #78adk | 10
 Plot délky $40$ m ohraničuje obdélníkovou zahradu u zdi (zeď tvoří jednu stranu). Jak dlouhé (m) mají být strany kolmé ke zdi, aby byl obsah největší?
 ! $S = x(40-2x)$, $S' = 40-4x = 0$.
+? input #1184c | 4
+Číslo $8$ rozdělte na dva sčítance tak, aby součet jejich třetích mocnin byl co nejmenší. Jaký je menší z nich?
+! $f(x) = x^3+(8-x)^3$ má $f'(x) = 3x^2-3(8-x)^2 = 0$ pro $x = 4$, a tam je minimum. Oba sčítance jsou $4$.
+? input #jfr8f | 2√2; 2.8284
+Jaká je nejmenší vzdálenost bodu $[3,0]$ od paraboly $y^2 = 4x$?
+! Pro bod $[x,y]$ paraboly je čtverec vzdálenosti $(x-3)^2+4x = x^2-2x+9$, nejmenší pro $x = 1$: $8$. Nejmenší vzdálenost je $\sqrt8 = 2\sqrt2$.
 
 ## Neurčitý integrál | P17–P19 | #8c3nd
 ### Primitivní funkce | P17 | #ar8wq
