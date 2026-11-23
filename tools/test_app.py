@@ -286,6 +286,7 @@ def test_site(b, url, cs):
     pg.click(".hud-card .fc-go"); pg.wait_for_timeout(300)
     href = pg.get_attribute("#lessonBody .report-link", "href") or ""
     check("a lesson item has a 'report a problem' link naming the course and the item", "issues/new?title=" in href and f"%5B{first}%5D" in href, href[:120])
+    check("a lesson report says it came from a lesson", "from%3A%20lesson" in href, href[-200:])
     steps = solve_lesson(pg)
     check("first lesson can be played through with correct answers", steps > 0, f"solver returned {steps}")
     pg.wait_for_timeout(1200)
@@ -461,6 +462,7 @@ def test_site(b, url, cs):
         if q.locator(".q-label.counter").count(): q.locator(".fq-options").last.locator(".opt").first.click(); pg.wait_for_timeout(200)
         check("a question can be answered inside the feed", q.locator(".fq-fb").count() == 1)
         check("feed posts have a 'report a problem' link", "issues/new" in (q.locator(".pa-report").get_attribute("href") or ""))
+        check("a feed report says it came from the feed", "from%3A%20feed" in (q.locator(".pa-report").get_attribute("href") or ""))
         check("an answer in the feed updates spaced repetition", pg.evaluate(f"!!CUSP.P.srs['{key}']"))
     else:
         check("a question can be answered inside the feed", False, "no inline question rendered")

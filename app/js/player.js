@@ -111,6 +111,12 @@
 
   // the course an item belongs to: the feed plays questions from every course, whichever course is selected
   function itemCourse(it) { return (it && it.cid && C.courseById(it.cid)) || course(); }
+  // a report link for an item, naming where the student met it
+  function reportLink(it) {
+    var from = S.feed ? "feed" : S.review ? "daily review" : S.final ? "final test" : S.node && S.node.checkpoint ? "checkpoint" :
+      it.review ? "lesson (review question)" : "lesson";
+    return C.reportLink(itemCourse(it), C.reportItem(it, from));
+  }
 
   function renderHearts(lost) {
     var box = $("lessonHearts");
@@ -147,7 +153,7 @@
         gb.addEventListener("click", function () { openGuide(ga); });
         inner.appendChild(gb);
       }
-      inner.appendChild(el("div", "report-row", C.reportLink(c, C.reportItem(it))));
+      inner.appendChild(el("div", "report-row", reportLink(it)));
       primary.textContent = s.cont; primary.disabled = false;
       typeset(inner);
       drawFigs(inner);
@@ -560,7 +566,7 @@
       (it.explain ? "<p>" + it.explain + "</p>" : "") +
       figs(it.figA) +
       (ok || S.feed ? "" : '<p class="muted">' + (S.out ? s.lastLife : s.again) + "</p>") +
-      C.reportLink(itemCourse(it), C.reportItem(it));
+      reportLink(it);
     fb.hidden = false;
     typeset(fb);
     drawFigs(fb);
@@ -577,7 +583,7 @@
     S.progress++;
     setBar();
     foot.dataset.state = "";
-    fb.innerHTML = "<p>" + escapeHtml(s.broken) + "</p>" + C.reportLink(itemCourse(it), C.reportItem(it));
+    fb.innerHTML = "<p>" + escapeHtml(s.broken) + "</p>" + reportLink(it);
     fb.hidden = false;
     primary.textContent = s.cont; primary.disabled = false;
     primary.focus({ preventScroll: true });
