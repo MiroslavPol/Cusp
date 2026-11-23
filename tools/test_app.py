@@ -322,17 +322,17 @@ def test_site(b, url, cs):
       return { id: node.id, fresh: keys.slice(0, 3) }; }""")
     if info:
         pg.wait_for_timeout(400)
-        badge = pg.locator(f'.space .node[data-id="{info["id"]}"] .nnew').inner_text() if pg.locator(f'.space .node[data-id="{info["id"]}"] .nnew').count() else ""
+        dot = pg.locator(f'.space .node[data-id="{info["id"]}"] .ndot').count() == 1
         pg.evaluate(f"""document.querySelector('.space .node[data-id="{info["id"]}"]').click()"""); pg.wait_for_timeout(300)
-        sat = pg.locator(".sp-sat button").count() == 1
-        check("a finished lesson with unanswered questions shows '+N' and a satellite node", badge == "+3" and sat, f"badge={badge!r} sat={sat}")
+        sat = pg.locator(".sp-sat .nnew").inner_text() if pg.locator(".sp-sat .nnew").count() == 1 else ""
+        check("a finished lesson with unanswered questions has a dot, and a satellite node with '+N'", dot and sat == "+3", f"dot={dot} sat={sat!r}")
         pg.evaluate("document.querySelector('.sp-sat button').click()"); pg.wait_for_timeout(300)
         pg.click(".hud-card .fc-go"); pg.wait_for_timeout(300)
         solve_lesson(pg)
         check("the new-questions session asks every question not answered yet", pg.evaluate(f"{info['fresh']!r}.every(function (k) {{ return !!CUSP.P.srs[k]; }})"))
         pg.wait_for_timeout(300)
         check("with them answered, the badge and the satellite are gone",
-              pg.locator(f'.space .node[data-id="{info["id"]}"] .nnew').count() == 0 and pg.locator(".sp-sat").count() == 0)
+              pg.locator(f'.space .node[data-id="{info["id"]}"] .ndot').count() == 0 and pg.locator(".sp-sat").count() == 0)
 
     # backup and restore
     ok = pg.evaluate("""() => { var b = CUSP.backup(); var keys = Object.keys(CUSP.P.done);

@@ -114,7 +114,7 @@
           id: n.id, n: n, unit: u, status: status, color: color, checkpoint: !!n.checkpoint, bonus: !!n.bonus, tick: tick,
           icon: n.checkpoint ? '<span class="qed">∎</span>' : n.icon ? window.CUSP_PATH.icon(n.icon) : n.bonus ? ICON_SPARK : ICON_STAR,
           badge: (status === "done" ? '<span class="nbadge ok">' + ICON_CHECK + "</span>" : status === "locked" ? '<span class="nbadge">' + ICON_LOCK + "</span>" : "") +
-            (fresh ? '<span class="nbadge nnew" aria-hidden="true">+' + fresh + "</span>" : ""),
+            (fresh ? '<span class="nbadge ndot" aria-hidden="true"></span>' : ""),
           unitTitle: k === 0 ? u.title : null, unitKicker: kicker, fresh: fresh,
           satLabel: fresh ? s.newQs + ": " + nodeTitle(n) + " · " + fmt(s.newQsBadge, { n: fresh }) : "",
           aria: nodeTitle(n) + (status === "done" ? " ✓" : status === "locked" ? " 🔒" : "") + (fresh ? " · " + fmt(s.newQsBadge, { n: fresh }) : "")
