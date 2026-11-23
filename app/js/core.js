@@ -592,16 +592,18 @@
   var REPORT_URL = "https://github.com/MiroslavPol/Cusp/issues/new";
   function plain(html) { return String(html || "").replace(/<[^>]+>/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/[ \t]+/g, " ").trim(); }
   // what to quote from a lesson item: its source lines, or for generated questions the instance the student saw
-  function reportItem(it) {
+  // `from` says where the student met it (feed, lesson, review, checkpoint, final): a question that reads
+  // fine inside its lesson may lack context in the feed.
+  function reportItem(it, from) {
     var text = it.text && it.text.length ? it.text.join("\n").trim() : plain(it.html);
     (it.options || []).forEach(function (o) { text += "\n" + (o.ok ? "+ " : "- ") + plain(o.html); });
     if (it.generated) text += "\n[generator " + it.gen + "] answer: " + (it.answer || "");
-    return { id: it.key || it.cardId, where: it.lesson ? it.lesson.title : "", text: text };
+    return { id: it.key || it.cardId, where: it.lesson ? it.lesson.title : "", from: from || "", text: text };
   }
   function reportUrl(c, info) {
     var title = "[" + c.id + "] " + (info.where ? info.where + " · " : "") + info.id;
     var body = stringsFor(c).rpAsk + "\n\n\n---\ncourse: " + c.id + "\nwhere: " + (info.where || "") + "\nid: " + info.id +
-      "\n\n" + String(info.text || "").slice(0, 900);
+      (info.from ? "\nfrom: " + info.from : "") + "\n\n" + String(info.text || "").slice(0, 900);
     var base = c.report || REPORT_URL, q = base.indexOf("?") < 0 ? "?" : "&";
     if (/^mailto:/i.test(base)) return base + q + "subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(body);
     return base + q + "title=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(body);

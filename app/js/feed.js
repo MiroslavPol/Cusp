@@ -162,8 +162,8 @@
   }
   // what a report names: the post, or the lesson item (for a generated question, the instance on screen)
   function reportInfo(e, q) {
-    if (e.kind === "post") return { id: e.id, where: e.post.title, text: e.post.title + "\n" + C.plain(e.post.body) };
-    return C.reportItem(q || e.it);
+    if (e.kind === "post") return { id: e.id, where: e.post.title, from: "feed", text: e.post.title + "\n" + C.plain(e.post.body) };
+    return C.reportItem(q || e.it, "feed");
   }
   // like · guide · report · save
   function actions(e, anchor, q) {
