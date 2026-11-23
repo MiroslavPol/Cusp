@@ -55,7 +55,46 @@
     }
     tieShortWords(node);
   }
-  function fixMath(node) { fixFnSpacing(node); fixVariants(node); fixPrimes(node); fixSigns(node); fixBars(node); fixTableLines(node); }
+  function fixMath(node) { fixFnSpacing(node); fixVariants(node); fixPrimes(node); fixSigns(node); fixBars(node); fixArrows(node); fixRoots(node); fixTableLines(node); }
+
+  // Roots: Chromium draws the bar of <msqrt> snapped to whole pixels and the √ glyph smoothed, so on most screens they
+  // don't meet (a step, a bar too thick) and a gap follows the root. Draw the root ourselves: the sign is a stretchable
+  // SVG in an <mspace> laid over the left padding (base.css: math-rad), the bar is the top border of the base.
+  function mathEl(ref, tag, cls) { var e = document.createElementNS(ref.namespaceURI, tag); if (cls) e.setAttribute("class", cls); return e; }
+  function fixRoots(node) {
+    Array.prototype.forEach.call(node.querySelectorAll("msqrt, mroot"), function (m) {
+      var isRoot = m.tagName.toLowerCase() === "mroot", index = isRoot ? m.children[1] : null;
+      var row = mathEl(m, "mrow", "math-root"), body = mathEl(m, "mrow", "math-radbody");
+      if (isRoot) body.appendChild(m.children[0]);
+      else while (m.firstChild) body.appendChild(m.firstChild);
+      row.appendChild(mathEl(m, "mspace", "math-rad"));
+      row.appendChild(body);
+      var out = row;
+      if (index) {                                   // \sqrt[3]{x}: the index sits small over the tick of the sign
+        out = mathEl(m, "mrow");
+        var sup = mathEl(m, "msup", "math-rootidx");
+        sup.appendChild(mathEl(m, "mrow"));
+        sup.appendChild(index);
+        out.appendChild(sup);
+        out.appendChild(row);
+      }
+      m.parentNode.replaceChild(out, m);
+    });
+  }
+  // \overrightarrow{AB} and \vec u: Chromium puts the stretched arrow off to the right and the combining arrow of
+  // \vec over the first letter only. Draw the arrow over the whole base instead (base.css: math-arrow).
+  var ARROWS = { "→": "", "⃗": "", "←": " left", "↔": " both" };
+  function fixArrows(node) {
+    Array.prototype.forEach.call(node.querySelectorAll("mover"), function (m) {
+      var base = m.children[0], acc = m.children[1];
+      if (!base || !acc || !/^mo$/i.test(acc.tagName) || !(acc.textContent.trim() in ARROWS)) return;
+      var one = /^mi$/i.test(base.tagName) && base.textContent.length === 1;         // a single italic letter: \vec u
+      var row = mathEl(m, "mrow", "math-arrow" + ARROWS[acc.textContent.trim()] + (one ? " one" : ""));
+      row.appendChild(base);
+      row.appendChild(mathEl(m, "mspace", "math-arr"));
+      m.parentNode.replaceChild(row, m);
+    });
+  }
 
   // \bar z and \overline{AB} come out as an accent <mo> (ˉ ‾ ¯) over the base, which Chromium draws 1 px tall,
   // that is, not at all. Replace the <mover> by an <mrow> around the base whose top border is the bar
