@@ -311,6 +311,24 @@ def test_site(b, url, cs):
     pg.evaluate("() => { Object.keys(CUSP.P.srs).forEach(function (k) { CUSP.P.srs[k][1] = 0; }); CUSP.startSession({ review: true }); }")
     pg.wait_for_timeout(200)
     check("the daily review has no lives", pg.evaluate("!!CUSP.debugItem()") and pg.locator("#lessonHearts").is_hidden())
+    # "I know this" on a review question puts it away for a long time, without an answer
+    key = pg.evaluate("CUSP.debugItem().key")
+    know = pg.evaluate("CUSP.L().knowIt")
+    shown = pg.is_visible("#secondary") and pg.inner_text("#secondary").strip().lower() == know.lower()
+    pg.click("#secondary"); pg.wait_for_timeout(200)
+    check("'I know this' on a review question moves it to the last box", shown and pg.evaluate(f"CUSP.P.srs['{key}'][0]") == 5,
+          f"shown={shown} srs={pg.evaluate(f'CUSP.P.srs[{key!r}]')}")
+    pg.click("#lessonClose"); pg.wait_for_timeout(200)
+    # "I don't know" on a new question shows the solution, costs a life and asks it again at the end
+    key = pg.evaluate("() => { var c = CUSP.course(); return Object.keys(c.byKey).filter(function (k) { return c.byKey[k].kind === 'mc' && !CUSP.P.srs[k]; })[0]; }")
+    pg.evaluate(f"CUSP.startSession({{ keys: ['{key}'] }})"); pg.wait_for_timeout(200)
+    dont = pg.evaluate("CUSP.L().dontKnow")
+    shown = pg.is_visible("#secondary") and pg.inner_text("#secondary").strip().lower() == dont.lower()
+    pg.click("#secondary"); pg.wait_for_timeout(200)
+    gave = pg.is_visible("#fb") and pg.locator("#lessonBody .opt.right").count() >= 1 and pg.locator("#lessonHearts svg:not(.lost)").count() == 2
+    pg.click("#primary"); pg.wait_for_timeout(200)
+    check("'I don't know' shows the answer, costs a life and asks again", shown and gave and pg.evaluate("CUSP.debugItem().key") == key,
+          f"shown={shown} gave={gave}")
     pg.click("#lessonClose"); pg.wait_for_timeout(200)
 
     # a finished lesson with questions not answered yet: "+N" on its node, a satellite node, a session that asks them
