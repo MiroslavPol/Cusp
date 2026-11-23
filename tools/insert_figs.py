@@ -28,11 +28,11 @@ src = [l for l in path.read_text(encoding="utf-8").split("\n") if not re.match(r
 items = []  # [kind, start line, last non-empty line, text]
 cur = None
 for i, l in enumerate(src):
-    if l.startswith("> ") or l.startswith("? ") or l.startswith("#"):
+    if l.startswith("> ") or l.startswith("? ") or l.startswith("?! ") or l.startswith("#"):
         if cur: items.append(cur)
         cur = None
         if l.startswith("> "): cur = ["L", i, i, l[2:].strip()]
-        elif l.startswith("? "): cur = ["Q", i, i, ""]
+        elif l.startswith("? ") or l.startswith("?! "): cur = ["Q", i, i, ""]
     elif cur is not None:
         if cur[0] == "Q" and not re.match(r"^[+\-!] ", l): cur[3] += l + "\n"
         if l.strip(): cur[2] = i

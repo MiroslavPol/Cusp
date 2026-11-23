@@ -339,6 +339,14 @@ def test_site(b, url, cs):
           f"shown={shown} gave={gave}")
     pg.click("#lessonClose"); pg.wait_for_timeout(200)
 
+    # "?!" marks a question every student meets in the lesson's first play; the rest of the lesson is drawn at random
+    r = pg.evaluate(r"""() => { var qs = []; for (var i = 0; i < 12; i++) qs.push((i < 2 ? '?! ' : '? ') + 'input #m' + i + ' | ' + i + '\nKolik je ' + i + '?');
+        var units = CUSP.parseCourse('## U | #mu\n### L | #ml\n' + qs.join('\n'), 'test'), l = units[0].lessons[0], node = units[0].nodes[0];
+        var flags = l.items.map(function (it) { return !!it.must; }), always = true;
+        for (var k = 0; k < 6; k++) { CUSP.startSession({ node: node }); var q = CUSP.debugQueue(); if (q.indexOf(l.items[0].key) < 0 || q.indexOf(l.items[1].key) < 0) always = false; }
+        return { flags: flags.filter(Boolean).length, first: flags[0] && flags[1], always: always }; }""")
+    check("questions marked ?! are read and always asked in the lesson", r["flags"] == 2 and r["first"] and r["always"], str(r))
+    pg.click("#lessonClose"); pg.wait_for_timeout(300)
     # a finished lesson with questions not answered yet: "+N" on its node, a satellite node, a session that asks them
     info = pg.evaluate("""() => { var c = CUSP.course(), node = null;
       c.units.forEach(function (u) { u.nodes.forEach(function (n) { if (!node && n.lesson && n.lesson.items.filter(function (it) { return it.key; }).length >= 4) node = n; }); });

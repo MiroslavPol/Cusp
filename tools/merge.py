@@ -46,7 +46,7 @@ if counter:
         hits = [i for i, l in enumerate(out) if l.startswith("? tf | false") and any(key in out[k] for k in range(i + 1, min(i + 4, len(out))))]
         if len(hits) != 1: print("COUNTER", len(hits), "matches:", key); continue
         j = hits[0] + 1
-        while j < len(out) and out[j].strip() and not re.match(r"^(\? |### |## |> )", out[j]): j += 1
+        while j < len(out) and out[j].strip() and not re.match(r"^(\?!? |### |## |> )", out[j]): j += 1
         if any(re.match(r"^[+-] ", out[k]) for k in range(hits[0] + 1, j)): print("ALREADY HAS OPTIONS:", key); continue
         out[j:j] = opts
 open(course, "w", encoding="utf-8").write("\n".join(out))

@@ -388,10 +388,10 @@
       }
       if ((m = line.match(/^~ (.*)/)) && lesson && !item) { lesson.icon = m[1]; return; }
       if ((m = line.match(/^> (.*)/))) { item = { kind: "learn", title: m[1].trim(), text: [] }; lesson.items.push(item); return; }
-      if ((m = line.match(/^\? (\w+)(?:\s+#([A-Za-z0-9_-]+))?(?:\s*\|\s*(.*))?$/))) {
-        var ans = (m[3] || "").trim(), flags = [];
-        if (m[1] === "expr") { var pp = ans.split("|").map(function (x) { return x.trim(); }); ans = pp[0]; flags = pp.slice(1); }
-        item = { kind: m[1], sid: m[2] || null, answer: ans, flags: flags, text: [], options: [], explain: "" }; lesson.items.push(item); return;
+      if ((m = line.match(/^\?(!?) (\w+)(?:\s+#([A-Za-z0-9_-]+))?(?:\s*\|\s*(.*))?$/))) {      // "?!": always in the lesson
+        var ans = (m[4] || "").trim(), flags = [];
+        if (m[2] === "expr") { var pp = ans.split("|").map(function (x) { return x.trim(); }); ans = pp[0]; flags = pp.slice(1); }
+        item = { kind: m[2], sid: m[3] || null, must: m[1] === "!", answer: ans, flags: flags, text: [], options: [], explain: "" }; lesson.items.push(item); return;
       }
       if (!item) return;
       if ((m = line.match(/^(@@?) (.*)/))) {

@@ -106,6 +106,7 @@ Prompt text with $TeX$
 + $x^2$ :: @ x=-2..2; f=x^2             "+ left :: right" is a pair (the right side may be a figure)
 - @ x=-2..2; f=sin(x)                   "- right" alone is a decoy that nothing matches
 ? gen | name                          a fresh instance from this course's generators.js
+?! mc                                 "?!" instead of "?" (any kind): every student meets it, see below
 ```
 
 It works for anything that pairs up: a theorem and its statement, a notion and its definition
@@ -142,6 +143,27 @@ comma, `$0{,}5$` in TeX (also in feed posts). An explanation ends with the resul
 
 Learn cards are the *theory* of the feed and questions are its *exercises*, so a course with
 good learn cards also gets a good feed.
+
+### Which questions a lesson asks: `?!` and the pool
+
+One play of a lesson asks 7 of its questions (at most 3 of them from generators) plus 2 review
+questions from earlier lessons. Questions written `?! kind` instead of `? kind` are asked **every
+time**; the rest of the 7 are drawn at random from the other questions. Mark the questions every
+student must meet: the typical exercise of the topic, the key theorem, the classic mistake.
+At most 7 per lesson (the build stops otherwise); 2 to 4 is usual, leaving room for variety.
+
+A lesson can therefore hold many more questions than one play asks. A finished lesson that still
+has at least 3 questions the student never answered shows a dot on the map; tapping it offers a
+short session of exactly those ("Nové otázky"). Extra questions never slow anyone down on the
+path, so a lesson may grow to 25 questions or more where the topic has enough good exercises.
+Checkpoints and the final test draw from all questions, marked or not.
+
+**Growing a lesson's pool** (from the course's exercise sheets, textbooks and exams):
+add 0 to 15 questions per lesson, as many as the topic supports, mixing computation (`input`,
+`expr`, `interval`, `set`) with theory (`tf` with a counterexample, `mc`, `match`, `order` for proof
+steps). Don't repeat an existing question with other numbers; a generator does that better. Then
+look at the whole lesson, old and new questions, and mark with `?!` the few every student must
+meet. Run `python tools/assign_ids.py <id>` and the checks in *Before you finish* (AGENTS.md).
 
 ## feed.txt
 

@@ -31,7 +31,8 @@ JS_AFTER_COURSES = ["strings.js", "core.js", "guide.js", "path.js", "player.js",
 KINDS = {"mc", "multi", "tf", "input", "expr", "interval", "set", "order", "build", "match", "gen"}
 POST_TYPES = {"def", "thm", "proof", "cex", "app", "exam", "hist", "tip"}
 COURSE_ID = re.compile(r"^[a-z][a-z0-9-]*$")
-QLINE = re.compile(r"^\? (\w+)(?:\s+#([A-Za-z0-9_-]+))?(?:\s*\|\s*(.*))?$")
+QLINE = re.compile(r"^\?!? (\w+)(?:\s+#([A-Za-z0-9_-]+))?(?:\s*\|\s*(.*))?$")   # "?!": always in the lesson
+LESSON_Q = 7    # questions in one play of a lesson (app/js/player.js)
 HEAD_ID = re.compile(r"^#[A-Za-z0-9_-]+$")
 
 
@@ -96,6 +97,7 @@ def check_course(d, probs):
     if not lp.exists():
         probs.add(rel(d), "missing lessons.txt"); return meta
     unit = lesson = False
+    must = []          # the ?! questions of the current lesson
     seen, missing = {}, []
     q = None              # the question being read: its kind, answer, options and prompt, checked when it ends
     def note_id(i, at):
@@ -115,14 +117,19 @@ def check_course(d, probs):
             end_question(); q = None
             if not unit: probs.add(at, 'lesson before the first unit ("## Unit title")')
             lesson = True
+            must = []
             note_id(head_id(line[4:]), at)
             check_lectures([p.strip() for p in line[4:].split("|")][1:], at)
         elif re.match(r"^#{1,3}[^# ]", line) or re.match(r"^#{1,3}$", line):
             probs.add(at, 'headers are "## Unit title" and "### Lesson title" (with a space)')
-        elif line.startswith("> ") or line.startswith("? "):
+        elif line.startswith("> ") or line.startswith("? ") or line.startswith("?! "):
             end_question(); q = None
             if not lesson: probs.add(at, 'item before the first lesson ("### Lesson title")')
-            if line.startswith("? "):
+            if line.startswith("?! "):
+                must.append(at)
+                if len(must) == LESSON_Q + 1:
+                    probs.add(at, f"more than {LESSON_Q} questions marked ?! in one lesson; a lesson asks only {LESSON_Q}")
+            if line.startswith("? ") or line.startswith("?! "):
                 m = QLINE.match(line.rstrip())
                 if not m or m.group(1) not in KINDS:
                     probs.add(at, f"unknown question kind; use one of: {', '.join(sorted(KINDS))}")
