@@ -370,9 +370,35 @@
     function zoomAt(f, sx, sy) { var k = Math.max(kMin(), Math.min(2.4, cam.k * f)); f = k / cam.k; cam = { k: k, x: sx - (sx - cam.x) * f, y: sy - (sy - cam.y) * f }; apply(); }
     function nodeK() { return Math.max(cam.k, Math.min(1, Math.max(0.75, fitK() * 1.6))); }
 
+    // A finished lesson with questions the student hasn't answered yet: while it (or the satellite) is selected,
+    // a small node pops out next to it, half way to the neighbouring turn of the spiral, a little further along.
+    var sat = null;
+    function hideSat() {
+      if (!sat) return;
+      sat.el.remove(); sat.link.remove(); delete byId[sat.id]; sat = null;
+    }
+    function showSat(id) {
+      var n = byId[id], it = n.item, i = items.indexOf(it), r = g.radii[i];
+      var r2 = solve(function (x) { return arcF(x) - (arcF(r) - S * 0.35); }, 0, r);
+      var p = g.at(r2, r - D >= R_IN - 0.5 ? -D * 0.47 : D * 0.47);      // inward, or outward on the last turn
+      var el = document.createElement("div");
+      el.className = "sp-node sp-sat"; el.style.left = f1(p[0]) + "px"; el.style.top = f1(p[1]) + "px";
+      el.style.setProperty("--u", it.color);
+      el.innerHTML = '<button type="button" class="node bonus sat" data-id="' + esc(it.id) + ':new" aria-label="' + esc(it.satLabel || "") + '">' + it.icon +
+        '<span class="nbadge nnew" aria-hidden="true">+' + it.fresh + "</span></button>";
+      world.appendChild(el);
+      var link = document.createElementNS(NS, "line");
+      link.setAttribute("class", "sp-sat-link"); link.style.setProperty("--c", it.color);
+      link.setAttribute("x1", f1(n.x)); link.setAttribute("y1", f1(n.y)); link.setAttribute("x2", f1(p[0])); link.setAttribute("y2", f1(p[1]));
+      world.querySelector(".sp-fg").appendChild(link);
+      sat = { id: it.id + ":new", parent: id, el: el, link: link };
+      byId[sat.id] = { item: { id: sat.id }, x: p[0], y: p[1], btn: el.querySelector("button") };
+    }
     function focus(id, move) {
       var n = byId[id]; if (!n) return;
       if (focusId && byId[focusId]) byId[focusId].btn.classList.remove("is-focus");
+      if (sat && id !== sat.id && id !== sat.parent) hideSat();
+      if (!sat && n.item.fresh) showSat(id);
       focusId = id; n.btn.classList.add("is-focus");
       card.innerHTML = ""; card.appendChild(opts.card(id));
       if (move) fly(centerOn(n.x, n.y, Math.max(cam.k, nodeK())), 650);

@@ -66,10 +66,23 @@
       var items = opts.node.lesson.items;
       var learn = items.filter(function (it) { return it.kind === "learn"; });
       var qsL = items.filter(function (it) { return it.key; });
-      var gens = qsL.filter(function (it) { return it.kind === "gen"; });
-      var stat = shuffle(qsL.filter(function (it) { return it.kind !== "gen"; }));
-      gens = shuffle(gens).slice(0, 3);
-      var chosen = shuffle(gens.concat(stat.slice(0, Math.max(0, LESSON_Q - gens.length)))).map(instantiate);
+      var chosen;
+      if (opts.fresh) {
+        // "new questions" of a finished lesson: the ones never answered first, then others to fill the lesson
+        var order = shuffle(C.unseen(opts.node.lesson)).concat(shuffle(qsL.filter(function (it) { return P.srs[it.key]; })));
+        var nGen = 0; chosen = [];
+        order.forEach(function (it) {
+          if (chosen.length >= LESSON_Q || (it.kind === "gen" && nGen >= 3)) return;
+          if (it.kind === "gen") nGen++;
+          chosen.push(it);
+        });
+        chosen = shuffle(chosen).map(instantiate);
+      } else {
+        var gens = qsL.filter(function (it) { return it.kind === "gen"; });
+        var stat = shuffle(qsL.filter(function (it) { return it.kind !== "gen"; }));
+        gens = shuffle(gens).slice(0, 3);
+        chosen = shuffle(gens.concat(stat.slice(0, Math.max(0, LESSON_Q - gens.length)))).map(instantiate);
+      }
       queue = learn.concat(chosen, pickReview(c, opts.node, REVIEW_Q));
     }
     queue = queue.filter(Boolean);
