@@ -313,6 +313,28 @@ def test_site(b, url, cs):
     check("the daily review has no lives", pg.evaluate("!!CUSP.debugItem()") and pg.locator("#lessonHearts").is_hidden())
     pg.click("#lessonClose"); pg.wait_for_timeout(200)
 
+    # a finished lesson with questions not answered yet: "+N" on its node, a satellite node, a session that asks them
+    info = pg.evaluate("""() => { var c = CUSP.course(), node = null;
+      c.units.forEach(function (u) { u.nodes.forEach(function (n) { if (!node && n.lesson && n.lesson.items.filter(function (it) { return it.key; }).length >= 4) node = n; }); });
+      if (!node) return null;
+      var keys = node.lesson.items.filter(function (it) { return it.key; }).map(function (it) { return it.key; });
+      keys.forEach(function (k, i) { if (i < 3) delete CUSP.P.srs[k]; else CUSP.P.srs[k] = [2, 99999]; });
+      CUSP.P.done[node.id] = true; CUSP.save(); CUSP.emit('progress');
+      return { id: node.id, fresh: keys.slice(0, 3) }; }""")
+    if info:
+        pg.wait_for_timeout(400)
+        dot = pg.locator(f'.space .node[data-id="{info["id"]}"] .ndot').count() == 1
+        pg.evaluate(f"""document.querySelector('.space .node[data-id="{info["id"]}"]').click()"""); pg.wait_for_timeout(300)
+        sat = pg.locator(".sp-sat .nnew").inner_text() if pg.locator(".sp-sat .nnew").count() == 1 else ""
+        check("a finished lesson with unanswered questions has a dot, and a satellite node with '+N'", dot and sat == "+3", f"dot={dot} sat={sat!r}")
+        pg.evaluate("document.querySelector('.sp-sat button').click()"); pg.wait_for_timeout(300)
+        pg.click(".hud-card .fc-go"); pg.wait_for_timeout(300)
+        solve_lesson(pg)
+        check("the new-questions session asks every question not answered yet", pg.evaluate(f"{info['fresh']!r}.every(function (k) {{ return !!CUSP.P.srs[k]; }})"))
+        pg.wait_for_timeout(300)
+        check("with them answered, the badge and the satellite are gone",
+              pg.locator(f'.space .node[data-id="{info["id"]}"] .ndot').count() == 0 and pg.locator(".sp-sat").count() == 0)
+
     # backup and restore
     ok = pg.evaluate("""() => { var b = CUSP.backup(); var keys = Object.keys(CUSP.P.done);
         keys.forEach(function (k) { delete CUSP.P.done[k]; }); CUSP.save();

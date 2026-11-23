@@ -522,6 +522,10 @@
     if (ok) delete P.mistakes[key]; else P.mistakes[key] = true;
     save();
   }
+  // Questions of a lesson the student has never answered (anywhere: lesson, review, feed). A generator counts as
+  // one question, seen after its first answer. A finished lesson with at least FRESH_MIN of them offers them on the map.
+  var FRESH_MIN = 3;
+  function unseen(lesson) { return lesson.items.filter(function (it) { return it.key && !P.srs[it.key]; }); }
   function dueKeys(c) {
     var t = dayNum();
     if (!c.byKey) return [];
@@ -620,7 +624,7 @@
     save: save, isAdmin: isAdmin, setAdmin: setAdmin, visibleCourses: visibleCourses, courses: visibleCourses,
     course: course, setCourse: setCourse, L: L, strings: L, stringsFor: stringsFor, lang: lang, setLang: setLang,
     today: today, yesterday: yesterday, liveStreak: liveStreak, bumpStreak: bumpStreak,
-    dayNum: dayNum, srsRecord: srsRecord, record: record, dueKeys: dueKeys,
+    dayNum: dayNum, srsRecord: srsRecord, record: record, dueKeys: dueKeys, unseen: unseen, FRESH_MIN: FRESH_MIN,
     lectNums: lectNums, lectDate: lectDate, lectLabel: lectLabel, currentLecture: currentLecture, guideAnchor: guideAnchor, guideUrl: guideUrl,
     backup: backup, restore: restore,
     doneCount: doneCount, backupDue: backupDue, lastBackup: lastBackup, markBackup: markBackup,

@@ -107,13 +107,17 @@
       }
       u.nodes.forEach(function (n, k) {
         var status = st[n.id], ln = C.lectNums(n.lect)[0], tick = null;
+        var fresh = status === "done" && n.lesson ? C.unseen(n.lesson).length : 0;
+        if (fresh < C.FRESH_MIN) fresh = 0;
         if (c.lectures && ln && ln > lastLect && !n.checkpoint) { tick = "P" + ln; lastLect = ln; }
         items.push({
           id: n.id, n: n, unit: u, status: status, color: color, checkpoint: !!n.checkpoint, bonus: !!n.bonus, tick: tick,
           icon: n.checkpoint ? '<span class="qed">∎</span>' : n.icon ? window.CUSP_PATH.icon(n.icon) : n.bonus ? ICON_SPARK : ICON_STAR,
-          badge: status === "done" ? '<span class="nbadge ok">' + ICON_CHECK + "</span>" : status === "locked" ? '<span class="nbadge">' + ICON_LOCK + "</span>" : "",
-          unitTitle: k === 0 ? u.title : null, unitKicker: kicker,
-          aria: nodeTitle(n) + (status === "done" ? " ✓" : status === "locked" ? " 🔒" : "")
+          badge: (status === "done" ? '<span class="nbadge ok">' + ICON_CHECK + "</span>" : status === "locked" ? '<span class="nbadge">' + ICON_LOCK + "</span>" : "") +
+            (fresh ? '<span class="nbadge ndot" aria-hidden="true"></span>' : ""),
+          unitTitle: k === 0 ? u.title : null, unitKicker: kicker, fresh: fresh,
+          satLabel: fresh ? s.newQs + ": " + nodeTitle(n) + " · " + fmt(s.newQsBadge, { n: fresh }) : "",
+          aria: nodeTitle(n) + (status === "done" ? " ✓" : status === "locked" ? " 🔒" : "") + (fresh ? " · " + fmt(s.newQsBadge, { n: fresh }) : "")
         });
       });
     });
@@ -143,8 +147,17 @@
         box.appendChild(backupBox(s));
         return box;
       }
-      var it = byId[id];
+      var sat = /:new$/.test(id), it = byId[sat ? id.slice(0, -4) : id];
       box.style.setProperty("--u", it.color);
+      if (sat) {                             // a finished lesson's questions not yet answered (the satellite next to it)
+        box.appendChild(el("div", "fc-k", escapeHtml(it.unit.title + " · " + (c.lectures && it.n.lect ? C.lectLabel(it.n.lect) : it.unitKicker))));
+        txt.appendChild(el("div", "fc-t", '<span class="bonus-k">' + escapeHtml(s.newQs) + "</span> " + escapeHtml(nodeTitle(it.n))));
+        txt.appendChild(el("div", "fc-s", escapeHtml(fmt(s.newQsSub, { n: it.fresh }))));
+        foot.appendChild(txt);
+        foot.appendChild(goBtn(s.start, function () { C.startSession({ node: it.n, fresh: true }); }));
+        box.appendChild(foot);
+        return box;
+      }
       var lect = c.lectures && it.n && it.n.lect && !it.checkpoint ? C.lectLabel(it.n.lect) : it.unitKicker;
       box.appendChild(el("div", "fc-k", escapeHtml(it.unit.title + " · " + lect)));
       txt.appendChild(el("div", "fc-t", (it.bonus ? '<span class="bonus-k">' + escapeHtml(s.bonus) + "</span> " : "") + escapeHtml(it.soon ? s.soonUnit : nodeTitle(it.n))));
