@@ -1444,7 +1444,7 @@ Určete $\lim\limits_{n\to\infty}\dfrac{1}{\sqrt n}$.
 Pro $a_n = \tfrac1n$ a $\varepsilon = \tfrac{1}{100}$: jaké je nejmenší $n_0$, od kterého platí $|a_n - 0| < \varepsilon$?
 ! $\tfrac1n < \tfrac1{100} \iff n > 100$, takže $n_0 = 101$.
 @ x=80..120; y=-0.003..0.015; band=-0.01,0.01; seq=1/n; vline=100.5
-? tf #9libi | false
+?! tf #9libi | false
 Ohraničená posloupnost je vždy konvergentní.
 ! $\{(-1)^n\}$ je ohraničená, ale nekonverguje. Platí jen opačná implikace.
 @ x=0..16; y=-1.5..1.5; seq=(-1)^n
@@ -1466,7 +1466,7 @@ Určete $\lim\limits_{n\to\infty}\dfrac{3n+1}{2n-5}$.
 ? tf #lq20r | true
 Jestliže $a_n\to A$, pak také $a_{n+7}\to A$.
 ! Je-li $|a_n - A|<\varepsilon$ pro $n\ge n_0$, platí to i pro $a_{n+7}$, protože $n+7\ge n_0$.
-? build #bka43
+?! build #bka43
 Sestavte definici: $\lim\limits_{n\to\infty}a_n = A$, jestliže
 + $\forall\varepsilon>0$
 + $\exists n_0\in\mathbb N$
@@ -1506,6 +1506,30 @@ Má-li posloupnost $\{|a_n|\}$ limitu, má limitu i $\{a_n\}$.
 + $a_n = (-1)^n$
 - $a_n = \frac1n$
 - $a_n = -n$
+?! interval #r219p | (-1; 1]
+Pro která $q$ konverguje posloupnost $\{q^n\}$?
+! Pro $|q|<1$ je $q^n\to0$ a pro $q = 1$ je posloupnost konstantní. Pro $q = -1$ osciluje mezi $\pm1$, pro $q>1$ jde do $+\infty$ a pro $q<-1$ osciluje s rostoucí absolutní hodnotou. Konverguje tedy právě pro $q\in(-1,1]$.
+?! tf #j02an | false
+Jestliže $a_n>0$ pro všechna $n$ a $a_n\to A$, pak $A>0$.
+! Limitním přechodem se ostrá nerovnost mění na neostrou: z $a_n>0$ plyne jen $A\ge0$. Například $\frac1n>0$, ale $\frac1n\to0$.
++ $a_n = \frac1n$
+- $a_n = 1+\frac1n$
+- $a_n = 2$
+? input #yhsn7 | 10
+Pro $a_n = \dfrac{n}{n+1}$ a $\varepsilon = 0{,}1$: jaké je nejmenší $n_0$, od kterého platí $|a_n-1|<\varepsilon$?
+! $|a_n-1| = \frac1{n+1}$ a $\frac1{n+1}<0{,}1$ platí právě pro $n>9$. Nejmenší takové $n_0$ je $10$.
+? input #8afxr | 2
+Určete $\lim\limits_{n\to\infty}\dfrac{2^{n+1}-1}{2^n+1}$.
+! Vydělíme čitatel i jmenovatel $2^n$: $\frac{2-2^{-n}}{1+2^{-n}}\to\frac21 = 2$.
+? input #xzg9w | 0
+Určete $\lim\limits_{n\to\infty}\dfrac{n^2+2n}{n^3+1}$.
+! Vydělíme $n^3$: čitatel $\frac1n+\frac2{n^2}\to0$ a jmenovatel $1+\frac1{n^3}\to1$. Limita je $0$.
+? input #1hydy | 1
+Určete $\lim\limits_{n\to\infty}\cos\dfrac1n$.
+! $\frac1n\to0$ a kosinus je spojitý, takže $\cos\frac1n\to\cos0 = 1$.
+? tf #vires | true
+Jestliže $a_n\to A$, pak $|a_n|\to|A|$.
+! Z trojúhelníkové nerovnosti $\bigl||a_n|-|A|\bigr|\le|a_n-A|\to0$, tedy $|a_n|\to|A|$.
 
 ### Nevlastní limity | P4 | #hceoj
 ~ seq=-0.85+0.024*n^2.3; N=9
@@ -1548,7 +1572,7 @@ Posloupnost s limitou $+\infty$ je konvergentní.
 ? tf #1ilxk | true
 Každá posloupnost s limitou $+\infty$ je zdola ohraničená.
 ! Pro $A=0$ existuje $n_0$, od kterého je $a_n>0$, a konečně mnoho členů před ním má minimum.
-? build #iy56y
+?! build #iy56y
 Sestavte definici: $\lim\limits_{n\to\infty}a_n = +\infty$, jestliže
 + $\forall A\in\mathbb R$
 + $\exists n_0\in\mathbb N$
@@ -1563,7 +1587,7 @@ Určete $\lim\limits_{n\to\infty}\dfrac{n^3-n}{n^2+1}$.
 ? input #oo2ob | -∞
 Určete $\lim\limits_{n\to\infty}\dfrac{2-n^3}{n+1}$.
 ! Podíl se chová jako $-n^2\to-\infty$.
-? tf #vdfv3 | false
+?! tf #vdfv3 | false
 Je-li $a_n\to+\infty$ a $b_n\to-\infty$, pak $a_n+b_n\to0$.
 ! Výraz $\infty-\infty$ je neurčitý: výsledek může být cokoli.
 + $a_n = 2n$, $b_n = -n$
@@ -1579,6 +1603,31 @@ Jaká je limita posloupnosti $\{(-2)^n\}$?
 ? input #1gr7m | ∞
 Určete $\lim\limits_{n\to\infty}\left(n-\sqrt n\right)$.
 ! $n - \sqrt n = \sqrt n(\sqrt n - 1)\to+\infty$.
+?! tf #vdt6t | false
+Jestliže $a_n\to0$ a $a_n\ne0$, pak $\dfrac1{a_n}\to+\infty$.
+! Rozhoduje znaménko: pro $a_n = \frac{(-1)^n}n$ je $\frac1{a_n} = (-1)^n n$, a ta limitu nemá. Platí jen $\left|\frac1{a_n}\right|\to+\infty$.
++ $a_n = \frac{(-1)^n}{n}$
+- $a_n = \frac1n$
+- $a_n = \frac1{n^2}$
+? tf #f2pei | true
+Jestliže $a_n\to+\infty$, pak $\dfrac1{a_n}\to0$.
+! K $\varepsilon>0$ je od jistého indexu $a_n>\frac1\varepsilon>0$, a tedy $0<\frac1{a_n}<\varepsilon$. Proto $\frac1{a_n}\to0$.
+? input #licxw | ∞
+Určete $\lim\limits_{n\to\infty}\dfrac{n!}{2^n}$.
+! Pro $n\ge4$ je každý z činitelů $\frac k2$ s $k\ge4$ aspoň $2$, takže $\frac{n!}{2^n}\ge\frac68\cdot2^{n-3}\to+\infty$. Limita je $+\infty$.
+? mc #r295v
+Která posloupnost má limitu $-\infty$?
++ $\sqrt n-n$
+- $(-1)^n n$
+- $-\frac1n$
+- $n-\sqrt n$
+! $\sqrt n-n = -\sqrt n\,(\sqrt n-1)\to-\infty$. $(-1)^n n$ limitu nemá, $-\frac1n\to0$ a $n-\sqrt n\to+\infty$.
+? tf #i2yxd | false
+Jestliže $a_n\to+\infty$, je posloupnost od jistého indexu rostoucí.
+! $a_n = n+2(-1)^n\ge n-2$ jde do $+\infty$, ale střídavě klesá a roste: $a_2 = 4$, $a_3 = 1$, $a_4 = 6$, $a_5 = 3$. Tvrzení tedy neplatí.
++ $a_n = n+2(-1)^n$
+- $a_n = n$
+- $a_n = n^2$
 
 ### Nerovnosti a věta o třech limitách | P5 | #rynwu
 ~ f=0.8*(1-x)/2; f=-0.8*(1-x)/2; seq=0.75*cos(2.6*n)*(1-(-0.85+1.7*(n-1)/8))/2; N=9
@@ -1593,7 +1642,7 @@ Z $a_n<b_n$ pro všechna $n$ plyne $\lim a_n < \lim b_n$ (pokud limity existují
 + $a_n = \frac{1}{n+1}$, $b_n = \frac1n$
 - $a_n = 0$, $b_n = 1$
 - $a_n = 1-\frac1n$, $b_n = 2$
-? input #1rpx8 | 0
+?! input #1rpx8 | 0
 Určete $\lim\limits_{n\to\infty}\dfrac{\cos(n^2)}{n}$.
 ! $-\tfrac1n\le\tfrac{\cos n^2}{n}\le\tfrac1n$ a obě krajní posloupnosti jdou k $0$.
 @ x=0..40; y=-1.1..1.1; seq=cos(n^2)/n; f=1/x; f=0-1/x
@@ -1601,7 +1650,7 @@ Určete $\lim\limits_{n\to\infty}\dfrac{\cos(n^2)}{n}$.
 Určete $\lim\limits_{n\to\infty}\sqrt[n]{2^n+3^n}$.
 ! $3^n\le 2^n+3^n\le 2\cdot3^n$, tedy $3\le\sqrt[n]{2^n+3^n}\le 3\sqrt[n]2\to3$.
 @ x=0..25; y=2.5..5.5; seq=(2^n+3^n)^(1/n); hline=3
-? input #3cmq4 | 1
+?! input #3cmq4 | 1
 Určete $\lim\limits_{n\to\infty}\sqrt[n]{n}$.
 ! Z binomické věty plyne $1\le\sqrt[n]{n}\le 1+\sqrt{\tfrac{2}{n-1}}$ pro $n\ge2$, a věta o třech limitách dá $1$.
 @ x=0..60; y=0.9..1.5; seq=n^(1/n); hline=1
@@ -1641,6 +1690,25 @@ Je-li $a_n\le b_n$ pro všechna $n$ a $\{b_n\}$ konverguje, konverguje i $\{a_n\
 + $a_n = -n$, $b_n = 0$
 - $a_n = 0$, $b_n = \frac1n$
 - $a_n = \frac1{n+1}$, $b_n = \frac1n$
+?! input #9pw9m | 1
+Určete
+$$\lim_{n\to\infty}\sum_{k=1}^{n}\frac{n}{n^2+k}.$$
+! Každý z $n$ sčítanců leží mezi $\frac{n}{n^2+n}$ a $\frac n{n^2+1}$, takže součet leží mezi $\frac{n^2}{n^2+n}$ a $\frac{n^2}{n^2+1}$. Obě meze jdou k $1$, a podle věty o třech limitách je limita $1$.
+? input #254fl | 0
+Určete $\lim\limits_{n\to\infty}\dfrac1{n^2}\sin\dfrac{n^3+1}{n+2}$.
+! Sinus je ohraničený a $\frac1{n^2}\to0$; nula krát ohraničená je nula. Limita je $0$.
+? input #zorxq | 1
+Určete $\lim\limits_{n\to\infty}\sqrt[n]{n^2}$.
+! $\sqrt[n]{n^2} = \left(\sqrt[n]n\right)^2\to1^2 = 1$.
+? input #mbcsy | 2
+Určete $\lim\limits_{n\to\infty}\sqrt[n]{2^n+n}$.
+! Protože $n\le2^n$, je $2^n\le2^n+n\le2\cdot2^n$, a tedy $2\le\sqrt[n]{2^n+n}\le2\sqrt[n]2\to2$. Limita je $2$.
+? input #qxln2 | √2; 1.4142
+Určete $\lim\limits_{n\to\infty}\dfrac{\lfloor n\sqrt2\rfloor}{n}$.
+! $n\sqrt2-1<\lfloor n\sqrt2\rfloor\le n\sqrt2$, po vydělení $n$: $\sqrt2-\frac1n<a_n\le\sqrt2$. Podle věty o třech limitách je limita $\sqrt2$.
+? tf #agpkv | true
+Jestliže $a_n\le5$ pro všechna $n$ a $a_n\to A$, pak $A\le5$.
+! Kdyby $A>5$, pro $\varepsilon = A-5$ by od jistého indexu platilo $a_n>A-\varepsilon = 5$, spor. Tedy $A\le5$.
 
 ### Počítání s limitami | P5 | #xm07v
 ~ noaxes; text=lim; size=0.62
@@ -1649,11 +1717,11 @@ Je-li $a_n\to A$ a $b_n\to B$ (vlastní limity), pak
 $$a_n\pm b_n\to A\pm B,\quad a_nb_n\to AB,\quad \frac{a_n}{b_n}\to\frac AB\ \ (B\ne0),\quad |a_n|\to|A|.$$
 > Neurčité výrazy
 S nevlastními limitami počítáme v $\mathbb R^*$: $\infty+\infty=\infty$, $a\cdot\infty = \infty$ pro $a>0$, $\frac{a}{\pm\infty} = 0$. Výrazy $\infty-\infty$, $0\cdot\infty$, $\frac00$ a $\frac\infty\infty$ jsou <b>neurčité</b>: výsledek závisí na konkrétních posloupnostech.
-? input #udcyf | 2/3
+?! input #udcyf | 2/3
 Určete $\lim\limits_{n\to\infty}\dfrac{2n^2 - n + 3}{3n^2 + 5}$.
 ! Vydělíme $n^2$: $\dfrac{2 - 1/n + 3/n^2}{3 + 5/n^2}\to\tfrac23$.
 @ x=0..30; y=0..1; seq=(2*n^2-n+3)/(3*n^2+5); hline=2/3
-? input #qfvw7 | 0
+?! input #qfvw7 | 0
 Určete $\lim\limits_{n\to\infty}\left(\sqrt{n+1}-\sqrt n\right)$.
 ! Rozšíříme: $\sqrt{n+1}-\sqrt n = \dfrac{1}{\sqrt{n+1}+\sqrt n}\to0$.
 @ x=0..40; y=-0.05..0.45; seq=sqrt(n+1)-sqrt(n); hline=0
@@ -1661,7 +1729,7 @@ Určete $\lim\limits_{n\to\infty}\left(\sqrt{n+1}-\sqrt n\right)$.
 Určete $\lim\limits_{n\to\infty}\left(\sqrt{n^2+n}-n\right)$.
 ! Rozšíříme výrazem $\sqrt{n^2+n}+n$: $$\sqrt{n^2+n}-n = \frac{n}{\sqrt{n^2+n}+n} = \frac{1}{\sqrt{1+1/n}+1}\to\frac12.$$
 @ x=0..30; y=0.3..0.55; seq=sqrt(n^2+n)-n; hline=0.5
-? multi #6kws1
+?! multi #6kws1
 Které výrazy jsou neurčité?
 + $\infty - \infty$
 + $0\cdot\infty$
@@ -1695,6 +1763,34 @@ Je-li $a_n\to0$, pak $a_nb_n\to0$ pro každou posloupnost $\{b_n\}$.
 ? input #9dw5l | 1/3
 Určete $\lim\limits_{n\to\infty}\dfrac{3^n+2^n}{3^{n+1}}$.
 ! Vydělíme $3^n$: $\dfrac{1+(2/3)^n}{3}\to\frac13$.
+?! mc #ymlvb
+Jestliže $a_n\to0$ a $b_n\to0$ (a $b_n\ne0$), co lze říct o $\lim\dfrac{a_n}{b_n}$?
++ nic obecného: výsledek závisí na posloupnostech
+- je vždy rovna $1$
+- je vždy rovna $0$
+- nikdy neexistuje
+! $\frac{1/n}{1/n}\to1$, $\frac{1/n^2}{1/n}\to0$, $\frac{1/n}{1/n^2}\to+\infty$ a $\frac{(-1)^n/n}{1/n}$ limitu nemá. Typ $\frac00$ je neurčitý výraz, o limitě obecně nic říct nelze.
+? input #6r6ak | 0
+Určete $\lim\limits_{n\to\infty}\left(\sqrt{9n^2-4}-3n\right)$.
+! Rozšíříme součtem: $$\sqrt{9n^2-4}-3n = \frac{-4}{\sqrt{9n^2-4}+3n}\to0.$$
+? input #3v9xq | 2
+Určete $\lim\limits_{n\to\infty}\left(\sqrt{n^2+3n}-\sqrt{n^2-n}\right)$.
+! Rozšíříme součtem odmocnin: $$\frac{4n}{\sqrt{n^2+3n}+\sqrt{n^2-n}} = \frac{4}{\sqrt{1+\frac3n}+\sqrt{1-\frac1n}}\to\frac42 = 2.$$
+? input #kjfm8 | -1
+Určete $\lim\limits_{n\to\infty}\dfrac{2^n-3^n}{3^n+1}$.
+! Vydělíme $3^n$: čitatel $\left(\frac23\right)^n-1\to-1$ a jmenovatel $1+3^{-n}\to1$. Limita je $-1$.
+? input #mbw05 | -1
+Určete $\lim\limits_{n\to\infty}\dfrac{(n+1)!}{n!-(n+1)!}$.
+! Vydělíme $n!$: $\frac{n+1}{1-(n+1)} = -\frac{n+1}{n}\to-1$.
+? input #wnb8o | 1
+Určete $\lim\limits_{n\to\infty}\dfrac{(n+2)!+(n+1)!}{(n+2)!-(n+1)!}$.
+! Vydělíme $(n+1)!$: $\frac{(n+2)+1}{(n+2)-1} = \frac{n+3}{n+1}\to1$.
+? input #sa28l | -1
+Určete $\lim\limits_{n\to\infty}\dfrac{\sin n+n}{\sin n-n}$.
+! Vydělíme $n$: $\frac{\sin n}n\to0$, takže výraz jde k $\frac{0+1}{0-1} = -1$.
+? input #balc4 | 1/3
+Určete $\lim\limits_{n\to\infty}\dfrac{(-2)^n+3^n}{(-2)^{n+1}+3^{n+1}}$.
+! Vydělíme čitatel i jmenovatel $3^n$: čitatel $\left(-\frac23\right)^n+1\to1$, jmenovatel $-2\left(-\frac23\right)^n+3\to3$. Limita je $\frac13$.
 
 ### Monotónní posloupnosti a číslo e | P5 | #d4s6k
 ~ noaxes; text=e; size=1.25
@@ -1704,7 +1800,7 @@ Každá monotónní posloupnost má limitu. Neklesající shora ohraničená pos
 Posloupnost $a_n = \left(1+\tfrac1n\right)^n$ je rostoucí a ohraničená (např. číslem $3$), proto konverguje. Její limitu značíme
 $$e = \lim_{n\to\infty}\left(1+\frac1n\right)^n \approx 2{,}71828.$$
 @@ x=0..30; y=1.9..2.9; seq=(1+1/n)^n; seq=(1+1/n)^(n+1); hline=E
-? tf #8d4wi | true
+?! tf #8d4wi | true
 Neklesající shora ohraničená posloupnost konverguje.
 ! Konverguje k supremu svých členů. Existenci suprema zaručuje axiom (R13).
 ? mc #bvfe5
@@ -1741,7 +1837,7 @@ Určete $\lim\limits_{n\to\infty}\left(1-\dfrac1n\right)^n$.
 ? input #1dlze | e^3; 20.0855
 Určete $\lim\limits_{n\to\infty}\left(1+\dfrac1n\right)^{3n}$.
 ! $\left[\left(1+\frac1n\right)^n\right]^3\to e^3$.
-? input #ebw09 | e^2; 7.3891
+?! input #ebw09 | e^2; 7.3891
 Určete $\lim\limits_{n\to\infty}\left(1+\dfrac2n\right)^{n}$.
 ! Obecně $\left(1+\frac an\right)^n\to e^a$.
 ? input #ahi20 | 1/e; 0.3679
@@ -1768,6 +1864,27 @@ Přiřaďte posloupnostem jejich limity.
 + $\dfrac{n^2}{n+1}$ :: $+\infty$
 - limita neexistuje
 ! $\frac{\sin n}{n}\to0$ podle věty o třech limitách, protože $|\sin n|\le1$. $\frac{n^2}{n+1} = n-1+\frac{1}{n+1}\to+\infty$. Limitu nemá třeba $(-1)^n$, ta tu ale není.
+?! tf #96uol | false
+Každá monotónní posloupnost konverguje.
+! Monotónní posloupnost konverguje, jen když je navíc ohraničená. $a_n = n$ je rostoucí, ale diverguje k $+\infty$.
++ $a_n = n$
+- $a_n = \frac1n$
+- $a_n = 1-\frac1n$
+? input #6tlut | e^(1/5); 1.2214
+Určete $\lim\limits_{n\to\infty}\left(1+\dfrac1{5n}\right)^n$.
+! $\left(1+\frac1{5n}\right)^n = \left[\left(1+\frac1{5n}\right)^{5n}\right]^{1/5}\to e^{1/5}$.
+? input #138jf | e^(-3); 0.0498
+Určete $\lim\limits_{n\to\infty}\left(1-\dfrac3n\right)^n$.
+! Pro $m = \frac n3$ je $\left(1-\frac3n\right)^n = \left[\left(1-\frac1m\right)^m\right]^3$ a $\left(1-\frac1m\right)^m\to e^{-1}$. Limita je $e^{-3}$.
+? input #wo5jn | e^3; 20.0855
+Určete $\lim\limits_{n\to\infty}\left(1+\dfrac1{3n+2}\right)^{9n+3}$.
+! $9n+3 = 3(3n+2)-3$, takže $$\left(1+\tfrac1{3n+2}\right)^{9n+3} = \left[\left(1+\tfrac1{3n+2}\right)^{3n+2}\right]^3\left(1+\tfrac1{3n+2}\right)^{-3}\to e^3.$$
+? input #rj2cw | e^2; 7.3891
+Určete $\lim\limits_{n\to\infty}\left(\dfrac{n+3}{n+1}\right)^n$.
+! $\frac{n+3}{n+1} = 1+\frac2{n+1}$ a $\left(1+\frac2{n+1}\right)^{n+1}\to e^2$; zbylý činitel $\left(1+\frac2{n+1}\right)^{-1}\to1$. Limita je $e^2$.
+? tf #sbn6t | true
+Posloupnost $a_n = \dfrac{2n+3}{n+1}$ je klesající.
+! $a_n = \frac{2n+2+1}{n+1} = 2+\frac1{n+1}$ a $\frac1{n+1}$ klesá, takže posloupnost je klesající. Je i ohraničená a má limitu $2$.
 
 ### Vybrané posloupnosti a hromadné body | P5–P6 | #5mxke
 ~ seq=(-1)^n*(0.55+0.35/n); N=10; dash=-1.1,0.55,1.1,0.55; dash=-1.1,-0.55,1.1,-0.55
@@ -1783,10 +1900,10 @@ Které body jsou hromadnými body posloupnosti $a_n = 3\cos\dfrac{n\pi}{2}$?
 - $1$
 ! Hodnoty se opakují s periodou $4$: $0,-3,0,3,\dots$ Každá z hodnot $-3$, $0$, $3$ se objeví nekonečně mnohokrát. (Úloha ze zkoušky M1100, 2010.)
 @ x=0..16; y=-3.6..3.6; seq=3*cos(n*pi/2); hline=3; hline=-3
-? tf #ffv82 | true
+?! tf #ffv82 | true
 Posloupnost má limitu, právě když má jediný hromadný bod v $\mathbb R^*$.
 ! Každá posloupnost má nejmenší a největší hromadný bod a limita existuje, právě když se rovnají.
-? mc #iihjf
+?! mc #iihjf
 Jaké hromadné body má posloupnost $\left\{(-1)^n + \tfrac1n\right\}$?
 + $-1$ a $1$
 - jen $1$
@@ -1847,6 +1964,21 @@ Přiřaďte posloupnostem množiny jejich hromadných bodů.
 + $\sin\dfrac{n\pi}{2}$ :: $\{-1,\ 0,\ 1\}$
 - $\{0,\ 1\}$
 ! $\sin\frac{n\pi}{2}$ nabývá hodnot $1, 0, -1, 0, 1, \dots$, každé nekonečněkrát. Má-li posloupnost limitu, je ta limita jejím jediným hromadným bodem.
+?! set #4elmx | 1; -1/2
+Určete množinu hromadných bodů posloupnosti $\cos\dfrac{2n\pi}3$.
+! Hodnoty se opakují s periodou $3$: $-\frac12, -\frac12, 1, -\frac12, -\frac12, 1, \dots$ Hromadné body jsou $1$ a $-\frac12$.
+? set #rq72q | 3; 1; 1/3
+Určete množinu hromadných bodů posloupnosti $3^{\cos\frac{n\pi}2}$.
+! $\cos\frac{n\pi}2$ nabývá s periodou $4$ hodnot $0, -1, 0, 1$, takže členy jsou $1, \frac13, 1, 3, \dots$ Hromadné body jsou $3$, $1$ a $\frac13$.
+? set #gwjos | 2; 1; 1/2
+Určete množinu hromadných bodů posloupnosti $2^{\sin\frac{n\pi}2}$.
+! $\sin\frac{n\pi}2$ nabývá s periodou $4$ hodnot $1, 0, -1, 0$, takže členy jsou $2, 1, \frac12, 1, \dots$ Hromadné body jsou $2$, $1$ a $\frac12$.
+? set #f4qe0 | 0; 1
+Určete množinu hromadných bodů posloupnosti $1, \frac12, 1, \frac13, 1, \frac14, \dots$
+! Liché členy jsou rovny $1$ a sudé tvoří posloupnost $\frac12, \frac13, \frac14,\dots\to0$. Hromadné body jsou $0$ a $1$.
+? tf #8mwy6 | true
+Je-li $a\in\mathbb R$ hromadný bod posloupnosti $\{a_n\}$, leží v každém okolí bodu $a$ nekonečně mnoho členů posloupnosti.
+! Vybraná posloupnost $a_{n_k}\to a$ leží od jistého indexu v daném okolí, a to jsou členy s nekonečně mnoha různými indexy $n_k$.
 
 ### Limes superior a Bolzanova–Weierstrassova věta | P6 | #g8dbw
 ~ seq=0.6*cos(2.4*n)*(1+0.5/n); N=10; dash=-1.1,0.6,1.1,0.6
@@ -1856,7 +1988,7 @@ $$\limsup_{n\to\infty} a_n \quad\text{a}\quad \liminf_{n\to\infty}a_n.$$
 Limita $\lim a_n$ existuje, právě když $\liminf a_n = \limsup a_n$.
 > Bolzanova–Weierstrassova věta
 Z každé ohraničené posloupnosti lze vybrat konvergentní posloupnost.
-? input #l1yxd | 3
+?! input #l1yxd | 3
 Určete $\limsup\limits_{n\to\infty}\, 3\cos\dfrac{n\pi}{2}$.
 ! Hromadné body jsou $-3$, $0$, $3$; největší je $3$.
 @ x=0..16; y=-3.6..3.6; seq=3*cos(n*pi/2); hline=3
@@ -1876,7 +2008,7 @@ Určete $\liminf\limits_{n\to\infty}\, 2\sin\dfrac{n\pi}{2}$.
 Určete $\limsup\limits_{n\to\infty}\,(-1)^n n$.
 ! Sudé členy $2, 4, 6, \dots$ jdou do $+\infty$, takže největší hromadný bod v $\mathbb R^*$ je $+\infty$.
 @ x=0..16; y=-16..16; seq=(-1)^n*n
-? tf #ub771 | false
+?! tf #ub771 | false
 Z každé posloupnosti lze vybrat konvergentní posloupnost.
 ! Z $\{n\}$ nelze, každá vybraná jde do $+\infty$. Platí jen slabší tvrzení: lze vybrat posloupnost s limitou v $\mathbb R^*$.
 + $a_n = n$
@@ -1911,6 +2043,29 @@ Seřaďte myšlenku důkazu Bolzanovy–Weierstrassovy věty půlením interval�
 + Opakováním dostaneme vložené intervaly s délkami $\frac{b-a}{2^k}\to0$.
 + Z $k$-tého intervalu vybereme člen s větším indexem než předtím; tato vybraná posloupnost konverguje.
 ! Vložené intervaly se stahují k jedinému bodu, který je limitou vybrané posloupnosti.
+?! input #gses7 | 2
+Určete $\limsup\limits_{n\to\infty}\,(-1)^{n-1}\left(2+\dfrac3n\right)$.
+! Pro lichá $n$ jsou členy $2+\frac3n\to2$, pro sudá $-2-\frac3n\to-2$. Největší hromadný bod je $2$, i když $\sup a_n = a_1 = 5$.
+?! tf #1kmxn | true
+Je-li $\liminf a_n = \limsup a_n = A\in\mathbb R$, pak $a_n\to A$.
+! Posloupnost pak má jediný hromadný bod $A$ a je ohraničená, protože by jinak měla hromadný bod $\pm\infty$. Ohraničená posloupnost s jediným hromadným bodem konverguje, tedy $a_n\to A$.
+? mc #z5b38
+Pro $a_n = (-1)^n+\frac1n$ platí
++ $\sup a_n = \frac32$ a $\limsup a_n = 1$
+- $\sup a_n = \limsup a_n = 1$
+- $\sup a_n = \limsup a_n = \frac32$
+- $\sup a_n = 2$ a $\limsup a_n = 1$
+! Pro sudá $n$ jsou členy $1+\frac1n$, největší je $a_2 = \frac32$; pro lichá $n$ je $a_n = -1+\frac1n\le0$. Supremum je $\frac32$, ale hromadné body jsou jen $\pm1$, takže $\limsup a_n = 1$.
+? input #gvezx | 1/3
+Určete $\liminf\limits_{n\to\infty}\, 3^{\cos\frac{n\pi}2}$.
+! Členy se opakují s periodou $4$: $1, \frac13, 1, 3$. Nejmenší hromadný bod je $\frac13$.
+? input #o096u | 2
+Určete
+$$\limsup_{n\to\infty}\left(1+\frac{n}{n+1}\cos\frac{n\pi}2\right).$$
+! Pro $n = 4k$ jsou členy $1+\frac n{n+1}\to2$, pro $n = 4k+2$ jsou $1-\frac n{n+1}\to0$ a pro lichá $n$ jsou rovny $1$. Hromadné body jsou $0$, $1$, $2$, největší je $2$.
+? input #uk6kr | 0
+Určete $\liminf\limits_{n\to\infty}\, n^{(-1)^n}$.
+! Pro sudá $n$ je člen $n\to+\infty$, pro lichá $\frac1n\to0$. Hromadné body jsou $0$ a $+\infty$, nejmenší je $0$.
 
 ### Cauchyovské posloupnosti | P6 | #oojos
 ~ noaxes; line=-1.05,-0.2,1.05,-0.2; pt=-0.85,-0.2; pt=-0.2,-0.2; pt=0.2,-0.2; pt=0.45,-0.2; pt=0.6,-0.2; pt=0.69,-0.2; pt=0.74,-0.2; arrow=-0.8,0.25,0.65,0.25
@@ -1918,7 +2073,7 @@ Seřaďte myšlenku důkazu Bolzanovy–Weierstrassovy věty půlením interval�
 Posloupnost $\{a_n\}$ je <b>cauchyovská</b> (fundamentální), jestliže
 $$\forall\varepsilon>0\ \exists n_0\ \forall m,n\ge n_0:\ |a_m - a_n|<\varepsilon.$$
 V $\mathbb R$ je posloupnost konvergentní, <b>právě když</b> je cauchyovská. Konvergenci tak lze ověřit, aniž bychom limitu znali.
-? tf #yrgj2 | true
+?! tf #yrgj2 | true
 Každá konvergentní posloupnost je cauchyovská.
 ! $|a_m - a_n|\le|a_m - A| + |A - a_n| < \tfrac\varepsilon2+\tfrac\varepsilon2$.
 ? tf #hb64g | false
@@ -1966,7 +2121,7 @@ Proč posloupnost $\{(-1)^n\}$ není cauchyovská?
 - Protože není monotónní
 - Protože její členy nejsou racionální
 ! Sousední členy jsou vždy ve vzdálenosti $2$.
-? tf #k27m0 | false
+?! tf #k27m0 | false
 Každá cauchyovská posloupnost racionálních čísel má limitu v $\mathbb Q$.
 ! $\mathbb Q$ není úplné, právě proto potřebujeme $\mathbb R$.
 + $1;\ 1{,}4;\ 1{,}41;\ 1{,}414;\dots\to\sqrt2$
@@ -1989,6 +2144,16 @@ Jaký je hlavní přínos Bolzanovy–Cauchyovy podmínky?
 - Platí i v $\mathbb Q$
 - Zaručuje monotonii posloupnosti
 ! Podmínka mluví jen o vzdálenostech členů mezi sebou.
+? tf #ug3os | true
+Posloupnost $a_n = 1+\dfrac1{2^2}+\dots+\dfrac1{n^2}$ je cauchyovská.
+! Pro $m>n$ je $$a_m-a_n = \sum_{k=n+1}^m\frac1{k^2}<\sum_{k=n+1}^m\left(\frac1{k-1}-\frac1k\right) = \frac1n-\frac1m<\frac1n.$$ Stačí tedy $n_0>\frac1\varepsilon$ a posloupnost je cauchyovská.
+? mc #bn6ka
+Která posloupnost není cauchyovská?
++ $\sqrt n$
+- $\frac1n$
+- $\frac{(-1)^n}{n}$
+- $1-2^{-n}$
+! V $\mathbb R$ je posloupnost cauchyovská, právě když konverguje. Zbylé tři konvergují, $\sqrt n\to+\infty$, a ta tedy cauchyovská není.
 
 ### Bonus: Rekurentní posloupnosti | P6 | bonus | #t0ypt
 ~ dash=-1,-1,1,1; f=0.5*x+0.35; poly=-0.8,-0.8,-0.8,-0.05,-0.05,-0.05,-0.05,0.325,0.325,0.325,0.325,0.51,0.51,0.51
@@ -2003,11 +2168,11 @@ Spočtěte $a_2$ v Heronově metodě s $a_1 = 2$.
 ? input #bw215 | 17/12
 V Heronově metodě $a_1 = 2$, $a_{n+1} = \tfrac12\left(a_n + \tfrac{2}{a_n}\right)$ spočtěte $a_3$.
 ! $\tfrac12\left(\tfrac32 + \tfrac43\right) = \tfrac{17}{12}\approx1{,}41667$, od $\sqrt2$ se liší až ve třetím desetinném místě.
-? input #eix5k | 3
+?! input #eix5k | 3
 Posloupnost $a_1 = 0$, $a_{n+1} = \sqrt{6 + a_n}$ je rostoucí a ohraničená. Určete její limitu.
 ! $L = \sqrt{6+L}$ dává $L^2 - L - 6 = 0$, tedy $L = 3$; kořen $-2$ nevyhovuje.
 @ x=0..12; y=-0.2..3.4; rec=0; sqrt(6+a); hline=3
-? tf #y8e3c | false
+?! tf #y8e3c | false
 Rovnice $L = g(L)$ sama o sobě dokazuje, že limita existuje.
 ! Pro $a_{n+1} = 2a_n$, $a_1 = 1$ má rovnice $L = 2L$ řešení $L = 0$, ale $a_n = 2^{n-1}\to+\infty$.
 + $a_1 = 1$, $a_{n+1} = 2a_n$: rovnice dává $L = 0$, ale $a_n\to\infty$
@@ -2038,6 +2203,12 @@ Posloupnost $a_1 = 1$, $a_{n+1} = \dfrac{1}{1+a_n}$ konverguje. Určete její li
 ? tf #xf4sk | false
 Každá rekurentně zadaná posloupnost $a_{n+1} = g(a_n)$ se spojitou $g$ konverguje.
 ! Například $a_{n+1} = a_n+1$ diverguje do $+\infty$.
+? input #hh7uf | 7
+Model úbytku: $S_{n+1} = 0{,}9\,S_n$. Po kolika generacích klesne $S_n$ poprvé pod polovinu $S_0$?
+! $S_n = 0{,}9^n S_0$. $0{,}9^6\approx0{,}531$ a $0{,}9^7\approx0{,}478$, takže pod polovinu klesne poprvé po $7$ generacích.
+? input #nxn70 | (1+√5)/2; 1.618
+Pro Fibonacciho čísla ($F_1 = F_2 = 1$, $F_{n+2} = F_{n+1}+F_n$) podíl $q_n = \frac{F_{n+1}}{F_n}$ konverguje. Určete jeho limitu.
+! $q_{n+1} = \frac{F_{n+1}+F_n}{F_{n+1}} = 1+\frac1{q_n}$. Limita splňuje $L = 1+\frac1L$, tedy $L^2-L-1 = 0$; protože $q_n\ge1$, je $L = \frac{1+\sqrt5}2$.
 
 ## Limita a spojitost funkce | P7–P9 | #t9gb7
 ### Limita funkce | P7 | #1aj7z
