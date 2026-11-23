@@ -836,7 +836,7 @@ Je-li $a^2$ iracionální, je iracionální i $a$.
 Funkce $f$ je <b>ohraničená</b>, existuje-li $K>0$ s $|f(x)|\le K$ pro všechna $x\in D(f)$. Je <b>sudá</b>, jestliže $f(-x)=f(x)$, a <b>lichá</b>, jestliže $f(-x)=-f(x)$; v obou případech musí s $x$ ležet v $D(f)$ i $-x$. Je <b>periodická</b> s periodou $p>0$, jestliže $f(x\pm p)=f(x)$.
 > Monotonie
 $f$ je na množině $I$ <b>rostoucí</b>, jestliže $x_1<x_2 \Rightarrow f(x_1)<f(x_2)$, a <b>neklesající</b>, jestliže $x_1<x_2 \Rightarrow f(x_1)\le f(x_2)$. Analogicky klesající a nerostoucí. Rostoucí a klesající funkce jsou <b>ryze monotonní</b>.
-? mc #9ylnc
+?! mc #9ylnc
 Funkce $f(x) = \dfrac{x}{x^2+1}$ je
 - sudá
 + lichá
@@ -856,7 +856,7 @@ Funkce $h(x) = \dfrac{1+x}{1+x^2}$ je
 Funkce $f(x)=\dfrac{1-x^2}{1+x^2}$ je ohraničená.
 ! $|1-x^2|\le 1+x^2$, takže $|f(x)|\le 1$.
 @ x=-6..6; y=-1.4..1.4; f=(1-x^2)/(1+x^2); hline=1; hline=-1
-? mc #ecmx4
+?! mc #ecmx4
 Jaká je nejmenší perioda funkce $\sin\tfrac{x}{3} + \cos 2x$?
 - $\pi$
 - $2\pi$
@@ -920,6 +920,57 @@ Přiřaďte funkcím jejich vlastnosti na $\mathbb R$.
 + $e^x$ :: ani sudá, ani lichá
 - sudá a není periodická
 ! $e^{-x}$ se nerovná $e^x$ ani $-e^x$, takže $e^x$ není sudá ani lichá. Sudá a neperiodická je třeba $x^2$, ta tu ale není.
+?! tf #wt8tp | false
+Funkce $f(x) = x^4-1$ s definičním oborem $D(f) = [-1,3]$ je sudá.
+! Sudá funkce potřebuje symetrický definiční obor: s každým $x$ i $-x$. Tady je $3\in D(f)$, ale $-3\notin D(f)$, takže $f$ sudá není, i když $f(-x) = f(x)$ všude, kde to má smysl.
+@ x=-1.6..3.2; y=-1.5..8; f=x>=-1&&x<=3?x^4-1:NaN; pt=-1,0
+?! mc #erz19
+Funkce $f(x) = \dfrac1x$ je
++ klesající na $(-\infty,0)$ i na $(0,\infty)$, ale ne na jejich sjednocení
+- klesající na celém definičním oboru
+- rostoucí na $(0,\infty)$
+- na žádném intervalu monotónní
+! Na každém z obou intervalů klesá. Na sjednocení ne: $-1<1$ a přitom $f(-1) = -1 < 1 = f(1)$.
+@ x=-4..4; y=-4..4; f=1/x; pt=-1,-1; pt=1,1
+? mc #2ey9k
+Funkce $y = |x+1|$ je
+- sudá
+- lichá
++ ani sudá, ani lichá
+- sudá i lichá
+! $f(1) = 2$ a $f(-1) = 0$, takže neplatí ani $f(-1) = f(1)$, ani $f(-1) = -f(1)$. Funkce není ani sudá, ani lichá.
+@ x=-4..3; y=-1..4; f=abs(x+1)
+? mc #cv4g1
+Funkce $y = \dfrac{\cos x}{x}$ je
+- sudá
++ lichá
+- ani sudá, ani lichá
+- sudá i lichá
+! $D = \mathbb R\setminus\{0\}$ je symetrický a $\frac{\cos(-x)}{-x} = -\frac{\cos x}{x}$, protože kosinus je sudý. Funkce je lichá.
+? mc #vvs55
+Funkce $y = \ln\dfrac{2-x}{2+x}$ je
+- sudá
++ lichá
+- ani sudá, ani lichá
+- sudá i lichá
+! Definiční obor $(-2,2)$ je symetrický a $f(-x) = \ln\frac{2+x}{2-x} = -\ln\frac{2-x}{2+x} = -f(x)$. Funkce je lichá.
+? tf #w7zwt | true
+Je-li $f$ lichá a $0\in D(f)$, pak $f(0) = 0$.
+! Dosazením $x = 0$ do $f(-x) = -f(x)$ dostaneme $f(0) = -f(0)$, tedy $2f(0) = 0$ a $f(0) = 0$.
+? input #v6tjw | 2π; 6.2832
+Jaká je nejmenší perioda funkce $\cos 2x + \sin 3x$?
+! Perioda $\cos2x$ je $\pi$, perioda $\sin3x$ je $\frac{2\pi}3$. Nejmenší číslo, které je násobkem obou, je $2\pi$.
+? input #3e012 | π; 3.1416
+Jaká je nejmenší perioda funkce $\sin^2 x$?
+! $\sin^2x = \frac{1-\cos2x}{2}$ a $\cos 2x$ má nejmenší periodu $\pi$. Nejmenší perioda $\sin^2x$ je tedy $\pi$.
+@ x=-6.3..6.3; y=-0.3..1.3; f=sin(x)^2
+? tf #kktej | false
+Funkce $\sin|x|$ je periodická.
+! Vpravo od nuly je to $\sin x$, takže perioda by musela být násobkem $2\pi$. Pak ale $f\left(-\frac\pi2\right) = \sin\frac\pi2 = 1$, kdežto $f\left(-\frac\pi2+2\pi\right) = \sin\frac{3\pi}2 = -1$. Funkce tedy periodická není.
+@ x=-10..10; y=-1.5..1.5; f=sin(abs(x))
+? tf #ltno6 | true
+Pro každé $x\in\mathbb R$ platí $\operatorname{sgn}|x| = |\operatorname{sgn}x|$.
+! Pro $x\ne0$ jsou obě strany rovny $1$, pro $x = 0$ jsou obě rovny $0$. Rovnost tedy platí pro všechna $x$.
 
 ### Složená a inverzní funkce | P3 | #bssjv
 ~ dash=-1,-1,1,1; f=exp(1.6*x)/2.5-0.8; f=ln(2.5*(x+0.8))/1.6
@@ -927,7 +978,7 @@ Přiřaďte funkcím jejich vlastnosti na $\mathbb R$.
 $F(x) = f(\varphi(x))$, kde $\varphi$ je <b>vnitřní</b> a $f$ <b>vnější složka</b>. Složená funkce existuje, právě když $H(\varphi)\cap D(f)\neq\emptyset$, a je definována pro ta $x\in D(\varphi)$, pro něž $\varphi(x)\in D(f)$.
 > Inverzní funkce
 Je-li $f$ prostá, existuje <b>inverzní funkce</b> $f^{-1}$: $f^{-1}(y) = x \iff f(x)=y$. Platí $D(f^{-1}) = H(f)$ a $H(f^{-1}) = D(f)$. Grafy $f$ a $f^{-1}$ jsou souměrné podle přímky $y=x$.
-? mc #v5orc
+?! mc #v5orc
 Pro $f(u) = \sqrt u$ a $\varphi(x) = 1-x^2$ je definiční obor funkce $f(\varphi(x))$
 - $\mathbb R$
 + $[-1,1]$
@@ -938,7 +989,7 @@ Pro $f(u) = \sqrt u$ a $\varphi(x) = 1-x^2$ je definiční obor funkce $f(\varph
 ? input #coytd | -1
 Pro $f(x) = x^2$ a $g(x) = x+1$ spočtěte $f(g(-1)) - g(f(0))$.
 ! $f(g(-1)) = f(0) = 0$ a $g(f(0)) = g(0) = 1$. Rozdíl je $-1$; skládání není komutativní.
-? mc #yyixz
+?! mc #yyixz
 Inverzní funkce k $f(x) = \dfrac{2x+1}{x-3}$ je
 + $f^{-1}(x) = \dfrac{3x+1}{x-2}$
 - $f^{-1}(x) = \dfrac{x-3}{2x+1}$
@@ -954,7 +1005,7 @@ Jaký je definiční obor inverzní funkce k $f(x) = e^x$?
 - $(1,\infty)$
 ! $D(f^{-1}) = H(f) = (0,\infty)$. Inverzní funkcí je $\ln x$.
 @ x=-3.5..4; y=-3.5..4; aspect=equal; f=exp(x); f=ln(x); f=x
-? tf #6ylaz | false
+?! tf #6ylaz | false
 Funkce $f(x)=x^2$ na $\mathbb R$ má inverzní funkci.
 ! Není prostá, $f(-2)=f(2)$. Inverzi má až zúžení, např. na $[0,\infty)$, a tou je $\sqrt x$.
 @ x=-3..3; y=-1..6; f=x^2; hline=4; pt=-2,4; pt=2,4
@@ -984,6 +1035,40 @@ Pro všechny funkce $f, g\colon\mathbb R\to\mathbb R$ platí $f\circ g = g\circ 
 + $f(x) = x^2$, $g(x) = x+1$
 - $f(x) = g(x) = x$
 - $f(x) = x$, $g(x) = \sin x$
+?! mc #g71ay
+Jak vznikne graf inverzní funkce $f^{-1}$ z grafu funkce $f$?
++ souměrností podle přímky $y = x$
+- souměrností podle osy $x$
+- souměrností podle osy $y$
+- souměrností podle počátku
+! Bod $[a,b]$ leží na grafu $f$, právě když $[b,a]$ leží na grafu $f^{-1}$. Prohození souřadnic je souměrnost podle přímky $y = x$.
+@ x=-0.5..4; y=-0.5..4; aspect=equal; f=x>=0?x^2:NaN; f=sqrt(x); f=x
+? expr #8xfrw | e^(x-1)-5
+Najděte inverzní funkci k $f(x) = 1+\ln(x+5)$. Zapište $f^{-1}(x)$.
+= $e^{x-1}-5$
+! Z $y = 1+\ln(x+5)$ plyne $y-1 = \ln(x+5)$, tedy $x = e^{y-1}-5$. Po přeznačení $f^{-1}(x) = e^{x-1}-5$.
+? expr #5oomi | -1+sqrt(x-2) | dom=2.5..6
+Funkce $f(x) = x^2+2x+3$ je na intervalu $[-1,\infty)$ prostá. Najděte k ní na tomto intervalu inverzní funkci $f^{-1}(x)$.
+= $-1+\sqrt{x-2}$
+! $f(x) = (x+1)^2+2$. Z $x = (y+1)^2+2$ a $y\ge-1$ plyne $y+1 = \sqrt{x-2}$. Tedy $f^{-1}(x) = -1+\sqrt{x-2}$ pro $x\ge2$.
+@ x=-1.5..7; y=-1.5..7; aspect=equal; f=x>=-1?(x+1)^2+2:NaN; f=x>=2?-1+sqrt(x-2):NaN; f=x
+? mc #tp0wy
+Pro $f(x) = \sqrt x$ a $g(x) = x^2$ je $f(g(x))$ rovno
++ $|x|$
+- $x$
+- $\pm x$
+- $x^2$
+! $f(g(x)) = \sqrt{x^2}$ a odmocnina je nezáporná, takže $\sqrt{x^2} = |x|$. Například pro $x=-3$ vyjde $3$, ne $-3$.
+? interval #1u7u4 | (1; 2]
+Jaký je definiční obor funkce $\arcsin(1-x)+\ln\ln x$?
+! $\arcsin(1-x)$ potřebuje $-1\le1-x\le1$, tedy $x\in[0,2]$. $\ln\ln x$ potřebuje $\ln x>0$, tedy $x>1$. Průnik je $(1,2]$.
+? interval #g6o4o | (-∞; 0)
+Jaký je definiční obor funkce $\ln(1-e^x)$?
+! Potřebujeme $1-e^x>0$, tedy $e^x<1$, a to platí právě pro $x<0$. $D(f) = (-\infty,0)$.
+? interval #ojqfc | (-∞; 2] ∪ [3; ∞)
+Jaký je definiční obor funkce $\sqrt{x^2-5x+6}$?
+! $x^2-5x+6 = (x-2)(x-3)\ge0$ platí vně kořenů i v nich: $D(f) = (-\infty,2]\cup[3,\infty)$.
+@ x=-1..6; y=-1..4; f=x^2-5*x+6; hline=0; pt=2,0; pt=3,0
 
 ### Polynomy a racionální funkce | P3–P4 | #fdl9e
 ~ f=1.6*x^3-1.1*x
@@ -1001,7 +1086,7 @@ Kolik různých reálných kořenů má $x^3 - x^2 - x + 1$?
 Polynom lichého stupně s reálnými koeficienty má aspoň jeden reálný kořen.
 ! Nereálné kořeny přicházejí ve sdružených dvojicích, takže jich je sudý počet. Později to uvidíme i z Bolzanovy věty.
 @ x=-3..3; y=-6..6; f=x^3-2*x+2; f=x^5-3*x^3+x-1
-? mc #w5bo4
+?! mc #w5bo4
 Jaký tvar má rozklad $\dfrac{x+3}{x^2(x+1)}$ na parciální zlomky?
 + $\dfrac{A}{x} + \dfrac{B}{x^2} + \dfrac{C}{x+1}$
 - $\dfrac{A}{x^2} + \dfrac{B}{x+1}$
@@ -1039,7 +1124,7 @@ Polynom stupně $n$ má vždy právě $n$ reálných kořenů (počítáno s ná
 + $x^2+1$
 - $x^2-1$
 - $x$
-? mc #456wp
+?! mc #456wp
 Rozložte $\dfrac{1}{x^2+x}$ na parciální zlomky.
 + $\dfrac1x - \dfrac{1}{x+1}$
 - $\dfrac1x + \dfrac{1}{x+1}$
@@ -1063,6 +1148,49 @@ Přiřaďte funkcím jejich grafy.
 + $\dfrac{x}{x^2+1}$ :: @ x=-3..3; y=-4..4; f=x/(x^2+1)
 - @ x=-3..3; y=-4..4; f=1/(x+1)
 ! U $x=1$ jsou neohraničené $\frac{1}{x-1}$ i $\frac{x+1}{x-1}$; pro velká $|x|$ se první blíží k $0$, druhá k $1$. $\frac{1}{x^2}$ je kladná a sudá, $\frac{x}{x^2+1}$ je definovaná všude. Graf s nespojitostí v $-1$ patří $\frac{1}{x+1}$.
+?! set #gnd3y | 1; -3; -7
+Najděte všechny kořeny polynomu $x^3+9x^2+11x-21$.
+! Celočíselné kořeny hledáme mezi děliteli $-21$. Hornerovo schéma ukáže kořen $1$ a podíl $x^2+10x+21 = (x+3)(x+7)$. Kořeny jsou $1$, $-3$ a $-7$.
+?! interval #1httr | (-3; -2) ∪ (0; 1)
+Na jaké množině je funkce $\dfrac{(x-1)(x+2)}{x(x+3)}$ záporná?
+! Nulové body čitatele a jmenovatele $-3$, $-2$, $0$, $1$ rozdělí přímku na intervaly, na kterých je znaménko stálé: $+$ na $(-\infty,-3)$, $-$ na $(-3,-2)$, $+$ na $(-2,0)$, $-$ na $(0,1)$ a $+$ na $(1,\infty)$. Funkce je záporná na $(-3,-2)\cup(0,1)$.
+? set #gwon0 | 2; -4; 1/2; -1/2
+Najděte všechny kořeny polynomu $4x^4+8x^3-33x^2-2x+8$.
+! Racionální kořeny jsou podíly dělitelů $8$ a $4$. Hornerovo schéma dá kořeny $2$ a $-\frac12$, zbylý činitel $4x^2+14x-8$ má kořeny $\frac12$ a $-4$. Polynom je $(x-2)(x+4)(2x-1)(2x+1)$, kořeny jsou $2$, $-4$, $\frac12$, $-\frac12$.
+? mc #2g27e
+Které číslo může být podle věty o racionálních kořenech kořenem polynomu $2x^3+x^2-5x+3$?
++ $\frac32$
+- $\frac23$
+- $2$
+- $\frac13$
+! Racionální kořen celočíselného polynomu je podíl dělitele absolutního členu $3$ a dělitele vedoucího koeficientu $2$: $\pm1$, $\pm3$, $\pm\frac12$, $\pm\frac32$. Z nabídky je kandidátem jen $\frac32$.
+? set #h1vns | -1; 1
+Najděte všechny reálné kořeny polynomu $x^6-1$.
+! Platí $$x^6-1 = (x-1)(x+1)(x^2+x+1)(x^2-x+1)$$ a kvadratické činitele mají záporný diskriminant. Reálné kořeny jsou $1$ a $-1$.
+? tf #i90k1 | true
+Má-li polynom s reálnými koeficienty kořen $2i$, má i kořen $-2i$.
+! Komplexní kořeny reálného polynomu tvoří dvojice komplexně sdružených čísel: z $P(2i) = 0$ plyne $P(-2i) = \overline{P(2i)} = 0$. Kořen $-2i$ tedy má.
+? mc #yqj19
+Jaký tvar má rozklad $\dfrac{x^2-x+10}{(x^2-3x+10)^2}$ na parciální zlomky?
++ $\dfrac{Ax+B}{x^2-3x+10}+\dfrac{Cx+D}{(x^2-3x+10)^2}$
+- $\dfrac{A}{x^2-3x+10}+\dfrac{B}{(x^2-3x+10)^2}$
+- $\dfrac{Ax+B}{(x^2-3x+10)^2}$
+- $\dfrac{A}{x-3}+\dfrac{B}{x+10}$
+! $x^2-3x+10$ má záporný diskriminant, je to tedy nerozložitelný kvadratický činitel. Každá jeho mocnina dostane v čitateli lineární výraz: $\frac{Ax+B}{x^2-3x+10}+\frac{Cx+D}{(x^2-3x+10)^2}$.
+? input #f61z3 | 3
+V rozkladu
+$$\frac{2x^2+4x+9}{x^3+3x^2+3x+2} = \frac{A}{x+2}+\frac{Bx+C}{x^2+x+1}$$
+určete $A$.
+! Jmenovatel je $(x+2)(x^2+x+1)$. Do rovnosti $$2x^2+4x+9 = A(x^2+x+1)+(Bx+C)(x+2)$$ dosadíme $x = -2$: $9 = 3A$, tedy $A = 3$.
+? input #ovjno | -1
+V rozkladu
+$$\frac{1}{x^3(x+1)} = \frac Ax+\frac B{x^2}+\frac C{x^3}+\frac D{x+1}$$
+určete $D$.
+! Rovnost vynásobíme $x+1$ a dosadíme $x = -1$: ostatní zlomky zmizí a zbude $D = \frac{1}{(-1)^3} = -1$.
+? interval #avalq | (-∞; -5) ∪ (-5; 0) ∪ [1; 2) ∪ [6; ∞)
+Řešte nerovnici
+$$\frac{7(x-6)(x-1)^3(x+2)^2}{x(x+5)^4(2-x)}\le0.$$
+! Nulové body jsou $-5$, $-2$, $0$, $1$, $2$, $6$; sudé mocniny $(x+2)^2$ a $(x+5)^4$ znaménko nemění. Výraz je záporný na $(-\infty,-5)$, $(-5,0)$, $(1,2)$, $(6,\infty)$ a nulový v $-2$, $1$, $6$. Body $-5$, $0$, $2$ do definičního oboru nepatří. Řešení je $(-\infty,-5)\cup(-5,0)\cup[1,2)\cup[6,\infty)$.
 
 ### Goniometrické a cyklometrické funkce | P3–P4 | #j2qr6
 ~ f=0.7*sin(3.2*x)
@@ -1071,7 +1199,7 @@ $\sin$ a $\cos$ jsou definované na $\mathbb R$, mají periodu $2\pi$ a obor hod
 > Cyklometrické funkce
 Jsou to inverze k zúžením goniometrických funkcí:
 <ul><li>$\arcsin\colon [-1,1]\to[-\tfrac\pi2,\tfrac\pi2]$,</li><li>$\arccos\colon [-1,1]\to[0,\pi]$,</li><li>$\operatorname{arctg}\colon \mathbb R\to(-\tfrac\pi2,\tfrac\pi2)$,</li><li>$\operatorname{arccotg}\colon \mathbb R\to(0,\pi)$.</li></ul>
-? mc #rklqw
+?! mc #rklqw
 Kolik je $\arcsin\left(-\tfrac12\right)$?
 - $\tfrac{7\pi}{6}$
 + $-\tfrac{\pi}{6}$
@@ -1087,7 +1215,7 @@ Kolik je $\arccos\left(-\tfrac12\right)$?
 - $\tfrac{\pi}{3}$
 ! $\cos\tfrac{2\pi}3 = -\tfrac12$ a $\tfrac{2\pi}{3}\in[0,\pi]$.
 @ x=-1.3..1.3; y=-0.3..3.4; f=acos(x); pt=-0.5,2*pi/3; hline=2*pi/3
-? tf #opo5q | false
+?! tf #opo5q | false
 Pro všechna $x\in\mathbb R$ platí $\arcsin(\sin x) = x$.
 ! Platí jen pro $x\in[-\tfrac\pi2,\tfrac\pi2]$. Například $\arcsin(\sin\pi) = \arcsin 0 = 0 \ne \pi$.
 @ x=-7..7; y=-4..4; f=asin(sin(x)); f=x
@@ -1098,7 +1226,7 @@ Spočtěte $\cos\left(\arcsin\tfrac35\right)$.
 ? input #m3gcb | 0
 Spočtěte $\operatorname{arctg} 7 + \operatorname{arctg}(-7)$.
 ! $\operatorname{arctg}$ je lichá funkce.
-? mc #3j6na
+?! mc #3j6na
 Jaký je obor hodnot funkce $\operatorname{arctg}$?
 - $\mathbb R$
 - $[-\tfrac\pi2,\tfrac\pi2]$
@@ -1142,6 +1270,44 @@ Přiřaďte funkcím jejich grafy.
 + $\operatorname{arctg} x$ :: @ x=-2.5..2.5; y=-2..3.5; f=atan(x)
 - @ x=-2.5..2.5; y=-2..3.5; f=PI/2-atan(x)
 ! $\arcsin$ a $\arccos$ jsou definované jen na $[-1,1]$: $\arcsin$ roste z $-\frac\pi2$ do $\frac\pi2$, $\arccos$ klesá z $\pi$ do $0$. $\operatorname{arctg}$ roste na celém $\mathbb R$; klesající graf s hodnotami v $(0,\pi)$ patří $\operatorname{arccotg}$.
+?! input #7cju9 | π/6; 0.5236
+Spočtěte $\arcsin\left(\sin\frac{5\pi}6\right)$.
+! $\sin\frac{5\pi}6 = \frac12$ a $\arcsin$ vrací úhel z $\left[-\frac\pi2,\frac\pi2\right]$: $\arcsin\frac12 = \frac\pi6$, ne $\frac{5\pi}6$.
+? tf #b8bvf | false
+Pro všechna $x$, pro která je $\operatorname{tg}x$ definován, platí $\operatorname{arctg}(\operatorname{tg}x) = x$.
+! $\operatorname{arctg}$ vrací hodnoty jen z $\left(-\frac\pi2,\frac\pi2\right)$. Například $\operatorname{arctg}(\operatorname{tg}\pi) = \operatorname{arctg}0 = 0\ne\pi$, rovnost platí jen pro $x\in\left(-\frac\pi2,\frac\pi2\right)$.
++ $x = \pi$
+- $x = 0$
+- $x = \frac\pi4$
+? expr #td2xa | x/sqrt(1+x^2) | dom=-2..2
+Zjednodušte $\sin(\operatorname{arctg}x)$ pro $x\in\mathbb R$.
+= $\dfrac{x}{\sqrt{1+x^2}}$
+! Pro $\alpha = \operatorname{arctg}x\in\left(-\frac\pi2,\frac\pi2\right)$ je $\cos\alpha>0$ a $\cos\alpha = \frac1{\sqrt{1+\operatorname{tg}^2\alpha}} = \frac1{\sqrt{1+x^2}}$. Tedy $\sin\alpha = \operatorname{tg}\alpha\cos\alpha = \frac{x}{\sqrt{1+x^2}}$.
+? interval #c326o | [-3/2; 5/2]
+Jaký je definiční obor funkce $\arccos\dfrac{1-2x}{4}$?
+! Potřebujeme $-1\le\frac{1-2x}4\le1$, tedy $-4\le1-2x\le4$ a $-\frac32\le x\le\frac52$. $D(f) = \left[-\frac32,\frac52\right]$.
+? input #btb6f | 6π; 18.8496
+Jaká je nejmenší perioda funkce $\operatorname{tg}\dfrac x2+\sin2x+\cos\dfrac x3$?
+! Periody jednotlivých sčítanců jsou $2\pi$, $\pi$ a $6\pi$. Nejmenší jejich společný násobek je $6\pi$.
+? multi #dhkxs
+Které vlastnosti má funkce $\ln|\cos x|$?
++ je sudá
++ je periodická s nejmenší periodou $\pi$
++ je shora ohraničená
+- je lichá
+- je zdola ohraničená
+! $|\cos x|$ je sudá a má periodu $\pi$. Protože $|\cos x|\le1$, je $\ln|\cos x|\le0$; v bodech $\frac\pi2+k\pi$ ale $|\cos x|\to0$ a logaritmus klesá pod každou mez. Funkce je sudá, periodická s periodou $\pi$ a shora ohraničená.
+@ x=-6.3..6.3; y=-4..0.8; f=ln(abs(cos(x)))
+? set #zjcm6 | π/3; 5π/3
+Najděte všechna řešení rovnice $\cos x = \frac12$ v intervalu $[0,2\pi]$.
+! $\cos\frac\pi3 = \frac12$ a kosinus je sudý a $2\pi$-periodický, takže druhé řešení je $2\pi-\frac\pi3$. Řešení jsou $\frac\pi3$ a $\frac{5\pi}3$.
+@ x=-0.3..6.6; y=-1.3..1.3; f=cos(x); hline=0.5; pt=1.0472,0.5; pt=5.236,0.5
+? tf #atmil | true
+Pro každé $x>0$ platí $\operatorname{arctg}x+\operatorname{arctg}\dfrac1x = \dfrac\pi2$.
+! Pro $\alpha = \operatorname{arctg}x\in\left(0,\frac\pi2\right)$ je $\operatorname{tg}\left(\frac\pi2-\alpha\right) = \operatorname{cotg}\alpha = \frac1x$ a $\frac\pi2-\alpha\in\left(0,\frac\pi2\right)$. Proto $\operatorname{arctg}\frac1x = \frac\pi2-\alpha$ a rovnost platí.
+? input #yv212 | -1/2; -0.5
+Spočtěte $\sin\dfrac{7\pi}6$.
+! $\frac{7\pi}6 = \pi+\frac\pi6$ a $\sin(\pi+t) = -\sin t$. Tedy $\sin\frac{7\pi}6 = -\sin\frac\pi6 = -\frac12$.
 
 ### Exponenciální, logaritmické a hyperbolické funkce | P3–P4 | #h292s
 ~ f=exp(2.2*x)/5-0.6
@@ -1173,10 +1339,10 @@ Jaký je obor hodnot funkce $\cosh$?
 - $[-1,1]$
 ! $\tfrac{e^x+e^{-x}}2 \ge \sqrt{e^xe^{-x}} = 1$ podle AG nerovnosti, s rovností pro $x=0$.
 @ x=-3..3; y=-0.5..8; f=cosh(x); hline=1
-? input #rricz | 3
+?! input #rricz | 3
 Řešte $\log_2(x+5) = 3$.
 ! $x+5 = 2^3 = 8$.
-? mc #o4zmm
+?! mc #o4zmm
 Definiční obor funkce $f(x) = \ln(x^2 - 4)$ je
 - $(2,\infty)$
 + $(-\infty,-2)\cup(2,\infty)$
@@ -1224,6 +1390,41 @@ Přiřaďte funkcím jejich grafy.
 ! $\cosh$ je sudý a $\cosh 0 = 1$, $\sinh$ je lichý a neomezený, $\operatorname{tgh}$ je lichý a omezený mezi $-1$ a $1$, $e^{-x}$ je kladná a klesá.
 
 ? gen #lp13c | domain_ivl
+?! tf #ufy3h | false
+Pro všechna $a,b>0$ platí $\ln(a+b) = \ln a+\ln b$.
+! Logaritmus převádí součin na součet: $\ln(ab) = \ln a+\ln b$. Pro $a = b = 1$ je $\ln 2\ne0 = \ln1+\ln1$. Rovnost platí jen náhodou, když $a+b = ab$, třeba pro $a = b = 2$.
++ $a = b = 1$
+- $a = b = 2$
+?! input #qjox8 | 2
+Řešte rovnici $\ln(x+1)+\ln(x-1) = \ln3$.
+! Rovnice má smysl jen pro $x>1$. Pak $\ln\bigl((x+1)(x-1)\bigr) = \ln 3$, tedy $x^2-1 = 3$ a $x = \pm2$. Podmínku $x>1$ splňuje jen $x = 2$.
+? interval #ax4kj | (0; 5)
+Jaký je definiční obor funkce $\ln(5x-x^2)$?
+! Potřebujeme $5x-x^2 = x(5-x)>0$, a to platí mezi kořeny: $D(f) = (0,5)$.
+? expr #huswu | ln(3-x) | dom=0..2.5
+Najděte inverzní funkci k $f(x) = 3-e^x$. Zapište $f^{-1}(x)$.
+= $\ln(3-x)$
+! Z $y = 3-e^x$ plyne $e^x = 3-y$, tedy $x = \ln(3-y)$. Po přeznačení $f^{-1}(x) = \ln(3-x)$ pro $x<3$.
+? mc #17z7j
+Funkce $y = \dfrac{2^x+1}{2^x-1}$ je
+- sudá
++ lichá
+- ani sudá, ani lichá
+- sudá i lichá
+! Definiční obor $\mathbb R\setminus\{0\}$ je symetrický. Rozšířením $2^x$ dostaneme $f(-x) = \frac{2^{-x}+1}{2^{-x}-1} = \frac{1+2^x}{1-2^x} = -f(x)$. Funkce je lichá.
+? input #4edak | -4
+Spočtěte $\log_3\dfrac1{81}$.
+! $\frac1{81} = 3^{-4}$, tedy $\log_3\frac1{81} = -4$.
+? input #eosc0 | 2
+Řešte rovnici $4^x-3\cdot2^x-4 = 0$.
+! Substitucí $t = 2^x>0$ dostaneme $t^2-3t-4 = (t-4)(t+1) = 0$. Kořen $t = -1$ nevyhovuje, protože $2^x>0$; z $2^x = 4$ plyne $x = 2$.
+? input #20x12 | 3/4; 0.75
+Pro $x>0$ je $\cosh x = \frac54$. Spočtěte $\sinh x$.
+! $\cosh^2x-\sinh^2x = 1$ dává $\sinh^2x = \frac{25}{16}-1 = \frac9{16}$. Pro $x>0$ je $\sinh x>0$, tedy $\sinh x = \frac34$.
+? interval #n99bm | (0; 1]
+Jaký je obor hodnot funkce $e^{-x^2}$?
+! $-x^2\le0$, takže $0<e^{-x^2}\le1$; hodnotu $1$ funkce nabývá v $x = 0$ a k nule se blíží pro $|x|\to\infty$. Obor hodnot je $(0,1]$.
+@ x=-3..3; y=-0.2..1.2; f=exp(-x^2); hline=1
 
 ## Posloupnosti | P4–P6 | #j7p53
 ### Limita posloupnosti | P4 | #6omrx
