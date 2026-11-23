@@ -2985,7 +2985,7 @@ Z definice spočtěte derivaci $f(x) = x^2$ v bodě $3$.
 Spočtěte $f'(2)$ pro $f(x) = \dfrac1x$.
 ! $\dfrac{\frac1{2+h}-\frac12}{h} = \dfrac{-1}{2(2+h)}\to-\frac14$.
 @ x=0..6; y=-0.5..3; f=1/x; tan=1/x,2; pt=2,0.5
-? mc #bx94r
+?! mc #bx94r
 Rovnice tečny ke grafu $y = x^2$ v bodě $[1, 1]$ je
 + $y = 2x - 1$
 - $y = 2x + 1$
@@ -3015,7 +3015,7 @@ Napište rovnici tečny ke grafu $y = x^3$ v bodě $[1, 1]$ ve tvaru $y = \dots$
 ? expr #lz4fo | x/4+1
 Napište rovnici tečny ke grafu $y = \sqrt x$ v bodě $[4, 2]$ ve tvaru $y = \dots$
 ! $y'(4) = \frac{1}{2\sqrt4} = \frac14$, tedy $y = 2+\frac14(x-4)$.
-? build #l9tfi
+?! build #l9tfi
 Sestavte definici derivace funkce $f$ v bodě $x_0$:
 + $f'(x_0) =$
 + $\lim\limits_{h\to0}$
@@ -3039,6 +3039,32 @@ Tečna ke grafu má s grafem vždy jen jeden společný bod.
 + tečna k $x^3$ v bodě $1$
 - tečna k $x^2$ v bodě $0$
 - tečna k $e^x$ v bodě $0$
+?! expr #5copv | 3/2 - x/2
+Normála ke grafu je přímka kolmá k tečně v bodě dotyku. Napište rovnici normály ke grafu $y = x^2$ v bodě $[1, 1]$ ve tvaru $y = \dots$
+= $y = \frac32-\frac x2$
+! Směrnice tečny je $f'(1) = 2$, směrnice normály je $-\frac12$. Normála je $y = 1-\frac12(x-1) = \frac32-\frac x2$.
+@ x=-1..3; y=-0.5..3; aspect=equal; f=x^2; f=2*x-1; f=1.5-x/2; pt=1,1
+? input #v5acy | 1
+Z definice spočtěte derivaci $f(x) = \sin x$ v bodě $0$.
+! $f'(0) = \lim\limits_{x\to0}\frac{\sin x-\sin0}{x-0} = \lim\limits_{x\to0}\frac{\sin x}{x} = 1$.
+? expr #d7wzz | 1 - x/2
+Napište rovnici tečny ke grafu $y = \dfrac1{x^2+1}$ v bodě $\left[1, \frac12\right]$ ve tvaru $y = \dots$
+= $y = 1-\frac x2$
+! $f'(x) = -\frac{2x}{(x^2+1)^2}$, takže $f'(1) = -\frac24 = -\frac12$. Tečna je $y = \frac12-\frac12(x-1) = 1-\frac x2$.
+@ x=-2..3; y=-0.4..1.4; f=1/(x^2+1); f=1-x/2; pt=1,0.5
+? expr #qzvk8 | -x/2
+Napište rovnici tečny ke grafu $y = 1-e^{x/2}$ v jeho průsečíku s osou $x$ ve tvaru $y = \dots$
+= $y = -\frac x2$
+! $1-e^{x/2} = 0$ jen pro $x = 0$. $f'(x) = -\frac12e^{x/2}$, takže $f'(0) = -\frac12$ a tečna je $y = -\frac x2$.
+? input #y79x7 | 2
+Ve kterém bodě (určete $x$) má parabola $y = x^2-4x$ vodorovnou tečnu?
+! Vodorovná tečna má směrnici $0$: $f'(x) = 2x-4 = 0$, tedy $x = 2$.
+? input #c1ll5 | 45
+Jaký úhel (ve stupních) svírá tečna ke grafu $y = x^2$ v bodě $\left[\frac12, \frac14\right]$ s kladným směrem osy $x$?
+! Směrnice je $f'\left(\frac12\right) = 1 = \operatorname{tg}\alpha$, tedy $\alpha = 45^\circ$.
+? input #wnnfc | 4
+Jaká je směrnice sečny grafu $y = x^2$ procházející body grafu s $x = 1$ a $x = 3$?
+! Směrnice sečny je $\frac{f(3)-f(1)}{3-1} = \frac{9-1}2 = 4$. Pro $x\to1$ by se blížila směrnici tečny $f'(1) = 2$.
 
 ### Jednostranné derivace a spojitost | P10 | #hei74
 ~ f=0.9*abs(x)-0.35; pt=0,-0.35
@@ -3046,21 +3072,21 @@ Tečna ke grafu má s grafem vždy jen jeden společný bod.
 $f'_+(x_0)$ a $f'_-(x_0)$ jsou jednostranné limity podílu $\frac{f(x)-f(x_0)}{x-x_0}$. Derivace existuje, právě když existují obě jednostranné a jsou si rovny.
 > Derivace a spojitost
 Má-li $f$ v $x_0$ vlastní derivaci, je v $x_0$ spojitá. Obrácení neplatí: $|x|$ je v nule spojitá, ale derivaci tam nemá.
-? input #4vb4m | 1
+?! input #4vb4m | 1
 Určete $f'_+(0)$ pro $f(x) = |x|$.
 ! $\frac{|h|}{h} = 1$ pro $h>0$.
 @ x=-2..2; y=-0.5..2; aspect=equal; f=abs(x); pt=0,0
 ? input #wxstt | -1
 Určete $f'_-(0)$ pro $f(x) = |x|$.
 ! $\frac{|h|}{h} = -1$ pro $h<0$.
-? tf #dfpu8 | false
+?! tf #dfpu8 | false
 Spojitá funkce má v každém bodě derivaci.
 ! Protipříklad je $|x|$ v nule. Existují dokonce funkce spojité všude a bez derivace v jakémkoli bodě (Weierstrass).
 + $|x|$ v bodě $0$
 - $x^2$ v bodě $0$
 - $x^3$ v bodě $0$
 - $\sin x$ v bodě $0$
-? tf #scm7p | true
+?! tf #scm7p | true
 Funkce, která má v bodě vlastní derivaci, je v něm spojitá.
 ! Pro $x\to x_0$ je $$f(x)-f(x_0) = \frac{f(x)-f(x_0)}{x-x_0}\cdot(x-x_0)\to f'(x_0)\cdot0 = 0.$$
 ? mc #wtfcj
@@ -3107,6 +3133,27 @@ Seřaďte důkaz: má-li $f$ v $x_0$ vlastní derivaci, je v $x_0$ spojitá.
 ? input #j1dr5 | 0
 Určete $f'_+(0)$ pro $f(x) = x|x|$.
 ! $\frac{h|h|}{h} = |h|\to0$.
+?! input #qn666 | 2
+Funkce je dána předpisem $f(x) = x^2$ pro $x\le1$ a $f(x) = ax+b$ pro $x>1$. Pro jaké $a$ (s vhodným $b$) má $f$ v bodě $1$ derivaci?
+! Derivace zleva je $2\cdot1 = 2$, zprava $a$, takže $a = 2$. Spojitost navíc vyžaduje $a+b = 1$, tedy $b = -1$.
+@ x=-1..2.5; y=-1..4; f=x<=1?x^2:2*x-1; pt=1,1
+? input #6ihec | ∞
+Určete $f'_+(0)$ pro $f(x) = \sqrt[3]{x^2}$.
+! $\frac{f(x)-f(0)}{x} = \frac{x^{2/3}}{x} = x^{-1/3}\to+\infty$ pro $x\to0^+$. Graf má v počátku hrot.
+@ x=-2..2; y=-0.3..1.8; f=cbrt(x^2)
+? mc #qdtx5
+Má funkce $f(x) = x^2\sin\frac1x$, $f(0) = 0$, derivaci v bodě $0$?
++ ano, $f'(0) = 0$
+- ne, protože $\sin\frac1x$ nemá v nule limitu
+- ano, $f'(0) = 1$
+- ne, protože $f$ není v nule spojitá
+! $\left|\frac{f(x)-f(0)}{x}\right| = \left|x\sin\frac1x\right|\le|x|\to0$. Derivace existuje a $f'(0) = 0$.
+? input #vwvhn | 2
+Funkce je dána předpisem $f(x) = x^2$ pro $x\le1$ a $f(x) = 2x-1$ pro $x>1$. Určete $f'(1)$.
+! $f$ je v bodě $1$ spojitá ($1^2 = 2\cdot1-1$), derivace zleva je $2x = 2$ a zprava $2$. Obě se rovnají, takže $f'(1) = 2$.
+? tf #m1af6 | false
+Funkce $|x^3|$ nemá v bodě $0$ derivaci.
+! $\frac{|x^3|-0}{x} = \frac{|x|^3}{x}$ má v absolutní hodnotě velikost $x^2\to0$, takže obě jednostranné derivace jsou $0$. Derivace v nule existuje a je rovna $0$.
 
 ### Pravidla pro derivování | P10 | #o78dj
 ~ noaxes; text=f′; size=1
@@ -3116,14 +3163,14 @@ Odvození vede přes Carathéodoryho lemma: $f(x)-f(x_0) = \varphi(x)(x-x_0)$ se
 ? input #16zf1 | 5
 Pro $f(x) = x^3 + 2x$ spočtěte $f'(1)$.
 ! $f'(x) = 3x^2 + 2$, tedy $f'(1) = 5$.
-? mc #v827i
+?! mc #v827i
 Derivace $x^2\sin x$ je
 + $2x\sin x + x^2\cos x$
 - $2x\cos x$
 - $2x\sin x - x^2\cos x$
 - $x^2\cos x$
 ! Pravidlo pro součin.
-? mc #fv88m
+?! mc #fv88m
 Derivace $\dfrac{x}{x+1}$ je
 + $\dfrac{1}{(x+1)^2}$
 - $\dfrac{-1}{(x+1)^2}$
@@ -3134,7 +3181,7 @@ Derivace $\dfrac{x}{x+1}$ je
 Pro $f(x) = xe^x$ spočtěte $f'(0)$.
 ! $f'(x) = e^x + xe^x$, tedy $f'(0) = 1$.
 @ x=-4..1.2; y=-1..3; f=x*exp(x); tan=x*exp(x),0; pt=0,0
-? tf #b1cqn | false
+?! tf #b1cqn | false
 $(fg)' = f'g'$.
 ! Pro $f = g = x$ je $(x^2)' = 2x$, ale $f'g' = 1$.
 + $f = g = x$
@@ -3164,20 +3211,48 @@ Seřaďte odvození derivace součinu v bodě $x_0$.
 + Pro $x\to x_0$ použijeme definice derivací a spojitost $g$ v $x_0$.
 + Vyjde $(fg)'(x_0) = f'(x_0)g(x_0) + f(x_0)g'(x_0)$.
 ! Spojitost $g$ plyne z existence $g'(x_0)$.
+?! expr #0knab | x^2 e^x
+Zderivujte a upravte $e^x\left(x^2-2x+2\right)$.
+= $x^2e^x$
+! Podle pravidla pro součin: $$e^x(x^2-2x+2)+e^x(2x-2) = e^x(x^2-2x+2+2x-2) = x^2e^x.$$
+? expr #cxslj | 3x^2 ln(x) + x^2
+Zderivujte $x^3\ln x$.
+= $3x^2\ln x+x^2$
+! Podle pravidla pro součin: $$(x^3)'\ln x+x^3(\ln x)' = 3x^2\ln x+x^3\cdot\frac1x = 3x^2\ln x+x^2.$$
+? expr #auclj | sin(x) + sin(x)/cos(x)^2 | dom=0.2..1.3
+Zderivujte $\sin x\cdot\operatorname{tg}x$.
+= $\sin x+\dfrac{\sin x}{\cos^2x}$
+! $\cos x\operatorname{tg}x+\sin x\cdot\frac1{\cos^2x} = \sin x+\frac{\sin x}{\cos^2x}$.
+? expr #9vlpw | -2/x^3 - 12/x^4
+Zderivujte $\dfrac1{x^2}+\dfrac4{x^3}$.
+= $-\dfrac2{x^3}-\dfrac{12}{x^4}$
+! $(x^{-2}+4x^{-3})' = -2x^{-3}-12x^{-4} = -\frac2{x^3}-\frac{12}{x^4}$.
+? expr #r6376 | 1/(5 x^(4/5))
+Zderivujte $\sqrt[5]x$.
+= $\dfrac1{5\sqrt[5]{x^4}}$
+! $\left(x^{1/5}\right)' = \frac15x^{-4/5} = \frac1{5\sqrt[5]{x^4}}$.
+? input #mi948 | 12
+Spočtěte třetí derivaci polynomu $2x^3-3x^2+5x-7$.
+! $f' = 6x^2-6x+5$, $f'' = 12x-6$, $f''' = 12$. Každá další derivace je už nulová.
+? tf #f217d | false
+Pro podíl platí $\left(\dfrac fg\right)' = \dfrac{f'}{g'}$.
+! Pro $f = g = x$ je $\left(\frac xx\right)' = 1' = 0$, ale $\frac{f'}{g'} = \frac11 = 1$. Správně je $\left(\frac fg\right)' = \frac{f'g-fg'}{g^2}$.
++ $f = g = x$
+- $f = 0$, $g = x$
 
 ### Derivace složené funkce | P10 | #o8dy7
 ~ noaxes; text=∘; size=1.3
 > Řetízkové pravidlo
 Má-li $u = g(x)$ vlastní derivaci v $x_0$ a $f$ v $u_0 = g(x_0)$, pak
 $$\big(f(g(x))\big)' = f'(g(x))\cdot g'(x),\qquad \frac{dy}{dx} = \frac{dy}{du}\cdot\frac{du}{dx}.$$
-? mc #keshl
+?! mc #keshl
 Derivace $\sin(x^2)$ je
 + $2x\cos(x^2)$
 - $\cos(x^2)$
 - $\cos(2x)$
 - $2x\sin(x^2)$
 ! Vnější funkce $\sin$, vnitřní $x^2$.
-? mc #su5q0
+?! mc #su5q0
 Derivace $e^{3x+1}$ je
 + $3e^{3x+1}$
 - $e^{3x+1}$
@@ -3218,6 +3293,32 @@ Pro $f(x) = (2x+1)^5$ spočtěte $f'(0)$.
 ! $f'(x) = 5(2x+1)^4\cdot2$, tedy $f'(0) = 10$.
 
 ? gen #xhkhd | deriv_expr
+?! expr #n5zof | 12x (x^2+1)^5
+Zderivujte $\left(x^2+1\right)^6$.
+= $12x\left(x^2+1\right)^5$
+! Vnější funkce $u^6$ má derivaci $6u^5$, vnitřní $x^2+1$ má derivaci $2x$: $6(x^2+1)^5\cdot2x = 12x(x^2+1)^5$.
+? expr #y89lh | sin(2x)/cos(2x)^(3/2) | dom=0.1..0.7
+Zderivujte $\dfrac1{\sqrt{\cos 2x}}$.
+= $\dfrac{\sin2x}{(\cos2x)^{3/2}}$
+! Funkce je $(\cos2x)^{-1/2}$, takže $$\left((\cos2x)^{-1/2}\right)' = -\frac12(\cos2x)^{-3/2}\cdot(-2\sin2x) = \frac{\sin2x}{(\cos2x)^{3/2}}.$$
+? expr #uwuro | cos(x) e^(sin(x))
+Zderivujte $e^{\sin x}$.
+= $\cos x\,e^{\sin x}$
+! $\left(e^{\sin x}\right)' = e^{\sin x}\cdot(\sin x)' = \cos x\,e^{\sin x}$.
+? expr #uosjt | e^x/sqrt(1+e^(2x))
+Zderivujte a upravte $\ln\left(e^x+\sqrt{1+e^{2x}}\right)$.
+= $\dfrac{e^x}{\sqrt{1+e^{2x}}}$
+! Derivace vnitřní funkce je $e^x+\frac{e^{2x}}{\sqrt{1+e^{2x}}} = \frac{e^x\left(\sqrt{1+e^{2x}}+e^x\right)}{\sqrt{1+e^{2x}}}$. Po vydělení $e^x+\sqrt{1+e^{2x}}$ zbude $\frac{e^x}{\sqrt{1+e^{2x}}}$.
+? expr #l861m | -sin(x) cos(cos(x))
+Zderivujte $\sin(\cos x)$.
+= $-\sin x\cos(\cos x)$
+! $\cos(\cos x)\cdot(\cos x)' = -\sin x\cos(\cos x)$.
+? input #mu5i2 | -1
+Spočtěte $f'(0)$ pro $f(x) = \ln\dfrac1{x+\sqrt{x^2+1}}$.
+! $f(x) = -\ln\left(x+\sqrt{x^2+1}\right)$ a $\left(\ln\left(x+\sqrt{x^2+1}\right)\right)' = \frac1{\sqrt{x^2+1}}$. Tedy $f'(x) = -\frac1{\sqrt{x^2+1}}$ a $f'(0) = -1$.
+? tf #re2t9 | true
+Derivace diferencovatelné periodické funkce je periodická se stejnou periodou.
+! Z $f(x+T) = f(x)$ derivováním podle pravidla o složené funkci dostaneme $f'(x+T) = f'(x)$. Derivace má tedy periodu $T$.
 
 ### Derivace inverzní funkce | P11 | #obsu1
 ~ dash=-1,-1,1,1; f=x^3*0.9; f=cbrt(x/0.9); tan=0.6
@@ -3227,11 +3328,11 @@ $$(f^{-1})'(x_0) = \frac{1}{f'(y_0)}.$$
 Je-li $f'(y_0) = 0$, má inverzní funkce v $x_0$ nevlastní derivaci $\pm\infty$.
 > Příklad: arkustangens
 Z $\operatorname{tg} y = x$ derivací dostaneme $\frac{y'}{\cos^2y} = 1$, tedy $(\operatorname{arctg}x)' = \cos^2(\operatorname{arctg} x) = \frac{1}{1+x^2}$.
-? input #rcq53 | 1/5; 0.2
+?! input #rcq53 | 1/5; 0.2
 Spočtěte $(f^{-1})'(3)$ pro $f(x) = x^3+2x$.
 ! $f(1) = 3$ a $f'(1) = 5$, tedy $(f^{-1})'(3) = \frac15$.
 @ x=-1..4; y=-1..4; aspect=equal; f=x^3+2*x; tan=x^3+2*x,1; pt=1,3; f=x
-? mc #u1xsf
+?! mc #u1xsf
 $(\arcsin x)' = $
 + $\dfrac{1}{\sqrt{1-x^2}}$
 - $\dfrac{-1}{\sqrt{1-x^2}}$
@@ -3281,6 +3382,21 @@ Je-li $f$ prostá a má všude vlastní derivaci, má $f^{-1}$ všude vlastní d
 ? input #9be6r | 1/4; 0.25
 Spočtěte $(f^{-1})'(2)$ pro $f(x) = x^3+x$.
 ! $f(1) = 2$ a $f'(x) = 3x^2+1$, tedy $f'(1) = 4$ a $(f^{-1})'(2) = \frac14$.
+?! expr #qdpkf | 2 sqrt(1-x^2) | dom=-0.9..0.9
+Zderivujte a upravte $x\sqrt{1-x^2}+\arcsin x$.
+= $2\sqrt{1-x^2}$
+! Derivace je $$\sqrt{1-x^2}+\frac{-x^2}{\sqrt{1-x^2}}+\frac1{\sqrt{1-x^2}} = \frac{2(1-x^2)}{\sqrt{1-x^2}} = 2\sqrt{1-x^2}.$$
+? input #8098t | 1/2; 0.5
+Spočtěte $(f^{-1})'(1)$ pro $f(x) = x+e^x$.
+! $f(0) = 1$, takže $f^{-1}(1) = 0$. $f'(x) = 1+e^x$ a $f'(0) = 2$, tedy $(f^{-1})'(1) = \frac1{f'(0)} = \frac12$.
+? expr #tkqs8 | 2/sqrt(1-4x^2) | dom=-0.4..0.4
+Zderivujte $\arcsin 2x$.
+= $\dfrac2{\sqrt{1-4x^2}}$
+! $\frac1{\sqrt{1-(2x)^2}}\cdot2 = \frac2{\sqrt{1-4x^2}}$.
+? expr #sdz9j | 1/sqrt(x^2+1)
+Zderivujte $\ln\left(x+\sqrt{x^2+1}\right)$, inverzní funkci k $\sinh$.
+= $\dfrac1{\sqrt{x^2+1}}$
+! $\frac{1+\frac{x}{\sqrt{x^2+1}}}{x+\sqrt{x^2+1}} = \frac{\frac{\sqrt{x^2+1}+x}{\sqrt{x^2+1}}}{x+\sqrt{x^2+1}} = \frac1{\sqrt{x^2+1}}$.
 
 ### Derivace elementárních funkcí | P11 | #nvfta
 ~ f=exp(1.8*x)/3-0.6; tan=0
@@ -3289,7 +3405,7 @@ $$(x^a)' = ax^{a-1},\qquad (e^x)' = e^x,\qquad (a^x)' = a^x\ln a,$$
 $$(\ln x)' = \frac1x,\qquad (\sin x)' = \cos x,\qquad (\cos x)' = -\sin x,$$
 $$(\operatorname{tg}x)' = \frac{1}{\cos^2x},\qquad (\arcsin x)' = \frac{1}{\sqrt{1-x^2}},\qquad (\operatorname{arctg}x)' = \frac{1}{1+x^2}.$$
 Hyperbolické funkce: $(\sinh x)' = \cosh x$, $(\cosh x)' = \sinh x$.
-? input #7o4hh | ln 2; 0.6931
+?! input #7o4hh | ln 2; 0.6931
 Spočtěte derivaci $2^x$ v bodě $0$.
 ! $(a^x)' = a^x\ln a$, v nule tedy $\ln 2\approx0{,}693$.
 @ x=-3..2.5; y=-0.5..5; f=2^x; tan=2^x,0; pt=0,1
@@ -3300,7 +3416,7 @@ $(\cosh x)' = $
 - $\cosh x$
 - $\frac{1}{\cosh^2x}$
 ! $\left(\frac{e^x+e^{-x}}2\right)' = \frac{e^x-e^{-x}}2$.
-? mc #xi0v6
+?! mc #xi0v6
 Derivace $x^x$ pro $x>0$ je
 + $x^x(\ln x + 1)$
 - $x\cdot x^{x-1}$
@@ -3339,7 +3455,7 @@ Zderivujte $\operatorname{tg}x$.
 ? input #yq8ca | 1
 Spočtěte derivaci $x^x$ v bodě $1$.
 ! $(x^x)' = x^x(\ln x+1)$, v bodě $1$: $1\cdot(0+1) = 1$.
-? match #7ykkz
+?! match #7ykkz
 Přiřaďte funkcím jejich derivace.
 + $\sin x$ :: $\cos x$
 + $\cos x$ :: $-\sin x$
@@ -3347,19 +3463,37 @@ Přiřaďte funkcím jejich derivace.
 + $\operatorname{arctg} x$ :: $\dfrac{1}{1+x^2}$
 - $-\cos x$
 ! Pozor na znaménko: $(\cos x)' = -\sin x$, ale $(\sin x)' = \cos x$. Výraz $-\cos x$ je derivace funkce $-\sin x$, ta tu není.
+? expr #766qe | e^(sin(x) ln(x)) (cos(x) ln(x) + sin(x)/x)
+Zderivujte $x^{\sin x}$ pro $x>0$.
+= $x^{\sin x}\left(\cos x\ln x+\dfrac{\sin x}x\right)$
+! $x^{\sin x} = e^{\sin x\ln x}$, takže derivace je $$e^{\sin x\ln x}\left(\cos x\ln x+\frac{\sin x}x\right) = x^{\sin x}\left(\cos x\ln x+\frac{\sin x}x\right).$$
+? expr #41obg | 1/cosh(x)^2
+Zderivujte $\operatorname{tgh}x = \dfrac{\sinh x}{\cosh x}$.
+= $\dfrac1{\cosh^2x}$
+! $\frac{\cosh x\cosh x-\sinh x\sinh x}{\cosh^2x} = \frac{1}{\cosh^2x}$, protože $\cosh^2x-\sinh^2x = 1$.
+? input #77dwe | 1/ln 10; 0.4343
+Spočtěte derivaci $\log_{10}x$ v bodě $1$.
+! $(\log_{10}x)' = \frac1{x\ln10}$, v bodě $1$ je to $\frac1{\ln10}$.
+? expr #daihu | -e^(-x) (cos(x) + sin(x))
+Zderivujte $e^{-x}\cos x$.
+= $-e^{-x}(\cos x+\sin x)$
+! Podle pravidla pro součin: $$-e^{-x}\cos x+e^{-x}(-\sin x) = -e^{-x}(\cos x+\sin x).$$
+? tf #tywyi | true
+Derivace funkce $\operatorname{arctg}x+\operatorname{arctg}\dfrac1x$ je na $(0,\infty)$ nulová.
+! $\frac1{1+x^2}+\frac1{1+1/x^2}\cdot\left(-\frac1{x^2}\right) = \frac1{1+x^2}-\frac1{x^2+1} = 0$. Funkce je proto na $(0,\infty)$ konstantní, rovna $\frac\pi2$.
 
 ### Bonus: Související rychlosti | P11 | bonus | #yshgp
 ~ noaxes; line=-0.75,-0.85,-0.75,0.95; line=-0.95,-0.85,0.95,-0.85; bar=-0.75,0.55,0.25,-0.85; arrow=0.35,-0.6,0.85,-0.6
 > Derivujeme podle času
 Jsou-li veličiny svázané rovnicí a mění se v čase, zderivujeme celou rovnici podle $t$. Například pro žebřík délky $\ell$ opřený o zeď: $x^2+y^2 = \ell^2 \Rightarrow 2xx' + 2yy' = 0$.
-? input #1eo6i | -3/4; -0.75
+?! input #1eo6i | -3/4; -0.75
 Žebřík délky $5$ m klouže; spodní konec se vzdaluje od zdi rychlostí $1$ m/s. Jak rychle se mění výška horního konce (m/s, se znaménkem), když je spodní konec $3$ m od zdi?
 ! $y = 4$ a $3\cdot1 + 4y' = 0$, tedy $y' = -\frac34$.
 @@ x=-0.6..5.6; y=-0.4..5.4; aspect=equal; axes=off; poly=0,5.2,0,0,5.4,0; poly=0,4,3,0; label=1.9,2.4,5 m; label=1.5,0.25,x; label=0.3,2,y
 ? input #6tfbx | -3/(4π); -0.2387
 Z válcové nádrže o poloměru $2$ m čerpáme $3\ \mathrm{m^3}$ za minutu. Jak rychle se mění výška hladiny (m/min)?
 ! $V = 4\pi h$, tedy $4\pi h' = -3$.
-? input #wq5bu | 4π; 12.566
+?! input #wq5bu | 4π; 12.566
 Poloměr kruhu roste rychlostí $2$ cm/s. Jak rychle roste obvod (cm/s)?
 ! $o = 2\pi r$, tedy $o' = 2\pi\cdot2 = 4\pi$.
 ? input #wm3li | 1/π; 0.3183
@@ -3383,6 +3517,12 @@ Plocha kruhu roste rychlostí $2\ \mathrm{cm^2/s}$. Jak rychle roste poloměr (c
 ? input #4yvd9 | -1/2; -0.5
 Bod se pohybuje po hyperbole $xy = 4$ a jeho souřadnice $x$ roste rychlostí $1$ za sekundu. Jak rychle se mění $y$ v bodě $[2, 2]$?
 ! Derivací $x'y + xy' = 0$: $2 + 2y' = 0$.
+? input #ru5zy | π; 3.1416
+Kruhový plech se v troubě rozpíná, jeho poloměr roste rychlostí $0{,}01$ cm/min. Jak rychle roste jeho obsah (cm²/min), když je poloměr $50$ cm?
+! $S = \pi r^2$, takže $\frac{dS}{dt} = 2\pi r\frac{dr}{dt} = 2\pi\cdot50\cdot0{,}01 = \pi$ cm²/min.
+? input #jlfwr | 11
+Balón stoupá svisle rychlostí $1$ m/s; v čase $t=0$ je ve výšce $65$ m. Cyklista právě projíždí pod ním a jede rychlostí $17$ m/s. Jak rychle (m/s) roste jejich vzdálenost v čase $t = 3$ s?
+! V čase $3$ s je $x = 51$, $y = 68$ a vzdálenost $s = \sqrt{x^2+y^2} = 85$. Z $s\frac{ds}{dt} = x\frac{dx}{dt}+y\frac{dy}{dt}$ plyne $\frac{ds}{dt} = \frac{51\cdot17+68\cdot1}{85} = 11$ m/s.
 
 ## Věty o střední hodnotě a průběh funkce | P12–P16 | #qr5w2
 ### Rolleova a Lagrangeova věta | P12 | #h8atf
