@@ -4902,10 +4902,10 @@ Pro $f(x) = x$ na $[0,1]$ a dělení na $2$ stejné díly spočtěte dolní sou�
 Pro $n$ stejných dílů je $s(D_n) = \frac{n-1}{2n}$ a $S(D_n) = \frac{n+1}{2n}$. Určete $\int_0^1x\,dx$.
 ! Oba součty jdou k $\frac12$.
 @ x=-0.1..1.1; y=-0.1..1.1; aspect=equal; rect=upper,x,0,1,8; rect=lower,x,0,1,8; f=x
-? tf #c5p52 | true
+?! tf #c5p52 | true
 Pro každé dělení platí $s(D,f)\le S(D,f)$.
 ! $m_k\le M_k$ na každém dílčím intervalu.
-? tf #cwhlf | false
+?! tf #cwhlf | false
 Dirichletova funkce je riemannovsky integrovatelná na $[0,1]$.
 ! Každý dolní součet je $0$ a každý horní $1$.
 ? input #wgmhx | 1/2; 0.5
@@ -4924,7 +4924,7 @@ Spočtěte Riemannův součet funkce $f(x) = x$ na $[0,2]$ pro dělení na $4$ s
 ? tf #jp8yl | true
 Zjemněním dělení se dolní součet nezmenší.
 ! Na menších dílcích je infimum funkce aspoň stejně velké.
-? build #ah9vx
+?! build #ah9vx
 Doplňte: ohraničená $f$ je integrovatelná na $[a,b]$, jestliže
 + $\sup\limits_D s(D,f)$
 + $=$
@@ -4938,13 +4938,22 @@ Který obrázek znázorňuje horní součet funkce $x^2$ na $[0,2]$?
 - @ x=-0.2..2.2; y=-0.3..4.6; rect=lower,x^2,0,2,4; f=x^2
 - @ x=-0.2..2.2; y=-0.3..4.6; shade=x^2,0,0,2; f=x^2
 ! Obdélníky horního součtu mají výšku rovnou supremu funkce na dílku, takže graf „přečnívají“.
+? input #sh9mx | 15/32; 0.4688
+Pro $f(x) = x^2$ na $[0,1]$ a dělení na $4$ stejné díly spočtěte horní součet.
+! $f$ roste, takže na každém dílku bereme hodnotu v pravém krajním bodě: $S = \frac14\left(\frac1{16}+\frac4{16}+\frac9{16}+\frac{16}{16}\right) = \frac14\cdot\frac{30}{16} = \frac{15}{32}$.
+? input #60m5p | 7/32; 0.2188
+Pro $f(x) = x^2$ na $[0,1]$ a dělení na $4$ stejné díly spočtěte dolní součet.
+! Na každém dílku bereme hodnotu v levém krajním bodě: $s = \frac14\left(0+\frac1{16}+\frac4{16}+\frac9{16}\right) = \frac{14}{64} = \frac7{32}$.
+? tf #fvvfv | false
+Má-li dělení $D_2$ víc dělicích bodů než $D_1$, je $s(D_1,f)\le s(D_2,f)$.
+! Zaručeno je to jen pro zjemnění, kdy $D_2\supseteq D_1$. Pro $f$ rovnou $1$ všude kromě $f\left(\frac13\right) = 0$ je $s\left(\left\{0,\frac12,1\right\}\right) = \frac12$, ale $s\left(\left\{0,\frac13,\frac23,1\right\}\right) = \frac13$. Tvrzení tedy neplatí.
 
 ### Podmínky integrovatelnosti | P21 | #9wowr
 ~ ax=0,-0.8; f=x<-0.25?-0.2:(x<0.35?0.45:0.1); shade=-0.8,0.8
 > Kritéria
 <ul><li>$f\in R[a,b]$, právě když ke každému $\varepsilon>0$ existuje dělení $D$ s $S(D,f) - s(D,f)<\varepsilon$.</li><li>Monotónní funkce na $[a,b]$ je integrovatelná.</li><li>Spojitá funkce na $[a,b]$ je integrovatelná.</li><li>Ohraničená funkce, jejíž body nespojitosti mají Jordanovu míru nula, je integrovatelná.</li></ul>
 Změna hodnot v konečně mnoha bodech integrál nezmění. (Na „malé“ nekonečné množině to obecně neplatí: změnou nulové funkce na $\mathbb Q$ vznikne Dirichletova funkce.)
-? multi #s44kk
+?! multi #s44kk
 Které funkce jsou integrovatelné na $[0,1]$?
 + $x^2$
 + $\lfloor 3x\rfloor$
@@ -4962,7 +4971,7 @@ Konečná množina má Jordanovu míru nula.
 ? tf #u1iwq | true
 Změníme-li integrovatelnou funkci v konečně mnoha bodech, integrál se nezmění.
 ! Rozdíl obou funkcí je nenulový jen v konečně mnoha bodech, takže je integrovatelný s integrálem $0$.
-? mc #n5waj
+?! mc #n5waj
 Nutná a postačující podmínka integrovatelnosti ohraničené funkce je
 + $\forall\varepsilon>0\ \exists D: S(D,f)-s(D,f)<\varepsilon$
 - spojitost $f$
@@ -4979,7 +4988,7 @@ Každá ohraničená funkce na $[a,b]$ je riemannovsky integrovatelná.
 + Dirichletova funkce na $[0,1]$
 - $\operatorname{sgn}x$ na $[-1,1]$
 - $x^2$ na $[0,1]$
-? tf #55h5c | true
+?! tf #55h5c | true
 Ohraničená funkce s konečně mnoha body nespojitosti je na $[a,b]$ integrovatelná.
 ! Konečná množina má míru nula.
 ? multi #7youe
@@ -5006,15 +5015,37 @@ Proč je funkce $\lfloor x\rfloor$ integrovatelná na $[0,5]$?
 - Má primitivní funkci
 - Je lichá
 ! Monotónní ohraničená funkce na uzavřeném intervalu je integrovatelná.
+? tf #3lu4y | true
+Existují dvě ohraničené funkce, které na $[0,1]$ nejsou integrovatelné, ale jejich součet integrovatelný je.
+! Pro Dirichletovu funkci $\chi$ a $-\chi$ není integrovatelná ani jedna, ale jejich součet je nulová funkce. Taková dvojice tedy existuje.
+? tf #cmpld | true
+Existuje ohraničená funkce, která na $[0,1]$ není integrovatelná, ale její druhá mocnina integrovatelná je.
+! Funkce $1$ na racionálních a $-1$ na iracionálních číslech má každý horní součet $1$ a každý dolní $-1$. Její druhá mocnina je konstantní funkce $1$, která integrovatelná je.
+? mc #18qrk
+Racionální funkce $\dfrac{P}{Q}$ (zlomek v základním tvaru) je integrovatelná na $[a,b]$, právě když
++ jmenovatel $Q$ nemá v $[a,b]$ kořen
+- čitatel $P$ nemá v $[a,b]$ kořen
+- je $\deg P<\deg Q$
+- vždy
+! Riemannův integrál vyžaduje ohraničenou funkci. Racionální funkce v základním tvaru je na $[a,b]$ ohraničená (a pak i spojitá), právě když $Q$ nemá v $[a,b]$ kořen.
+? tf #ousfi | true
+Množina $\left\{\frac1n : n\in\mathbb N\right\}\cup\{0\}$ má nulovou Jordanovu míru.
+! K $\varepsilon>0$ pokryjeme interval $\left[0,\frac\varepsilon2\right]$ a zbylých konečně mnoho bodů $\frac1n>\frac\varepsilon2$ intervaly o celkové délce menší než $\frac\varepsilon2$. Celková délka je menší než $\varepsilon$, míra je tedy nulová.
+? tf #e35si | false
+Sjednocení spočetně mnoha množin nulové Jordanovy míry má nulovou Jordanovu míru.
+! Každý jednotlivý bod má míru nula, ale $\mathbb Q\cap[0,1]$ je spočetné sjednocení bodů a nulovou Jordanovu míru nemá: každé konečné pokrytí intervaly pokryje i uzávěr $[0,1]$.
++ $\mathbb Q\cap[0,1]$ jako sjednocení jednobodových množin
+- $\left\{\frac1n\right\}\cup\{0\}$ jako sjednocení jednobodových množin
+- $\{0,1\}$ jako sjednocení dvou bodů
 
 ### Vlastnosti určitého integrálu | P22 | #ud9a8
 ~ ax=0,-0.8; f=0.35*sin(2.5*x)+0.25; shade=-0.85,0.05; dash=0.05,-0.8,0.05,0.5; shade=0.05,0.85
 > Linearita, monotonie, aditivita
 $\int(\alpha f + \beta g) = \alpha\int f+\beta\int g$; je-li $f\le g$, pak $\int f\le\int g$; $\left|\int f\right|\le\int|f|$; $\int_a^c f = \int_a^b f + \int_b^c f$. Dodefinujeme $\int_b^a f = -\int_a^b f$ a $\int_a^a f = 0$. Součin a absolutní hodnota integrovatelných funkcí jsou integrovatelné.
-? input #dw0r0 | 7
+?! input #dw0r0 | 7
 Je-li $\int_0^2 f = 3$ a $\int_2^5 f = 4$, kolik je $\int_0^5 f$?
 ! Aditivita vzhledem k intervalu.
-? input #y0ie7 | -3
+?! input #y0ie7 | -3
 Je-li $\int_0^2 f = 3$, kolik je $\int_2^0 f$?
 ! $\int_2^0 f = -\int_0^2 f = -3$.
 ? input #ier9v | 11
@@ -5029,7 +5060,7 @@ $\int_a^b f(x)g(x)\,dx = \int_a^b f\cdot\int_a^b g$.
 + $f = g = x$ na $[0,1]$
 - $f = g = 1$ na $[0,1]$
 - $f = 0$, $g = x$ na $[0,1]$
-? mc #xlnfa
+?! mc #xlnfa
 Která nerovnost platí vždy?
 + $\left|\int_a^b f\right|\le\int_a^b|f|$
 - $\left|\int_a^b f\right|\ge\int_a^b|f|$
@@ -5062,6 +5093,25 @@ Seřaďte odhad integrálu $\int_0^1 e^{x^2}dx$.
 ? input #s7x38 | 1
 Je-li $\int_0^1 f = 1$ a $\int_0^1 g = -1$, kolik je $\int_0^1(2f+g)$?
 ! Linearita: $2\cdot1 + (-1) = 1$.
+?! input #2o9s9 | 2
+Pro jaké $c$ platí $\displaystyle\int_0^3\left(x^2+c\right)dx = 15$?
+! $\int_0^3(x^2+c)\,dx = 9+3c = 15$, tedy $c = 2$.
+? tf #6hbjg | true
+Je-li $f\ge0$ integrovatelná na $[a,b]$, spojitá v bodě $x_0\in[a,b]$ a $f(x_0)>0$, pak $\int_a^bf>0$.
+! Ze spojitosti je $f\ge\frac{f(x_0)}2$ na nějakém intervalu délky $\delta>0$ kolem $x_0$. Integrál přes něj je aspoň $\frac{f(x_0)}2\delta>0$ a zbytek je nezáporný, takže $\int_a^bf>0$.
+? input #h0kvk | 0
+Spočtěte $\displaystyle\int_{-\pi}^{\pi}x^2\sin x\,dx$.
+! Integrand je lichá funkce ($x^2$ sudá, $\sin x$ lichá) a interval je symetrický kolem nuly. Integrál je $0$.
+? mc #9l9gf
+Mezi kterými mezemi leží $\displaystyle\int_0^1\frac{dx}{1+x^4}$?
++ mezi $\frac12$ a $1$
+- mezi $0$ a $\frac12$
+- mezi $1$ a $2$
+- je roven přesně $\frac\pi4$
+! Na $[0,1]$ je $1\le1+x^4\le2$, takže $\frac12\le\frac1{1+x^4}\le1$. Integrál přes interval délky $1$ leží mezi $\frac12$ a $1$.
+? tf #9ym0x | true
+Je-li $f$ integrovatelná na $[a,b]$, je integrovatelná i $f^+ = \max\{f,0\}$.
+! $f^+ = \frac{f+|f|}2$ a s $f$ je integrovatelná i $|f|$. Součet a násobek integrovatelných funkcí jsou integrovatelné, takže $f^+$ také.
 
 ### Věta o střední hodnotě integrálního počtu | P22 | #k1m5p
 ~ ax=0,-0.8; f=0.7*x^2-0.3; shade=-0.85,0.85; dash=-0.85,-0.02,0.85,-0.02
@@ -5070,7 +5120,7 @@ Průměrná hodnota $f$ na $[a,b]$ je
 $$c = \frac{1}{b-a}\int_a^b f(x)\,dx.$$
 Je-li $f$ spojitá, existuje $\xi\in[a,b]$ s $f(\xi) = c$: obdélník se stranou $b-a$ a výškou $f(\xi)$ má stejný obsah jako plocha pod grafem.
 @@ x=-0.2..2.3; y=-0.3..4.6; f=x^2; shade=x^2,0,0,2; hline=4/3; pt=2/sqrt(3),4/3
-? input #wf7ny | 1/3
+?! input #wf7ny | 1/3
 Jaká je průměrná hodnota $x^2$ na $[0,1]$?
 ! $\int_0^1x^2\,dx = \frac13$.
 @ x=-0.1..1.1; y=-0.1..1.1; f=x^2; shade=x^2,0,0,1; hline=1/3
@@ -5082,7 +5132,7 @@ Jaká je průměrná hodnota $\sin x$ na $[0,\pi]$?
 Jaká je průměrná hodnota funkce $x$ na $[2,6]$?
 ! U lineární funkce je průměr hodnota uprostřed intervalu.
 @ x=-0.5..7; y=-0.5..7; f=x; shade=x,0,2,6; hline=4
-? tf #bsocq | true
+?! tf #bsocq | true
 Pro spojitou $f$ na $[a,b]$ existuje $\xi$ s $\int_a^b f = f(\xi)(b-a)$.
 ! Plyne z věty o střední hodnotě a Bolzanovy věty.
 ? mc #y14s1
@@ -5119,20 +5169,29 @@ Co geometricky říká věta o střední hodnotě pro $f\ge0$?
 - Graf protne osu $x$
 - Funkce má na $[a,b]$ maximum
 ! Výška obdélníku je průměrná hodnota funkce. Tečna rovnoběžná se sečnou je Lagrangeova věta.
+?! input #cooyx | 4/3
+Jaká je průměrná hodnota funkce $\sqrt x$ na $[0,4]$?
+! $\frac14\int_0^4\sqrt x\,dx = \frac14\cdot\frac23\cdot4^{3/2} = \frac14\cdot\frac{16}3 = \frac43$.
+? input #m834t | ln(e-1); 0.5413
+Pro $f(x) = e^x$ na $[0,1]$ najděte $\xi$ s $f(\xi) = \int_0^1 f$.
+! $\int_0^1e^x\,dx = e-1$, takže $e^\xi = e-1$ a $\xi = \ln(e-1)$.
+? input #jhs90 | 1/2; 0.5
+Jaká je průměrná hodnota funkce $\cos^2x$ na $[0,\pi]$?
+! $\cos^2x = \frac{1+\cos2x}2$ a $\int_0^\pi\cos2x\,dx = 0$, takže $\frac1\pi\int_0^\pi\cos^2x\,dx = \frac1\pi\cdot\frac\pi2 = \frac12$.
 
 ### Integrál jako funkce horní meze | P23 | #id1p4
 ~ ax=0,-0.8; f=0.4*x+0.15; shade=-0.85,0.3; bar=0.3,-0.8,0.3,0.27
 > Hlavní věta analýzy
 Pro $f\in R[a,b]$ je $F(x) = \int_a^x f(t)\,dt$ spojitá na $[a,b]$. Je-li $f$ spojitá v $x_0$, pak $F'(x_0) = f(x_0)$. Každá spojitá funkce na intervalu proto má primitivní funkci. Pro dolní mez platí $\frac{d}{dx}\int_x^b f(t)\,dt = -f(x)$.
 @@ x=-0.3..3.2; y=-0.2..1.4; f=exp(-x^2/2); shade=exp(-x^2/2),0,0,1.6; vline=1.6
-? mc #r1ufe
+?! mc #r1ufe
 $\dfrac{d}{dx}\displaystyle\int_0^x e^{-t^2}\,dt = $
 + $e^{-x^2}$
 - $-2xe^{-x^2}$
 - $\int_0^x -2te^{-t^2}\,dt$
 - $0$
 ! Derivace integrálu podle horní meze je integrand v horní mezi.
-? mc #mn60s
+?! mc #mn60s
 $\dfrac{d}{dx}\displaystyle\int_0^{x^2}\sin t\,dt = $
 + $2x\sin(x^2)$
 - $\sin(x^2)$
@@ -5166,7 +5225,7 @@ Zapište $\dfrac{d}{dx}\displaystyle\int_0^{x^3}e^t\,dt$.
 ? input #9hn3k | 1/2; 0.5
 Určete $\lim\limits_{x\to0}\dfrac{\int_0^x\sin t\,dt}{x^2}$.
 ! L'Hospital a hlavní věta: $\frac{\sin x}{2x}\to\frac12$.
-? tf #w34ih | true
+?! tf #w34ih | true
 Každá spojitá funkce na intervalu má primitivní funkci.
 ! Je jí $F(x) = \int_a^x f(t)\,dt$.
 ? order #x12un
@@ -5176,13 +5235,26 @@ Seřaďte důkaz hlavní věty: $F(x) = \int_a^x f$ má derivaci $f(x)$, je-li $
 + Pro $h\to0$ jde $\xi_h\to x$.
 + Ze spojitosti $f$ plyne $f(\xi_h)\to f(x)$, tedy $F'(x) = f(x)$.
 ! Klíčové jsou dvě věci: aditivita integrálu a věta o střední hodnotě.
+?! tf #7hfhu | false
+Je-li $f$ integrovatelná na $[a,b]$ a $F(x) = \int_a^xf$ má v bodě $x_0$ derivaci, pak $F'(x_0) = f(x_0)$.
+! Bez spojitosti $f$ v $x_0$ to neplatí. Pro $f$ nulovou všude kromě $f(x_0) = 1$ je $F\equiv0$, takže $F'(x_0) = 0\ne1 = f(x_0)$.
+? expr #5mqpi | 1/x | dom=1.2..3
+Zapište $\dfrac{d}{dx}\displaystyle\int_x^{x^2}\frac{dt}t$ pro $x>1$.
+= $\dfrac1x$
+! Derivace je $\frac1{x^2}\cdot2x-\frac1x = \frac2x-\frac1x = \frac1x$. (Integrál je roven $\ln x^2-\ln x = \ln x$.)
+? input #q5e11 | 1/2; 0.5
+Určete $\lim\limits_{x\to0}\dfrac{\int_0^x\operatorname{arctg}t\,dt}{x^2}$.
+! Typ $\frac00$, L'Hospital: $\frac{\operatorname{arctg}x}{2x}\to\frac12$.
+? input #aeelb | 1
+Ve kterém bodě má funkce $F(x) = \displaystyle\int_0^x(t-1)e^t\,dt$ lokální minimum?
+! $F'(x) = (x-1)e^x$ mění znaménko z $-$ na $+$ v bodě $1$. Lokální minimum je v $x = 1$.
 
 ### Newtonova–Leibnizova formule | P24 | #phkng
 ~ noaxes; text=[F]; size=0.75
 > Výpočet integrálu
 Je-li $f\in R[a,b]$ a $F$ spojitá na $[a,b]$ a primitivní k $f$ na $(a,b)$, pak
 $$\int_a^b f(x)\,dx = \big[F(x)\big]_a^b = F(b)-F(a).$$
-? input #ifusv | 1
+?! input #ifusv | 1
 Spočtěte $\displaystyle\int_0^{\pi/2}\sin x\,dx$.
 ! $[-\cos x]_0^{\pi/2} = 0 + 1 = 1$.
 @ x=-0.2..3.4; y=-0.2..1.2; f=sin(x); shade=sin(x),0,0,pi/2
@@ -5198,11 +5270,11 @@ Spočtěte $\displaystyle\int_1^2 x^2\,dx$.
 Spočtěte $\displaystyle\int_0^1\frac{dx}{1+x^2}$.
 ! $[\operatorname{arctg}x]_0^1 = \frac\pi4$.
 @ x=-2..2; y=-0.1..1.2; f=1/(1+x^2); shade=1/(1+x^2),0,0,1
-? tf #a6qbz | false
+?! tf #a6qbz | false
 $\displaystyle\int_{-1}^1\frac{dx}{x^2} = \left[-\frac1x\right]_{-1}^1 = -2$.
 ! Integrand není na $[-1,1]$ ohraničený, Newtonovu–Leibnizovu formuli nelze použít. Kladná funkce navíc nemůže mít záporný integrál.
 @ x=-1.5..1.5; y=-1..20; f=1/x^2; vline=0
-? input #9xawp | 4
+?! input #9xawp | 4
 Spočtěte $\displaystyle\int_0^{2\pi}|\sin x|\,dx$.
 ! $2\int_0^\pi\sin x\,dx = 2\cdot2 = 4$.
 @ x=-0.3..6.6; y=-0.2..1.2; f=abs(sin(x)); shade=abs(sin(x)),0,0,2*pi
@@ -5231,6 +5303,21 @@ Přiřaďte integrálům jejich hodnoty.
 + $\int_0^1 e^x\,dx$ :: $e-1$
 - $0$
 ! $\big[-\cos x\big]_0^\pi = 1-(-1) = 2$, $\big[\ln x\big]_1^e = 1$, $\big[e^x\big]_0^1 = e-1$.
+?! input #smlbw | 1
+Spočtěte $\displaystyle\int_{-1}^{2}\operatorname{sgn}x\,dx$.
+! $\operatorname{sgn}$ nemá primitivní funkci, ale $F(x) = |x|$ je spojitá a $F' = \operatorname{sgn}$ všude kromě nuly. To stačí: $\int_{-1}^2\operatorname{sgn}x\,dx = |2|-|-1| = 1$.
+? input #5k1v5 | 18/ln 3; 16.3843
+Spočtěte $\displaystyle\int_2^3 3^x\,dx$.
+! $\left[\frac{3^x}{\ln3}\right]_2^3 = \frac{27-9}{\ln3} = \frac{18}{\ln3}$.
+? input #mivj2 | π/4; 0.7854
+Spočtěte $\displaystyle\int_0^{\pi/2}\cos^2x\,dx$.
+! $\cos^2x = \frac{1+\cos2x}2$, takže $\left[\frac x2+\frac{\sin2x}4\right]_0^{\pi/2} = \frac\pi4$.
+? input #gatoh | π/2; 1.5708
+Spočtěte $\displaystyle\int_{-1}^{1}\frac{dx}{1+x^2}$.
+! $[\operatorname{arctg}x]_{-1}^1 = \frac\pi4-\left(-\frac\pi4\right) = \frac\pi2$.
+? input #ac5t6 | 4
+Spočtěte $\displaystyle\int_{-2}^{2}\left|x^2-1\right|dx$.
+! Integrand je sudý, takže integrál je $2\int_0^2|x^2-1|\,dx$. Na $[0,1]$ dostaneme $\int(1-x^2) = \frac23$, na $[1,2]$ dostaneme $\int(x^2-1) = \frac43$. Celkem $2\left(\frac23+\frac43\right) = 4$.
 
 ### Per partes a substituce v určitém integrálu | P24 | #4s1va
 ~ noaxes; text=∫ₐᵇ; size=0.9
@@ -5239,7 +5326,7 @@ $$\int_a^b u'v\,dx = \big[uv\big]_a^b - \int_a^b uv'\,dx.$$
 > Substituce
 $$\int_a^b f(\varphi(x))\varphi'(x)\,dx = \int_{\varphi(a)}^{\varphi(b)} f(t)\,dt.$$
 Přepočítáme meze, zpětné dosazení pak není potřeba.
-? input #utviv | 1
+?! input #utviv | 1
 Spočtěte $\displaystyle\int_0^1xe^x\,dx$.
 ! $[(x-1)e^x]_0^1 = 0 - (-1) = 1$.
 @ x=-0.2..1.2; y=-0.2..3; f=x*exp(x); shade=x*exp(x),0,0,1
@@ -5259,14 +5346,14 @@ Spočtěte $\displaystyle\int_0^1\frac{2x}{1+x^2}\,dx$.
 Spočtěte $\displaystyle\int_0^{\pi}x\sin x\,dx$.
 ! $[-x\cos x]_0^\pi + \int_0^\pi\cos x\,dx = \pi + 0$.
 @ x=-0.2..3.4; y=-0.2..2; f=x*sin(x); shade=x*sin(x),0,0,pi
-? mc #cjyoq
+?! mc #cjyoq
 Při substituci $t = x^2$ v integrálu $\int_0^2 x e^{x^2}dx$ se meze změní na
 + $0$ a $4$
 - $0$ a $2$
 - $0$ a $\sqrt2$
 - zůstanou stejné
 ! $\varphi(0) = 0$ a $\varphi(2) = 4$.
-? input #13wju | (e-1)/2; 0.8591
+?! input #13wju | (e-1)/2; 0.8591
 Spočtěte $\displaystyle\int_0^1xe^{x^2}\,dx$.
 ! $t = x^2$: $\frac12\int_0^1e^t\,dt = \frac{e-1}{2}$.
 ? input #tbbtt | π/2-1; 0.5708
@@ -5288,6 +5375,21 @@ Seřaďte výpočet $\displaystyle\int_0^1xe^{x^2}dx$ substitucí.
 ? input #d6y84 | 2
 Spočtěte $\displaystyle\int_0^{\pi}\sin x\,dx$.
 ! $[-\cos x]_0^\pi = 1+1 = 2$.
+?! input #l18st | π/4; 0.7854
+Spočtěte $\displaystyle\int_0^1\sqrt{1-x^2}\,dx$.
+! Substitucí $x = \sin t$, $t\in\left[0,\frac\pi2\right]$: $\int_0^{\pi/2}\cos^2t\,dt = \frac\pi4$. Je to čtvrtina obsahu jednotkového kruhu.
+? input #eworw | (e^2+1)/4; 2.0973
+Spočtěte $\displaystyle\int_0^1xe^{2x}\,dx$.
+! Per partes: $\left[\frac{xe^{2x}}2\right]_0^1-\int_0^1\frac{e^{2x}}2\,dx = \frac{e^2}2-\frac{e^2-1}4 = \frac{e^2+1}4$.
+? input #4i667 | 1/3
+Spočtěte $\displaystyle\int_0^1x\sqrt{1-x^2}\,dx$.
+! Substitucí $t = 1-x^2$, $dt = -2x\,dx$, meze $1\to0$: $\frac12\int_0^1\sqrt t\,dt = \frac12\cdot\frac23 = \frac13$.
+? input #9k6mh | π/4 - ln(2)/2; 0.4388
+Spočtěte $\displaystyle\int_0^1\operatorname{arctg}x\,dx$.
+! Per partes: $[x\operatorname{arctg}x]_0^1-\int_0^1\frac{x}{1+x^2}\,dx = \frac\pi4-\frac12\ln2$.
+? input #3fveq | ln(3/2); 0.4055
+Spočtěte $\displaystyle\int_0^{\ln2}\frac{e^x}{1+e^x}\,dx$.
+! Substitucí $t = 1+e^x$ s mezemi $2$ a $3$: $\int_2^3\frac{dt}t = \ln3-\ln2 = \ln\frac32$.
 
 ### Bonus: Spravedlivé dělení čokolády | P24 | bonus | #q2pas
 ~ noaxes; circle=0,0,0.88; line=-0.24,-0.85,-0.24,0.85; line=0.24,-0.85,0.24,0.85
