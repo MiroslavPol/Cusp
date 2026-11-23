@@ -12,7 +12,7 @@ $D(f)=A$ je definiční obor a $H(f)=\{f(x): x\in A\}$ obor hodnot. Není-li u f
 ? input #fwxfb | 6
 Kolik prvků má $A\times B$ pro $A=\{1,2,3\}$ a $B=\{a,b\}$?
 ! Každý z $3$ prvků $A$ spárujeme s každým ze $2$ prvků $B$: $3\cdot 2 = 6$.
-? mc #l94n2
+?! mc #l94n2
 Která z relací na $A=\{1,2,3\}$ je zobrazením $A\to A$?
 + $\{(1,2),(2,2),(3,1)\}$
 - $\{(1,2),(1,3),(2,1),(3,3)\}$
@@ -23,7 +23,7 @@ Která z relací na $A=\{1,2,3\}$ je zobrazením $A\to A$?
 Kružnice $\{(x,y) : x^2+y^2=1\}$ je zobrazení $[-1,1]\to\mathbb R$.
 ! Bodu $x=0$ odpovídají dvě hodnoty $y=\pm1$, takže nejde o zobrazení.
 @ x=-1.6..1.6; y=-1.3..1.3; aspect=equal; circle=0,0,1; vline=0; pt=0,1; pt=0,-1
-? mc #zq5bw
+?! mc #zq5bw
 Jaký je obor hodnot $H(f)$ funkce $f\colon\mathbb R\to\mathbb R$, $f(x)=x^2+1$?
 - $\mathbb R$
 - $(1,\infty)$
@@ -31,7 +31,7 @@ Jaký je obor hodnot $H(f)$ funkce $f\colon\mathbb R\to\mathbb R$, $f(x)=x^2+1$?
 - $[0,\infty)$
 ! $x^2\ge0$, takže $f(x)\ge1$, a každé $y\ge1$ dostaneme jako $f\left(\sqrt{y-1}\right)$.
 @ x=-2.2..2.2; y=-0.5..5; f=x^2+1; hline=1; pt=0,1
-? mc #yv27e
+?! mc #yv27e
 Jaký je definiční obor funkce $f(x)=\dfrac{x-1}{x-2}$?
 - $\mathbb R$
 + $\mathbb R\setminus\{2\}$
@@ -69,6 +69,31 @@ Který obrázek je grafem zobrazení $\mathbb R\to\mathbb R$?
 ? tf #n164u | true
 Každá funkce $f\colon\mathbb R\to\mathbb R$ je relací na $\mathbb R$.
 ! Zobrazení je podle definice relace, tedy podmnožina $\mathbb R\times\mathbb R$, se zvláštní vlastností.
+?! interval #xs2qb | [0; 4]
+Pro $f(x)=x^2$ určete obraz $f([-1,2])$.
+! Nejmenší hodnotu $0$ má funkce v bodě $0\in[-1,2]$, největší hodnotu $4$ v bodě $2$ a mezi nimi nabývá všech hodnot. Obraz je $[0,4]$, ne $[f(-1), f(2)] = [1,4]$.
+@ x=-1.8..2.6; y=-0.6..5; f=x^2; vband=-1,2; hline=4; pt=0,0; pt=2,4; pt=-1,1
+? interval #2u8ne | [1; 9]
+Pro $f(x)=x^2$ určete obraz $f([1,3])$.
+! Na $[1,3]$ je $x^2$ rostoucí, takže obraz je $[f(1), f(3)] = [1,9]$.
+? interval #grzd2 | [-2; -1] ∪ [1; 2]
+Pro $f(x)=x^2$ určete vzor $f^{-1}([1,4])$, tedy všechna $x$ s $f(x)\in[1,4]$.
+! $1\le x^2\le4 \iff 1\le|x|\le2$, tedy $f^{-1}([1,4]) = [-2,-1]\cup[1,2]$.
+@ x=-2.6..2.6; y=-0.6..5; f=x^2; hline=1; hline=4; vband=-2,-1; vband=1,2
+? tf #mjls9 | false
+Funkce $f(x)=\dfrac{x^2-1}{x-1}$ a $g(x)=x+1$ jsou si rovny.
+! Na $\mathbb R\setminus\{1\}$ mají stejné hodnoty, ale $D(f) = \mathbb R\setminus\{1\}$, kdežto $D(g) = \mathbb R$. Zobrazení se rovnají, jen když mají stejný definiční obor i stejné hodnoty, takže $f\ne g$.
+@ x=-2..3; y=-1..4; f=(x^2-1)/(x-1); hole=1,2
+? interval #w6wub | [-2; 3]
+Jaký je definiční obor funkce $f(x)=\sqrt{(x+2)(3-x)}$?
+! Pod odmocninou musí být nezáporné číslo: $(x+2)(3-x)\ge0$. Součin je nezáporný mezi kořeny $-2$ a $3$ včetně nich, takže $D(f) = [-2,3]$.
+? mc #czudp
+Relace $R=\{(1,2),(2,3),(3,3)\}$ je na množině $\{1,2,3\}$. Která relace je k ní inverzní, tj. $R^{-1}=\{(y,x):(x,y)\in R\}$?
++ $\{(2,1),(3,2),(3,3)\}$
+- $\{(1,2),(2,3),(3,3)\}$
+- $\{(2,1),(3,2)\}$
+- $\{(1,1),(2,2),(3,3)\}$
+! V každé dvojici prohodíme složky; dvojice $(3,3)$ se tím nezmění. Tedy $R^{-1} = \{(2,1),(3,2),(3,3)\}$.
 
 ### Injekce, surjekce, bijekce | P1 | #lj1xz
 ~ noaxes; pt=-0.6,0.6; pt=-0.6,0; pt=-0.6,-0.6; pt=0.6,0.6; pt=0.6,0; pt=0.6,-0.6; line=-0.6,0.6,0.6,0; line=-0.6,0,0.6,-0.6; line=-0.6,-0.6,0.6,0.6
@@ -79,7 +104,7 @@ Zobrazení $f\colon A\to B$ je
 Prostotu dokážeme tak, že z $f(x_1)=f(x_2)$ odvodíme $x_1=x_2$. Surjektivitu tak, že ke každému $y\in B$ najdeme vzor $x$. K vyvrácení stačí jediný protipříklad.
 
 Pozor: odpověď závisí i na množinách $A$ a $B$, nejen na vzorci.
-? mc #khuzk
+?! mc #khuzk
 Funkce $f\colon\mathbb R\to\mathbb R$, $f(x) = x^2$ je
 - injektivní, ale ne surjektivní
 - surjektivní, ale ne injektivní
@@ -87,7 +112,7 @@ Funkce $f\colon\mathbb R\to\mathbb R$, $f(x) = x^2$ je
 - bijekce
 ! $f(-1)=f(1)$, takže není prostá; hodnoty $-1$ nenabývá, takže není na $\mathbb R$.
 @ x=-2.5..2.5; y=-1.5..5; f=x^2; hline=1; pt=-1,1; pt=1,1; hline=-1
-? mc #5t3re
+?! mc #5t3re
 Funkce $g\colon[0,\infty)\to[0,\infty)$, $g(x)=x^2$ je
 - jen injektivní
 - jen surjektivní
@@ -155,6 +180,35 @@ Přiřaďte funkcím $f\colon\mathbb R\to\mathbb R$ jejich vlastnosti.
 + $f(x) = x^3 - x$ :: surjekce, ale ne injekce
 + $f(x) = x^2$ :: ani injekce, ani surjekce
 ! $e^x$ nenabývá záporných hodnot. $x^3-x$ má kořeny $-1$, $0$, $1$, takže není prostá, ale jako polynom lichého stupně nabývá všech reálných hodnot. $x^2$ není prostá a nenabývá záporných hodnot.
+?! interval #yoyp5 | [-1; ∞)
+Pro jakou množinu $B$ je zobrazení $f\colon\mathbb R\to B$, $f(x)=x^2+2x$ surjektivní?
+! $x^2+2x = (x+1)^2-1\ge-1$ a každé $y\ge-1$ je hodnotou v bodě $x=-1+\sqrt{y+1}$. Zobrazení $\mathbb R\to B$ je surjekce, právě když $B = H(f) = [-1,\infty)$.
+@ x=-3.5..1.5; y=-1.6..4; f=x^2+2*x; hline=-1; pt=-1,-1
+? mc #cynov
+Zobrazení $f\colon\{1,2,3\}\to\{1,2,3\}$ je dáno předpisem $f(1)=2$, $f(2)=3$, $f(3)=2$. Je
+- injektivní, ale ne surjektivní
+- surjektivní, ale ne injektivní
++ ani injektivní, ani surjektivní
+- bijekce
+! $f(1) = f(3)$, takže není prosté, a hodnota $1$ nemá vzor, takže není na. Není tedy ani injektivní, ani surjektivní.
+? tf #ls69u | true
+Zobrazení konečné množiny do sebe, $f\colon A\to A$, je prosté, právě když je surjektivní.
+! Má-li $A$ $n$ prvků, prosté $f$ má $n$ různých hodnot, tedy všechny prvky $A$, a je surjektivní. Surjektivní $f$ nabývá $n$ hodnot na $n$ prvcích, takže žádné dva prvky nemají stejný obraz a je prosté. Obě vlastnosti jsou tedy ekvivalentní.
+? tf #x0ej2 | false
+Prosté zobrazení $\mathbb N\to\mathbb N$ je vždy surjektivní.
+! U nekonečných množin prostota surjektivitu nezaručuje: $f(n) = n+1$ je prosté, ale hodnoty $1$ nenabývá.
++ $f(n) = n+1$
+- $f(n) = n$
+- $f$ prohazující $1\leftrightarrow2$, $3\leftrightarrow4$, …
+? tf #gx0nd | true
+Pro $f\colon A\to B$ a $g\colon B\to C$ platí: je-li $g\circ f$ surjekce, je surjekcí i $g$.
+! Každé $z\in C$ je tvaru $g(f(x))$ pro nějaké $x\in A$, má tedy při zobrazení $g$ vzor $f(x)$. Proto je $g$ surjekce.
+? tf #e0le0 | false
+Pro $f\colon A\to B$ a $g\colon B\to C$ platí: je-li $g\circ f$ surjekce, je surjekcí i $f$.
+! Surjektivita složení vynucuje jen surjektivitu $g$. Pro $A=\{1\}$, $B=\{1,2\}$, $C=\{1\}$, $f(1)=1$ a $g(1)=g(2)=1$ je $g\circ f$ surjekce, ale $f$ nenabývá hodnoty $2$, takže surjekcí není.
++ $f\colon\{1\}\to\{1,2\}$, $f(1)=1$; $g\colon\{1,2\}\to\{1\}$, $g\equiv1$
+- $f=g=\mathrm{id}$ na $\{1,2\}$
+- $f(x)=2x$, $g(x)=\frac x2$ na $\mathbb R$
 
 ### Uspořádání | P1 | #1777z
 ~ noaxes; pt=0,-0.8; pt=-0.6,0; pt=0.6,0; pt=0,0.8; line=0,-0.8,-0.6,0; line=0,-0.8,0.6,0; line=-0.6,0,0,0.8; line=0.6,0,0,0.8
@@ -164,7 +218,7 @@ Relace $\le$ na množině $A$ je
 Relace se všemi třemi vlastnostmi je <b>uspořádání</b>.
 > Úplné uspořádání
 Uspořádání je <b>úplné</b> (lineární), jestliže každé dva prvky lze porovnat: $x\le y$ nebo $y\le x$. Pak platí zákon trichotomie: nastane právě jedna z možností $x<y$, $x=y$, $x>y$.
-? tf #nzuaw | true
+?! tf #nzuaw | true
 Relace dělitelnosti $a\mid b$ na $\mathbb N$ je uspořádání.
 ! Reflexivita: $a\mid a$. Antisymetrie: z $a\mid b$ a $b\mid a$ plyne v $\mathbb N$ rovnost $a=b$. Tranzitivita: $a\mid b$ a $b\mid c$ dává $a\mid c$.
 ? tf #pnb7c | false
@@ -187,7 +241,7 @@ Které vlastnosti má relace $<$ na $\mathbb R$?
 + tranzitivita
 - pro všechna $x,y$ platí $x<y$ nebo $y<x$
 ! $x<x$ neplatí nikdy. Antisymetrie platí, protože $x<y$ a $y<x$ současně nenastane. Pro $x=y$ neplatí ani $x<y$, ani $y<x$.
-? mc #vxfab
+?! mc #vxfab
 Inkluze $\subseteq$ na množině všech podmnožin množiny $\{1,2\}$, tj. na $\{\emptyset,\ \{1\},\ \{2\},\ \{1,2\}\}$, je
 - úplné uspořádání
 + uspořádání, které není úplné
@@ -238,6 +292,24 @@ Množinu $\{1,2,3,4,6,12\}$ uspořádáme dělitelností: $a\preceq b$, právě 
 - $12$
 - žádné
 ! Srovnatelné se $4$ jsou $1$ a $2$ (dělí $4$) a $12$ (je dělitelné $4$). Číslo $3$ ani $6$ nedělí $4$ a $4$ nedělí ani $3$, ani $6$, takže jsou se $4$ nesrovnatelné.
+? multi #591sc
+Které vlastnosti má relace „$|x|\le|y|$“ na $\mathbb R$?
++ reflexivita
++ tranzitivita
+- antisymetrie
++ každé dva prvky lze porovnat
+! $|x|\le|x|$ a z $|x|\le|y|\le|z|$ plyne $|x|\le|z|$; porovnat lze libovolná dvě čísla. Chybí jen antisymetrie: $|1|\le|-1|$ i $|-1|\le|1|$, ale $1\ne-1$.
+? input #uiju0 | 3
+Množinu $\{1,2,3,4,6,12\}$ uspořádáme dělitelností. Kolik dvojic různých prvků je nesrovnatelných (žádný z nich nedělí druhý)?
+! $1$ i $12$ jsou srovnatelné se vším. Mezi $2, 3, 4, 6$ platí $2\mid4$, $2\mid6$, $3\mid6$; nesrovnatelné jsou dvojice $2, 3$; $3, 4$ a $4, 6$. Je jich tedy $3$.
+?! match #5ydut
+Přiřaďte relacím, jaké vlastnosti uspořádání mají.
++ $<$ na $\mathbb R$ :: není reflexivní
++ dělitelnost na $\mathbb Z$ :: není antisymetrická
++ dělitelnost na $\mathbb N$ :: uspořádání, které není úplné
++ $\le$ na $\mathbb R$ :: úplné uspořádání
+- není tranzitivní
+! $x<x$ neplatí. Na $\mathbb Z$ je $2\mid-2$ i $-2\mid2$. Na $\mathbb N$ jsou $2$ a $3$ nesrovnatelné. Všechny čtyři relace jsou tranzitivní, takže na „není tranzitivní“ nepasuje žádná.
 
 ## Reálná čísla | P2–P3 | #q8ikg
 ### Závory a ohraničenost | P2 | #5uupn
@@ -246,7 +318,7 @@ Množinu $\{1,2,3,4,6,12\}$ uspořádáme dělitelností: $a\preceq b$, právě 
 Nechť $(A,\le)$ je uspořádaná množina a $B\subseteq A$. Prvek $U\in A$ je <b>horní závora</b> množiny $B$, jestliže $x\le U$ pro každé $x\in B$. Prvek $L$ je <b>dolní závora</b>, jestliže $L\le x$ pro každé $x\in B$.
 
 $B$ je <b>shora (zdola) ohraničená</b>, má-li aspoň jednu horní (dolní) závoru, a <b>ohraničená</b>, je-li ohraničená shora i zdola.
-? multi #5h20t
+?! multi #5h20t
 Která z čísel jsou horní závory množiny $B=(0,1)$ v $\mathbb R$?
 - $0{,}99$
 + $1$
@@ -260,7 +332,7 @@ Množina $\mathbb N$ v $\mathbb R$ je
 - ohraničená
 - neohraničená shora ani zdola
 ! $1$ je dolní závora. Shora ohraničená není, to je archimedovská vlastnost $\mathbb R$.
-? mc #uoo90
+?! mc #uoo90
 Množina $M=\left\{\dfrac{n}{n+1} : n\in\mathbb N\right\}$ je
 - jen shora ohraničená
 - jen zdola ohraničená
@@ -282,7 +354,7 @@ Množina $\{x\in\mathbb R: x^2<4\}$ je
 ? interval #z2flt | [1; ∞)
 Zapište množinu všech horních závor množiny $(0,1]$ jako interval.
 ! Horní závora je každé $U\ge1$; čísla menší než $1$ jsou překročena prvky blízkými $1$.
-? build #h9thi
+?! build #h9thi
 Sestavte definici: množina $B\subseteq\mathbb R$ je shora ohraničená, jestliže
 + $\exists U\in\mathbb R$
 + $\forall x\in B$
@@ -317,6 +389,41 @@ Jak zní negace výroku „$B$ je shora ohraničená“?
 ? interval #r576g | (-∞; -1]
 Zapište množinu všech dolních závor množiny $[-1, 5)$ jako interval.
 ! Dolní závorou je každé $L\le-1$.
+? mc #mfilk
+Množina $\{n^2-2n+1 : n\in\mathbb Z\}$ je
++ zdola ohraničená, ale ne shora
+- shora ohraničená, ale ne zdola
+- ohraničená
+- neohraničená shora ani zdola
+! $n^2-2n+1 = (n-1)^2\ge0$, takže $0$ je dolní závora. Shora ohraničená není, protože $(n-1)^2$ přeroste každou mez. Množina je tedy zdola ohraničená, ale ne shora.
+? multi #tx8lh
+Které množiny jsou shora ohraničené?
++ $\{x\in\mathbb R : x^2<5\}$
++ $\{-n^2 : n\in\mathbb N\}$
++ $\left\{\frac{n^2}{n^2+1} : n\in\mathbb N\right\}$
+- $\{\sqrt n : n\in\mathbb N\}$
+- $\{x\in\mathbb R : x^3>1\}$
+! $x^2<5$ dává $x<\sqrt5$; $-n^2\le-1$; $\frac{n^2}{n^2+1}<1$. Naopak $\sqrt n$ roste nade všechny meze a $x^3>1$ platí pro všechna $x>1$. Shora ohraničené jsou tedy první tři množiny.
+? interval #13vrl | [2; ∞)
+Zapište množinu všech horních závor množiny $\{x\in\mathbb R : x^2\le2x\}$ jako interval.
+! $x^2\le2x \iff x(x-2)\le0 \iff x\in[0,2]$. Horní závorou je každé $U\ge2$, tedy $[2,\infty)$.
+? tf #xp21y | false
+Průnik dvou neohraničených množin je neohraničený.
+! Obě množiny mohou utíkat do nekonečna na opačné strany: $(-\infty,0]\cap[0,\infty) = \{0\}$ je ohraničená množina.
++ $(-\infty,0]$ a $[0,\infty)$
+- $\mathbb R$ a $\mathbb N$
+- $[1,\infty)$ a $[2,\infty)$
+? tf #lu4km | true
+Množina $B\subseteq\mathbb R$ je ohraničená, právě když existuje $K>0$ takové, že $|x|\le K$ pro všechna $x\in B$.
+! Je-li $L\le x\le U$ pro všechna $x\in B$, stačí vzít $K=\max(|L|,|U|,1)$. Obráceně jsou $-K$ a $K$ dolní a horní závora. Obě podmínky jsou tedy ekvivalentní.
+? multi #pdz7q
+Která z čísel jsou dolní závory množiny $\left\{\frac1n : n\in\mathbb N\right\}$?
++ $0$
++ $-5$
+- $\frac1{100}$
+- $1$
+! Všechny prvky jsou kladné, takže každé $L\le0$ je dolní závora. Kladné $L$ dolní závorou není: pro $n>\frac1L$ je $\frac1n<L$. Z nabídky jsou dolní závory $0$ a $-5$.
+@ x=0..14; y=-0.15..1.15; seq=1/n; hline=0; hline=0.01
 
 ### Supremum a infimum | P2 | #8fppg
 ~ seq=0.7-1.3/n^1.3; N=8; dash=-1.1,0.7,1.1,0.7
@@ -331,7 +438,7 @@ Cokoli menšího než $a$ už tedy horní závorou není.
 ? input #xgje6 | 1
 Určete $\sup\,(0,1)$.
 ! $1$ je horní závora a pro každé $\varepsilon>0$ existuje prvek intervalu větší než $1-\varepsilon$.
-? mc #l03c7
+?! mc #l03c7
 Má interval $(0,1)$ maximum?
 - Ano, $1$
 - Ano, $0{,}999\ldots$
@@ -350,7 +457,7 @@ Určete $\sup\left\{\dfrac{n}{n+1}: n\in\mathbb N\right\}$.
 Určete $\sup\left\{1+\dfrac{(-1)^n}{n}: n\in\mathbb N\right\}$.
 ! Pro sudá $n$ je prvek $1+\tfrac1n\le 1+\tfrac12$, pro lichá je menší než $1$. Největší prvek je pro $n=2$: $\tfrac32$.
 @ x=0..14; y=-0.2..1.8; seq=1+(-1)^n/n; hline=1.5; hline=1
-? input #9ykg8 | 0
+?! input #9ykg8 | 0
 Určete $\inf\left\{\dfrac1n : n\in\mathbb N\right\}$.
 ! $0$ je dolní závora a pro každé $\varepsilon>0$ existuje $n$ s $\tfrac1n<\varepsilon$. Do množiny $0$ nepatří, takže minimum neexistuje.
 @ x=0..14; y=-0.15..1.15; seq=1/n; hline=0
@@ -377,7 +484,7 @@ Seřaďte důkaz, že $\sup\,(0,1) = 1$.
 + Číslo $x = 1-\frac\varepsilon2$ leží v $(0,1)$.
 + Platí $x>1-\varepsilon$, takže $1$ je nejmenší horní závora.
 ! Použili jsme charakterizaci suprema: horní závora, kterou nelze zmenšit o žádné $\varepsilon$.
-? build #vlory
+?! build #vlory
 Doplňte charakterizaci: $a = \sup B$, právě když $a$ je horní závora $B$ a
 + $\forall\varepsilon>0$
 + $\exists x\in B$
@@ -397,6 +504,55 @@ Přiřaďte pojmům jejich definice ($B\subseteq\mathbb R$ je neprázdná).
 + $\max B$ :: horní závora množiny $B$, která do $B$ patří
 - horní závora množiny $B$, která do $B$ nepatří
 ! Supremum do $B$ patřit nemusí, např. $\sup\,(0,1) = 1\notin(0,1)$; když patří, je to maximum.
+?! mc #a9wur
+Co platí pro interval $M=[0,1)$?
++ $\min M=\inf M=0$, $\sup M=1$ a maximum neexistuje
+- $\min M=\inf M=0$ a $\max M=\sup M=1$
+- $\inf M=0$, ale minimum neexistuje
+- $M$ nemá supremum, protože nemá maximum
+! $0\in M$ je nejmenší prvek, takže je to minimum i infimum. Supremum $1$ do $M$ nepatří, proto maximum neexistuje.
+? input #61r9s | 0
+Určete $\inf\{n^2-2n+1 : n\in\mathbb Z\}$.
+! $n^2-2n+1 = (n-1)^2\ge0$ a pro $n=1$ je prvek roven $0$. Infimum je $0$ a je to dokonce minimum.
+? input #3mtl3 | 1
+Určete $\inf\{x\in\mathbb R : x^2-3x+2<0\}$.
+! $x^2-3x+2 = (x-1)(x-2)$ je záporné právě pro $x\in(1,2)$. Infimum intervalu $(1,2)$ je $1$.
+? input #ldjw6 | -1
+Určete $\inf\left\{\dfrac{(-1)^n\,n}{n+1} : n\in\mathbb N\right\}$.
+! Pro lichá $n$ jsou prvky $-\frac12, -\frac34, -\frac56,\dots$: všechny větší než $-1$ a k $-1$ se libovolně blíží. Pro sudá $n$ jsou prvky kladné. Infimum je $-1$, minimum neexistuje.
+@ x=0..14; y=-1.25..1.25; seq=(-1)^n*n/(n+1); hline=-1; hline=1
+? multi #i6f6e
+Které množiny mají maximum?
++ $\left\{\frac1n : n\in\mathbb N\right\}$
++ $(0,1]$
+- $\left\{1-\frac1n : n\in\mathbb N\right\}$
+- $\{x\in\mathbb R : x^2<2\}$
+! $\frac11 = 1$ je největší prvek první množiny a $1\in(0,1]$. Množina $\left\{1-\frac1n\right\}$ má supremum $1$, které do ní nepatří, a $\{x: x^2<2\} = (-\sqrt2,\sqrt2)$ nemá největší prvek. Maximum mají tedy $\left\{\frac1n\right\}$ a $(0,1]$.
+? mc #lv1ar
+Jsou-li $A\subseteq B$ neprázdné shora ohraničené množiny, pak
++ $\sup A\le\sup B$
+- $\sup A\ge\sup B$
+- $\sup A=\sup B$
+- $\sup A<\sup B$
+! $\sup B$ je horní závora $B$, tedy i jeho části $A$, a $\sup A$ je nejmenší horní závora $A$. Proto $\sup A\le\sup B$; rovnost nastat může, ale nemusí.
+? tf #4rrlm | false
+Pro funkce $f$, $g$ ohraničené na množině $A$ vždy platí
+$$\sup_A\,(f+g) = \sup_A f+\sup_A g.$$
+! Funkce mohou nabývat supremum v různých bodech. Pro $\sin x$ a $\cos x$ na $\left[0,\frac\pi2\right]$ je $\sup\,(\sin x+\cos x) = \sqrt2$, kdežto součet suprem je $1+1 = 2$. Platí jen nerovnost $\le$, rovnost obecně ne.
++ $f(x)=\sin x$, $g(x)=\cos x$ na $\left[0,\frac\pi2\right]$
+- $f(x)=g(x)=x$ na $[0,1]$
+- $f(x)=x$, $g(x)=1$ na $[0,1]$
+? tf #r5gny | true
+Pro funkce $f$, $g$ ohraničené na množině $A$ platí
+$$\sup_A\,(f+g) \le \sup_A f+\sup_A g.$$
+! Pro každé $x\in A$ je $f(x)+g(x)\le\sup f+\sup g$. Pravá strana je tedy horní závora hodnot $f+g$ a supremum, nejmenší horní závora, je nejvýše rovno jí. Nerovnost proto platí.
+? order #ca1t3
+Seřaďte důkaz: je-li $a=\sup M$, pak ke každému $\varepsilon>0$ existuje $x\in M$ s $x>a-\varepsilon$.
++ Kdyby to neplatilo, existovalo by $\varepsilon_0>0$ s $x\le a-\varepsilon_0$ pro všechna $x\in M$.
++ Pak by $a-\varepsilon_0$ byla horní závora množiny $M$.
++ Supremum je nejmenší horní závora, takže $a\le a-\varepsilon_0$.
++ To je spor s $\varepsilon_0>0$, takže tvrzení platí.
+! Důkaz sporem: číslo menší než supremum nemůže být horní závorou. Ke každému $\varepsilon>0$ tedy existuje $x\in M$ s $x>a-\varepsilon$.
 
 ### Axiomy reálných čísel | P2 | #wo5z2
 ~ noaxes; text=ℝ; size=1.15
@@ -408,14 +564,14 @@ Reálná čísla jsou struktura $(\mathbb R,+,\cdot,\le)$ splňující axiomy (R
 $\mathbb N\subset\mathbb Z\subset\mathbb Q\subset\mathbb R\subset\mathbb C$, kde $\mathbb N=\{1,2,3,\dots\}$ je nejmenší induktivní podmnožina $\mathbb R$ a $\mathbb Q=\{p/q: p\in\mathbb Z,\ q\in\mathbb Z\setminus\{0\}\}$. Množina iracionálních čísel je $\mathbb I=\mathbb R\setminus\mathbb Q$.
 
 Racionální čísla tvoří uspořádané pole, ale axiom (R13) v nich neplatí.
-? mc #6q1m9
+?! mc #6q1m9
 Který axiom odlišuje $\mathbb R$ od $\mathbb Q$?
 - komutativita sčítání
 - existence inverzního prvku k nenulovému číslu
 + axiom suprema (R13)
 - slučitelnost uspořádání se sčítáním
 ! $\mathbb Q$ splňuje (R1)–(R12), je to tedy uspořádané pole, ale (R13) v něm neplatí.
-? mc #7g2dz
+?! mc #7g2dz
 Proč množina $M=\{q\in\mathbb Q: q^2<2\}$ ukazuje, že v $\mathbb Q$ neplatí (R13)?
 + Je neprázdná a shora ohraničená, ale její supremum $\sqrt2$ není racionální
 - Je prázdná, protože $q^2=2$ nemá řešení v $\mathbb Q$
@@ -432,7 +588,7 @@ Která tvrzení platí?
 - součin dvou iracionálních čísel je vždy iracionální
 - $0\in\mathbb N$
 ! Induktivní množina obsahuje $1$ a s každým $x$ i $x+1$. Protipříklad k součinu: $\sqrt2\cdot\sqrt2 = 2$. Podle úmluvy ve skriptech je $\mathbb N=\{1,2,3,\dots\}$.
-? tf #1mzbp | false
+?! tf #1mzbp | false
 Součet dvou iracionálních čísel je vždy iracionální.
 ! $\sqrt2 + (-\sqrt2) = 0\in\mathbb Q$.
 + $\sqrt2 + (-\sqrt2) = 0$
@@ -472,6 +628,36 @@ Co zaručuje axiom suprema pro množinu $\{x\in\mathbb R: x^2<2\}$?
 - Že je množina konečná
 - Že supremum je racionální
 ! Právě takto se z axiomu suprema dokazuje existence odmocnin.
+? order #5u5a7
+Seřaďte důkaz, že v každém poli platí $0\cdot a = 0$.
++ $0 = 0+0$, protože $0$ je neutrální prvek sčítání.
++ Proto $0\cdot a = (0+0)\cdot a = 0\cdot a+0\cdot a$ (distributivita).
++ K oběma stranám přičteme opačný prvek $-(0\cdot a)$.
++ Dostaneme $0 = 0\cdot a$.
+! Nulový součin tedy plyne jen z axiomů pole: $0\cdot a = 0$ pro každé $a$.
+? tf #m5cex | true
+Z axiomů uspořádaného pole plyne $1>0$.
+! Pro každé $a$ je $a^2\ge0$: pro $a\ge0$ ze slučitelnosti uspořádání s násobením, pro $a<0$ je $-a>0$ a $a^2=(-a)^2\ge0$. Protože $1\ne0$, je $1 = 1^2>0$.
+? multi #11ogc
+Které číselné obory s obvyklým sčítáním a násobením jsou pole?
++ $\mathbb Q$
++ $\mathbb R$
+- $\mathbb Z$
+- $\mathbb N$
+! V $\mathbb Z$ nemá $2$ převrácený prvek ($\frac12\notin\mathbb Z$) a v $\mathbb N$ chybí i opačné prvky a nula. Pole jsou tedy $\mathbb Q$ a $\mathbb R$.
+? mc #hneow
+Která množina je shora ohraničená, ale v $\mathbb Q$ nemá supremum?
++ $\{q\in\mathbb Q : q^2<3\}$
+- $\{q\in\mathbb Q : q<3\}$
+- $\{q\in\mathbb Q : q^2<4\}$
+- $\mathbb N$
+! V $\mathbb R$ je supremem $\sqrt3$, které není racionální, takže v $\mathbb Q$ nejmenší horní závora neexistuje. Množiny $\{q<3\}$ a $\{q^2<4\}$ mají racionální suprema $3$ a $2$ a $\mathbb N$ není shora ohraničená. Hledaná množina je $\{q\in\mathbb Q : q^2<3\}$.
+? tf #4e3r0 | false
+Každá neprázdná podmnožina $\mathbb R$ má v $\mathbb R$ supremum.
+! Axiom suprema to zaručuje jen pro množiny shora ohraničené. $\mathbb N$ shora ohraničená není, takže supremum v $\mathbb R$ nemá.
++ $\mathbb N$
+- $[0,1]$
+- $\{1,2\}$
 
 ### Hustota, rozšířená reálná čísla, okolí | P3 | #awvan
 ~ noaxes; line=-1.05,0,1.05,0; bar=-0.45,0,0.45,0; hole=-0.45,0; hole=0.45,0; pt=0,0.35; line=0,-0.15,0,0.15
@@ -494,7 +680,7 @@ Najděte nejmenší $n\in\mathbb N$, pro které $n\cdot 0{,}3 > 1$.
 ? tf #5e9xo | true
 Mezi čísly $0$ a $10^{-100}$ leží nekonečně mnoho iracionálních čísel.
 ! Například $\tfrac{\sqrt2}{n}\cdot 10^{-100}$ pro $n = 2, 3, 4,\dots$
-? mc #gr2ak
+?! mc #gr2ak
 Která z množin je okolím bodu $+\infty$?
 - $(-\infty, 5)$
 - $(0, 100)$
@@ -507,7 +693,7 @@ Pro jaké největší $\delta$ platí $\mathcal O_\delta(2) \subseteq (1;\ 2{,}5
 ? tf #la666 | false
 Ryzí okolí bodu $x_0$ obsahuje bod $x_0$.
 ! Ryzí okolí je $\mathcal O(x_0)\setminus\{x_0\}$. Hodí se u limit, kde nás hodnota v samotném bodě $x_0$ nezajímá.
-? interval #2s7gc | (5/2; 7/2)
+?! interval #2s7gc | (5/2; 7/2)
 Zapište okolí $\mathcal O_{1/2}(3)$ jako interval.
 ! $\mathcal O_\delta(x_0) = (x_0-\delta,\ x_0+\delta) = (2{,}5;\ 3{,}5)$.
 ? interval #bixkh | (-1; 0) ∪ (0; 1)
@@ -536,12 +722,31 @@ Které okolí bodu $-\infty$ je zapsáno správně?
 ? input #5cwsg | 101
 Najděte nejmenší $n\in\mathbb N$ s $n\cdot\frac{1}{100}>1$.
 ! Potřebujeme $n>100$.
+?! mc #xgzh7
+Kolik racionálních čísel leží mezi $\sqrt2$ a $\sqrt2+10^{-9}$?
++ nekonečně mnoho
+- žádné
+- právě jedno
+- konečně mnoho, ale aspoň jedno
+! Mezi dvěma různými reálnými čísly leží racionální číslo $q_1$, mezi $\sqrt2$ a $q_1$ další $q_2$ a tak dále. Racionálních čísel je tam tedy nekonečně mnoho.
+? tf #gpswk | true
+Průnik dvou okolí bodu $x_0\in\mathbb R$ je opět okolí bodu $x_0$.
+! $\mathcal O_{\delta_1}(x_0)\cap\mathcal O_{\delta_2}(x_0) = \mathcal O_{\delta}(x_0)$ pro $\delta = \min(\delta_1,\delta_2)>0$. Průnik je tedy okolí bodu $x_0$.
+? tf #r5lc7 | true
+Dva různé body $a\ne b$ v $\mathbb R$ mají disjunktní okolí.
+! Pro $\delta = \frac{|a-b|}2$ se okolí $\mathcal O_\delta(a)$ a $\mathcal O_\delta(b)$ neprotínají. Na tom stojí jednoznačnost limity.
+? tf #l340u | false
+Mezi každými dvěma různými reálnými čísly leží celé číslo.
+! $\mathbb Z$ na rozdíl od $\mathbb Q$ hustá v $\mathbb R$ není: mezi $0{,}1$ a $0{,}2$ žádné celé číslo neleží.
++ $0{,}1$ a $0{,}2$
+- $0{,}5$ a $1{,}5$
+- $-1$ a $1$
 
 ### Bonus: Důkazy sporem | P2 | bonus | #e0bhu
 ~ noaxes; text=↯; size=1.1
 > √2 není racionální
 Předpokládejme, že $\sqrt2 = \tfrac pq$ v základním tvaru. Pak $p^2 = 2q^2$, takže $p^2$ je sudé, a proto je sudé i $p$: $p=2m$. Odtud $q^2 = 2m^2$, tedy je sudé i $q$. To je spor s tím, že zlomek byl v základním tvaru.
-? mc #u3bcw
+?! mc #u3bcw
 Na čem stojí krok „$p^2$ je sudé, tedy $p$ je sudé“?
 + Druhá mocnina lichého čísla je lichá
 - Každé sudé číslo je druhou mocninou
@@ -562,7 +767,7 @@ $$\begin{aligned} a &= b\\ a^2 &= ab\\ a^2-b^2 &= ab-b^2\\ (a+b)(a-b) &= b(a-b)\
 - V odečtení $b^2$
 - V rozkladu $a^2-b^2$
 ! Protože $a=b$, je $a-b=0$, a nulou dělit nelze.
-? order #fbbdd
+?! order #fbbdd
 Seřaďte důkaz, že $\sqrt2$ není racionální.
 + Předpokládejme, že $\sqrt2 = \frac pq$, kde zlomek je v základním tvaru.
 + Pak $p^2 = 2q^2$, takže $p$ je sudé: $p = 2m$.
@@ -600,6 +805,29 @@ Seřaďte důkaz, že $\log_23$ je iracionální.
 + Vlevo je sudé číslo, vpravo liché.
 + To je spor, takže $\log_23\notin\mathbb Q$.
 ! Logaritmus je kladný, proto stačí přirozená $p, q$.
+? order #01wsj
+Seřaďte důkaz, že neexistuje nejmenší kladné racionální číslo.
++ Předpokládejme, že $q$ je nejmenší kladné racionální číslo.
++ Číslo $\frac q2$ je také racionální a kladné.
++ Přitom $\frac q2<q$.
++ To je spor s volbou $q$, takže nejmenší kladné racionální číslo neexistuje.
+! Stačilo najít menší kladné racionální číslo než to „nejmenší“: $\frac q2<q$.
+? mc #cel9e
+Čím začíná důkaz sporem tvrzení „je-li $n^2$ sudé, je $n$ sudé“?
++ Předpokladem, že $n^2$ je sudé a $n$ je liché
+- Předpokladem, že $n^2$ je liché a $n$ je sudé
+- Předpokladem, že $n^2$ je liché
+- Předpokladem, že $n$ je sudé
+! Negace implikace $A\Rightarrow B$ je „$A$ a zároveň ne $B$“. Předpokládáme tedy, že $n^2$ je sudé a $n$ je liché.
+? tf #8lx7y | false
+Je-li $a$ iracionální, je iracionální i $a^2$.
+! $\sqrt2$ je iracionální, ale $(\sqrt2)^2 = 2$ je racionální. Tvrzení tedy neplatí.
++ $a=\sqrt2$
+- $a=\sqrt[3]2$
+- $a=\pi$
+? tf #hd4gi | true
+Je-li $a^2$ iracionální, je iracionální i $a$.
+! Obměna tvrzení zní: je-li $a$ racionální, je racionální i $a^2$. To platí, protože součin racionálních čísel je racionální, a tvrzení proto platí také.
 
 ## Funkce | P3–P4 | #f3nrq
 ### Vlastnosti funkcí | P3 | #tyhtb
