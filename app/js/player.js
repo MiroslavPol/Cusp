@@ -11,7 +11,7 @@
   function openGuide(a, c) { C.openGuide(a, c); }
 
   var S = null;
-  var body = $("lessonBody"), foot = $("lessonFoot"), fb = $("fb"), primary = $("primary");
+  var body = $("lessonBody"), foot = $("lessonFoot"), fb = $("fb"), primary = $("primary"), secondary = $("secondary");
 
   // ---- Question bank: each session draws from the lesson's pool; templates get fresh numbers ----
   var LESSON_Q = 7, REVIEW_Q = 2, CHECKPOINT_Q = 8;
@@ -149,6 +149,7 @@
       }
       inner.appendChild(el("div", "report-row", C.reportLink(c, C.reportItem(it))));
       primary.textContent = s.cont; primary.disabled = false;
+      secondary.hidden = true;
       typeset(inner);
       drawFigs(inner);
       return;
@@ -171,6 +172,9 @@
       buildInput(inner, it, s);
     }
     primary.textContent = s.check; primary.disabled = true;
+    S.knowMode = canSkipAsKnown(it);
+    secondary.textContent = S.knowMode ? s.knowIt : s.dontKnow;
+    secondary.hidden = false;
     typeset(inner);
     drawFigs(inner);
     // a match item too wide for its half of the grid (a long formula): give every item a full-width row
@@ -479,16 +483,42 @@
     setTimeout(function () { try { q.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) { /* ignore */ } }, 30);
   }
 
-  function check() {
+  // A question the student already knows from before (a review question, or one met before in the feed) can be
+  // put away for a long time with "I know this"; any other one can be given up with "I don't know". Not in a
+  // checkpoint or the final test, which are there to show what the student knows.
+  function canSkipAsKnown(it) {
+    if (!it.key || S.final || (S.node && S.node.checkpoint) || S.missed[it.key]) return false;
+    return !!(S.review || it.review || (S.feed && P.srs[it.key]));
+  }
+  // "I know this": no answer, no feedback; the question moves to the last box of spaced repetition.
+  function knowIt() {
+    var it = S.queue[S.i];
+    P.srs[it.key] = [5, C.dayNum() + 35];
+    delete P.mistakes[it.key];
+    S.questions--;            // not counted in the accuracy
+    S.progress++;
+    save();
+    next();
+  }
+
+  // giveUp ("I don't know"): show the answer and explanation; it counts as a mistake (a life in a lesson, asked
+  // again at the end, back to the first box of spaced repetition).
+  function check(giveUp) {
     var it = S.queue[S.i], s = C.stringsFor(itemCourse(it)), ok, answerHtml = "", A = window.CUSP_ANS;
-    if (S.inputKind && (it.kind === "input" || it.kind === "expr" || it.kind === "interval" || it.kind === "set")) {
+    secondary.hidden = true;
+    if (giveUp && S.input && (it.kind === "input" || it.kind === "expr" || it.kind === "interval" || it.kind === "set")) {
+      ok = false;
+      S.input.readOnly = true;
+      var er0 = S.input.parentNode.querySelector(".in-error"); if (er0) er0.remove();
+      answerHtml = answerTeX(it);
+    } else if (S.inputKind && (it.kind === "input" || it.kind === "expr" || it.kind === "interval" || it.kind === "set")) {
       var r;
       if (it.kind === "expr") r = A.checkExpr(S.input.value, S.spec);
       else if (it.kind === "interval") r = A.checkInterval(S.input.value, it.answer);
       else if (it.kind === "set") r = A.checkSet(S.input.value, it.answer);
       else r = { ok: inputCorrect(S.input.value, it.answer) };
       if (r.broken) { brokenQuestion(it, r.broken); return; }
-      if (r.error) { inputError(r.error); return; }
+      if (r.error) { secondary.hidden = false; inputError(r.error); return; }
       var er = S.input.parentNode.querySelector(".in-error"); if (er) er.remove();
       ok = r.ok;
       S.input.readOnly = true;
@@ -530,14 +560,15 @@
       });
       answerHtml = right.join(", ");
     } else {
-      ok = S.choice._opt.ok;
-      if (ok && it.kind === "tf" && S.stage !== 2 && it.answer === "false" && it.options && it.options.length) { counterStep(it); return; }
+      ok = !giveUp && S.choice._opt.ok;
+      if (ok && it.kind === "tf" && S.stage !== 2 && it.answer === "false" && it.options && it.options.length) { secondary.hidden = false; counterStep(it); return; }
       Array.prototype.forEach.call(S.box.children, function (b) {
         b.disabled = true;
         if (b._opt.ok) { b.classList.add("right"); answerHtml = /^@ /.test(b._opt.html) ? "" : b._opt.html; }
         else if (b === S.choice) b.classList.add("wrong");
       });
     }
+    if (giveUp) ok = false;
     S.checked = true;
     if (S.result === null) S.result = ok;
 
@@ -555,7 +586,7 @@
     setBar();
 
     foot.dataset.state = ok ? "good" : "bad";
-    fb.innerHTML = "<strong>" + (ok ? s.praise[Math.floor(Math.random() * s.praise.length)] : s.notQuite) + "</strong>" +
+    fb.innerHTML = "<strong>" + (ok ? s.praise[Math.floor(Math.random() * s.praise.length)] : giveUp ? s.solution : s.notQuite) + "</strong>" +
       (ok || !answerHtml ? "" : (it.kind === "order" ? "<p>" + s.answer + "</p>" + answerHtml : "<p>" + s.answer + " " + answerHtml + "</p>")) +
       (it.explain ? "<p>" + it.explain + "</p>" : "") +
       figs(it.figA) +
@@ -572,6 +603,7 @@
   function brokenQuestion(it, why) {
     var s = C.stringsFor(itemCourse(it));
     console.error("question " + (it.key || "?") + " can't be checked: " + why);
+    secondary.hidden = true;
     S.input.readOnly = true;
     S.checked = true;
     S.progress++;
@@ -615,7 +647,7 @@
       '<div class="tile"><div class="k">' + s.streak + '</div><div class="v">' + liveStreak() + "</div></div>"));
     if (C.backupDue()) inner.appendChild(backupNudge(s));
     body.appendChild(inner);
-    foot.dataset.state = ""; fb.hidden = true;
+    foot.dataset.state = ""; fb.hidden = true; secondary.hidden = true;
     primary.textContent = s.cont; primary.disabled = false;
     S.finished = true;
   }
@@ -636,7 +668,7 @@
     inner.appendChild(row);
     body.appendChild(inner);
     body.scrollTop = 0;
-    foot.dataset.state = ""; fb.hidden = true; fb.innerHTML = "";
+    foot.dataset.state = ""; fb.hidden = true; fb.innerHTML = ""; secondary.hidden = true;
     primary.textContent = s.restart; primary.disabled = false;
     primary.focus({ preventScroll: true });
     S.restart = true;
@@ -664,6 +696,10 @@
     if (S.restart) { startSession(S.opts); return; }
     var it = S.queue[S.i];
     if (it.kind !== "learn" && !S.checked) check(); else next();
+  });
+  secondary.addEventListener("click", function () {
+    if (!S || S.finished || S.restart || S.checked) return;
+    if (S.knowMode) knowIt(); else check(true);
   });
 
   C.startSession = startSession;
