@@ -4420,7 +4420,7 @@ $F$ je <b>primitivní funkce</b> k $f$ na intervalu $I$, jestliže $F'(x) = f(x)
 $$\int f(x)\,dx = F(x) + C.$$
 > Základní vzorce
 $$\int x^r dx = \frac{x^{r+1}}{r+1}\ (r\ne-1),\quad \int\frac{dx}{x} = \ln|x|,\quad\int e^x dx = e^x,\quad \int\frac{dx}{1+x^2} = \operatorname{arctg}x,\quad \int\frac{f'}{f}\,dx = \ln|f|.$$
-? mc #db6lv
+?! mc #db6lv
 $\int (3x^2 + 2x)\,dx = $
 + $x^3 + x^2 + C$
 - $6x + 2 + C$
@@ -4441,10 +4441,10 @@ $\int\dfrac{2x}{x^2+1}\,dx = $
 - $2\operatorname{arctg}x + C$
 - $\frac{1}{x^2+1} + C$
 ! Tvar $\frac{f'}{f}$ s $f = x^2+1$.
-? tf #ia7en | false
+?! tf #ia7en | false
 Funkce $\operatorname{sgn}x$ má na $\mathbb R$ primitivní funkci.
 ! Derivace má Darbouxovu vlastnost (nabývá všech mezihodnot), $\operatorname{sgn}$ ji nemá.
-? tf #qumey | true
+?! tf #qumey | true
 Dvě primitivní funkce k téže funkci na intervalu se liší o konstantu.
 ! Jejich rozdíl má na intervalu nulovou derivaci.
 ? mc #vked2
@@ -4486,6 +4486,28 @@ Přiřaďte funkcím jejich primitivní funkce.
 + $\dfrac{1}{1+x^2}$ :: $\operatorname{arctg}x + C$
 - $\cos x + C$
 ! Zkouška derivací: $(-\cos x)' = \sin x$. Výraz $\cos x + C$ je primitivní funkce k $-\sin x$, ta tu není.
+?! input #a468p | 9
+Funkce $F$ je primitivní k $f(x) = 2x+1$ na $\mathbb R$ a $F(1) = 5$. Kolik je $F(2)$?
+! $F(x) = x^2+x+C$ a $F(1) = 2+C = 5$, tedy $C = 3$. $F(2) = 4+2+3 = 9$.
+? expr #ktm9k | tg(x) + cos(x) | +C | dom=0.2..1.3
+Najděte $\displaystyle\int\left(\frac1{\cos^2x}-\sin x\right)dx$.
+= $\operatorname{tg}x+\cos x+C$
+! Integrujeme člen po členu: $\int\frac{dx}{\cos^2x} = \operatorname{tg}x$ a $\int(-\sin x)\,dx = \cos x$. Výsledek je $\operatorname{tg}x+\cos x+C$.
+? expr #z8ptd | x^4/2 - cos(x) + 3^x/ln(3) | +C
+Najděte $\displaystyle\int\left(2x^3+\sin x+3^x\right)dx$.
+= $\dfrac{x^4}2-\cos x+\dfrac{3^x}{\ln3}+C$
+! $\int2x^3\,dx = \frac{x^4}2$, $\int\sin x\,dx = -\cos x$ a $\int3^x\,dx = \frac{3^x}{\ln3}$. Výsledek je $\frac{x^4}2-\cos x+\frac{3^x}{\ln3}+C$.
+? expr #7d733 | x^2/2 + ln(x) | +C
+Najděte $\displaystyle\int\frac{x^2+1}{x}\,dx$ pro $x>0$.
+= $\dfrac{x^2}2+\ln x+C$
+! $\frac{x^2+1}x = x+\frac1x$, takže integrál je $\frac{x^2}2+\ln x+C$.
+? expr #8h8jb | 2^x e^x/(1+ln(2)) | +C
+Najděte $\displaystyle\int2^xe^x\,dx$.
+= $\dfrac{2^xe^x}{1+\ln2}+C$
+! $2^xe^x = (2e)^x$ a $\int a^x\,dx = \frac{a^x}{\ln a}$ s $\ln(2e) = 1+\ln2$. Výsledek je $\frac{2^xe^x}{1+\ln2}+C$.
+? tf #sjogl | true
+Je-li $F$ primitivní funkce k $f$ na intervalu $I$, je $F$ na $I$ spojitá.
+! $F$ má v každém bodě $I$ vlastní derivaci $f$, a funkce s vlastní derivací je spojitá. $F$ je tedy spojitá.
 
 ### Metoda per partes | P17–P18 | #un38d
 ~ noaxes; text=uv′; size=0.8
@@ -4493,14 +4515,14 @@ Přiřaďte funkcím jejich primitivní funkce.
 Z derivace součinu $(uv)' = u'v + uv'$ plyne
 $$\int u'v\,dx = uv - \int uv'\,dx.$$
 Za $v$ volíme to, co se derivací zjednoduší, a za $u'$ to, co umíme integrovat. Pomůcka LATE (pořadí pro derivování): logaritmy, mocniny, goniometrické, exponenciální funkce.
-? mc #clrhy
+?! mc #clrhy
 $\int xe^x\,dx = $
 + $(x-1)e^x + C$
 - $xe^x + C$
 - $\frac{x^2}{2}e^x + C$
 - $(x+1)e^x + C$
 ! $u' = e^x$, $v = x$: $xe^x - \int e^x\,dx$.
-? mc #abjkl
+?! mc #abjkl
 $\int\ln x\,dx = $
 + $x\ln x - x + C$
 - $\frac1x + C$
@@ -4528,7 +4550,7 @@ $\int\operatorname{arctg}x\,dx = $
 - $x\operatorname{arctg}x + C$
 - $x\operatorname{arctg}x + \frac12\ln(1+x^2) + C$
 ! $x\operatorname{arctg}x - \int\frac{x}{1+x^2}\,dx$.
-? tf #fldpz | true
+?! tf #fldpz | true
 Pro $\int x^2e^x\,dx$ je potřeba použít per partes dvakrát.
 ! Každé použití sníží stupeň polynomu o jedna.
 ? expr #c9p1n | -(x+1)e^(-x) | +C
@@ -4557,27 +4579,47 @@ Jak zvolit $u'$ a $v$ při výpočtu $\displaystyle\int\ln x\,dx$?
 - $u' = \frac1x$, $v = x$
 - per partes použít nelze
 ! Logaritmus integrovat neumíme, derivovat ano: $\int\ln x = x\ln x - \int x\cdot\frac1x$.
+? expr #vi6b9 | x^2/2 ln(x) - x^2/4 | +C
+Najděte $\displaystyle\int x\ln x\,dx$ pro $x>0$.
+= $\dfrac{x^2}2\ln x-\dfrac{x^2}4+C$
+! $u' = x$, $v = \ln x$: $\frac{x^2}2\ln x-\int\frac{x^2}2\cdot\frac1x\,dx = \frac{x^2}2\ln x-\frac{x^2}4+C$.
+? expr #3yv4r | x^2 sin(x) + 2x cos(x) - 2sin(x) | +C
+Najděte $\displaystyle\int x^2\cos x\,dx$.
+= $x^2\sin x+2x\cos x-2\sin x+C$
+! Dvakrát per partes: $\int x^2\cos x\,dx = x^2\sin x-\int2x\sin x\,dx$ a $\int2x\sin x\,dx = -2x\cos x+2\sin x$. Výsledek je $x^2\sin x+2x\cos x-2\sin x+C$.
+? expr #3hhcs | x arcsin(x) + sqrt(1-x^2) | +C | dom=-0.9..0.9
+Najděte $\displaystyle\int\arcsin x\,dx$.
+= $x\arcsin x+\sqrt{1-x^2}+C$
+! $u' = 1$, $v = \arcsin x$: $$x\arcsin x-\int\frac{x}{\sqrt{1-x^2}}\,dx = x\arcsin x+\sqrt{1-x^2}+C.$$
+? expr #mxir9 | x ln(x)^2 - 2x ln(x) + 2x | +C
+Najděte $\displaystyle\int\ln^2x\,dx$ pro $x>0$.
+= $x\ln^2x-2x\ln x+2x+C$
+! $u' = 1$, $v = \ln^2x$: $x\ln^2x-\int2\ln x\,dx$ a $\int\ln x\,dx = x\ln x-x$. Výsledek je $x\ln^2x-2x\ln x+2x+C$.
+? expr #1lfnx | (x^2+1)/2 arctg(x) - x/2 | +C
+Najděte $\displaystyle\int x\operatorname{arctg}x\,dx$.
+= $\dfrac{x^2+1}2\operatorname{arctg}x-\dfrac x2+C$
+! $u' = x$, $v = \operatorname{arctg}x$: $$\frac{x^2}2\operatorname{arctg}x-\frac12\int\frac{x^2}{1+x^2}\,dx = \frac{x^2}2\operatorname{arctg}x-\frac12(x-\operatorname{arctg}x).$$ Výsledek je $\frac{x^2+1}2\operatorname{arctg}x-\frac x2+C$.
 
 ### Substituční metoda | P18 | #n8ee0
 ~ noaxes; text=φ; size=1.15
 > Substituce
 $$\int f(\varphi(x))\,\varphi'(x)\,dx = \left|\begin{matrix} t = \varphi(x)\\ dt = \varphi'(x)\,dx\end{matrix}\right| = \int f(t)\,dt.$$
 Hledáme vnitřní funkci, jejíž derivace stojí vedle (až na konstantu).
-? mc #emjx7
+?! mc #emjx7
 $\int 2x\cos(x^2)\,dx = $
 + $\sin(x^2) + C$
 - $\cos(x^2) + C$
 - $2\sin(x^2) + C$
 - $x^2\sin(x^2) + C$
 ! $t = x^2$, $dt = 2x\,dx$.
-? mc #v09y7
+?! mc #v09y7
 $\int \dfrac{\ln x}{x}\,dx = $
 + $\frac{\ln^2 x}{2} + C$
 - $\ln x + C$
 - $\ln|\ln x| + C$
 - $x\ln x + C$
 ! $t = \ln x$, $dt = \frac{dx}{x}$.
-? mc #91uy8
+?! mc #91uy8
 $\int \operatorname{tg}x\,dx = $
 + $-\ln|\cos x| + C$
 - $\ln|\cos x| + C$
@@ -4627,26 +4669,50 @@ Jakou substituci zvolíte pro $\displaystyle\int\frac{x}{1+x^4}\,dx$?
 - $t = 1+x^4$
 - $t = \operatorname{tg}x$
 ! $dt = 2x\,dx$ a integrál přejde na $\frac12\int\frac{dt}{1+t^2} = \frac12\operatorname{arctg}x^2$.
+? expr #xlo8b | arctg(e^x) | +C
+Najděte $\displaystyle\int\frac{e^x}{1+e^{2x}}\,dx$.
+= $\operatorname{arctg}e^x+C$
+! Substitucí $t = e^x$, $dt = e^x\,dx$: $\int\frac{dt}{1+t^2} = \operatorname{arctg}t+C = \operatorname{arctg}e^x+C$.
+? expr #nco5m | 1/(2cos(x)^2) | +C | dom=0.2..1.3
+Najděte $\displaystyle\int\frac{\sin x}{\cos^3x}\,dx$.
+= $\dfrac1{2\cos^2x}+C$
+! Substitucí $t = \cos x$, $dt = -\sin x\,dx$: $-\int t^{-3}\,dt = \frac1{2t^2}+C = \frac1{2\cos^2x}+C$.
+? expr #8eefw | -sqrt(1-x^2) | +C | dom=-0.9..0.9
+Najděte $\displaystyle\int\frac{x}{\sqrt{1-x^2}}\,dx$.
+= $-\sqrt{1-x^2}+C$
+! Substitucí $t = 1-x^2$, $dt = -2x\,dx$: $-\frac12\int t^{-1/2}\,dt = -\sqrt t+C = -\sqrt{1-x^2}+C$.
+? expr #dsxn3 | arctg(x)^2/2 | +C
+Najděte $\displaystyle\int\frac{\operatorname{arctg}x}{1+x^2}\,dx$.
+= $\dfrac{\operatorname{arctg}^2x}2+C$
+! Substitucí $t = \operatorname{arctg}x$, $dt = \frac{dx}{1+x^2}$: $\int t\,dt = \frac{t^2}2+C = \frac{\operatorname{arctg}^2x}2+C$.
+? expr #m5h6v | arctg(ln(x)) | +C
+Najděte $\displaystyle\int\frac{dx}{x\left(1+\ln^2x\right)}$ pro $x>0$.
+= $\operatorname{arctg}(\ln x)+C$
+! Substitucí $t = \ln x$, $dt = \frac{dx}x$: $\int\frac{dt}{1+t^2} = \operatorname{arctg}t+C = \operatorname{arctg}(\ln x)+C$.
+? expr #e9ryg | e^(sin(x)) | +C
+Najděte $\displaystyle\int\cos x\,e^{\sin x}\,dx$.
+= $e^{\sin x}+C$
+! Substitucí $t = \sin x$, $dt = \cos x\,dx$: $\int e^t\,dt = e^t+C = e^{\sin x}+C$.
 
 ### Racionální funkce | P19 | #4tdn4
 ~ f=0.9/(1+14*x^2)-0.35
 > Postup
 <ol><li>Není-li funkce ryze racionální, vydělíme polynomy.</li><li>Jmenovatel rozložíme na součin $(x-a)^k$ a nerozložitelných $(x^2+px+q)^k$.</li><li>Rozložíme na parciální zlomky a integrujeme: $\int\frac{dx}{x-a} = \ln|x-a|$, $\int\frac{dx}{(x-a)^k} = \frac{-1}{(k-1)(x-a)^{k-1}}$; kvadratické členy po doplnění na čtverec vedou na $\ln$ a $\operatorname{arctg}$.</li></ol>
-? mc #83v91
+?! mc #83v91
 $\int\dfrac{dx}{x^2-1} = $
 + $\frac12\ln\left|\frac{x-1}{x+1}\right| + C$
 - $\operatorname{arctg}x + C$
 - $\ln|x^2-1| + C$
 - $\frac12\ln\left|\frac{x+1}{x-1}\right| + C$
 ! $\frac{1}{x^2-1} = \frac12\left(\frac{1}{x-1} - \frac{1}{x+1}\right)$.
-? mc #8uujz
+?! mc #8uujz
 $\int\dfrac{dx}{x^2+4} = $
 + $\frac12\operatorname{arctg}\frac x2 + C$
 - $\operatorname{arctg}\frac x2 + C$
 - $\frac14\operatorname{arctg}x + C$
 - $\ln(x^2+4) + C$
 ! $\frac{1}{x^2+4} = \frac14\cdot\frac{1}{1+(x/2)^2}$, substituce $t = \frac x2$.
-? mc #hera0
+?! mc #hera0
 $\int\dfrac{dx}{x^2+2x+2} = $
 + $\operatorname{arctg}(x+1) + C$
 - $\ln(x^2+2x+2) + C$
@@ -4686,13 +4752,33 @@ Najděte $\displaystyle\int\frac{dx}{x^2+9}$.
 ? expr #4gjb1 | x - ln(x+1) | +C | dom=0.5..3
 Najděte $\displaystyle\int\frac{x}{x+1}\,dx$ pro $x>-1$.
 ! $\frac{x}{x+1} = 1 - \frac{1}{x+1}$.
+?! expr #zyyk3 | 3/2 ln(x^2-4x+15) + 13/sqrt(11) arctg((x-2)/sqrt(11)) | +C
+Najděte $\displaystyle\int\frac{3x+7}{x^2-4x+15}\,dx$.
+= $\dfrac32\ln(x^2-4x+15)+\dfrac{13}{\sqrt{11}}\operatorname{arctg}\dfrac{x-2}{\sqrt{11}}+C$
+! Čitatel rozdělíme: $3x+7 = \frac32(2x-4)+13$. První část dá $\frac32\ln(x^2-4x+15)$. Ve druhé je $x^2-4x+15 = (x-2)^2+11$, takže $$\int\frac{13\,dx}{(x-2)^2+11} = \frac{13}{\sqrt{11}}\operatorname{arctg}\frac{x-2}{\sqrt{11}}.$$
+? expr #8ecyl | -1/(2(x-1)^2) | +C | dom=1.5..3
+Najděte $\displaystyle\int\frac{dx}{(x-1)^3}$ pro $x>1$.
+= $-\dfrac1{2(x-1)^2}+C$
+! Substitucí $t = x-1$: $\int t^{-3}\,dt = -\frac1{2t^2}+C = -\frac1{2(x-1)^2}+C$.
+? expr #4ixyp | 1/sqrt(2) arctg(x/sqrt(2)) | +C
+Najděte $\displaystyle\int\frac{dx}{x^2+2}$.
+= $\dfrac1{\sqrt2}\operatorname{arctg}\dfrac x{\sqrt2}+C$
+! $\int\frac{dx}{x^2+a^2} = \frac1a\operatorname{arctg}\frac xa+C$ pro $a = \sqrt2$. Výsledek je $\frac1{\sqrt2}\operatorname{arctg}\frac x{\sqrt2}+C$.
+? expr #teh3b | ln(x+1) - ln(x) - 1/x | +C
+Najděte $\displaystyle\int\frac{dx}{x^2(x+1)}$ pro $x>0$.
+= $\ln(x+1)-\ln x-\dfrac1x+C$
+! Rozklad je $\frac1{x^2(x+1)} = -\frac1x+\frac1{x^2}+\frac1{x+1}$. Integrál je $-\ln x-\frac1x+\ln(x+1)+C$.
+? expr #tvygc | x^2/2 - ln(x^2+1)/2 | +C
+Najděte $\displaystyle\int\frac{x^3}{x^2+1}\,dx$.
+= $\dfrac{x^2}2-\dfrac12\ln(x^2+1)+C$
+! Vydělením $\frac{x^3}{x^2+1} = x-\frac{x}{x^2+1}$, takže integrál je $\frac{x^2}2-\frac12\ln(x^2+1)+C$.
 
 ### Speciální substituce | P19 | #zyqt3
 ~ noaxes; text=√; size=1.1
 > Odmocniny a goniometrické funkce
 <ul><li>$R\left(x, \sqrt[n]{ax+b}\right)$: substituce $t = \sqrt[n]{ax+b}$.</li><li>$R(\sin x,\cos x)$: univerzální substituce $t = \operatorname{tg}\frac x2$, kde $\sin x = \frac{2t}{1+t^2}$, $\cos x = \frac{1-t^2}{1+t^2}$, $dx = \frac{2\,dt}{1+t^2}$. Je-li integrand lichý v $\cos x$, stačí $t = \sin x$; je-li lichý v $\sin x$, stačí $t = \cos x$; je-li sudý v obou, $t = \operatorname{tg}x$.</li><li>$\sqrt{ax^2+bx+c}$: Eulerovy substituce.</li></ul>
 Ne každá elementární funkce má elementární primitivní funkci, příkladem je $\int e^{-x^2}dx$.
-? mc #3a8a8
+?! mc #3a8a8
 Jakou substituci zvolíte pro $\int\dfrac{dx}{1+\sqrt x}$?
 + $t = \sqrt x$
 - $t = \operatorname{tg}\frac x2$
@@ -4713,7 +4799,7 @@ Integrand v $\int\cos^3x\,dx$ je lichý v $\cos x$. Která substituce je nejvhod
 - $t = \operatorname{tg}x$
 - $t = \operatorname{tg}\frac x2$
 ! $\cos^3x\,dx = (1-\sin^2x)\cos x\,dx = (1-t^2)\,dt$.
-? mc #pr0hl
+?! mc #pr0hl
 Při univerzální substituci $t = \operatorname{tg}\frac x2$ je $\cos x = $
 + $\frac{1-t^2}{1+t^2}$
 - $\frac{2t}{1+t^2}$
@@ -4759,7 +4845,7 @@ Integrand je sudý v $\sin x$ i v $\cos x$, například $\dfrac{1}{\sin^2x + 3\c
 ? expr #z6wc3 | 2sqrt(x+1) | +C
 Najděte $\displaystyle\int\frac{dx}{\sqrt{x+1}}$.
 ! $t = \sqrt{x+1}$, $dx = 2t\,dt$: $\int 2\,dt = 2t = 2\sqrt{x+1}$.
-? match #zgoj7
+?! match #zgoj7
 Přiřaďte integrálům vhodnou metodu.
 + $\int x\,e^x\,dx$ :: per partes
 + $\int 2x\cos(x^2)\,dx$ :: substituce $t = x^2$
@@ -4767,6 +4853,33 @@ Přiřaďte integrálům vhodnou metodu.
 + $\int\frac{dx}{2+\cos x}$ :: univerzální substituce $t = \operatorname{tg}\frac x2$
 + $\int\frac{dx}{1+\sqrt x}$ :: substituce $t = \sqrt x$
 ! Součin polynomu a $e^x$ zjednoduší per partes; $2x$ je derivace $x^2$; racionální funkci rozložíme na parciální zlomky; $R(\sin x,\cos x)$ převede univerzální substituce na racionální funkci; odmocninu odstraní $t=\sqrt x$.
+?! expr #gok4x | x/2 - sin(2x)/4 | +C
+Najděte $\displaystyle\int\sin^2x\,dx$.
+= $\dfrac x2-\dfrac{\sin2x}4+C$
+! $\sin^2x = \frac{1-\cos2x}2$, takže integrál je $\frac x2-\frac{\sin2x}4+C$.
+? mc #7h91h
+Jakou substituci zvolíte pro $\displaystyle\int\frac{dx}{\sqrt x+\sqrt[3]x}$?
++ $x = t^6$
+- $x = t^2$
+- $x = t^3$
+- $t = \sqrt x+\sqrt[3]x$
+! Šestá mocnina odstraní obě odmocniny zároveň: $\sqrt x = t^3$ a $\sqrt[3]x = t^2$. Nejmenší společný násobek odmocnitelů $2$ a $3$ je $6$, proto $x = t^6$.
+? expr #0fa7w | 2sqrt(x) - 3x^(1/3) + 6x^(1/6) - 6ln(x^(1/6)+1) | +C
+Najděte $\displaystyle\int\frac{dx}{\sqrt x+\sqrt[3]x}$ pro $x>0$.
+= $2\sqrt x-3\sqrt[3]x+6\sqrt[6]x-6\ln\left(\sqrt[6]x+1\right)+C$
+! Substitucí $x = t^6$, $dx = 6t^5\,dt$: $$\int\frac{6t^5}{t^3+t^2}\,dt = 6\int\left(t^2-t+1-\frac1{t+1}\right)dt = 2t^3-3t^2+6t-6\ln(t+1).$$ Po dosazení $t = \sqrt[6]x$ vyjde $2\sqrt x-3\sqrt[3]x+6\sqrt[6]x-6\ln\left(\sqrt[6]x+1\right)+C$.
+? expr #k03c5 | sin(x) - sin(x)^3/3 | +C
+Najděte $\displaystyle\int\cos^3x\,dx$.
+= $\sin x-\dfrac{\sin^3x}3+C$
+! $\cos^3x = (1-\sin^2x)\cos x$ a substitucí $t = \sin x$: $\int(1-t^2)\,dt = t-\frac{t^3}3+C = \sin x-\frac{\sin^3x}3+C$.
+? expr #4rpe1 | ln(tg(x/2)) | +C | dom=0.3..2.8
+Najděte $\displaystyle\int\frac{dx}{\sin x}$ na $(0,\pi)$.
+= $\ln\operatorname{tg}\dfrac x2+C$
+! Univerzální substitucí $t = \operatorname{tg}\frac x2$ je $\sin x = \frac{2t}{1+t^2}$ a $dx = \frac{2\,dt}{1+t^2}$, takže $\int\frac{dt}t = \ln t+C = \ln\operatorname{tg}\frac x2+C$.
+? expr #pe3pu | (x sqrt(1-x^2) + arcsin(x))/2 | +C | dom=-0.9..0.9
+Najděte $\displaystyle\int\sqrt{1-x^2}\,dx$.
+= $\dfrac{x\sqrt{1-x^2}+\arcsin x}2+C$
+! Substitucí $x = \sin t$, $t\in\left[-\frac\pi2,\frac\pi2\right]$: $\int\cos^2t\,dt = \frac t2+\frac{\sin2t}4 = \frac{t+\sin t\cos t}2$. Po dosazení $t = \arcsin x$ vyjde $\frac{x\sqrt{1-x^2}+\arcsin x}2+C$.
 
 ## Riemannův integrál | P20–P24 | #7zt8v
 ### Dělení a Riemannovy součty | P20 | #o2byn
