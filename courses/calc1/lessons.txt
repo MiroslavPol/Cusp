@@ -168,7 +168,7 @@ Uspořádání je <b>úplné</b> (lineární), jestliže každé dva prvky lze p
 Relace dělitelnosti $a\mid b$ na $\mathbb N$ je uspořádání.
 ! Reflexivita: $a\mid a$. Antisymetrie: z $a\mid b$ a $b\mid a$ plyne v $\mathbb N$ rovnost $a=b$. Tranzitivita: $a\mid b$ a $b\mid c$ dává $a\mid c$.
 ? tf #pnb7c | false
-Dělitelnost na $\mathbb N$ je úplné uspořádání, tj. ze dvou přirozených čísel vždy jedno dělí druhé.
+Relace dělitelnosti $a\mid b$ je na $\mathbb N$ úplné uspořádání.
 ! Čísla $2$ a $3$ nelze porovnat: $2\nmid 3$ ani $3\nmid 2$. U ostatních dvojic jedno číslo dělí druhé: $2\mid4$, $1\mid5$, $3\mid3$.
 + čísla $2$ a $3$
 - čísla $2$ a $4$
@@ -1747,7 +1747,11 @@ Existují-li v bodě $x_0$ obě jednostranné limity, existuje i limita.
 ### Počítání s limitami funkcí | P7 | #4ntju
 ~ f=(x^2-0.25)/(x-0.5)*0.8-0.5; hole=0.5,0.3
 > Algebra limit
-Jako u posloupností: existují-li vlastní limity $L_1$, $L_2$ funkcí $f$, $g$ v bodě $x_0$, je limita součtu, součinu a podílu ($L_2\ne0$) rovna součtu, součinu a podílu limit. Platí věta o třech limitách a pravidlo <b>„nula krát ohraničená je nula“</b>.
+Jako u posloupností: existují-li vlastní limity $\lim\limits_{x\to x_0}f(x) = L_1$ a $\lim\limits_{x\to x_0}g(x) = L_2$, pak
+$$\lim_{x\to x_0}(f\pm g) = L_1\pm L_2,\quad \lim_{x\to x_0}fg = L_1L_2,\quad \lim_{x\to x_0}\frac fg = \frac{L_1}{L_2}\ (L_2\ne0).$$
+<b>Věta o třech limitách:</b> je-li $f\le g\le h$ na ryzím okolí $x_0$ a $\lim f = \lim h = L$, pak i $\lim g = L$.
+
+<b>Nula krát ohraničená je nula:</b> je-li $\lim\limits_{x\to x_0}f(x) = 0$ a $g$ je na ryzím okolí $x_0$ ohraničená, pak $\lim\limits_{x\to x_0}f(x)g(x) = 0$.
 > Limita složené funkce
 Je-li $\lim\limits_{x\to x_0}\varphi(x) = \alpha$, $\lim\limits_{y\to\alpha}f(y) = L$ a $\varphi(x)\ne\alpha$ na ryzím okolí $x_0$, pak $\lim\limits_{x\to x_0}f(\varphi(x)) = L$. Podmínku $\varphi(x)\neq\alpha$ lze vynechat, je-li $f$ spojitá v $\alpha$.
 ? input #ivu45 | 0
@@ -1755,7 +1759,7 @@ Určete $\lim\limits_{x\to0} x\sin\dfrac1x$.
 ! $x\to0$ a $\sin\frac1x$ je ohraničená.
 @ x=-0.5..0.5; y=-0.5..0.5; f=x*sin(1/x); f=abs(x); f=0-abs(x)
 ? input #4iz6p | -∞
-Zkouška M1100 (2010): určete $\lim\limits_{x\to\infty}\dfrac{x - 3x^2 + x^3}{2 + 2x - 2x^2}$.
+Taková úloha může přijít u zkoušky: určete $\lim\limits_{x\to\infty}\dfrac{x - 3x^2 + x^3}{2 + 2x - 2x^2}$.
 ! Čitatel se chová jako $x^3$, jmenovatel jako $-2x^2$, podíl jako $-\frac x2\to-\infty$.
 ? input #cciik | 3/2; 1.5
 Určete $\lim\limits_{x\to\infty}\dfrac{3x^2+x}{2x^2-7}$.
@@ -1803,7 +1807,9 @@ $f$ je <b>spojitá v bodě</b> $x_0$, jestliže $\lim\limits_{x\to x_0} f(x) = f
 > Spojitost na intervalu
 $f\in C[a,b]$, je-li spojitá ve vnitřních bodech a jednostranně v krajních. Monotónní funkce má v každém vnitřním bodě obě jednostranné limity.
 ? input #i4cj1 | 4
-Pro jaké $a$ je funkce $f(x)=\begin{cases} x^2, & x<2\\ a, & x\ge 2\end{cases}$ spojitá v bodě $2$?
+Pro jaké $a$ je funkce
+$$f(x)=\begin{cases} x^2, & x<2\\ a, & x\ge 2\end{cases}$$
+spojitá v bodě $2$?
 ! Limita zleva je $4$, takže potřebujeme $a = 4$.
 @ x=-0.5..3.5; y=-0.5..6; f=x<2?x^2:4; pt=2,4
 ? input #qswy3 | 2
@@ -1833,7 +1839,8 @@ Funkce $f(x) = x\cdot\chi(x)$, kde $\chi$ je Dirichletova funkce, je spojitá
 + jen v bodě $0$
 - všude
 - ve všech racionálních bodech
-! V nule platí $|f(x)|\le|x|\to0 = f(0)$; jinde funkce skáče mezi $0$ a hodnotami blízkými $x_0\ne0$.
+! Pro racionální $x$ leží graf na přímce $y=x$, pro iracionální na ose $x$. V nule platí $|f(x)|\le|x|\to0 = f(0)$; v bodě $x_0\ne0$ funkce skáče mezi $0$ a hodnotami blízkými $x_0$. Spojitá je tedy jen v bodě $0$.
+@ x=-2..2; y=-2..2; fd=x; f=abs(x); f=0-abs(x); pt=0,0
 ? build #3sgej
 Sestavte definici: $f$ je spojitá v bodě $x_0$, jestliže
 + $\forall\varepsilon>0$
@@ -1846,11 +1853,14 @@ Sestavte definici: $f$ je spojitá v bodě $x_0$, jestliže
 - $|f(x)-L|>\varepsilon$
 ! Oproti definici limity je místo $L$ hodnota $f(x_0)$ a nevylučujeme $x=x_0$.
 ? input #sni0m | 0
-Pro jaké $a$ je funkce $f(x) = \begin{cases} ax+1, & x<1\\ x^2, & x\ge1\end{cases}$ spojitá v bodě $1$?
-! Limita zleva je $a+1$, hodnota $f(1) = 1$. Potřebujeme $a+1 = 1$.
+Pro jaké $a$ je funkce
+$$f(x) = \begin{cases} ax+1, & x<1\\ x^2, & x\ge1\end{cases}$$
+spojitá v bodě $1$?
+! Limita zleva je $a+1$, hodnota $f(1) = 1$. Potřebujeme $a+1 = 1$, tedy $a = 0$.
 ? set #muef9 | -1; 1
 Ve kterých bodech je funkce $f(x) = \dfrac{1}{x^2-1}$ nespojitá?
-! Jen tam, kde není definovaná: $x^2 = 1$. Jinde je spojitá jako podíl spojitých funkcí.
+! Podíl spojitých funkcí je spojitý všude, kde je jmenovatel nenulový. Jmenovatel $x^2-1$ je nulový pro $x=\pm1$, takže nespojitá je jen v bodech $-1$ a $1$.
+@ x=-3..3; y=-4..4; f=1/(x^2-1); vline=-1; vline=1
 ? tf #9ox1z | false
 Je-li $f$ spojitá v $x_0$ a $g$ nespojitá v $x_0$, je $f\cdot g$ v $x_0$ nespojitá.
 ! Nulový činitel může nespojitost „umlčet“.
@@ -1884,8 +1894,8 @@ U kterých funkcí Weierstrassova věta zaručuje existenci maxima?
 ! Věta potřebuje spojitou funkci na uzavřeném ohraničeném intervalu.
 @ x=-0.2..1.6; y=-1..10; f=x>0&&x<=1?1/x:NaN; f=x>0&&x<1?x:NaN; hole=0,0; hole=1,1; pt=1,1
 ? input #tzjik | 4
-Jaké je maximum funkce $x^2$ na $[-1,2]$?
-! Kandidáti jsou krajní body a stacionární bod: $f(-1) = 1$, $f(0)=0$, $f(2) = 4$.
+Jaká je největší hodnota funkce $x^2$ na intervalu $[-1,2]$?
+! Na $[-1,0]$ funkce $x^2$ klesá a na $[0,2]$ roste, takže největší hodnotu má v jednom z krajních bodů: $f(-1) = 1$, $f(2) = 4$. Největší hodnota je $4$.
 @ x=-1.6..2.6; y=-0.6..5; f=x^2; vband=-1,2; pt=2,4; pt=-1,1; pt=0,0
 ? tf #8eqqz | false
 Funkce $f(x)=x$ nabývá na intervalu $(0,1)$ maxima.
@@ -1903,16 +1913,19 @@ Na čem stojí důkaz Weierstrassovy věty?
 ! Z posloupnosti $x_n$ s $f(x_n)\to\sup f$ vybereme konvergentní podposloupnost a použijeme spojitost.
 ? tf #r8u3g | false
 Nespojitá funkce na $[a,b]$ nikdy nenabývá maxima.
-! Věta dává jen postačující podmínku. Například $\operatorname{sgn}x$ na $[-1,1]$ maximum $1$ nabývá.
+! Weierstrassova věta dává jen postačující podmínku. Funkce $f(x)=x$ na $[0,1)$ s $f(1)=0$ je nespojitá a maxima nenabývá, tvrzení tedy nevyvrací. Protipříkladem je $\operatorname{sgn}x$ na $[-1,1]$: je nespojitá v $0$ a maximum $1$ nabývá.
 + $\operatorname{sgn}x$ na $[-1,1]$
+- $f(x)=x$ na $[0,1)$, $f(1)=0$
 - $x^2$ na $[1,3]$
 - $x^2$ na $[-1,1]$
 ? input #95yi8 | -1
-Najděte minimum funkce $x^2-2x$ na intervalu $[0,3]$.
-! Kandidáti: $f(0) = 0$, stacionární bod $f(1) = -1$, $f(3) = 3$.
+Jaká je nejmenší hodnota funkce $x^2-2x$ na intervalu $[0,3]$?
+! Parabola $x^2-2x = x(x-2)$ má kořeny $0$ a $2$ a její vrchol leží uprostřed mezi nimi, v $x=1$. Kandidáti jsou krajní body a vrchol: $f(0) = 0$, $f(1) = -1$, $f(3) = 3$. Nejmenší hodnota je $-1$.
+@ x=-0.6..3.6; y=-1.6..3.6; f=x^2-2*x; vband=0,3; pt=1,-1; pt=0,0; pt=3,3
 ? input #uofml | √2/2; 0.7071
-Najděte maximum funkce $\sin x$ na intervalu $\left[0,\frac\pi4\right]$.
-! $\sin$ je na tomto intervalu rostoucí, maximum je v pravém krajním bodě.
+Jaká je největší hodnota funkce $\sin x$ na intervalu $\left[0,\frac\pi4\right]$?
+! $\sin$ je na tomto intervalu rostoucí, největší hodnota je proto v pravém krajním bodě: $\sin\frac\pi4 = \frac{\sqrt2}2$.
+@ x=-0.3..1.2; y=-0.3..1.2; f=sin(x); vband=0,0.7854; pt=0.7854,0.7071
 ? tf #3z9a7 | false
 Spojitá funkce na otevřeném intervalu $(0,1)$ je ohraničená.
 ! Weierstrassova věta potřebuje uzavřený interval.
@@ -1921,11 +1934,12 @@ Spojitá funkce na otevřeném intervalu $(0,1)$ je ohraničená.
 - $\sin x$
 ? order #yxwgr
 Seřaďte důkaz, že spojitá funkce na $[a,b]$ je shora ohraničená.
-+ Kdyby $f$ nebyla shora ohraničená, existovala by $x_n\in[a,b]$ s $f(x_n)>n$.
-+ Podle Bolzanovy–Weierstrassovy věty má $\{x_n\}$ vybranou posloupnost $x_{n_k}\to c\in[a,b]$.
-+ Ze spojitosti v bodě $c$ plyne $f(x_{n_k})\to f(c)$, tedy konečné číslo.
-+ Přitom $f(x_{n_k})>n_k\to\infty$, a to je spor.
-! Uzavřenost intervalu zaručí, že limita $c$ v něm leží.
++ Kdyby $f$ nebyla shora ohraničená, existovalo by pro každé $n$ číslo $x_n\in[a,b]$ s $f(x_n)>n$.
++ Posloupnost $\{x_n\}$ je ohraničená, takže má vybranou posloupnost $x_{n_k}\to c$ (Bolzanova–Weierstrassova věta).
++ Interval $[a,b]$ je uzavřený, proto $c\in[a,b]$.
++ Funkce $f$ je spojitá v $c$, proto $f(x_{n_k})\to f(c)$, což je reálné číslo.
++ Zároveň $f(x_{n_k})>n_k\to\infty$. To je spor, takže $f$ je shora ohraničená.
+! Ohraničenost intervalu dává vybranou konvergentní posloupnost, uzavřenost zaručí, že její limita $c$ leží v $[a,b]$, a spojitost v $c$ pak vylučuje $f(x_{n_k})\to\infty$. Funkce $f$ je tedy shora ohraničená.
 ? mc #673kd
 Na kterém obrázku funkce na intervalu $[0,2]$ (svislé čáry) nenabývá maxima?
 + @ x=-0.3..2.3; y=-0.5..1.5; f=x<1?x:0; vline=0; vline=2; hole=1,1; pt=1,0
@@ -2114,7 +2128,7 @@ Určete $\lim\limits_{x\to\infty}\left(1+\dfrac{2}{x}\right)^x$.
 - $1$
 ! Substitucí $t = \frac x2$: $\left(1+\frac1t\right)^{2t}\to e^2$.
 ? mc #l0dtp
-Zkouška M1100 (2010): určete $\lim\limits_{x\to\pi}\dfrac{x}{\sin x}$.
+Taková úloha může přijít u zkoušky: určete $\lim\limits_{x\to\pi}\dfrac{x}{\sin x}$.
 - $1$
 - $\pi$
 - $+\infty$
@@ -2544,7 +2558,7 @@ Derivace $x^x$ pro $x>0$ je
 - $x^x$
 ! $x^x = e^{x\ln x}$.
 ? mc #hbi63
-Zkouška M1100 (2010): derivace $f(t) = (t^2+1)\operatorname{arctg}\dfrac{t+1}{t-1}$ po zjednodušení je
+Taková úloha může přijít u zkoušky: derivace $f(t) = (t^2+1)\operatorname{arctg}\dfrac{t+1}{t-1}$ po zjednodušení je
 + $2t\operatorname{arctg}\dfrac{t+1}{t-1} - 1$
 - $2t\operatorname{arctg}\dfrac{t+1}{t-1} + 1$
 - $2t\operatorname{arctg}\dfrac{t+1}{t-1}$
@@ -2912,7 +2926,7 @@ Je-li $f'(x_0) = 0$ a $f''(x_0) = 0$, extrém v $x_0$ není.
 - $x^3$ v bodě $0$
 - $x^5$ v bodě $0$
 ? input #dh7zx | 300
-Zkouška M1100 (2010): zahrada tvaru rovnoramenného trojúhelníka s obvodem $900$ m má mít maximální plochu. Jak dlouhá je základna (m)?
+Taková úloha může přijít u zkoušky: zahrada tvaru rovnoramenného trojúhelníka s obvodem $900$ m má mít maximální plochu. Jak dlouhá je základna (m)?
 ! Maximum nastane pro rovnostranný trojúhelník se stranami $300$ m.
 @@ x=-20..420; y=-30..230; aspect=equal; axes=off; poly=0,0,400,0,200,180,0,0; label=200,-22,b; label=85,105,a; label=315,105,a
 ? input #ycfqv | 25
@@ -3118,7 +3132,7 @@ Jakou vodorovnou asymptotu $y=b$ má $\dfrac{3x+1}{x-2}$? Zadejte $b$.
 ! $\frac{3x+1}{x-2}\to3$.
 @ x=-8..12; y=-10..14; f=(3*x+1)/(x-2); vline=2; hline=3
 ? mc #u3lrx
-Zkouška M1100 (2010): asymptoty funkce $f(x) = \dfrac{3-x}{\sqrt{x^2+1}}$ jsou
+Taková úloha může přijít u zkoušky: asymptoty funkce $f(x) = \dfrac{3-x}{\sqrt{x^2+1}}$ jsou
 + $y=-1$ pro $x\to\infty$, $y = 1$ pro $x\to-\infty$
 - $y=-1$ pro $x\to\pm\infty$
 - $y=1$ pro $x\to\infty$, $y = -1$ pro $x\to-\infty$
@@ -4200,7 +4214,7 @@ Která šrafovaná plocha má obsah $\int_0^1(x-x^2)\,dx$?
 > Délka
 Pro parametrickou křivku je $L = \int_\alpha^\beta\sqrt{\varphi'(t)^2+\psi'(t)^2}\,dt$, pro graf funkce $L = \int_a^b\sqrt{1+f'(x)^2}\,dx$. Vzorec vzniká z lomené čáry a Pythagorovy věty.
 ? input #a2rjo | e - 1/e; 2.3504
-Zkouška M1100 (2010): spočtěte délku řetězovky $\cosh x$ na $[-1,1]$.
+Taková úloha může přijít u zkoušky: spočtěte délku řetězovky $\cosh x$ na $[-1,1]$.
 ! $\sqrt{1+\sinh^2x} = \cosh x$, takže $L = 2\sinh 1 = e - \frac1e$.
 @ x=-2..2; y=-0.2..3.2; f=cosh(x); vband=-1,1
 ? input #biuy7 | 2π; 6.2832
@@ -4386,7 +4400,7 @@ Integrál $\displaystyle\int_0^\infty\sin x\,dx$
 ! $\int_0^b\sin x\,dx = 1-\cos b$ nemá limitu.
 @ x=0..20; y=-1.2..2.2; f=sin(x); f=1-cos(x)
 ? input #0dq9g | 1/2; 0.5
-Zkouška M1100 (2010): spočtěte $\displaystyle\int_1^\infty\frac{\operatorname{arctg}x}{x^3}\,dx$.
+Taková úloha může přijít u zkoušky: spočtěte $\displaystyle\int_1^\infty\frac{\operatorname{arctg}x}{x^3}\,dx$.
 ! Per partes a rozklad $\frac{1}{x^2(1+x^2)} = \frac1{x^2} - \frac1{1+x^2}$: $\frac\pi8 + \frac12\left(1-\frac\pi4\right) = \frac12$.
 ? gen #g5wmc | improper_p
 ? gen #jg78s | improper_exp

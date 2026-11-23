@@ -2702,14 +2702,14 @@ Jaká je vzájemná poloha přímek $AB$ a $GH$ v krychli $ABCDEFGH$?
 - totožné
 ! $AB\parallel DC$ a $DC\parallel HG$, takže i $AB\parallel GH$. Leží v rovině $ABGH$.
 ? mc #hseac
-Jaká je vzájemná poloha přímek $AE$ a $BC$?
+Jaká je vzájemná poloha přímek $AE$ a $BC$ v krychli $ABCDEFGH$?
 - rovnoběžné
 - různoběžné
 + mimoběžné
 - kolmé různoběžky
 ! Nemají společný bod a nejsou rovnoběžné ($AE$ je svislá, $BC$ vodorovná). Jsou mimoběžné, i když svírají pravý úhel.
 ? mc #holb1
-Jaká je vzájemná poloha tělesových úhlopříček $AG$ a $BH$?
+Jaká je vzájemná poloha tělesových úhlopříček $AG$ a $BH$ krychle $ABCDEFGH$?
 @@ x=-0.7..1.35; y=-0.6..1.25; aspect=equal; axes=off; seg=-0.42,-0.32,0.58,-0.32,ink; seg=0.58,-0.32,1,0,ink; seg=1,0,0.875,0,muted; seg=0.75,0,0.625,0,muted; seg=0.5,0,0.375,0,muted; seg=0.25,0,0.125,0,muted; seg=0,0,-0.052,-0.04,muted; seg=-0.105,-0.08,-0.158,-0.12,muted; seg=-0.21,-0.16,-0.263,-0.2,muted; seg=-0.315,-0.24,-0.367,-0.28,muted; seg=-0.42,0.68,0.58,0.68,ink; seg=0.58,0.68,1,1,ink; seg=1,1,0,1,ink; seg=0,1,-0.42,0.68,ink; seg=-0.42,-0.32,-0.42,0.68,ink; seg=0.58,-0.32,0.58,0.68,ink; seg=1,0,1,1,ink; seg=0,0,0,0.125,muted; seg=0,0.25,0,0.375,muted; seg=0,0.5,0,0.625,muted; seg=0,0.75,0,0.875,muted; seg=-0.42,-0.32,1,1,ex; seg=0.58,-0.32,0,1,prf; label=-0.5,-0.44,A; label=0.65,-0.44,B; label=1.09,-0.04,C; label=-0.09,0.02,D; label=-0.5,0.72,E; label=0.68,0.7,F; label=1.08,1.04,G; label=-0.08,1.05,H
 - rovnoběžné
 + různoběžné
@@ -2717,14 +2717,15 @@ Jaká je vzájemná poloha tělesových úhlopříček $AG$ a $BH$?
 - totožné
 ! Obě leží v obdélníku $ABGH$ a protínají se v jeho středu, který je zároveň středem krychle.
 ? mc #egoi1
-Jaká je vzájemná poloha přímky $AB$ a roviny $EFG$?
+Jaká je vzájemná poloha přímky $AB$ a roviny $EFG$ v krychli $ABCDEFGH$?
 + přímka je s rovinou rovnoběžná
 - přímka leží v rovině
 - přímka rovinu protíná
 - přímka je k rovině kolmá
 ! $AB\parallel EF$ a $EF$ leží v rovině $EFG$. Přímka $AB$ v ní neleží, je s ní tedy rovnoběžná.
 ? mc #8tbbd
-Jaká je vzájemná poloha rovin $ACG$ a $BDH$?
+Jaká je vzájemná poloha rovin $ACG$ a $BDH$ v krychli $ABCDEFGH$?
+@@ x=-0.7..1.35; y=-0.6..1.25; aspect=equal; axes=off; seg=-0.42,-0.32,0.58,-0.32,ink; seg=0.58,-0.32,1,0,ink; seg=1,0,0.875,0,muted; seg=0.75,0,0.625,0,muted; seg=0.5,0,0.375,0,muted; seg=0.25,0,0.125,0,muted; seg=0,0,-0.052,-0.04,muted; seg=-0.105,-0.08,-0.158,-0.12,muted; seg=-0.21,-0.16,-0.263,-0.2,muted; seg=-0.315,-0.24,-0.367,-0.28,muted; seg=-0.42,0.68,0.58,0.68,ink; seg=0.58,0.68,1,1,ink; seg=1,1,0,1,ink; seg=0,1,-0.42,0.68,ink; seg=-0.42,-0.32,-0.42,0.68,ink; seg=0.58,-0.32,0.58,0.68,ink; seg=1,0,1,1,ink; seg=0,0,0,0.125,muted; seg=0,0.25,0,0.375,muted; seg=0,0.5,0,0.625,muted; seg=0,0.75,0,0.875,muted; label=-0.5,-0.44,A; label=0.65,-0.44,B; label=1.09,-0.04,C; label=-0.09,0.02,D; label=-0.5,0.72,E; label=0.68,0.7,F; label=1.08,1.04,G; label=-0.08,1.05,H
 - rovnoběžné
 + různoběžné
 - totožné
@@ -2751,7 +2752,7 @@ Kolik hran krychle je mimoběžných s hranou $AB$?
 Dvě přímky v prostoru, které nemají společný bod, jsou rovnoběžné.
 ! Mohou být také mimoběžné, třeba hrany $AE$ a $BC$ krychle.
 ? multi #ln0pn
-Které přímky jsou rovnoběžné s rovinou podstavy $ABC$ (a neleží v ní)?
+Které přímky jsou rovnoběžné s rovinou podstavy $ABC$ krychle $ABCDEFGH$ (a neleží v ní)?
 + $EF$
 + $FG$
 + $EG$
@@ -2796,7 +2797,7 @@ Jakou odchylku svírají stěnové úhlopříčky $AC$ a $CH$ krychle (ve stupn�
 ! Trojúhelník $ACH$ má všechny strany stěnové úhlopříčky, je rovnostranný. Odchylka je $60^\circ$.
 @ x=-0.7..1.35; y=-0.6..1.25; aspect=equal; axes=off; fill=-0.42,-0.32,1,0,0,1,ex; seg=-0.42,-0.32,0.58,-0.32,ink; seg=0.58,-0.32,1,0,ink; seg=1,0,0.875,0,muted; seg=0.75,0,0.625,0,muted; seg=0.5,0,0.375,0,muted; seg=0.25,0,0.125,0,muted; seg=0,0,-0.052,-0.04,muted; seg=-0.105,-0.08,-0.158,-0.12,muted; seg=-0.21,-0.16,-0.263,-0.2,muted; seg=-0.315,-0.24,-0.367,-0.28,muted; seg=-0.42,0.68,0.58,0.68,ink; seg=0.58,0.68,1,1,ink; seg=1,1,0,1,ink; seg=0,1,-0.42,0.68,ink; seg=-0.42,-0.32,-0.42,0.68,ink; seg=0.58,-0.32,0.58,0.68,ink; seg=1,0,1,1,ink; seg=0,0,0,0.125,muted; seg=0,0.25,0,0.375,muted; seg=0,0.5,0,0.625,muted; seg=0,0.75,0,0.875,muted; seg=-0.42,-0.32,1,0,ex; seg=1,0,0,1,ex; seg=0,1,-0.42,-0.32,ex; label=-0.5,-0.44,A; label=0.65,-0.44,B; label=1.09,-0.04,C; label=-0.09,0.02,D; label=-0.5,0.72,E; label=0.68,0.7,F; label=1.08,1.04,G; label=-0.08,1.05,H
 ? input #w7nkc | 90
-Jakou odchylku svírají mimoběžky $AB$ a $FG$ (ve stupních)?
+Jakou odchylku svírají mimoběžky $AB$ a $FG$ v krychli $ABCDEFGH$ (ve stupních)?
 ! $FG\parallel BC$ a $BC\perp AB$. Odchylka je $90^\circ$.
 ? mc #9sgwb
 Jaký je tangens odchylky tělesové úhlopříčky $AG$ od roviny podstavy?
