@@ -78,10 +78,13 @@
         });
         chosen = shuffle(chosen).map(instantiate);
       } else {
-        var gens = qsL.filter(function (it) { return it.kind === "gen"; });
-        var stat = shuffle(qsL.filter(function (it) { return it.kind !== "gen"; }));
-        gens = shuffle(gens).slice(0, 3);
-        chosen = shuffle(gens.concat(stat.slice(0, Math.max(0, LESSON_Q - gens.length)))).map(instantiate);
+        // the questions marked "?!" every time, the rest drawn at random (at most 3 generators in all)
+        var must = qsL.filter(function (it) { return it.must; }), rest = qsL.filter(function (it) { return !it.must; });
+        var room = Math.max(0, LESSON_Q - must.length);
+        var nGen = must.filter(function (it) { return it.kind === "gen"; }).length;
+        var gens = shuffle(rest.filter(function (it) { return it.kind === "gen"; })).slice(0, Math.max(0, Math.min(room, 3 - nGen)));
+        var stat = shuffle(rest.filter(function (it) { return it.kind !== "gen"; }));
+        chosen = shuffle(must.concat(gens, stat.slice(0, Math.max(0, room - gens.length)))).map(instantiate);
       }
       queue = learn.concat(chosen, pickReview(c, opts.node, REVIEW_Q));
     }
@@ -727,6 +730,7 @@
   C.canonBuild = canonBuild;
   C.closeLesson = closeLesson;
   C.debugItem = function () { return S && S.queue[S.i]; };
+  C.debugQueue = function () { return S ? S.queue.map(function (q) { return q.key || q.kind; }) : []; };
   C.debugStage = function () { return S ? S.stage : 0; };
   // play one question in the lesson player; onDone(true | false | null) runs when it closes
   C.answer = function (q, onDone) { startSession({ items: [q], feed: true, onDone: onDone }); };

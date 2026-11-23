@@ -41,6 +41,13 @@ All file formats are in `courses/README.md`. Follow the existing course files as
 (`courses/calc1/` is the largest). Keep each course in its own language as set in
 course.json (`lang`); the existing courses are Czech.
 
+**Adding questions to a lesson:** a lesson asks 7 questions per play, so its pool can be much larger;
+unanswered ones are offered later from the map. Questions written `?! kind` are asked every time.
+When you add questions, look at the whole lesson afterwards and mark with `?!` the few (at most 7,
+usually 2 to 4) that every student must meet. See *Which questions a lesson asks* in
+`courses/README.md`. Source material (exercise sheets, textbooks) may be outside the repository;
+ask the course owner where it is, and never commit it.
+
 Follow the writing rules in `courses/README.md` (*Writing for a phone*, *Notation*): a formula longer
 than about half a line goes in `$$…$$`, points are `[1, 2]`, decimals take a comma (`0{,}5`), and an
 explanation ends with the result. The right sides of `? match` and the options are shuffled, so never

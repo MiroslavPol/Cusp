@@ -22,7 +22,7 @@ import unicodedata
 sys.stdout.reconfigure(encoding="utf-8")
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ID = re.compile(r"^#[A-Za-z0-9_-]+$")
-Q = re.compile(r"^\? (\w+)(?:\s+#([A-Za-z0-9_-]+))?(\s*\|.*)?$")
+Q = re.compile(r"^(\?!?) (\w+)(?:\s+#([A-Za-z0-9_-]+))?(\s*\|.*)?$")
 ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789"
 
 
@@ -46,7 +46,7 @@ def existing_ids(lines):
             i = head_id(l.split(" ", 1)[1])
             if i: out.add(i)
         m = Q.match(l)
-        if m and m.group(2): out.add(m.group(2))
+        if m and m.group(3): out.add(m.group(3))
     return out
 
 
@@ -63,8 +63,8 @@ def assign(lines, rng=random.SystemRandom()):
             l = l.rstrip() + " | #" + new(); added += 1
         else:
             m = Q.match(l.rstrip())
-            if m and not m.group(2):
-                l = "? " + m.group(1) + " #" + new() + (m.group(3) or ""); added += 1
+            if m and not m.group(3):
+                l = m.group(1) + " " + m.group(2) + " #" + new() + (m.group(4) or ""); added += 1
         out.append(l)
     return out, added
 
@@ -83,7 +83,7 @@ def legacy_map(cid, old_lines, new_lines, feed_text):
             else:
                 m = Q.match(l.rstrip())
                 if m and units and units[-1]["lessons"]:
-                    units[-1]["lessons"][-1]["q"].append(m.group(2))
+                    units[-1]["lessons"][-1]["q"].append(m.group(3))
         return units
     old, new = walk(old_lines), walk(new_lines)
     M = {cid + "-final": cid + ":final"}

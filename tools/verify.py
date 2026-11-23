@@ -21,7 +21,7 @@ for f in sys.argv[1:]:
     cur = None; lesson = None
     for i, l in enumerate(open(f, encoding='utf-8').read().split('\n'), 1):
         if l.startswith('### '): lesson = l[4:]; continue
-        m = rx.match(r'^\? (\w+)(?:\s+#[A-Za-z0-9_-]+)?(?:\s*\|\s*(.*))?$', l)   # an optional #id after the kind
+        m = rx.match(r'^\?!? (\w+)(?:\s+#[A-Za-z0-9_-]+)?(?:\s*\|\s*(.*))?$', l)   # an optional #id after the kind
         if m:
             parts = [p.strip() for p in (m.group(2) or '').split('|')]
             cur = {'kind': m.group(1), 'answer': parts[0], 'flags': parts[1:] if m.group(1) == 'expr' else [], 'line': i, 'file': f}
