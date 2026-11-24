@@ -10,17 +10,17 @@ Negace obrací pravdivost. U složených výroků se spojky mění:
 $$\neg(A\wedge B) \Leftrightarrow \neg A\vee\neg B,\qquad \neg(A\vee B)\Leftrightarrow \neg A\wedge\neg B,$$
 $$\neg(A\Rightarrow B)\Leftrightarrow A\wedge\neg B.$$
 Negace implikace tedy není implikace: „Prší a není mokro.“ popírá „Jestliže prší, je mokro.“
-? mc #l84qj
+?! mc #l84qj
 Která z vět je výrok?
 + Číslo $91$ je prvočíslo.
 - Je dnes pátek?
 - Zavřete prosím okno!
 - Číslo $x$ je kladné.
 ! Otázka ani výzva pravdivostní hodnotu nemají a věta s proměnnou $x$ je jen výroková forma: o její pravdivosti rozhodne až dosazené číslo. Věta o čísle $91$ je výrok, a to nepravdivý, protože $91 = 7\cdot13$.
-? tf #1ug2u | true
+?! tf #1ug2u | true
 Výrok „$\sqrt{16} = 4$ nebo $2 > 3$“ je pravdivý.
 ! Disjunkce platí, když platí aspoň jedna část, a $\sqrt{16} = 4$ platí. Výrok je pravdivý.
-? tf #4bjbr | false
+?! tf #4bjbr | false
 Výrok „$\pi > 3$ a zároveň $\pi < 3{,}14$“ je pravdivý.
 ! $\pi \approx 3{,}1416 > 3{,}14$, takže druhá část neplatí a konjunkce je nepravdivá.
 ? mc #8kd76
@@ -77,6 +77,12 @@ Které formule jsou tautologie?
 Formule $(A\Rightarrow B)\wedge A$ je pravdivá pro všechny hodnoty $A$, $B$.
 ! Pro $A$ nepravdivé je celá konjunkce nepravdivá. Formule tedy tautologií není.
 ? gen #oo1qu | hs_truth
+? tf #87s7i | true
+Výrok $\neg(A\wedge B)$ je ekvivalentní s výrokem $\neg A\vee\neg B$.
+! To je de Morganovo pravidlo: konjunkce je nepravdivá, právě když je nepravdivý aspoň jeden z výroků. Tvrzení platí.
+? input #xrm70 | 2
+Kolik z formulí $A\vee\neg A$, $A\wedge\neg A$, $A\Rightarrow A$ je tautologií?
+! $A\vee\neg A$ i $A\Rightarrow A$ jsou pravdivé vždy, $A\wedge\neg A$ je vždy nepravdivá. Tautologie jsou $2$.
 
 ### Implikace a kvantifikátory | #djjp4
 ~ noaxes; text=∀∃; size=0.85
@@ -88,7 +94,7 @@ Je-li číslo dělitelné čtyřmi, je sudé. Obměna: není-li sudé, není dě
 $\forall x$ čteme „pro každé $x$“, $\exists x$ „existuje $x$“. Při negaci se kvantifikátory vymění a negujeme tvrzení za nimi:
 $$\neg(\forall x: V(x)) \Leftrightarrow \exists x: \neg V(x).$$
 Podobně se mění „aspoň $n$“ na „nejvýše $n-1$“ a naopak.
-? mc #vl3v3
+?! mc #vl3v3
 Která věta je obměnou implikace „Je-li číslo dělitelné šesti, je sudé.“?
 + Není-li číslo sudé, není dělitelné šesti.
 - Je-li číslo sudé, je dělitelné šesti.
@@ -96,10 +102,10 @@ Která věta je obměnou implikace „Je-li číslo dělitelné šesti, je sudé
 - Číslo je dělitelné šesti a není sudé.
 ! Obměna $\neg B\Rightarrow\neg A$ neguje obě části a prohodí je: „Není-li číslo sudé, není dělitelné šesti.“ Druhá nabídka je obrácená implikace, třetí obměna obrácené.
 @ x=-2.6..2.6; y=-1.7..1.7; aspect=equal; axes=off; circle=0,0,1.5; circle=-0.45,-0.1,0.75; label=-0.45,0.85,dělitelná 6; label=1.05,1.25,sudá
-? tf #zep8p | true
+?! tf #zep8p | true
 Obměněná implikace je pravdivá právě tehdy, když je pravdivá původní implikace.
 ! $A\Rightarrow B$ i $\neg B\Rightarrow\neg A$ jsou nepravdivé právě pro $A$ pravdivé a $B$ nepravdivé. Mají tedy vždy stejnou pravdivost.
-? tf #wg2al | false
+?! tf #wg2al | false
 Je-li implikace pravdivá, je pravdivá i implikace obrácená.
 ! „Je-li číslo dělitelné čtyřmi, je sudé.“ platí, ale „Je-li číslo sudé, je dělitelné čtyřmi.“ neplatí: protipříkladem je $6$.
 @ x=-2.6..2.6; y=-1.7..1.7; aspect=equal; axes=off; circle=0,0,1.5; circle=-0.45,-0.1,0.75; label=-0.45,0.85,dělitelná 4; label=1.05,1.25,sudá; pt=0.95,-0.7
@@ -154,6 +160,16 @@ Která formule je negací výroku $\forall x\in\mathbb R\ \exists y\in\mathbb R:
 - $\forall y\in\mathbb R\ \exists x\in\mathbb R: y > x$
 ! Oba kvantifikátory se vymění a nerovnost se neguje: $\exists x\ \forall y: y\le x$.
 ? gen #86gv5 | hs_neg_count
+? mc #lnrxl
+Která věta je obrácenou implikací k větě „Je-li číslo dělitelné čtyřmi, je sudé.“?
++ Je-li číslo sudé, je dělitelné čtyřmi.
+- Není-li číslo sudé, není dělitelné čtyřmi.
+- Není-li číslo dělitelné čtyřmi, není sudé.
+- Číslo je dělitelné čtyřmi a není sudé.
+! Obrácená implikace prohodí předpoklad a závěr: „Je-li číslo sudé, je dělitelné čtyřmi.“ Ta neplatí, třeba pro $6$; původní implikace přitom platí.
+? tf #pjjxx | false
+Ekvivalence $A\Leftrightarrow B$ je pravdivá, jen když jsou oba výroky $A$, $B$ pravdivé.
+! Ekvivalence je pravdivá, když mají $A$ a $B$ stejnou pravdivostní hodnotu, tedy i když jsou oba nepravdivé.
 
 ### Množiny a intervaly | #sol3s
 ~ noaxes; circle=-0.32,0,0.55; circle=0.32,0,0.55
@@ -166,7 +182,7 @@ Nahoře průnik $A\cap B$, dole sjednocení $A\cup B$.
 Plný bod do intervalu patří, prázdný ne. Šipka znamená, že interval pokračuje do nekonečna.
 @@ x=-4.6..4.6; y=-1..1.1; aspect=equal; axes=off; seg=-4.5,0,4.5,0,muted; seg=-4,-0.12,-4,0.12,muted; label=-4,-0.62,-4; seg=-3,-0.12,-3,0.12,muted; label=-3,-0.62,-3; seg=-2,-0.12,-2,0.12,muted; label=-2,-0.62,-2; seg=-1,-0.12,-1,0.12,muted; label=-1,-0.62,-1; seg=0,-0.12,0,0.12,muted; label=0,-0.62,0; seg=1,-0.12,1,0.12,muted; label=1,-0.62,1; seg=2,-0.12,2,0.12,muted; label=2,-0.62,2; seg=3,-0.12,3,0.12,muted; label=3,-0.62,3; seg=4,-0.12,4,0.12,muted; label=4,-0.62,4; fill=-2,0.29,3,0.29,3,0.55,-2,0.55,def; pt=-2,0.42; hole=3,0.42
 Na obrázku je $[-2, 3)$, tedy všechna $x$ s $-2\le x < 3$. Nekonečno do intervalu nikdy nepatří: $(-\infty, 1]$.
-? mc #r64jg
+?! mc #r64jg
 Která množina je na obrázku vybarvená?
 @@ x=-3.4..3.4; y=-2.1..2.1; aspect=equal; axes=off; fill=0,-1.062,0.05,-1.025,0.098,-0.985,0.144,-0.944,0.188,-0.9,0.23,-0.854,0.27,-0.806,0.307,-0.757,0.342,-0.705,0.374,-0.652,0.404,-0.598,0.432,-0.542,0.456,-0.485,0.478,-0.427,0.497,-0.368,0.513,-0.308,0.526,-0.247,0.537,-0.186,0.544,-0.124,0.549,-0.062,0.55,0,0.549,0.062,0.544,0.124,0.537,0.186,0.526,0.247,0.513,0.308,0.497,0.368,0.478,0.427,0.456,0.485,0.432,0.542,0.404,0.598,0.374,0.652,0.342,0.705,0.307,0.757,0.27,0.806,0.23,0.854,0.188,0.9,0.144,0.944,0.098,0.985,0.05,1.025,0,1.062,0,1.062,-0.05,1.025,-0.098,0.985,-0.144,0.944,-0.188,0.9,-0.23,0.854,-0.27,0.806,-0.307,0.757,-0.342,0.705,-0.374,0.652,-0.404,0.598,-0.432,0.542,-0.456,0.485,-0.478,0.427,-0.497,0.368,-0.513,0.308,-0.526,0.247,-0.537,0.186,-0.544,0.124,-0.549,0.062,-0.55,0,-0.549,-0.062,-0.544,-0.124,-0.537,-0.186,-0.526,-0.247,-0.513,-0.308,-0.497,-0.368,-0.478,-0.427,-0.456,-0.485,-0.432,-0.542,-0.404,-0.598,-0.374,-0.652,-0.342,-0.705,-0.307,-0.757,-0.27,-0.806,-0.23,-0.854,-0.188,-0.9,-0.144,-0.944,-0.098,-0.985,-0.05,-1.025,0,-1.062,def; circle=-0.75,0,1.3; circle=0.75,0,1.3; seg=-3.3,-2,3.3,-2,muted; seg=3.3,-2,3.3,2,muted; seg=3.3,2,-3.3,2,muted; seg=-3.3,2,-3.3,-2,muted; label=-1.725,1.235,A; label=1.725,1.235,B
 + $A\cap B$
@@ -174,7 +190,7 @@ Která množina je na obrázku vybarvená?
 - $A\setminus B$
 - $B\setminus A$
 ! Vybarvené jsou prvky, které leží v obou množinách zároveň: to je průnik $A\cap B$.
-? mc #wzbs6
+?! mc #wzbs6
 Která množina je na obrázku vybarvená?
 @@ x=-3.4..3.4; y=-2.1..2.1; aspect=equal; axes=off; fill=0,1.062,-0.12,1.137,-0.248,1.199,-0.382,1.247,-0.52,1.28,-0.661,1.297,-0.803,1.299,-0.944,1.285,-1.083,1.257,-1.218,1.213,-1.348,1.154,-1.47,1.082,-1.584,0.997,-1.688,0.9,-1.78,0.793,-1.861,0.676,-1.928,0.55,-1.981,0.419,-2.019,0.282,-2.042,0.142,-2.05,0,-2.042,-0.142,-2.019,-0.282,-1.981,-0.419,-1.928,-0.55,-1.861,-0.676,-1.78,-0.793,-1.688,-0.9,-1.584,-0.997,-1.47,-1.082,-1.348,-1.154,-1.218,-1.213,-1.083,-1.257,-0.944,-1.285,-0.803,-1.299,-0.661,-1.297,-0.52,-1.28,-0.382,-1.247,-0.248,-1.199,-0.12,-1.137,0,-1.062,0,-1.062,-0.05,-1.025,-0.098,-0.985,-0.144,-0.944,-0.188,-0.9,-0.23,-0.854,-0.27,-0.806,-0.307,-0.757,-0.342,-0.705,-0.374,-0.652,-0.404,-0.598,-0.432,-0.542,-0.456,-0.485,-0.478,-0.427,-0.497,-0.368,-0.513,-0.308,-0.526,-0.247,-0.537,-0.186,-0.544,-0.124,-0.549,-0.062,-0.55,0,-0.549,0.062,-0.544,0.124,-0.537,0.186,-0.526,0.247,-0.513,0.308,-0.497,0.368,-0.478,0.427,-0.456,0.485,-0.432,0.542,-0.404,0.598,-0.374,0.652,-0.342,0.705,-0.307,0.757,-0.27,0.806,-0.23,0.854,-0.188,0.9,-0.144,0.944,-0.098,0.985,-0.05,1.025,0,1.062,def; fill=0,-1.062,0.12,-1.137,0.248,-1.199,0.382,-1.247,0.52,-1.28,0.661,-1.297,0.803,-1.299,0.944,-1.285,1.083,-1.257,1.218,-1.213,1.348,-1.154,1.47,-1.082,1.584,-0.997,1.688,-0.9,1.78,-0.793,1.861,-0.676,1.928,-0.55,1.981,-0.419,2.019,-0.282,2.042,-0.142,2.05,0,2.042,0.142,2.019,0.282,1.981,0.419,1.928,0.55,1.861,0.676,1.78,0.793,1.688,0.9,1.584,0.997,1.47,1.082,1.348,1.154,1.218,1.213,1.083,1.257,0.944,1.285,0.803,1.299,0.661,1.297,0.52,1.28,0.382,1.247,0.248,1.199,0.12,1.137,0,1.062,0,1.062,0.05,1.025,0.098,0.985,0.144,0.944,0.188,0.9,0.23,0.854,0.27,0.806,0.307,0.757,0.342,0.705,0.374,0.652,0.404,0.598,0.432,0.542,0.456,0.485,0.478,0.427,0.497,0.368,0.513,0.308,0.526,0.247,0.537,0.186,0.544,0.124,0.549,0.062,0.55,0,0.549,-0.062,0.544,-0.124,0.537,-0.186,0.526,-0.247,0.513,-0.308,0.497,-0.368,0.478,-0.427,0.456,-0.485,0.432,-0.542,0.404,-0.598,0.374,-0.652,0.342,-0.705,0.307,-0.757,0.27,-0.806,0.23,-0.854,0.188,-0.9,0.144,-0.944,0.098,-0.985,0.05,-1.025,0,-1.062,def; circle=-0.75,0,1.3; circle=0.75,0,1.3; seg=-3.3,-2,3.3,-2,muted; seg=3.3,-2,3.3,2,muted; seg=3.3,2,-3.3,2,muted; seg=-3.3,2,-3.3,-2,muted; label=-1.725,1.235,A; label=1.725,1.235,B
 - $A\cap B$
@@ -182,7 +198,7 @@ Která množina je na obrázku vybarvená?
 + $(A\cup B)\setminus(A\cap B)$
 - $(A\cap B)'$
 ! Vybarvené je všechno, co patří právě do jedné z množin: sjednocení bez průniku, $(A\cup B)\setminus(A\cap B)$. Doplněk průniku by obsahoval i okolí kruhů.
-? mc #jur9w
+?! mc #jur9w
 Který obrázek znázorňuje $B\setminus A$?
 + @ x=-3.4..3.4; y=-2.1..2.1; aspect=equal; axes=off; fill=0,-1.062,0.12,-1.137,0.248,-1.199,0.382,-1.247,0.52,-1.28,0.661,-1.297,0.803,-1.299,0.944,-1.285,1.083,-1.257,1.218,-1.213,1.348,-1.154,1.47,-1.082,1.584,-0.997,1.688,-0.9,1.78,-0.793,1.861,-0.676,1.928,-0.55,1.981,-0.419,2.019,-0.282,2.042,-0.142,2.05,0,2.042,0.142,2.019,0.282,1.981,0.419,1.928,0.55,1.861,0.676,1.78,0.793,1.688,0.9,1.584,0.997,1.47,1.082,1.348,1.154,1.218,1.213,1.083,1.257,0.944,1.285,0.803,1.299,0.661,1.297,0.52,1.28,0.382,1.247,0.248,1.199,0.12,1.137,0,1.062,0,1.062,0.05,1.025,0.098,0.985,0.144,0.944,0.188,0.9,0.23,0.854,0.27,0.806,0.307,0.757,0.342,0.705,0.374,0.652,0.404,0.598,0.432,0.542,0.456,0.485,0.478,0.427,0.497,0.368,0.513,0.308,0.526,0.247,0.537,0.186,0.544,0.124,0.549,0.062,0.55,0,0.549,-0.062,0.544,-0.124,0.537,-0.186,0.526,-0.247,0.513,-0.308,0.497,-0.368,0.478,-0.427,0.456,-0.485,0.432,-0.542,0.404,-0.598,0.374,-0.652,0.342,-0.705,0.307,-0.757,0.27,-0.806,0.23,-0.854,0.188,-0.9,0.144,-0.944,0.098,-0.985,0.05,-1.025,0,-1.062,def; circle=-0.75,0,1.3; circle=0.75,0,1.3; seg=-3.3,-2,3.3,-2,muted; seg=3.3,-2,3.3,2,muted; seg=3.3,2,-3.3,2,muted; seg=-3.3,2,-3.3,-2,muted; label=-1.725,1.235,A; label=1.725,1.235,B
 - @ x=-3.4..3.4; y=-2.1..2.1; aspect=equal; axes=off; fill=0,1.062,-0.12,1.137,-0.248,1.199,-0.382,1.247,-0.52,1.28,-0.661,1.297,-0.803,1.299,-0.944,1.285,-1.083,1.257,-1.218,1.213,-1.348,1.154,-1.47,1.082,-1.584,0.997,-1.688,0.9,-1.78,0.793,-1.861,0.676,-1.928,0.55,-1.981,0.419,-2.019,0.282,-2.042,0.142,-2.05,0,-2.042,-0.142,-2.019,-0.282,-1.981,-0.419,-1.928,-0.55,-1.861,-0.676,-1.78,-0.793,-1.688,-0.9,-1.584,-0.997,-1.47,-1.082,-1.348,-1.154,-1.218,-1.213,-1.083,-1.257,-0.944,-1.285,-0.803,-1.299,-0.661,-1.297,-0.52,-1.28,-0.382,-1.247,-0.248,-1.199,-0.12,-1.137,0,-1.062,0,-1.062,-0.05,-1.025,-0.098,-0.985,-0.144,-0.944,-0.188,-0.9,-0.23,-0.854,-0.27,-0.806,-0.307,-0.757,-0.342,-0.705,-0.374,-0.652,-0.404,-0.598,-0.432,-0.542,-0.456,-0.485,-0.478,-0.427,-0.497,-0.368,-0.513,-0.308,-0.526,-0.247,-0.537,-0.186,-0.544,-0.124,-0.549,-0.062,-0.55,0,-0.549,0.062,-0.544,0.124,-0.537,0.186,-0.526,0.247,-0.513,0.308,-0.497,0.368,-0.478,0.427,-0.456,0.485,-0.432,0.542,-0.404,0.598,-0.374,0.652,-0.342,0.705,-0.307,0.757,-0.27,0.806,-0.23,0.854,-0.188,0.9,-0.144,0.944,-0.098,0.985,-0.05,1.025,0,1.062,def; circle=-0.75,0,1.3; circle=0.75,0,1.3; seg=-3.3,-2,3.3,-2,muted; seg=3.3,-2,3.3,2,muted; seg=3.3,2,-3.3,2,muted; seg=-3.3,2,-3.3,-2,muted; label=-1.725,1.235,A; label=1.725,1.235,B
@@ -242,6 +258,12 @@ Ve třídě je $30$ žáků. Fotbal hraje $18$ z nich, basketbal $15$ a obojí $
 ? gen #zrxu2 | hs_setop
 ? gen #owo5s | hs_ivl_op
 ? gen #nrdz1 | hs_nl_read
+? input #nuqvz | 16
+Kolik podmnožin má množina $\{a, b, c, d\}$?
+! Každý ze čtyř prvků v podmnožině buď je, nebo není: $2^4 = 16$ (včetně prázdné množiny a celé množiny).
+? interval #htdk1 | [-1; 0] ∪ (4; 6)
+Pro $A = [-1, 3]$, $B = (2, 6)$ a $C = (0, 4]$ určete $(A\cup B)\setminus C$.
+! $A\cup B = [-1, 6)$. Odebereme $(0, 4]$ a zbude $[-1, 0]\cup(4, 6)$.
 
 ## Rovnice a nerovnice | #kjg5l
 ### Lineární rovnice | #ry7bu
@@ -249,17 +271,17 @@ Ve třídě je $30$ žáků. Fotbal hraje $18$ z nich, basketbal $15$ a obojí $
 > Obě strany v rovnováze
 Rovnice je jako rovnoramenné váhy: co uděláte s jednou stranou, musíte udělat i s druhou. Rovnici $ax + b = c$ vyřešíme tak, že operace vrátíme v opačném pořadí: odečteme $b$ a pak vydělíme $a$.
 $$3x + 5 = 20 \;\Rightarrow\; 3x = 15 \;\Rightarrow\; x = 5$$
-? input #rrj8n | 4
+?! input #rrj8n | 4
 Vyřešte $2x + 7 = 15$.
 ! Odečteme $7$: $2x = 8$. Vydělíme $2$: $x = 4$.
-? mc #h3u7b
+?! mc #h3u7b
 Vyřešte $5 - x = 9$.
 - $x = 4$
 + $x = -4$
 - $x = 14$
 - $x = -14$
 ! Odečteme $5$: $-x = 4$, tedy $x = -4$.
-? input #zirap | 8
+?! input #zirap | 8
 Vyřešte $2(x - 3) = 10$.
 ! Vydělíme $2$: $x - 3 = 5$, tedy $x = 8$.
 ? input #gv8bc | 3
@@ -297,6 +319,12 @@ Obvod obdélníku je $40$ cm a jedna strana je o $4$ cm delší než druhá. Jak
 ! $2(a + a+4) = 40$, tedy $a = 8$ a delší strana $12$.
 ? gen #n7ph5 | hs_lin2
 ? gen #ad0tt | hs_lin_frac
+? input #un2a4 | 22/5; 4.4
+Vyřešte $\dfrac{2x-1}{3}-\dfrac{x+2}{4} = 1$.
+! Vynásobíme $12$: $4(2x-1)-3(x+2) = 12$, tedy $5x-10 = 12$ a $x = \frac{22}5$.
+? tf #ezc6r | true
+Rovnice $0\cdot x = 0$ má nekonečně mnoho řešení.
+! Rovnost platí pro každé reálné $x$, řešením je celé $\mathbb R$.
 
 ### Rozklad a kvadratické rovnice | #1hpou
 ~ f=1.2*x^2-0.6; pt=-0.707,0; pt=0.707,0
@@ -307,21 +335,21 @@ $$x^2 - 5x + 6 = (x-2)(x-3) = 0 \;\Rightarrow\; x = 2 \text{ nebo } x = 3$$
 Rovnice $ax^2 + bx + c = 0$ s $a\ne0$ má pro $b^2 - 4ac \ge 0$ reálná řešení
 $$x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.$$
 <b>Diskriminant</b> $D = b^2 - 4ac$ určuje jejich počet: dvě pro $D > 0$, jedno pro $D = 0$, žádné pro $D < 0$.
-? mc #4hn37
+?! mc #4hn37
 Rozložte $x^2 + 7x + 12$.
 + $(x+3)(x+4)$
 - $(x+2)(x+6)$
 - $(x+1)(x+12)$
 - $(x-3)(x-4)$
 ! Hledáme $p + q = 7$ a $pq = 12$: to jsou $3$ a $4$.
-? mc #7uzc0
+?! mc #7uzc0
 Rozložte $x^2 - 9$.
 - $(x-3)^2$
 + $(x-3)(x+3)$
 - $(x-9)(x+1)$
 - Rozložit nejde
 ! Rozdíl čtverců: $a^2 - b^2 = (a-b)(a+b)$.
-? input #o66a0 | 5
+?! input #o66a0 | 5
 Rovnice $x^2 - 2x - 15 = 0$ má dvě řešení. Zadejte větší z nich.
 ! $x^2 - 2x - 15 = (x-5)(x+3)$, tedy $x = 5$ nebo $x = -3$.
 @ x=-5..7; y=-17..8; f=x^2-2*x-15; pt=-3,0; pt=5,0
@@ -361,6 +389,12 @@ Vyřešte $2x^2-5x-3 = 0$.
 @ x=-2..4; y=-7..5; f=2*x^2-5*x-3; pt=-0.5,0; pt=3,0
 ? gen #l6ayw | hs_quad_a
 ? gen #ed04z | hs_disc
+? set #6208h | -2; -1; 1; 2
+Vyřešte $x^4-5x^2+4 = 0$.
+! Substitucí $t = x^2$: $t^2-5t+4 = (t-1)(t-4) = 0$, tedy $x^2 = 1$ nebo $x^2 = 4$. Řešení jsou $\pm1$ a $\pm2$.
+? set #vru9h | -2; 0; 2
+Vyřešte $x^3-4x = 0$.
+! $x^3-4x = x(x-2)(x+2)$, takže řešení jsou $0$, $2$ a $-2$. Nezapomeňte na kořen $0$, který by se ztratil vydělením $x$.
 
 ### Kvadratický trojčlen a Viètovy vzorce | #ao39z
 ~ f=1.1*(x-0.1)^2-0.6; pt=-0.64,0; pt=0.84,0; dash=0.1,-0.9,0.1,0.9
@@ -372,13 +406,13 @@ Kořeny jsou průsečíky paraboly s osou $x$ a vrchol leží přesně uprostře
 > Doplnění na čtverec
 $$x^2 + bx + c = \left(x + \frac b2\right)^2 + c - \frac{b^2}{4}.$$
 Druhá mocnina je nejmenší, když je nulová. Proto má $x^2 - 6x + 11 = (x-3)^2 + 2$ nejmenší hodnotu $2$, a to pro $x = 3$.
-? input #1gyym | -5
+?! input #1gyym | -5
 Rovnice $x^2 + px + 10 = 0$ má jeden kořen $-2$. Určete druhý kořen.
 ! Součin kořenů je $\frac ca = 10$, takže $-2\cdot x_2 = 10$ a druhý kořen je $x_2 = -5$.
-? input #4xlwi | 7
+?! input #4xlwi | 7
 Rovnice $x^2 + px + 10 = 0$ má jeden kořen $-2$. Určete koeficient $p$.
 ! Kořeny jsou $-2$ a $-5$ (jejich součin je $10$). Součet kořenů je $-p = -7$, tedy $p = 7$.
-? input #om9a1 | 3
+?! input #om9a1 | 3
 Určete součet kořenů rovnice $2x^2 - 6x + 1 = 0$, aniž ji řešíte.
 ! $x_1 + x_2 = -\frac ba = -\frac{-6}{2} = 3$.
 ? input #uvkc6 | -2
@@ -435,6 +469,16 @@ Zjednodušte $\dfrac{x^2 - 9}{x^2 + x - 6}$ (pro $x\ne2$, $x\ne-3$).
 ? gen #uad2u | hs_vieta
 ? gen #22usc | hs_vieta_sym
 ? gen #ewulj | hs_minval
+? input #53h2m | 52
+Rovnice $x^2-4x+1 = 0$ má kořeny $x_1$, $x_2$. Určete $x_1^3+x_2^3$ bez řešení rovnice.
+! $x_1+x_2 = 4$ a $x_1x_2 = 1$, takže $$x_1^3+x_2^3 = (x_1+x_2)^3-3x_1x_2(x_1+x_2) = 64-12 = 52.$$
+? mc #hm3oc
+Která rovnice má kořeny $\frac12$ a $-3$?
++ $2x^2+5x-3 = 0$
+- $2x^2-5x-3 = 0$
+- $x^2+\frac52x+\frac32 = 0$
+- $2x^2+5x+3 = 0$
+! $(2x-1)(x+3) = 2x^2+5x-3$. Rovnice $2x^2+5x-3 = 0$ má kořeny $\frac12$ a $-3$.
 
 ### Nerovnice | #lp4tv
 ~ f=0.6*x+0.1; shade=-1,1
@@ -443,21 +487,21 @@ Nerovnice řešíme jako rovnice, jen s jedním rozdílem: když obě strany ná
 $$-2x < 6 \;\Rightarrow\; x > -3$$
 > Absolutní hodnota
 $|x| < a$ znamená $-a < x < a$: vzdálenost od $0$ je menší než $a$. A $|x| > a$ znamená $x < -a$ nebo $x > a$.
-? mc #nwouz
+?! mc #nwouz
 Vyřešte $3x - 4 > 5$.
 + $x > 3$
 - $x < 3$
 - $x > \tfrac13$
 - $x > 9$
 ! Přičteme $4$: $3x > 9$. Vydělíme $3$: $x > 3$.
-? mc #lq157
+?! mc #lq157
 Vyřešte $-2x + 1 \le 7$.
 - $x \le -3$
 + $x \ge -3$
 - $x \ge 3$
 - $x \le 3$
 ! $-2x \le 6$ a dělení číslem $-2$ otočí znak: $x \ge -3$.
-? mc #qcezz
+?! mc #qcezz
 Vyřešte $|x - 2| < 3$.
 - $x < 5$
 + $-1 < x < 5$
@@ -497,6 +541,12 @@ Vyřešte $(x-2)(x-5)>0$.
 ! Součin je kladný mimo interval mezi kořeny.
 @ x=-0.6..7.6; y=-1..1.1; aspect=equal; axes=off; seg=-0.5,0,7.5,0,muted; seg=0,-0.12,0,0.12,muted; label=0,-0.62,0; seg=1,-0.12,1,0.12,muted; label=1,-0.62,1; seg=2,-0.12,2,0.12,muted; label=2,-0.62,2; seg=3,-0.12,3,0.12,muted; label=3,-0.62,3; seg=4,-0.12,4,0.12,muted; label=4,-0.62,4; seg=5,-0.12,5,0.12,muted; label=5,-0.62,5; seg=6,-0.12,6,0.12,muted; label=6,-0.62,6; seg=7,-0.12,7,0.12,muted; label=7,-0.62,7; fill=-0.5,0.29,2,0.29,2,0.55,-0.5,0.55,def; vec=-0.1,0.42,-0.5,0.42,def; hole=2,0.42; fill=5,0.29,7.5,0.29,7.5,0.55,5,0.55,def; hole=5,0.42; vec=7.1,0.42,7.5,0.42,def; label=0.75,0.78,+; label=3.5,0.78,−; label=6.25,0.78,+; seg=2,-0.25,2,0.25,ex; seg=5,-0.25,5,0.25,ex
 ? gen #eetui | hs_quad_ineq
+? interval #sziod | (4; 7)
+Řešte v $\mathbb R$: $3x-8<x+6<2x+2$.
+! Levá nerovnost dává $2x<14$, tedy $x<7$; pravá dává $4<x$. Řešením je $(4, 7)$.
+? interval #tq73n | [-3/4; 1]
+Řešte v $\mathbb R$ soustavu $2(x-1)\le1-x$, $7-3x\le x+10$, $x-3>2x-6$.
+! První nerovnice dá $x\le1$, druhá $x\ge-\frac34$, třetí $x<3$. Průnik je $\left[-\frac34, 1\right]$.
 
 ### Nerovnice v součinovém a podílovém tvaru | #zizc0
 ~ f=1.5*(x+0.5)*(x-0.5); shade=-0.5,0.5
@@ -507,15 +557,15 @@ Například $(x + 2)(x - 6) > 0$ platí vlevo od $-2$ a vpravo od $6$. Graf $y =
 > Podíl a nulový jmenovatel
 Pro podíl platí totéž co pro součin, jen nulový bod jmenovatele do řešení nikdy nepatří. Nerovnici nenásobte výrazem, jehož znaménko neznáte: záporný činitel by otočil znak.
 $$\frac{x - 3}{x + 1}\le 0 \iff x\in(-1, 3].$$
-? interval #7439t | (-∞; -2) ∪ (6; ∞)
+?! interval #7439t | (-∞; -2) ∪ (6; ∞)
 Vyřešte $(x - 6)(x + 2) > 0$.
 ! Nulové body $-2$ a $6$. Součin je kladný vlevo od $-2$ a vpravo od $6$, mezi nimi záporný: $x\in(-\infty, -2)\cup(6, \infty)$.
 @ x=-4.6..8.6; y=-1..1.1; aspect=equal; axes=off; seg=-4.5,0,8.5,0,muted; seg=-4,-0.12,-4,0.12,muted; label=-4,-0.62,-4; seg=-3,-0.12,-3,0.12,muted; label=-3,-0.62,-3; seg=-2,-0.12,-2,0.12,muted; label=-2,-0.62,-2; seg=-1,-0.12,-1,0.12,muted; label=-1,-0.62,-1; seg=0,-0.12,0,0.12,muted; label=0,-0.62,0; seg=1,-0.12,1,0.12,muted; label=1,-0.62,1; seg=2,-0.12,2,0.12,muted; label=2,-0.62,2; seg=3,-0.12,3,0.12,muted; label=3,-0.62,3; seg=4,-0.12,4,0.12,muted; label=4,-0.62,4; seg=5,-0.12,5,0.12,muted; label=5,-0.62,5; seg=6,-0.12,6,0.12,muted; label=6,-0.62,6; seg=7,-0.12,7,0.12,muted; label=7,-0.62,7; seg=8,-0.12,8,0.12,muted; label=8,-0.62,8; fill=-4.5,0.29,-2,0.29,-2,0.55,-4.5,0.55,def; vec=-4.1,0.42,-4.5,0.42,def; hole=-2,0.42; fill=6,0.29,8.5,0.29,8.5,0.55,6,0.55,def; hole=6,0.42; vec=8.1,0.42,8.5,0.42,def; label=-3.25,0.78,+; label=2,0.78,−; label=7.25,0.78,+; seg=-2,-0.25,-2,0.25,ex; seg=6,-0.25,6,0.25,ex
-? interval #a07hz | (-∞; -2] ∪ [4; ∞)
+?! interval #a07hz | (-∞; -2] ∪ [4; ∞)
 Vyřešte $(x + 2)(4 - x)\le 0$.
 ! Nulové body $-2$ a $4$. Pro $x = 0$ je součin $8 > 0$, takže kladný je mezi nimi a nekladný vně, včetně nulových bodů: $x\in(-\infty, -2]\cup[4, \infty)$.
 @ x=-4.6..6.6; y=-1..1.1; aspect=equal; axes=off; seg=-4.5,0,6.5,0,muted; seg=-4,-0.12,-4,0.12,muted; label=-4,-0.62,-4; seg=-3,-0.12,-3,0.12,muted; label=-3,-0.62,-3; seg=-2,-0.12,-2,0.12,muted; label=-2,-0.62,-2; seg=-1,-0.12,-1,0.12,muted; label=-1,-0.62,-1; seg=0,-0.12,0,0.12,muted; label=0,-0.62,0; seg=1,-0.12,1,0.12,muted; label=1,-0.62,1; seg=2,-0.12,2,0.12,muted; label=2,-0.62,2; seg=3,-0.12,3,0.12,muted; label=3,-0.62,3; seg=4,-0.12,4,0.12,muted; label=4,-0.62,4; seg=5,-0.12,5,0.12,muted; label=5,-0.62,5; seg=6,-0.12,6,0.12,muted; label=6,-0.62,6; fill=-4.5,0.29,-2,0.29,-2,0.55,-4.5,0.55,def; vec=-4.1,0.42,-4.5,0.42,def; pt=-2,0.42; fill=4,0.29,6.5,0.29,6.5,0.55,4,0.55,def; pt=4,0.42; vec=6.1,0.42,6.5,0.42,def; label=-3.25,0.78,−; label=1,0.78,+; label=5.25,0.78,−; seg=-2,-0.25,-2,0.25,ex; seg=4,-0.25,4,0.25,ex
-? interval #g8864 | (-1; 3]
+?! interval #g8864 | (-1; 3]
 Vyřešte $\dfrac{x - 3}{x + 1}\le 0$.
 ! Nulové body $-1$ (jmenovatel, ten do řešení nepatří) a $3$. Mezi nimi je podíl záporný: $x\in(-1, 3]$.
 @ x=-3.6..5.6; y=-1..1.1; aspect=equal; axes=off; seg=-3.5,0,5.5,0,muted; seg=-3,-0.12,-3,0.12,muted; label=-3,-0.62,-3; seg=-2,-0.12,-2,0.12,muted; label=-2,-0.62,-2; seg=-1,-0.12,-1,0.12,muted; label=-1,-0.62,-1; seg=0,-0.12,0,0.12,muted; label=0,-0.62,0; seg=1,-0.12,1,0.12,muted; label=1,-0.62,1; seg=2,-0.12,2,0.12,muted; label=2,-0.62,2; seg=3,-0.12,3,0.12,muted; label=3,-0.62,3; seg=4,-0.12,4,0.12,muted; label=4,-0.62,4; seg=5,-0.12,5,0.12,muted; label=5,-0.62,5; fill=-1,0.29,3,0.29,3,0.55,-1,0.55,def; hole=-1,0.42; pt=3,0.42; label=-2.25,0.78,+; label=1,0.78,−; label=4.25,0.78,+; seg=-1,-0.25,-1,0.25,ex; seg=3,-0.25,3,0.25,ex
@@ -576,6 +626,12 @@ Který obrázek znázorňuje řešení nerovnice $(x - 1)(x + 3)\le 0$?
 ! Součin je nekladný mezi kořeny $-3$ a $1$, včetně nich: $[-3, 1]$, oba body plné.
 ? gen #lqfkc | hs_frac_ineq
 ? gen #rj00w | hs_quad_ineq
+? interval #rul9f | (5/2; 3]
+Řešte v $\mathbb R$ soustavu $\dfrac{2+x}{x-1}<3$, $\dfrac2{x-1}\ge1$.
+! První nerovnice je $\frac{5-2x}{x-1}<0$, tedy $x<1$ nebo $x>\frac52$. Druhá je $\frac{3-x}{x-1}\ge0$, tedy $1<x\le3$. Průnik je $\left(\frac52, 3\right]$.
+? interval #wmxhj | [-1; 0) ∪ [6; ∞)
+Řešte v $\mathbb R$ soustavu $\dfrac43+\dfrac4x\le\dfrac x3$, $\dfrac12+\dfrac1x\le\dfrac x2$.
+! První nerovnice je $\frac{(x-6)(x+2)}{x}\ge0$, tedy $x\in[-2,0)\cup[6,\infty)$. Druhá je $\frac{(x-2)(x+1)}{x}\ge0$, tedy $x\in[-1,0)\cup[2,\infty)$. Průnik je $[-1, 0)\cup[6,\infty)$.
 
 ## Další rovnice a soustavy | #4eit8
 ### Absolutní hodnota | #9nl21
@@ -585,14 +641,14 @@ $|a|$ je vzdálenost čísla $a$ od nuly a $|x - a|$ vzdálenost $x$ od $a$. Rov
 @@ x=-4..6; y=-1..5; f=abs(x-1); hline=3; pt=-2,3; pt=4,3
 > Metoda nulových bodů
 Nulové body výrazů v absolutních hodnotách rozdělí osu na intervaly. Na každém z nich absolutní hodnoty odstraníme podle znaménka ($|u| = u$ pro $u\ge0$, $|u| = -u$ pro $u < 0$) a vyřešíme obyčejnou rovnici. Výsledek musí ležet v daném intervalu.
-? set #6rsgi | -5; -3
+?! set #6rsgi | -5; -3
 Vyřešte $|x + 4| = 1$.
 ! Hledáme čísla ve vzdálenosti $1$ od $-4$: $x = -5$ a $x = -3$.
 @ x=-7..0; y=-1..4; f=abs(x+4); hline=1; pt=-5,1; pt=-3,1
-? set #048sp | -3/2; 9/2
+?! set #048sp | -3/2; 9/2
 Vyřešte $|2x - 3| = 6$.
 ! $2x - 3 = 6$ dává $x = \frac92$ a $2x - 3 = -6$ dává $x = -\frac32$.
-? set #regbm | ∅
+?! set #regbm | ∅
 Vyřešte $|x + 1| = -2$.
 ! Absolutní hodnota není nikdy záporná, rovnice nemá řešení.
 ? interval #c0111 | [7; ∞)
@@ -633,6 +689,12 @@ Pro všechna reálná čísla $a$, $b$ platí $|a + b|\le|a| + |b|$.
 ! Je to trojúhelníková nerovnost. Rovnost nastane, když mají $a$, $b$ stejné znaménko (nebo je jedno nulové), jinak se v součtu částečně odečtou.
 ? gen #jli46 | hs_abs_eq
 ? gen #p5fsf | hs_abs_ineq
+? interval #0ngpv | (-∞; -1) ∪ (-1; ∞)
+Řešte v $\mathbb R$: $|x-3|+2|x+1|>4$.
+! Na $(-\infty,-1)$ je to $1-3x>4$, tedy $x<-1$: platí všude. Na $[-1,3)$ je to $x+5>4$, tedy $x>-1$, a na $[3,\infty)$ je to $3x-1>4$, což platí všude. Jen v bodě $-1$ je levá strana rovna $4$. Řešením je $\mathbb R\setminus\{-1\}$.
+? interval #dolee | (-7; -7/2) ∪ (-1/2; 3)
+Řešte v $\mathbb R$: $3<|2x+4|<10$.
+! Platí $|2x+4| = 2|x+2|$, takže $\frac32<|x+2|<5$. To dává $x+2\in(-5,-\frac32)\cup(\frac32,5)$, tedy $x\in\left(-7,-\frac72\right)\cup\left(-\frac12,3\right)$.
 
 ### Odmocniny a neznámá ve jmenovateli | #55lh1
 ~ f=0.9*sqrt(x+1)-0.6; f=0.3-0.5*x
@@ -642,14 +704,14 @@ Umocnění obou stran není ekvivalentní úprava: z $a = b$ plyne $a^2 = b^2$, 
 Rovnice $\sqrt x = 2 - x$ má po umocnění kořeny $1$ a $4$, ale grafy se protnou jen v $x = 1$. Pro $x = 4$ je $\sqrt4 = 2\ne-2$.
 > Neznámá ve jmenovateli
 Nejdřív podmínky: jmenovatel nesmí být nula. Potom rovnici vynásobíme společným jmenovatelem a na konci vyřadíme kořeny, které podmínky porušují.
-? set #2vt5p | 1
+?! set #2vt5p | 1
 Vyřešte $\sqrt x + x = 2$.
 ! $\sqrt x = 2 - x$, po umocnění $x = 4 - 4x + x^2$, tedy $x^2 - 5x + 4 = 0$ a $x\in\{1, 4\}$. Zkouška: $\sqrt1 + 1 = 2$ platí, $\sqrt4 + 4 = 6$ ne. Řešení je $x = 1$.
 @ x=-1..6; y=-2..4; f=sqrt(x); f=2-x; pt=1,1
-? set #svwsy | -5; 4
+?! set #svwsy | -5; 4
 Vyřešte $3\sqrt{x + 5} = x + 5$.
 ! Označme $t = \sqrt{x + 5}\ge0$: $3t = t^2$, tedy $t = 0$ nebo $t = 3$. Odtud $x = -5$ nebo $x = 4$ a oba kořeny zkouškou projdou.
-? set #lg052 | 5
+?! set #lg052 | 5
 Vyřešte $\sqrt{x - 1} + \sqrt{x + 4} = 5$.
 ! Levá strana roste, takže řešení je nejvýše jedno. $x = 5$: $\sqrt4 + \sqrt9 = 2 + 3 = 5$. Řešení je $x = 5$.
 ? set #firg5 | 3
@@ -688,6 +750,12 @@ Pro která $x$ má výraz $\dfrac{\sqrt{x + 2}}{x - 3}$ smysl?
 ! Odmocnina potřebuje $x\ge-2$ a jmenovatel $x\ne3$: $x\in[-2, 3)\cup(3, \infty)$.
 ? gen #fmdea | hs_sqrt_eq
 ? gen #g94sx | hs_frac_eq
+? input #kfaqz | 2
+Vyřešte $\sqrt{x+7} = x+1$.
+! Umocněním $x+7 = x^2+2x+1$, tedy $x^2+x-6 = 0$ a $x\in\{2,-3\}$. Zkouška: $\sqrt9 = 3$ platí, pro $-3$ je $\sqrt4 = 2\ne-2$. Řešení je $x = 2$.
+? set #1hkss | 0
+Vyřešte $\dfrac{x}{x-2}-\dfrac4{x+2} = \dfrac8{x^2-4}$.
+! Podmínky $x\ne\pm2$. Vynásobením $x^2-4$: $x(x+2)-4(x-2) = 8$, tedy $x^2-2x = 0$ a $x\in\{0, 2\}$. Číslo $2$ podmínky nesplňuje, řešení je jen $x = 0$.
 
 ### Soustavy rovnic | #ywqe9
 ~ f=0.8*x+0.1; f=-0.6*x+0.3; pt=0.143,0.214
@@ -697,7 +765,7 @@ Každá lineární rovnice o dvou neznámých je přímka. Řešení soustavy js
 > Dosazovací a sčítací metoda
 Z jedné rovnice vyjádříme neznámou a dosadíme do druhé, nebo rovnice vynásobíme tak, aby se po sečtení jedna neznámá odečetla.
 $$\begin{aligned} x + y &= 5\\ x - y &= 1\end{aligned}\quad\Rightarrow\quad 2x = 6,\ x = 3,\ y = 2.$$
-? mc #kg0lm
+?! mc #kg0lm
 Vyřešte soustavu $3x + 2y = 12$, $x - y = -1$.
 + $[2, 3]$
 - $[3, 2]$
@@ -705,7 +773,7 @@ Vyřešte soustavu $3x + 2y = 12$, $x - y = -1$.
 - $[0, 6]$
 ! Z druhé rovnice $x = y - 1$. Dosadíme: $3y - 3 + 2y = 12$, tedy $y = 3$ a $x = 2$. Řešení je $[2, 3]$.
 @ x=-1..5; y=-1..7; f=(12-3*x)/2; f=x+1; pt=2,3
-? mc #oer4e
+?! mc #oer4e
 Na obrázku jsou přímky $y = 2x - 1$ a $y = 5 - x$. Které řešení má soustava těchto dvou rovnic?
 @@ x=-1..5; y=-2..5; f=2*x-1; f=5-x
 + $[2, 3]$
@@ -713,7 +781,7 @@ Na obrázku jsou přímky $y = 2x - 1$ a $y = 5 - x$. Které řešení má soust
 - $[1, 1]$
 - $[0, 5]$
 ! Přímky se protínají v bodě $[2, 3]$: $2\cdot2 - 1 = 3 = 5 - 2$.
-? mc #4z6nu
+?! mc #4z6nu
 Kolik řešení má soustava $x - 5y = 7$, $x - 5y = 6$?
 + Žádné
 - Právě jedno
@@ -757,6 +825,12 @@ Přiřaďte soustavám obrázky.
 - @ x=-2..4; y=-2..4; f=x; f=2
 ! Soustava $y = x$, $y = 2 - x$ má jeden průsečík, $y = x$ a $y = x + 2$ jsou rovnoběžky a přímka $y = x$ protne kružnici o poloměru $2$ dvakrát. Obrázek s vodorovnou přímkou $y = 2$ k žádné soustavě nepatří.
 ? gen #fvprm | hs_sys2
+? input #98y61 | 4
+Kolik řešení $[x, y]$ má soustava $x^2+y^2 = 13$, $xy = 6$?
+! $(x+y)^2 = x^2+y^2+2xy = 25$, tedy $x+y = \pm5$. Spolu s $xy = 6$ dostaneme $[2,3]$, $[3,2]$, $[-2,-3]$, $[-3,-2]$. Řešení jsou $4$.
+? input #x4eal | 49
+Součet dvou přirozených čísel je $50$ a jejich aritmetický průměr je o $18$ větší než geometrický. Určete větší z nich.
+! $\frac{a+b}2 = 25$, takže $\sqrt{ab} = 7$ a $ab = 49$. Čísla se součtem $50$ a součinem $49$ jsou $49$ a $1$. Větší je $49$.
 
 ### Slovní úlohy | #6m1d8
 ~ noaxes; text=%; size=1.1
@@ -766,13 +840,13 @@ Neznámou pojmenujte, podmínky úlohy přepište na rovnici a na konci odpově�
 Zdražení o $20\,\%$ a zlevnění o $10\,\%$ neznamená zdražení o $10\,\%$: druhá změna se počítá z nové ceny.
 @@ x=0.2..3.8; y=-11.04..138; fill=0.65,0,1.35,0,1.35,100,0.65,100,def; fill=1.65,0,2.35,0,2.35,120,1.65,120,def; fill=2.65,0,3.35,0,3.35,108,2.65,108,def
 $$100\cdot1{,}2\cdot0{,}9 = 108.$$
-? input #efi4e | 8
+?! input #efi4e | 8
 Cena zboží nejprve vzrostla o $20\,\%$, potom klesla o $10\,\%$. O kolik procent je výsledná cena vyšší než původní?
 ! $1{,}2\cdot0{,}9 = 1{,}08$, cena je o $8\,\%$ vyšší.
-? input #v2ort | 42
+?! input #v2ort | 42
 Smícháme $10$ litrů $30\%$ roztoku a $15$ litrů $50\%$ roztoku. Kolikaprocentní roztok vznikne?
 ! Účinné látky je $3 + 7{,}5 = 10{,}5$ litru ve $25$ litrech: $\frac{10{,}5}{25} = 0{,}42$, tedy $42\,\%$.
-? input #zwgbe | 20
+?! input #zwgbe | 20
 Kolik litrů vody musíme přilít ke $100$ litrům $90\%$ lihu, abychom dostali $75\%$ líh?
 ! Čistého lihu je $90$ l a zůstane ho stejně: $90 = 0{,}75(100 + x)$, tedy $100 + x = 120$ a $x = 20$ litrů.
 ? input #ufl6j | 2
@@ -805,6 +879,18 @@ Dvojciferné číslo má ciferný součet $9$. Když jeho cifry prohodíme, dost
 ? gen #lnywp | hs_word_mix
 ? gen #ykkcn | hs_word_work
 ? gen #wbgma | hs_word_meet
+?! input #ezils | 8
+Připíšeme-li k jednocifernému číslu číslici $1$ vpravo, dostaneme číslo $4{,}5$krát větší, než kdybychom číslici $1$ připsali vlevo. Určete dané číslo.
+! Vpravo dostaneme $10x+1$, vlevo $10+x$. Z $10x+1 = 4{,}5(10+x)$ plyne $5{,}5x = 44$, tedy $x = 8$ (a opravdu $81 = 4{,}5\cdot18$).
+? input #w4ij3 | 120
+Zvětšíme-li jednu stranu obdélníku o $2$ cm a druhou zmenšíme o $4$ cm, zmenší se obsah o $36\ \mathrm{cm}^2$. Zvětšíme-li obě strany o $1$ cm, bude obsah $143\ \mathrm{cm}^2$. Jaký je původní obsah ($\mathrm{cm}^2$)?
+! Z první podmínky $2b-4a-8 = -36$, tedy $b = 2a-14$. Druhá dá $(a+1)(2a-13) = 143$, tedy $2a^2-11a-156 = 0$ a $a = 12$, $b = 10$. Původní obsah je $120\ \mathrm{cm}^2$.
+? input #qtoy0 | 15
+Kolik litrů vody teplé $60^\circ$C musíme přilít do $30$ litrů vody teplé $30^\circ$C, aby měla směs $40^\circ$C?
+! Teplo odevzdané teplejší vodou se rovná teplu přijatému studenější: $x(60-40) = 30(40-30)$, tedy $20x = 300$ a $x = 15$ litrů.
+? input #9j4e3 | 3/2; 1.5
+Petr by hromadu uhlí složil sám za $3$ hodiny, Pavel za $2$ hodiny. Nejprve pracuje Petr sám půl hodiny, pak se přidá Pavel. Za kolik hodin od začátku je hotovo?
+! Za půl hodiny Petr udělá $\frac16$ práce. Společně udělají za hodinu $\frac13+\frac12 = \frac56$, takže zbylých $\frac56$ zvládnou za $1$ hodinu. Celkem $\frac32$ hodiny.
 
 ### Rovnice s parametrem | #os02h
 ~ f=1.2*x^2-0.7; f=1.2*x^2-0.2; f=1.2*x^2+0.3
@@ -814,17 +900,17 @@ $$x(a - 4) = a^2 - 16:\quad a = 4\Rightarrow x\in\mathbb R,\qquad a\ne4\Rightarr
 > Kvadratická rovnice s parametrem
 Počet reálných kořenů určuje diskriminant. Pro $x^2 + 2x + c = 0$ je $D = 4 - 4c$: dva kořeny pro $c < 1$, jeden pro $c = 1$, žádný pro $c > 1$. Parabola se s rostoucím $c$ posouvá nahoru.
 @@ x=-4..2; y=-3..4; f=x^2+2*x-2; f=x^2+2*x+1; f=x^2+2*x+2.5; label=0.95,1.2,c = −2; label=-2.2,2.2,c = 1
-? mc #tpuq8
+?! mc #tpuq8
 Jaké řešení má rovnice $x(a - 4) = a^2 - 16$ s neznámou $x$ pro $a = 4$?
 + Každé reálné číslo
 - Žádné
 - $x = 8$
 - $x = 0$
 ! Pro $a = 4$ dostaneme $0\cdot x = 0$, a to platí pro každé $x$.
-? expr #7o2j1 | a+4 | var=a
+?! expr #7o2j1 | a+4 | var=a
 Vyřešte rovnici $x(a - 4) = a^2 - 16$ s neznámou $x$ pro $a\ne4$. Zapište $x$ pomocí $a$.
 ! Vydělíme $a - 4\ne0$: $x = \frac{(a - 4)(a + 4)}{a - 4} = a + 4$.
-? mc #mwb6a
+?! mc #mwb6a
 Jaké řešení má rovnice $x(2a + 1) = 5$ s neznámou $x$ pro $a = -\frac12$?
 - Každé reálné číslo
 + Žádné
@@ -863,19 +949,25 @@ Určete $m$ tak, aby rovnice $\dfrac mx + m = 6 + \dfrac2x$ měla kořen $x = 2$
 ! Dosadíme $x = 2$: $\frac m2 + m = 6 + 1$, tedy $\frac{3m}{2} = 7$ a $m = \frac{14}{3}$.
 ? gen #vz0em | hs_param_lin
 ? gen #070sh | hs_param_disc
+?! set #3utfd | 0; 1
+Pro která $a$ má rovnice $ax^2+2x+1 = 0$ právě jedno řešení?
+! Pro $a = 0$ je rovnice lineární, $2x+1 = 0$, s jediným řešením $-\frac12$. Pro $a\ne0$ je kvadratická a jediné (dvojnásobné) řešení má při $D = 4-4a = 0$, tedy $a = 1$. Odpověď je $a\in\{0, 1\}$.
+? input #jyxr0 | 6
+Pro které $m$ má rovnice $x^2-mx+9 = 0$ kladný dvojnásobný kořen?
+! Dvojnásobný kořen nastane pro $D = m^2-36 = 0$, tedy $m = \pm6$. Kořen je $\frac m2$, kladný pro $m = 6$ (kořen $3$).
 
 ## Funkce | #z3yyt
 ### Co je funkce? | #qjh3h
 ~ noaxes; text=f(x); size=0.62
 > Jeden vstup, jeden výstup
 <b>Funkce</b> $f$ přiřazuje každému vstupu $x$ ze svého <b>definičního oboru</b> právě jednu hodnotu $f(x)$. U funkce zadané vzorcem bereme za definiční obor všechna $x$, pro která má vzorec smysl: nedělíme nulou a neodmocňujeme záporná čísla.
-? input #sgloh | 7
+?! input #sgloh | 7
 Je-li $f(x) = x^2 - 2$, kolik je $f(3)$?
 ! $f(3) = 9 - 2 = 7$.
-? input #xoj7u | 11
+?! input #xoj7u | 11
 Je-li $g(t) = 5 - 2t$, kolik je $g(-3)$?
 ! $g(-3) = 5 - 2\cdot(-3) = 5 + 6 = 11$.
-? mc #f0lhr
+?! mc #f0lhr
 Jaký je definiční obor funkce $f(x) = \dfrac{1}{x - 4}$?
 - Všechna reálná čísla
 + Všechna reálná čísla kromě $4$
@@ -916,6 +1008,12 @@ Je-li $f(x) = x^2$, kolik je $f(f(\sqrt3))$?
 Jaký je definiční obor funkce $\sqrt{4-2x}$?
 ! $4-2x\ge0\iff x\le2$.
 ? gen #ftq9c | hs_domain
+? interval #1vkqc | (-∞; -2) ∪ [1; ∞)
+Jaký je definiční obor funkce $f(x) = \sqrt{\dfrac{x-1}{x+2}}$?
+! Potřebujeme $\frac{x-1}{x+2}\ge0$ a $x\ne-2$. Zlomek je nezáporný vně nulových bodů $-2$ a $1$, bod $1$ včetně. $D(f) = (-\infty,-2)\cup[1,\infty)$.
+? input #clmyu | 4
+Pro $f(x) = 3x-2$ platí $f(a) = 10$. Určete $a$.
+! $3a-2 = 10$, tedy $a = 4$.
 
 ### Vlastnosti funkcí | #1qv7u
 ~ f=0.9*x^3; fd=x^2-0.5
@@ -926,18 +1024,18 @@ Funkce $3 - (x - 1)^2$ roste na $(-\infty, 1]$, klesá na $[1, \infty)$ a má ma
 > Sudá, lichá, prostá
 <b>Sudá</b> funkce, $f(-x) = f(x)$, má graf souměrný podle osy $y$. <b>Lichá</b>, $f(-x) = -f(x)$, podle počátku. <b>Prostá</b> funkce nabývá každé hodnoty nejvýše jednou: každá vodorovná přímka protne graf nejvýše jednou.
 @@ x=-2.5..2.5; y=-3..3; f=x^2-2; f=x^3-x; label=1.6,1.9,x² − 2; label=-1.9,-2.5,x³ − x
-? mc #7zq2p
+?! mc #7zq2p
 Který graf patří sudé funkci?
 + @ x=-3..3; y=-3..3; f=x^2-2
 - @ x=-3..3; y=-3..3; f=x^3-x
 - @ x=-3..3; y=-3..3; f=(x-1)^2-1
 - @ x=-3..3; y=-3..3; f=2^x-1
 ! Graf sudé funkce je souměrný podle osy $y$. To splňuje jen parabola $y = x^2 - 2$ s vrcholem na ose $y$.
-? tf #m1mj8 | true
+?! tf #m1mj8 | true
 Funkce $f(x) = x^3 - x$ je lichá.
 ! $f(-x) = -x^3 + x = -(x^3 - x) = -f(x)$, takže je lichá. Graf je souměrný podle počátku.
 @ x=-2..2; y=-2..2; f=x^3-x
-? multi #t4hmw
+?! multi #t4hmw
 Které funkce jsou sudé?
 + $y = |x|$
 + $y = x^4 - x^2$
@@ -990,6 +1088,16 @@ Na kterém intervalu je funkce $f(x) = \dfrac1{x^2}$ klesající?
 @ x=-3..3; y=-0.5..4; f=1/x^2
 ? gen #a3u8b | hs_parity
 ? gen #kslo8 | hs_range_quad
+? tf #6w600 | true
+Součet dvou rostoucích funkcí (na témže intervalu) je rostoucí funkce.
+! Pro $x_1<x_2$ je $f(x_1)<f(x_2)$ i $g(x_1)<g(x_2)$; sečtením $f(x_1)+g(x_1)<f(x_2)+g(x_2)$. Součet je rostoucí.
+? mc #6r23s
+Funkce $f(x) = x\,|x|$ je
+- sudá
++ lichá
+- ani sudá, ani lichá
+- sudá i lichá
+! $f(-x) = -x\,|-x| = -x\,|x| = -f(x)$, takže je lichá.
 
 ### Lineární funkce | #atseo
 ~ f=0.6*x+0.15; f=-0.5*x-0.3
@@ -997,14 +1105,14 @@ Na kterém intervalu je funkce $f(x) = \dfrac1{x^2}$ klesající?
 Lineární funkce má tvar $f(x) = kx + q$. Jejím grafem je přímka se <b>směrnicí</b> $k$, která protíná osu $y$ v bodě $q$. Pro přímku procházející body $[x_1, y_1]$ a $[x_2, y_2]$ je
 $$k = \frac{y_2 - y_1}{x_2 - x_1}.$$
 Rovnoběžné přímky mají stejnou směrnici. Směrnice kolmých přímek mají součin $-1$.
-? input #ec5w5 | 3
+?! input #ec5w5 | 3
 Určete směrnici přímky procházející body $[1, 2]$ a $[3, 8]$.
 ! $k = \dfrac{8 - 2}{3 - 1} = \dfrac62 = 3$.
 @ x=-1..5; y=-1..9; f=3*x-1; pt=1,2; pt=3,8; seg=1,2,3,2,prf; seg=3,2,3,8,thm; label=2,1.3,2; label=3.4,5,6
-? input #e270q | -5
+?! input #e270q | -5
 V jakém bodě protíná přímka $y = 2x - 5$ osu $y$? Zadejte hodnotu $y$.
 ! Dosadíme $x = 0$: $y = -5$.
-? mc #v7i5s
+?! mc #v7i5s
 Která přímka je rovnoběžná s $y = 3x + 1$?
 - $y = -3x + 1$
 - $y = \tfrac13 x + 1$
@@ -1057,6 +1165,12 @@ Přiřaďte funkcím jejich grafy.
 ! Směrnice $k$ určuje sklon, $q$ je průsečík s osou $y$. $y=-x+2$ klesá a protíná osu $y$ v bodě $2$; rostoucí přímka se stejným průsečíkem patří $y=x+2$. $y=3$ je vodorovná.
 ? gen #mf621 | hs_slope
 ? gen #tbncr | hs_line_pick
+? input #u5j5r | 2
+Přímka prochází body $[-1, 4]$ a $[3, -4]$. Ve kterém bodě protíná osu $y$? Zadejte hodnotu $y$.
+! Směrnice je $\frac{-4-4}{3+1} = -2$, takže $y = 4-2(x+1) = -2x+2$. Osu $y$ protíná v $y = 2$.
+? input #73cyd | 2/3
+Pro jaké $k$ je přímka $y = kx+1$ rovnoběžná s přímkou $2x-3y = 6$?
+! Z $2x-3y = 6$ je $y = \frac23x-2$. Rovnoběžné přímky mají stejnou směrnici: $k = \frac23$.
 
 ### Kvadratická funkce | #etst6
 ~ f=0.6-1.4*(x-0.15)^2; pt=0.15,0.6
@@ -1064,14 +1178,14 @@ Přiřaďte funkcím jejich grafy.
 Grafem funkce $f(x) = ax^2 + bx + c$ je parabola. Pro $a > 0$ je otevřená nahoru, pro $a < 0$ dolů. Její vrchol leží v bodě
 $$x = -\frac{b}{2a}.$$
 Ve <b>vrcholovém tvaru</b> $f(x) = a(x - m)^2 + n$ je vrchol v bodě $[m, n]$.
-? input #konjx | 3
+?! input #konjx | 3
 Jaká je souřadnice $x$ vrcholu paraboly $f(x) = x^2 - 6x + 2$?
 ! $x = -\dfrac{-6}{2\cdot 1} = 3$.
 @ x=-1..7; y=-8..4; f=x^2-6*x+2; pt=3,-7; vline=3
-? input #jzl3b | -7
+?! input #jzl3b | -7
 Jaká je nejmenší hodnota funkce $f(x) = x^2 - 6x + 2$?
 ! Je to hodnota ve vrcholu: $f(3) = 9 - 18 + 2 = -7$.
-? mc #hfo89
+?! mc #hfo89
 Kde leží vrchol paraboly $f(x) = -2(x + 1)^2 + 4$?
 - $[1, 4]$
 + $[-1, 4]$
@@ -1123,6 +1237,12 @@ Přiřaďte funkcím jejich grafy.
 - @ x=-4..4; y=-5..6; f=(x+2)^2
 ! Ve vrcholovém tvaru $a(x-m)^2+n$ je vrchol v bodě $[m, n]$: $(x-2)^2$ má vrchol $[2, 0]$, $(x+1)^2-3$ vrchol $[-1, -3]$, $x^2-4$ vrchol $[0, -4]$. Záporné $a$ otevírá parabolu dolů. Parabola s vrcholem $[-2, 0]$ patří $y=(x+2)^2$.
 ? gen #mt8c6 | hs_parab_pick
+? input #7t3b3 | 1
+Parabola $y = ax^2+bx+c$ má vrchol $[1, -4]$ a prochází bodem $[0, -3]$. Určete $a$.
+! Vrcholový tvar je $y = a(x-1)^2-4$. Dosazením $[0,-3]$: $a-4 = -3$, tedy $a = 1$.
+? input #twxdr | 9
+Pro jaké $c$ leží vrchol paraboly $y = x^2-6x+c$ na ose $x$?
+! $y = (x-3)^2+c-9$, vrchol je $[3, c-9]$. Leží na ose $x$ pro $c = 9$.
 
 ### Posouvání a překlápění grafů | #ymol5
 ~ fd=1.2*x^2-0.7; f=1.2*(x-0.4)^2-0.2
@@ -1133,7 +1253,7 @@ $y = (x - 2)^2 + 1$ vznikne z $y = x^2$ posunutím o $2$ doprava a o $1$ nahoru.
 > Překlopení
 $y = -f(x)$ je graf překlopený podle osy $x$, $y = f(-x)$ podle osy $y$. $y = |f(x)|$ překlopí nahoru jen části pod osou $x$ a $y = f(|x|)$ zrcadlí pravou polovinu grafu doleva.
 @@ x=-3..3; y=-5..5; f=x^2-4; f=abs(x^2-4); label=2.4,-3.6,x² − 4; label=0.9,4.4,|x² − 4|
-? mc #akai2
+?! mc #akai2
 Jak vznikne graf funkce $y = (x - 3)^2$ z grafu $y = x^2$?
 + Posunutím o $3$ doprava
 - Posunutím o $3$ doleva
@@ -1141,7 +1261,7 @@ Jak vznikne graf funkce $y = (x - 3)^2$ z grafu $y = x^2$?
 - Posunutím o $9$ dolů
 ! Vrchol se z bodu $[0, 0]$ přesune do $[3, 0]$, kde je $x - 3 = 0$: posunutí o $3$ doprava.
 @ x=-2..5; y=-1..5; f=x^2; f=(x-3)^2
-? mc #5aq5m
+?! mc #5aq5m
 Jak vznikne graf funkce $y = 2^x - 4$ z grafu $y = 2^x$?
 - Posunutím o $4$ doprava
 - Posunutím o $4$ doleva
@@ -1149,7 +1269,7 @@ Jak vznikne graf funkce $y = 2^x - 4$ z grafu $y = 2^x$?
 - Překlopením podle osy $x$
 ! Ke každé hodnotě se přičte $-4$: graf se posune o $4$ dolů a vodorovná asymptota $y = 0$ přejde v $y = -4$.
 @ x=-4..3; y=-5..5; f=2^x; f=2^x-4; hline=-4
-? mc #duj4a
+?! mc #duj4a
 Který graf patří funkci $y = \sqrt{x + 2} - 1$?
 + @ x=-3..4; y=-2..3; f=sqrt(x+2)-1; pt=-2,-1
 - @ x=-3..4; y=-2..3; f=sqrt(x-2)-1; pt=2,-1
@@ -1208,6 +1328,17 @@ Určete obor hodnot funkce $y = \sin x + 2$.
 ! $\sin x$ nabývá hodnot z $[-1, 1]$, posun o $2$ nahoru dává $[1, 3]$.
 @ x=-6.3..6.3; y=-0.5..3.5; f=sin(x)+2; hline=1; hline=3
 ? gen #xyko4 | hs_shift_expr
+? mc #1pplf
+Jak vznikne graf $y = f(x-2)+3$ z grafu $y = f(x)$?
++ posunutím o $2$ doprava a o $3$ nahoru
+- posunutím o $2$ doleva a o $3$ nahoru
+- posunutím o $2$ doprava a o $3$ dolů
+- posunutím o $3$ doprava a o $2$ nahoru
+! Odečtení $2$ od argumentu posune graf o $2$ doprava a přičtení $3$ k hodnotě o $3$ nahoru.
+? input #8wl2w | 2
+Jaká je nejmenší hodnota funkce $y = |x-1|+|x+1|$?
+! Pro $x\in[-1,1]$ je $y = (1-x)+(x+1) = 2$, mimo tento interval je větší. Nejmenší hodnota je $2$.
+@ x=-3..3; y=-0.5..5; f=abs(x-1)+abs(x+1)
 
 ### Složená a inverzní funkce | #yom5k
 ~ dash=-1,-1,1,1; f=exp(1.6*x)/2.5-0.8; f=ln(2.5*(x+0.8))/1.6
@@ -1216,13 +1347,13 @@ $(f\circ g)(x) = f(g(x))$: nejdřív použijeme $g$, potom $f$. Na pořadí zál
 > Inverzní funkce
 Je-li $f$ prostá, její <b>inverzní funkce</b> $f^{-1}$ ji „vrací zpět“: $f^{-1}(f(x)) = x$. Najdeme ji tak, že napíšeme $y = f(x)$ a vyjádříme $x$.
 $$y = 2x + 3 \;\Rightarrow\; x = \frac{y - 3}{2},\quad\text{tedy } f^{-1}(x) = \frac{x-3}{2}.$$
-? input #qw6fa | 11
+?! input #qw6fa | 11
 Nechť $f(x) = 2x + 1$. Vypočtěte $f(f(2))$.
 ! $f(2) = 5$ a $f(5) = 11$.
-? input #vqi9x | 10
+?! input #vqi9x | 10
 Nechť $f(x) = x^2 + 1$ a $g(x) = x - 2$. Vypočtěte $f(g(5))$.
 ! $g(5) = 3$, pak $f(3) = 9 + 1 = 10$.
-? mc #jfrt4
+?! mc #jfrt4
 Pro $f(x) = x^2$ a $g(x) = x + 1$ určete $(g\circ f)(x)$.
 - $(x+1)^2$
 + $x^2 + 1$
@@ -1264,6 +1395,13 @@ Je-li $f(x) = 2x+1$, kolik je $f^{-1}(7)$?
 ! Hledáme $x$ s $2x+1 = 7$: $x = 3$.
 ? gen #v4wfq | hs_compose
 ? gen #7bbaz | hs_inv_val
+? expr #kv0th | (3x+1)/(x-2) | dom=2.5..5
+Najděte inverzní funkci k $f(x) = \dfrac{2x+1}{x-3}$. Zapište $f^{-1}(x)$.
+= $\dfrac{3x+1}{x-2}$
+! Z $y = \frac{2x+1}{x-3}$ plyne $yx-3y = 2x+1$, tedy $x(y-2) = 3y+1$ a $x = \frac{3y+1}{y-2}$. Po přeznačení $f^{-1}(x) = \frac{3x+1}{x-2}$.
+? input #s7kbn | 3
+Funkce $f(x) = x^2+1$ s definičním oborem $[0,\infty)$ je prostá. Kolik je $f^{-1}(10)$?
+! Hledáme $x\ge0$ s $x^2+1 = 10$, tedy $x = 3$.
 
 ## Mocniny a odmocniny | #it5gm
 ### Počítání s mocninami | #qunbl
@@ -1272,17 +1410,17 @@ Je-li $f(x) = 2x+1$, kolik je $f^{-1}(7)$?
 Pro $a \ne 0$ a celá čísla $m, n$ platí:
 $$a^m a^n = a^{m+n},\qquad \frac{a^m}{a^n} = a^{m-n},\qquad (a^m)^n = a^{mn}$$
 $$a^0 = 1,\qquad a^{-n} = \frac{1}{a^n},\qquad a^{1/n} = \sqrt[n]{a}\ \ (a>0)$$
-? mc #j601y
+?! mc #j601y
 Zjednodušte $x^3 \cdot x^4$.
 + $x^7$
 - $x^{12}$
 - $2x^7$
 - $2x^{12}$
 ! Stejný základ, takže exponenty sečteme: $3 + 4 = 7$.
-? input #4v21x | 1/8; 0.125
+?! input #4v21x | 1/8; 0.125
 Vypočtěte $2^{-3}$.
 ! $2^{-3} = \dfrac{1}{2^3} = \dfrac18$.
-? input #xwkdt | 4
+?! input #xwkdt | 4
 Vypočtěte $8^{2/3}$.
 ! $8^{1/3} = 2$ a $2^2 = 4$.
 ? tf #is75y | false
@@ -1327,6 +1465,13 @@ Přiřaďte výrazům jejich zjednodušený tvar ($a\ne0$).
 - $a^8$
 ! Při násobení se exponenty sčítají, při umocňování násobí: $a^2a^3 = a^5$, ale $(a^2)^3 = a^6$. $a^8$ nepatří k žádnému výrazu: vznikl by z chybného $(a^2)^3 = a^{2^3}$.
 ? gen #alrbd | hs_pow_mix
+? input #eibr5 | 2
+Vypočtěte $\dfrac{2^{10}\cdot4^{-3}}{8}$.
+! $4^{-3} = 2^{-6}$ a $8 = 2^3$, takže výraz je $2^{10-6-3} = 2^1 = 2$.
+? expr #1jspt | a^5 | var=a
+Zjednodušte $\left(a^{1/2}\cdot a^{1/3}\right)^6$ pro $a>0$.
+= $a^5$
+! $a^{1/2}\cdot a^{1/3} = a^{5/6}$ a $\left(a^{5/6}\right)^6 = a^5$.
 
 ### Odmocniny a usměrňování | #ytqsp
 ~ noaxes; text=√2; size=0.9
@@ -1336,13 +1481,13 @@ $\sqrt a$ je nezáporné číslo, jehož druhá mocnina je $a$. Úhlopříčka �
 > Pravidla a usměrňování
 Pro $a, b\ge0$ platí $\sqrt{ab} = \sqrt a\sqrt b$ a $\sqrt{\frac ab} = \frac{\sqrt a}{\sqrt b}$. Pozor: $\sqrt{a^2} = |a|$ a $\sqrt{a + b}\ne\sqrt a + \sqrt b$. Částečné odmocnění: $\sqrt{12} = \sqrt{4\cdot3} = 2\sqrt3$. Odmocninu ve jmenovateli odstraníme rozšířením:
 $$\frac1{\sqrt2} = \frac{\sqrt2}{2},\qquad \frac{1}{\sqrt3 - 1} = \frac{\sqrt3 + 1}{(\sqrt3 - 1)(\sqrt3 + 1)} = \frac{\sqrt3 + 1}{2}.$$
-? input #736rw | 6
+?! input #736rw | 6
 Vypočtěte $\sqrt{12}\cdot\sqrt3$.
 ! $\sqrt{12\cdot3} = \sqrt{36} = 6$.
-? input #14bbt | 6
+?! input #14bbt | 6
 Vypočtěte $\sqrt{72} : \sqrt2$.
 ! $\sqrt{\frac{72}{2}} = \sqrt{36} = 6$.
-? mc #swyil
+?! mc #swyil
 Upravte $\sqrt{12} - \sqrt{48} + 2\sqrt{75}$.
 + $8\sqrt3$
 - $4\sqrt3$
@@ -1406,6 +1551,12 @@ Pro všechna $a, b\ge0$ platí $\sqrt{a + b} = \sqrt a + \sqrt b$.
 ? gen #metsz | hs_sqrt_part
 ? gen #5rzas | hs_sqrt_sum
 ? gen #7mxfu | hs_rationalize
+? input #fxrqs | 1+√2; 2.4142
+Upravte $\sqrt{3+2\sqrt2}$.
+! $(1+\sqrt2)^2 = 1+2\sqrt2+2 = 3+2\sqrt2$ a $1+\sqrt2>0$, takže $\sqrt{3+2\sqrt2} = 1+\sqrt2$.
+? input #ykq3g | √3+√2; 3.1463
+Usměrněte zlomek $\dfrac1{\sqrt3-\sqrt2}$.
+! Rozšíříme $\sqrt3+\sqrt2$: jmenovatel je $3-2 = 1$, takže výsledek je $\sqrt3+\sqrt2$.
 
 ### Mocninné funkce | #rer4c
 ~ f=x^2*0.9; f=x^3*0.9; f=x^4*0.9
@@ -1415,7 +1566,7 @@ Pro sudé $n$ je graf souměrný podle osy $y$ (funkce je sudá), pro liché $n$
 > Záporné exponenty a odmocniny
 $y = x^{-n} = \frac1{x^n}$ není definovaná v nule a osy jsou jejími asymptotami. Odmocnina $y = \sqrt x$ je inverzní k $x^2$ na $[0, \infty)$, $y = \sqrt[3]x$ k $x^3$ na celém $\mathbb R$.
 @@ x=-3..3; y=-3..3; aspect=equal; f=1/x; f=1/x^2; label=2.4,0.85,1/x; label=-1.1,2.4,1/x²
-? match #y5jbp
+?! match #y5jbp
 Přiřaďte funkcím jejich grafy.
 + $y = x^2$ :: @ x=-2..2; y=-2..2; f=x^2
 + $y = x^3$ :: @ x=-2..2; y=-2..2; f=x^3
@@ -1423,7 +1574,7 @@ Přiřaďte funkcím jejich grafy.
 + $y = \sqrt x$ :: @ x=-2..2; y=-2..2; f=sqrt(x)
 - @ x=-2..2; y=-2..2; f=1/x^2
 ! $x^3$ je lichá a prochází počátkem, $\frac1x$ má dvě větve v I. a III. kvadrantu, $\sqrt x$ existuje jen pro $x\ge0$. Dvě větve nad osou $x$ patří $\frac1{x^2}$, ta mezi funkcemi chybí.
-? multi #h196m
+?! multi #h196m
 Které funkce jsou liché?
 + $y = x^3$
 + $y = x^{-1}$
@@ -1431,7 +1582,7 @@ Které funkce jsou liché?
 - $y = x^4$
 - $y = x^{-2}$
 ! Lichá mocnina změní se znaménkem $x$ znaménko, sudá ne. $x^3$, $x^{-1}$ a $x^5 - x$ jsou liché, $x^4$ a $x^{-2}$ sudé.
-? interval #pzq3p | (0; ∞)
+?! interval #pzq3p | (0; ∞)
 Určete obor hodnot funkce $y = x^{-2}$.
 ! $\frac{1}{x^2} > 0$ a nabývá libovolně malých i velkých kladných hodnot. Obor hodnot je $(0, \infty)$.
 ? interval #wkmgm | (-1; 0) ∪ (1; ∞)
@@ -1466,6 +1617,12 @@ Vyřešte $x^4 < 16$.
 ! $x^4 < 16\iff x^2 < 4\iff |x| < 2$, tedy $x\in(-2, 2)$.
 @ x=-3..3; y=-1..20; f=x^4; hline=16; vband=-2,2
 ? gen #2wjag | hs_pow_eq
+? input #yjo7e | 4
+Vyřešte $x^{3/2} = 8$.
+! $x^{3/2} = 8 = 2^3$, takže $x^{1/2} = 2$ a $x = 4$.
+? interval #331rr | (-1/2; 0) ∪ (0; 1/2)
+Vyřešte $x^{-2}>4$.
+! $\frac1{x^2}>4 \iff x^2<\frac14$ a $x\ne0$, tedy $x\in\left(-\frac12,0\right)\cup\left(0,\frac12\right)$.
 
 ### Lineární lomená funkce | #jjjh4
 ~ f=0.15/x
@@ -1476,7 +1633,7 @@ Funkci $y = \frac{ax + b}{cx + d}$ přepíšeme dělením na posunutou hyperbolu
 $$\frac{x + 3}{x - 4} = 1 + \frac{7}{x - 4}.$$
 Asymptoty jsou $x = 4$ a $y = 1$, střed $[4, 1]$.
 @@ x=-4..12; y=-6..8; f=(x+3)/(x-4); vline=4; hline=1; pt=4,1
-? mc #slpcf
+?! mc #slpcf
 Které asymptoty má graf funkce $y = \dfrac{2x + 1}{x - 3}$?
 + $x = 3$ a $y = 2$
 - $x = -3$ a $y = 2$
@@ -1484,10 +1641,10 @@ Které asymptoty má graf funkce $y = \dfrac{2x + 1}{x - 3}$?
 - $x = 2$ a $y = 3$
 ! Jmenovatel je nulový pro $x = 3$ a $\frac{2x + 1}{x - 3} = 2 + \frac{7}{x - 3}$. Asymptoty jsou $x = 3$ a $y = 2$.
 @ x=-4..10; y=-6..10; f=(2*x+1)/(x-3); vline=3; hline=2
-? input #doiyv | 3/2; 1.5
+?! input #doiyv | 3/2; 1.5
 Jakou vodorovnou asymptotu $y = b$ má graf $y = \dfrac{3x + 4}{2x + 1}$? Zadejte $b$.
 ! Pro velká $|x|$ rozhodují vedoucí členy: $\frac{3x}{2x} = \frac32$. Asymptota je $y = \frac32$.
-? input #w5cef | -4
+?! input #w5cef | -4
 Graf $y = \dfrac{1}{x + 4} - 2$ má svislou asymptotu $x = a$. Určete $a$.
 ! Jmenovatel je nulový pro $x = -4$, asymptota je $x = -4$.
 ? mc #oi25k
@@ -1535,21 +1692,28 @@ Ve kterém bodě protíná graf funkce $y = \dfrac{x + 3}{x - 4}$ osu $x$? Zadej
 ! Zlomek je nulový, když je nulový čitatel: $x = -3$.
 ? gen #yifa3 | hs_hyp_asym
 ? gen #zzt56 | hs_hyp_pick
+? input #ob1wz | 6
+Pro jaké $k$ prochází graf funkce $y = \dfrac{k}{x-1}+2$ bodem $[3, 5]$?
+! $5 = \frac k2+2$, tedy $k = 6$.
+? expr #kmcua | 1/(x-1)+2 | dom=1.5..4
+Najděte inverzní funkci k $f(x) = \dfrac1{x-2}+1$. Zapište $f^{-1}(x)$.
+= $\dfrac1{x-1}+2$
+! Z $y-1 = \frac1{x-2}$ plyne $x-2 = \frac1{y-1}$ a $x = \frac1{y-1}+2$. Po přeznačení $f^{-1}(x) = \frac1{x-1}+2$.
 
 ## Exponenciály a logaritmy | #7dte4
 ### Exponenciální funkce | #7t1ff
 ~ f=exp(2*x)/4-0.7
 > Růst o stálý násobek
 Exponenciální funkce $f(x) = a\cdot b^x$ se při zvětšení $x$ o $1$ vynásobí číslem $b$. Pro $b > 1$ roste, pro $0 < b < 1$ klesá. Zvláštní základ $e \approx 2{,}71828$ se v analýze objevuje všude.
-? input #lqvq4 | 96
+?! input #lqvq4 | 96
 Kultura začíná se $3$ buňkami a každou hodinu se zdvojnásobí. Kolik buněk je po $5$ hodinách?
 ! $3 \cdot 2^5 = 3 \cdot 32 = 96$.
 @ x=-0.5..5.5; y=-5..105; seq=3*2^n; f=3*2^x; pt=5,96
-? input #geszh | 3
+?! input #geszh | 3
 Vyřešte $2^x = 8$.
 ! $8 = 2^3$, tedy $x = 3$.
 @ x=-1..4; y=-1..10; f=2^x; hline=8; pt=3,8
-? input #z5sn1 | 5/2; 2.5
+?! input #z5sn1 | 5/2; 2.5
 Vyřešte $4^x = 32$.
 ! Obě strany zapíšeme jako mocniny $2$: $2^{2x} = 2^5$, tedy $2x = 5$ a $x = \tfrac52$.
 ? mc #pt03i
@@ -1588,6 +1752,12 @@ Vyřešte $2^{x-1} = 8$.
 Funkce $2^x$ nabývá jen kladných hodnot.
 ! Kladné číslo umocněné na libovolný exponent je kladné.
 ? gen #iv17h | hs_compound
+? input #4b1bz | 15
+Populace roste o $5\,\%$ ročně. Nejméně po kolika celých letech bude aspoň dvojnásobná?
+! Potřebujeme $1{,}05^n\ge2$, tedy $n\ge\frac{\ln2}{\ln1{,}05}\approx14{,}2$. Nejmenší celé $n$ je $15$.
+? tf #c4hau | false
+Funkce $y = 2^{-x}$ je rostoucí.
+! $2^{-x} = \left(\frac12\right)^x$ a základ menší než $1$ dává klesající funkci.
 
 ### Logaritmy | #1davk
 ~ f=0.35*ln(x+1.02)+0.2
@@ -1595,14 +1765,14 @@ Funkce $2^x$ nabývá jen kladných hodnot.
 $\log_b x$ je exponent, na který musíme umocnit $b$, abychom dostali $x$:
 $$\log_b x = y \iff b^y = x \qquad (b > 0,\ b \ne 1,\ x > 0).$$
 Zvláštní značení: $\ln x = \log_e x$ a $\log x = \log_{10} x$.
-? input #vo8tn | 3
+?! input #vo8tn | 3
 Vypočtěte $\log_2 8$.
 ! $2^3 = 8$.
 @ x=-0.5..9; y=-2..4; f=ln(x)/ln(2); pt=8,3; pt=1,0
-? input #fjg2w | -2
+?! input #fjg2w | -2
 Vypočtěte $\log_{10} 0{,}01$.
 ! $10^{-2} = 0{,}01$.
-? input #bz6tv | 0
+?! input #bz6tv | 0
 Vypočtěte $\ln 1$.
 ! $e^0 = 1$, tedy $\ln 1 = 0$.
 ? input #ssnia | 1/2; 0.5
@@ -1643,6 +1813,12 @@ Přiřaďte funkcím jejich grafy.
 + $y = \log_2 x$ :: @ x=-3..3; y=-3..6; f=ln(x)/ln(2)
 - @ x=-3..3; y=-3..6; f=x^2
 ! Exponenciála se základem větším než $1$ roste, se základem mezi $0$ a $1$ klesá a obě procházejí bodem $[0, 1]$. Logaritmus je definovaný jen pro $x>0$ a prochází bodem $[1, 0]$.
+? input #mwrxm | 3/2; 1.5
+Vypočtěte $\log_2\sqrt8$.
+! $\sqrt8 = 2^{3/2}$, takže $\log_2\sqrt8 = \frac32$.
+? input #l94ex | -3
+Vypočtěte $\log_{1/3}27$.
+! $\left(\frac13\right)^{-3} = 27$, takže $\log_{1/3}27 = -3$.
 
 ### Pravidla pro logaritmy | #y9bc0
 ~ noaxes; text=log; size=0.62
@@ -1651,13 +1827,13 @@ Pro kladná $x, y$ platí:
 $$\log_b(xy) = \log_b x + \log_b y,\qquad \log_b\frac{x}{y} = \log_b x - \log_b y,$$
 $$\log_b(x^r) = r\log_b x.$$
 Odpovídají pravidlům pro mocniny: násobení čísel sčítá exponenty.
-? input #pehax | 2
+?! input #pehax | 2
 Zjednodušte $\log_6 4 + \log_6 9$.
 ! $\log_6(4\cdot9) = \log_6 36 = 2$.
-? input #qrxxy | 3
+?! input #qrxxy | 3
 Zjednodušte $\log_2 40 - \log_2 5$.
 ! $\log_2\tfrac{40}{5} = \log_2 8 = 3$.
-? tf #tadd8 | false
+?! tf #tadd8 | false
 Platí $\log(x + y) = \log x + \log y$.
 ! Pravidlo pro součin zní $\log(xy) = \log x + \log y$. Pro logaritmus součtu žádné jednoduché pravidlo není.
 + $x = y = 1$
@@ -1700,6 +1876,12 @@ Přiřaďte výrazům jejich rozepsaný tvar ($x, y > 0$).
 + $\log_b\sqrt{x}$ :: $\dfrac12\log_b x$
 - $\log_b x\cdot\log_b y$
 ! Logaritmus součinu je součet logaritmů, ne jejich součin. $\sqrt x = x^{1/2}$, proto $\log_b\sqrt x = \frac12\log_b x$.
+?! input #s18oh | 3
+Vypočtěte $\log_23\cdot\log_38$.
+! Přechodem k přirozenému logaritmu $\frac{\ln3}{\ln2}\cdot\frac{\ln8}{\ln3} = \frac{\ln8}{\ln2} = 3$.
+? tf #8b1vo | true
+Pro $a, b>0$ různá od $1$ platí $\log_ab = \dfrac1{\log_ba}$.
+! $\log_ab = \frac{\ln b}{\ln a}$ a $\log_ba = \frac{\ln a}{\ln b}$, jsou to tedy převrácené hodnoty.
 
 ### Exponenciální a logaritmické rovnice | #lsbqx
 ~ f=exp(2*x)/4-0.7; dash=-1,0.3,1,0.3; pt=0.693,0.3
@@ -1710,13 +1892,13 @@ $$4^x - 6\cdot2^x + 8 = 0,\quad t = 2^x:\quad t^2 - 6t + 8 = 0.$$
 Kořeny $t = 2$ a $t = 4$ dávají $2^x = 2$ a $2^x = 4$, tedy $x = 1$ a $x = 2$.
 > Logaritmické rovnice
 Nejdřív podmínky (logaritmus jen z kladných čísel), pak pravidla pro logaritmy a nakonec $\log_a u = \log_a v\Rightarrow u = v$ nebo definice $\log_a u = c\Rightarrow u = a^c$. Kořeny, které podmínky porušují, vyřadíme.
-? input #71qlm | 2
+?! input #71qlm | 2
 Vyřešte $2^{3x - 1} = 32$.
 ! $32 = 2^5$, takže $3x - 1 = 5$ a $x = 2$.
-? input #3haw7 | 3
+?! input #3haw7 | 3
 Vyřešte $3^x + 3^{x + 1} = 108$.
 ! Vytkneme $3^x$: $3^x(1 + 3) = 108$, tedy $3^x = 27$ a $x = 3$.
-? set #v9uny | 1; 2
+?! set #v9uny | 1; 2
 Vyřešte $4^x - 6\cdot2^x + 8 = 0$.
 ! S $t = 2^x$ dostaneme $t^2 - 6t + 8 = 0$, tedy $t\in\{2, 4\}$. Odtud $x = 1$ nebo $x = 2$.
 ? input #zlyzp | 3/2; 1.5
@@ -1758,6 +1940,18 @@ Vyřešte $\log_2(x + 4) - \log_2 x = 1$.
 ? gen #c69tq | hs_exp_eq2
 ? gen #mef1z | hs_exp_sub
 ? gen #glmpw | hs_log_eq
+? input #dn08w | 100
+Řešte $\dfrac{\log x+3}{3-\log x} = 5$.
+! Pro $t = \log x$: $t+3 = 15-5t$, tedy $t = 2$ a $x = 100$.
+? input #3vrfj | 81
+Řešte $\log_9x+\log_3x = 6$.
+! $\log_9x = \frac12\log_3x$, takže $\frac32\log_3x = 6$, $\log_3x = 4$ a $x = 81$.
+? input #3gie5 | 3
+Řešte $x+\log_2\left(8+2^x\right) = 7$.
+! $x = \log_22^x$, takže $\log_2\bigl(2^x(8+2^x)\bigr) = 7$, tedy $t(8+t) = 128$ pro $t = 2^x$. Kladný kořen je $t = 8$, a $x = 3$.
+? set #6yqpu | 100; 1/10
+Řešte $x^{\log x} = 100x$.
+! Zlogaritmujeme: $\log^2x = 2+\log x$, tedy $t^2-t-2 = 0$ pro $t = \log x$. $t = 2$ nebo $t = -1$, takže $x = 100$ nebo $x = \frac1{10}$.
 
 ### Exponenciální a logaritmické nerovnice | #nuk2o
 ~ f=exp(2*x)/4-0.7; dash=-1,0.3,1,0.3; band=-1,0.3
@@ -1767,13 +1961,13 @@ Pro základ $a > 1$ jsou $a^x$ i $\log_a x$ rostoucí, takže nerovnost mezi exp
 $$\left(\tfrac12\right)^u > \left(\tfrac12\right)^v\iff u < v.$$
 > Nezapomeňte na definiční obor
 U logaritmických nerovnic patří do výsledku jen čísla, pro která jsou logaritmy definované. Například $\log_3(x - 4) < 0$ znamená $0 < x - 4 < 1$, tedy $x\in(4, 5)$.
-? interval #5in6i | (-∞; -5)
+?! interval #5in6i | (-∞; -5)
 Vyřešte $3^{x + 5} < 1$.
 ! $1 = 3^0$ a základ $3 > 1$, takže $x + 5 < 0$ a $x < -5$.
-? interval #pd49i | (-∞; -3)
+?! interval #pd49i | (-∞; -3)
 Vyřešte $\left(\frac12\right)^{x + 3} > 1$.
 ! $1 = \left(\frac12\right)^0$ a základ je menší než $1$, znak se otočí: $x + 3 < 0$, tedy $x < -3$.
-? interval #4z79k | [4/3; ∞)
+?! interval #4z79k | [4/3; ∞)
 Vyřešte $2^{3x - 4}\ge1$.
 ! $3x - 4\ge0$, tedy $x\ge\frac43$.
 ? interval #7h1gp | (-∞; 2)
@@ -1818,6 +2012,12 @@ Které z čísel je větší?
 ! $\log_3 5 > \log_3 3 = 1$, kdežto $\log_5 3 < \log_5 5 = 1$. Větší je $\log_3 5$.
 ? gen #fjyys | hs_exp_ineq
 ? gen #02p3c | hs_log_ineq
+? interval #12zaq | (-∞; -2) ∪ (4; ∞)
+Vyřešte $\left(\frac16\right)^{x^2}<\left(\frac16\right)^{2x+8}$.
+! Základ je menší než $1$, takže se nerovnost exponentů obrátí: $x^2>2x+8$, tedy $(x-4)(x+2)>0$ a $x\in(-\infty,-2)\cup(4,\infty)$.
+? interval #r1tax | (-∞; 1)
+Vyřešte $3^{x+1}+3^{x+2}<36$.
+! $3^{x+1}+3^{x+2} = 12\cdot3^x<36$, tedy $3^x<3$ a $x<1$.
 
 ## Goniometrie | #f864b
 ### Pravoúhlý trojúhelník | #3svnn
@@ -1826,11 +2026,11 @@ Které z čísel je větší?
 V pravoúhlém trojúhelníku pro ostrý úhel $\alpha$ platí:
 $$\sin\alpha = \frac{\text{protilehlá}}{\text{přepona}},\qquad \cos\alpha = \frac{\text{přilehlá}}{\text{přepona}},$$
 $$\operatorname{tg}\alpha = \frac{\text{protilehlá}}{\text{přilehlá}}.$$
-? input #0p4q6 | 5
+?! input #0p4q6 | 5
 Pravoúhlý trojúhelník má odvěsny $3$ a $4$. Jak dlouhá je přepona?
 ! $\sqrt{3^2 + 4^2} = \sqrt{25} = 5$.
 @ x=-0.6..4.6; y=-0.6..3.6; aspect=equal; axes=off; seg=0,0,4,0,ink; seg=4,0,0,3,ink; seg=0,3,0,0,ink; label=2.275,1.634,5; label=-0.321,1.549,3; label=2.19,-0.357,4; seg=0.312,0,0.312,0.312,thm; seg=0.312,0.312,0,0.312,thm
-? mc #bsih7
+?! mc #bsih7
 V trojúhelníku $3$–$4$–$5$ označme $\alpha$ úhel proti straně délky $3$. Kolik je $\sin\alpha$?
 + $\tfrac35$
 - $\tfrac45$
@@ -1838,7 +2038,7 @@ V trojúhelníku $3$–$4$–$5$ označme $\alpha$ úhel proti straně délky $3
 - $\tfrac43$
 ! Protilehlá ku přeponě: $\tfrac35$.
 @ x=-0.6..4.6; y=-0.6..3.6; aspect=equal; axes=off; seg=0,0,4,0,ink; seg=4,0,4,3,ink; seg=4,3,0,0,ink; label=4.321,1.549,3; label=1.725,1.634,5; label=1.81,-0.357,4; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=0+0.416*cos(t),0+0.416*sin(t),0,0.644; label=0.75,0.094,α; seg=4,0.312,3.688,0.312,thm; seg=3.688,0.312,3.688,0,thm
-? mc #9pv1x
+?! mc #9pv1x
 V trojúhelníku $3$–$4$–$5$ označme $\alpha$ úhel proti straně délky $3$. Kolik je $\operatorname{tg}\alpha$?
 - $\tfrac35$
 - $\tfrac45$
@@ -1879,6 +2079,12 @@ Přiřaďte funkcím ostrého úhlu $\alpha$ v pravoúhlém trojúhelníku jejic
 - $\dfrac{\text{přepona}}{\text{protilehlá}}$
 ! Sinus a kosinus dělí přeponou; tangens je jejich podíl, $\operatorname{tg}\alpha = \frac{\sin\alpha}{\cos\alpha}$.
 ? gen #6ivke | hs_rt_side
+? input #f09n1 | 10
+V pravoúhlém trojúhelníku je odvěsna $a = 5$ a úhel proti ní $\alpha = 30^\circ$. Jak dlouhá je přepona?
+! $\sin\alpha = \frac ac$, takže $c = \frac{5}{\sin30^\circ} = \frac5{1/2} = 10$.
+? input #pzvxm | 3/5; 0.6
+Pro ostrý úhel $\alpha$ je $\operatorname{tg}\alpha = \frac34$. Kolik je $\sin\alpha$?
+! Vezmeme odvěsny $3$ a $4$; přepona je $5$, takže $\sin\alpha = \frac35$.
 
 ### Oblouková míra a jednotková kružnice | #ppkt2
 ~ circle=0,0,0.8; line=0,0,0.566,0.566; pt=0.566,0.566
@@ -1886,17 +2092,17 @@ Přiřaďte funkcím ostrého úhlu $\alpha$ v pravoúhlém trojúhelníku jejic
 Celý úhel je $360^\circ = 2\pi$ radiánů, tedy $180^\circ = \pi$. Stupně na radiány převedeme vynásobením $\frac{\pi}{180}$.
 > Jednotková kružnice
 Bod na kružnici o poloměru $1$ v úhlu $\alpha$ má souřadnice $[\cos\alpha, \sin\alpha]$. Tím jsou $\sin$ a $\cos$ definované pro každý úhel, i tupý a záporný.
-? mc #7mnjq
+?! mc #7mnjq
 Kolik je $90^\circ$ v radiánech?
 - $\pi$
 + $\tfrac{\pi}{2}$
 - $\tfrac{\pi}{4}$
 - $2\pi$
 ! $90 \cdot \frac{\pi}{180} = \frac{\pi}{2}$.
-? input #ncdh8 | 60
+?! input #ncdh8 | 60
 Převeďte $\dfrac{\pi}{3}$ radiánů na stupně.
 ! $\frac{\pi}{3}\cdot\frac{180}{\pi} = 60$.
-? input #jbj4j | -1
+?! input #jbj4j | -1
 Kolik je $\cos\pi$?
 ! Úhlu $\pi$ odpovídá na jednotkové kružnici bod $[-1, 0]$.
 @ x=-1.45..1.45; y=-1.3..1.3; aspect=equal; circle=0,0,1; seg=-1,0,-1,0,thm; seg=0,0,-1,0,prf; vec=-1,0,ex; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=0+0.22*cos(t),0+0.22*sin(t),0,3.142; pt=-1,0; label=-1.22,-0.04,[−1, 0]
@@ -1943,6 +2149,12 @@ Přiřaďte úhlům ve stupních jejich velikost v radiánech.
 + $270^\circ$ :: $\dfrac{3\pi}{2}$
 - $\dfrac{\pi}{3}$
 ! Násobíme $\frac{\pi}{180}$: $120^\circ = \frac{120\pi}{180} = \frac{2\pi}{3}$. Hodnota $\frac{\pi}{3}$ odpovídá $60^\circ$, ten tu není.
+? input #dkg9l | -√3/2; -0.8660
+Kolik je $\cos\frac{7\pi}6$?
+! $\frac{7\pi}6 = \pi+\frac\pi6$ leží ve třetím kvadrantu, kde je kosinus záporný. $\cos\frac{7\pi}6 = -\cos\frac\pi6 = -\frac{\sqrt3}2$.
+? input #k7ze4 | 4π; 12.5664
+Jak dlouhý je oblouk kružnice o poloměru $6$ se středovým úhlem $\frac{2\pi}3$?
+! Délka oblouku je $r\varphi = 6\cdot\frac{2\pi}3 = 4\pi$.
 
 ### Grafy goniometrických funkcí | #lj1rm
 ~ f=0.7*sin(4*x); fd=0.7*cos(4*x)
@@ -1953,14 +2165,14 @@ $\sin$ a $\cos$ mají periodu $2\pi$ a hodnoty v $[-1, 1]$. Kosinusoida je sinus
 > Amplituda a perioda
 Graf $y = a\sin(bx)$ má amplitudu $|a|$ (výšku vln) a periodu $\frac{2\pi}{|b|}$. Násobení zvenku natahuje svisle, násobení $x$ zhušťuje vodorovně.
 @@ x=-0.2..6.5; y=-2.3..2.3; f=sin(x); f=2*sin(x); f=sin(2*x); label=1.6,2.2,2 sin x; label=0.9,-1.4,sin 2x
-? input #gl691 | π; 3.1416
+?! input #gl691 | π; 3.1416
 Určete periodu funkce $y = \sin 2x$.
 ! $\sin(2(x + \pi)) = \sin(2x + 2\pi) = \sin 2x$. Perioda je $\frac{2\pi}{2} = \pi$.
 @ x=-0.2..6.5; y=-1.5..1.5; f=sin(2*x); vband=0,3.1416
-? input #fepyx | 4π; 12.5664
+?! input #fepyx | 4π; 12.5664
 Určete periodu funkce $y = \cos\frac x2$.
 ! $\frac{2\pi}{1/2} = 4\pi$: graf je dvakrát roztažený.
-? interval #po0cw | [-4; 2]
+?! interval #po0cw | [-4; 2]
 Určete obor hodnot funkce $y = 3\sin x - 1$.
 ! $3\sin x\in[-3, 3]$, po odečtení $1$ dostaneme $[-4, 2]$.
 @ x=-0.2..6.5; y=-4.5..2.5; f=3*sin(x)-1; hline=2; hline=-4
@@ -2012,6 +2224,12 @@ Který graf patří funkci $y = \sin\left(x - \frac\pi2\right)$?
 ! Sinusoida posunutá o $\frac\pi2$ doprava má v nule hodnotu $\sin\left(-\frac\pi2\right) = -1$. Je to graf $y = -\cos x$.
 ? gen #bqvs4 | hs_period
 ? gen #fsur9 | hs_trig_range
+? input #yafmq | 2π; 6.2832
+Určete periodu funkce $y = \sin3x+\cos2x$.
+! Periody sčítanců jsou $\frac{2\pi}3$ a $\pi$. Nejmenší číslo, které je násobkem obou, je $2\pi$.
+? tf #u7dy2 | true
+Funkce $y = \sin^2x$ má periodu $\pi$.
+! $\sin^2(x+\pi) = (-\sin x)^2 = \sin^2x$. Perioda $\pi$ to je (a menší kladná perioda není).
 
 ### Goniometrické vzorce | #14oa3
 ~ f=0.6*sin(3*x); fd=0.6*cos(3*x)
@@ -2020,11 +2238,11 @@ Bod $[\cos\alpha, \sin\alpha]$ leží na jednotkové kružnici, proto
 $$\sin^2\alpha + \cos^2\alpha = 1 \quad\text{pro každé } \alpha.$$
 > Dvojnásobný úhel
 $$\sin 2\alpha = 2\sin\alpha\cos\alpha,\qquad \cos 2\alpha = \cos^2\alpha - \sin^2\alpha.$$
-? input #to01n | 1
+?! input #to01n | 1
 Zjednodušte $\sin^2 37^\circ + \cos^2 37^\circ$.
 ! Pythagorova identita platí pro každý úhel.
 @ x=-1.45..1.45; y=-1.3..1.3; aspect=equal; circle=0,0,1; seg=0.799,0,0.799,0.602,thm; seg=0,0,0.799,0,prf; vec=0.799,0.602,ex; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=0+0.22*cos(t),0+0.22*sin(t),0,0.646; pt=0.799,0.602; label=0.974,0.67,[cos 37°, sin 37°]
-? mc #0q7ky
+?! mc #0q7ky
 Je-li $\sin\alpha = \tfrac35$ a $\alpha$ ostrý, kolik je $\cos\alpha$?
 + $\tfrac45$
 - $\tfrac25$
@@ -2032,7 +2250,7 @@ Je-li $\sin\alpha = \tfrac35$ a $\alpha$ ostrý, kolik je $\cos\alpha$?
 - $\tfrac{16}{25}$
 ! $\cos^2\alpha = 1 - \tfrac{9}{25} = \tfrac{16}{25}$ a pro ostrý úhel je $\cos\alpha > 0$.
 @ x=-0.6..4.6; y=-0.6..3.6; aspect=equal; axes=off; seg=0,0,4,0,ink; seg=4,0,4,3,ink; seg=4,3,0,0,ink; label=4.321,1.549,3; label=1.725,1.634,5; label=1.81,-0.357,4; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=0+0.416*cos(t),0+0.416*sin(t),0,0.644; label=0.75,0.094,α; seg=4,0.312,3.688,0.312,thm; seg=3.688,0.312,3.688,0,thm
-? input #uvej7 | 24/25; 0.96
+?! input #uvej7 | 24/25; 0.96
 Je-li $\sin\alpha = \tfrac35$ a $\alpha$ ostrý, kolik je $\sin 2\alpha$?
 ! $2\cdot\tfrac35\cdot\tfrac45 = \tfrac{24}{25}$.
 ? tf #41aus | true
@@ -2079,6 +2297,12 @@ Přiřaďte výrazům jejich jiný zápis.
 + $\operatorname{tg}\alpha$ :: $\dfrac{\sin\alpha}{\cos\alpha}$
 - $2\sin\alpha$
 ! $\sin 2\alpha$ není $2\sin\alpha$: pro $\alpha = 90^\circ$ je $\sin180^\circ = 0$, ale $2\sin90^\circ = 2$.
+?! input #2q2s7 | (√6-√2)/4; 0.2588
+Vypočtěte $\cos75^\circ$ pomocí součtového vzorce.
+! $$\cos(45^\circ+30^\circ) = \cos45^\circ\cos30^\circ-\sin45^\circ\sin30^\circ = \frac{\sqrt2}2\cdot\frac{\sqrt3}2-\frac{\sqrt2}2\cdot\frac12 = \frac{\sqrt6-\sqrt2}4.$$
+? input #gf1zc | 4/5; 0.8
+Je-li $\operatorname{tg}\alpha = 2$, kolik je $\sin2\alpha$?
+! $\sin2\alpha = \frac{2\operatorname{tg}\alpha}{1+\operatorname{tg}^2\alpha} = \frac{4}{5}$.
 
 ### Goniometrické rovnice a nerovnice | #no0io
 ~ circle=0,0,0.8; dash=-1,0.4,1,0.4; pt=0.693,0.4; pt=-0.693,0.4
@@ -2088,15 +2312,15 @@ $$x = \frac\pi6 + 2k\pi\quad\text{nebo}\quad x = \frac{5\pi}6 + 2k\pi,\qquad k\i
 @@ x=-1.45..1.45; y=-1.3..1.3; aspect=equal; circle=0,0,1; hline=0.5; vec=0.866,0.5,ex; vec=-0.866,0.5,ex; pt=0.866,0.5; pt=-0.866,0.5; label=1.15,0.6,π/6; label=-1.15,0.6,5π/6
 > Substituce
 Rovnice s jedinou goniometrickou funkcí převedeme substitucí na algebraickou: $2\cos^2x - \cos x - 1 = 0$ dává pro $t = \cos x$ kořeny $t = 1$ a $t = -\frac12$. Zbude vyřešit $\cos x = 1$ a $\cos x = -\frac12$.
-? set #cqlgh | π/6; 5π/6
+?! set #cqlgh | π/6; 5π/6
 Vyřešte $\sin x = \frac12$ v intervalu $[0, 2\pi)$.
 ! Výšku $\frac12$ mají body kružnice v úhlech $\frac\pi6$ a $\pi - \frac\pi6 = \frac{5\pi}6$.
 @ x=-1.45..1.45; y=-1.3..1.3; aspect=equal; circle=0,0,1; hline=0.5; vec=0.866,0.5,ex; vec=-0.866,0.5,ex
-? set #821ck | π/6; 11π/6
+?! set #821ck | π/6; 11π/6
 Vyřešte $\cos x = \frac{\sqrt3}{2}$ v intervalu $[0, 2\pi)$.
 ! Souřadnici $x = \frac{\sqrt3}2$ mají body v úhlech $\frac\pi6$ a $2\pi - \frac\pi6 = \frac{11\pi}6$.
 @ x=-1.45..1.45; y=-1.3..1.3; aspect=equal; circle=0,0,1; vline=0.866; vec=0.866,0.5,ex; vec=0.866,-0.5,ex
-? set #5b08l | π/4; 5π/4
+?! set #5b08l | π/4; 5π/4
 Vyřešte $\operatorname{tg} x = 1$ v intervalu $[0, 2\pi)$.
 ! Tangens má periodu $\pi$: $x = \frac\pi4$ a $x = \frac\pi4 + \pi = \frac{5\pi}4$.
 ? set #kr7ta | π
@@ -2136,6 +2360,12 @@ Vyřešte $\sin x = 2$.
 Vyřešte $2\sin^2x - \sin x - 1 = 0$ v intervalu $[0, 2\pi)$.
 ! S $t = \sin x$: $2t^2 - t - 1 = 0$, tedy $t = 1$ nebo $t = -\frac12$. $\sin x = 1$ dává $\frac\pi2$, $\sin x = -\frac12$ dává $\frac{7\pi}6$ a $\frac{11\pi}6$.
 ? gen #zlk2f | hs_trig_eq
+? set #gsdob | 0; π/3; π; 5π/3
+Vyřešte $\sin2x = \sin x$ v intervalu $[0, 2\pi)$.
+! $2\sin x\cos x-\sin x = \sin x(2\cos x-1) = 0$. Buď $\sin x = 0$ ($x = 0$, $\pi$), nebo $\cos x = \frac12$ ($x = \frac\pi3$, $\frac{5\pi}3$).
+? interval #ft91o | [0; π/3] ∪ [5π/3; 2π)
+Vyřešte $\cos x\ge\frac12$ v intervalu $[0, 2\pi)$.
+! Na jednotkové kružnici je $\cos x\ge\frac12$ pro úhly u kladné poloosy $x$: $x\in\left[0,\frac\pi3\right]\cup\left[\frac{5\pi}3,2\pi\right)$.
 
 ### Sinová a kosinová věta | #3hlhy
 ~ noaxes; poly=-0.85,-0.6,0.85,-0.6,-0.25,0.7,-0.85,-0.6
@@ -2147,14 +2377,14 @@ kde $r$ je poloměr kružnice opsané.
 > Kosinová věta
 $$c^2 = a^2 + b^2 - 2ab\cos\gamma.$$
 Pro $\gamma = 90^\circ$ je $\cos\gamma = 0$ a zbude Pythagorova věta. Kosinovou větu použijeme, když známe tři strany, nebo dvě strany a úhel mezi nimi.
-? input #0zhak | √39; 6.2450
+?! input #0zhak | √39; 6.2450
 Trojúhelník má strany $a = 5$, $b = 7$ a úhel $\gamma = 60^\circ$ mezi nimi. Určete stranu $c$.
 ! $c^2 = 25 + 49 - 2\cdot5\cdot7\cdot\frac12 = 39$, tedy $c = \sqrt{39}\approx6{,}24$.
 @ x=-0.6..7.6; y=-0.6..4.93; aspect=equal; axes=off; seg=0,0,7,0,ink; seg=7,0,2.5,4.33,ink; seg=2.5,4.33,0,0,ink; label=-0.533,-0.356,C; label=7.549,-0.319,A; label=2.368,4.789,B; label=5.242,2.277,c; label=0.744,2.243,a = 5; label=3.622,-0.64,b = 7; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=0+0.656*cos(t),0+0.656*sin(t),0,1.047; label=1.079,0.377,60°
-? input #ezpll | 120
+?! input #ezpll | 120
 Trojúhelník má strany $3$, $5$ a $7$. Jak velký je jeho největší úhel (ve stupních)?
 ! Proti nejdelší straně: $\cos\gamma = \frac{9 + 25 - 49}{2\cdot3\cdot5} = -\frac12$, tedy $\gamma = 120^\circ$.
-? input #19c36 | 4
+?! input #19c36 | 4
 V trojúhelníku je $b = 8$, $\alpha = 30^\circ$ a $\beta = 90^\circ$. Určete stranu $a$.
 ! Podle sinové věty $a = b\cdot\frac{\sin\alpha}{\sin\beta} = 8\cdot\frac{1/2}{1} = 4$.
 ? input #er0k5 | 4√2; 5.6569
@@ -2193,6 +2423,12 @@ Pomocí kosinové věty určete úhel rovnostranného trojúhelníku (ve stupní
 ? gen #82bz7 | hs_cos_rule
 ? gen #co0lr | hs_sine_rule
 ? gen #dnnhc | hs_tri_area
+? input #bzlwo | 120
+Trojúhelník má strany $7$, $8$ a $13$. Jak velký je jeho největší úhel (ve stupních)?
+! Proti nejdelší straně: $\cos\gamma = \frac{49+64-169}{2\cdot7\cdot8} = -\frac12$, tedy $\gamma = 120^\circ$.
+? input #aq4hc | 12
+Určete obsah trojúhelníku se stranami $5$, $5$ a $6$.
+! Výška na stranu $6$ je $\sqrt{5^2-3^2} = 4$, takže obsah je $\frac{6\cdot4}2 = 12$ (Heronův vzorec dá totéž).
 
 ## Posloupnosti a řady | #ili2i
 ### Posloupnosti a jejich vlastnosti | #gjpuq
@@ -2203,14 +2439,14 @@ Posloupnost $(a_n)$ přiřazuje každému $n = 1, 2, 3, \dots$ číslo $a_n$. Za
 Posloupnost $a_n = \frac{n - 1}{n + 1}$ roste, je omezená a její členy se blíží k $1$: má limitu $1$.
 > Monotonie, omezenost, limita
 Posloupnost je <b>rostoucí</b>, když $a_{n+1} > a_n$ pro každé $n$, a <b>omezená</b>, když všechny členy leží v nějakém intervalu $[m, M]$. Limita je číslo, ke kterému se členy pro velká $n$ libovolně přiblíží. U podílu dvou polynomů stejného stupně je to podíl vedoucích koeficientů.
-? input #55wxn | 11
+?! input #55wxn | 11
 Posloupnost je dána vzorcem $a_n = n^2 - 5$. Určete $a_4$.
 ! $a_4 = 16 - 5 = 11$.
-? expr #imk2n | 4n | var=n
+?! expr #imk2n | 4n | var=n
 Napište vzorec pro $n$-tý člen posloupnosti $4, 8, 12, 16, \dots$
 = $a_n = 4n$
 ! Každý člen je čtyřnásobkem svého pořadí: $a_n = 4n$.
-? expr #or6up | 2n-1 | var=n
+?! expr #or6up | 2n-1 | var=n
 Napište vzorec pro $n$-tý člen posloupnosti všech lichých přirozených čísel $1, 3, 5, \dots$
 = $a_n = 2n - 1$
 ! Liché číslo je o jedna menší než sudé $2n$: $a_n = 2n - 1$.
@@ -2267,6 +2503,12 @@ Je posloupnost $a_n = \dfrac{n + 1}{2n + 3}$ rostoucí?
 ! $a_1 = \frac25 = 0{,}4$, $a_2 = \frac37\approx0{,}43$ a $\frac{n + 1}{2n + 3} = \frac12 - \frac{1}{2(2n + 3)}$ roste k limitě $\frac12$.
 ? gen #z9ggz | hs_seq_term
 ? gen #c187o | hs_seq_lim
+? input #ec1gs | -1/20; -0.05
+Pro $a_n = \dfrac{n+1}n$ určete $a_5-a_4$.
+! $a_5 = \frac65$ a $a_4 = \frac54$, takže $a_5-a_4 = \frac{24-25}{20} = -\frac1{20}$. Posloupnost je klesající.
+? tf #64q9x | true
+Každá rostoucí posloupnost je zdola omezená.
+! Všechny členy jsou větší nebo rovny prvnímu členu $a_1$, ten je tedy dolní mezí.
 
 ### Aritmetická posloupnost | #cn8v1
 ~ seq=-0.85+0.22*n; N=8
@@ -2277,13 +2519,13 @@ $$a_n = a_1 + (n - 1)d,\qquad s_n = \frac{n(a_1 + a_n)}{2}.$$
 > Proč platí vzorec pro součet
 Součet napíšeme dvakrát, jednou pozpátku. Pod sebou stojící členy dávají vždy $a_1 + a_n$, a dvojic je $n$:
 $$1 + 2 + \dots + 100 = \frac{100\cdot101}{2} = 5050.$$
-? input #3mrbd | 21
+?! input #3mrbd | 21
 V aritmetické posloupnosti je $a_1 = 20$ a $d = 4$. Kolikátý člen je roven $100$?
 ! $20 + (n - 1)\cdot4 = 100$, tedy $n - 1 = 20$ a $n = 21$.
-? input #0scrz | 3
+?! input #0scrz | 3
 V aritmetické posloupnosti je $a_4 = 9$ a $a_{10} = 21$. Určete $a_1$.
 ! Mezi $a_4$ a $a_{10}$ je $6$ kroků: $6d = 12$, tedy $d = 2$. Pak $a_1 = a_4 - 3d = 9 - 6 = 3$.
-? input #czbzy | 210
+?! input #czbzy | 210
 Určete součet prvních deseti členů aritmetické posloupnosti s $a_1 = 3$ a $d = 4$.
 ! $a_{10} = 3 + 9\cdot4 = 39$ a $s_{10} = \frac{10(3 + 39)}{2} = 210$.
 ? input #qjm16 | 4905
@@ -2324,6 +2566,12 @@ Napište vzorec pro $n$-tý člen aritmetické posloupnosti $7, 10, 13, \dots$
 ? gen #ir5cx | hs_ap_term
 ? gen #54q5s | hs_ap_sum
 ? gen #wshnu | hs_ap_find
+? input #rz2we | 3
+Mezi čísla $2$ a $20$ vložte pět čísel tak, aby všech sedm tvořilo aritmetickou posloupnost. Jaká je její diference?
+! $a_7 = a_1+6d$, tedy $20 = 2+6d$ a $d = 3$. Posloupnost je $2, 5, 8, 11, 14, 17, 20$.
+? input #q11i7 | 98550
+Určete součet všech trojciferných čísel dělitelných pěti.
+! Jsou to členy $100, 105, \dots, 995$, celkem $\frac{995-100}5+1 = 180$. Součet je $180\cdot\frac{100+995}2 = 98\,550$.
 
 ### Geometrická posloupnost | #2jier
 ~ seq=-0.9+0.025*2^n; N=8
@@ -2336,13 +2584,13 @@ Pro $q > 1$ členy rostou stále rychleji, pro $0 < q < 1$ klesají k nule a pro
 Vklad $K_0$ úročený $p\,\%$ ročně (s připisováním úroků) je po $n$ letech
 $$K_n = K_0\left(1 + \frac{p}{100}\right)^n.$$
 Je to geometrická posloupnost s kvocientem $1 + \frac p{100}$.
-? input #3omam | 12
+?! input #3omam | 12
 V geometrické posloupnosti je $a_1 = 64$ a $q = \frac12$. Kolikátý člen je roven $\frac1{32}$?
 ! $64\cdot\left(\frac12\right)^{n - 1} = 2^{6 - (n - 1)} = 2^{-5}$, tedy $7 - n = -5$ a $n = 12$.
-? set #ae78f | -1/4; 1/4
+?! set #ae78f | -1/4; 1/4
 V geometrické posloupnosti je $a_2 = 16$ a $a_4 = 1$. Určete všechny možné kvocienty $q$.
 ! $a_4 = a_2q^2$, tedy $q^2 = \frac1{16}$ a $q = \pm\frac14$.
-? input #82ywu | 242
+?! input #82ywu | 242
 Určete součet prvních pěti členů geometrické posloupnosti s $a_1 = 2$ a $q = 3$.
 ! $s_5 = 2\cdot\frac{3^5 - 1}{3 - 1} = 243 - 1 = 242$ (členy $2, 6, 18, 54, 162$).
 ? input #xw8ng | 1023
@@ -2384,6 +2632,12 @@ V geometrické posloupnosti je $a_1 = 5$ a $q = 2$. Určete $a_6$.
 ! $a_6 = 5\cdot2^5 = 160$.
 ? gen #rm1l8 | hs_gp_term
 ? gen #ga9hw | hs_gp_sum
+? input #s62kt | 3
+V geometrické posloupnosti je $a_1 = 3$ a $a_4 = 81$. Určete kvocient.
+! $a_4 = a_1q^3$, tedy $q^3 = 27$ a $q = 3$.
+? input #0v423 | 18
+Mezi čísla $2$ a $162$ vložte tři kladná čísla tak, aby všech pět tvořilo geometrickou posloupnost. Jaké je prostřední z nich?
+! $162 = 2q^4$, tedy $q^4 = 81$ a $q = 3$. Posloupnost je $2, 6, 18, 54, 162$, prostřední člen je $18$.
 
 ### Nekonečná geometrická řada | #sgp51
 ~ noaxes; poly=-0.8,-0.8,0.8,-0.8,0.8,0.8,-0.8,0.8,-0.8,-0.8; line=0,-0.8,0,0.8; line=0,0,0.8,0; line=0.4,0,0.4,0.8
@@ -2397,14 +2651,14 @@ $$\frac12 + \frac14 + \frac18 + \dots = \frac{1/2}{1 - 1/2} = 1.$$
 Periodické desetinné číslo je nekonečná geometrická řada:
 $$0{,}\overline{3} = \frac3{10} + \frac3{100} + \dots = \frac{3/10}{1 - 1/10} = \frac13.$$
 Pro $|q|\ge1$ (a $a_1\ne0$) řada součet nemá.
-? input #er7wx | 3
+?! input #er7wx | 3
 Určete součet řady $\dfrac32 + \dfrac34 + \dfrac38 + \dfrac3{16} + \dots$
 ! $a_1 = \frac32$, $q = \frac12$: $s = \frac{3/2}{1 - 1/2} = 3$.
-? input #hwgwv | 2/3
+?! input #hwgwv | 2/3
 Určete součet řady $1 - \dfrac12 + \dfrac14 - \dfrac18 + \dots$
 ! $q = -\frac12$: $s = \frac{1}{1 + 1/2} = \frac23$.
 @ x=0..8.5; y=0..1.1; seq=(1-(-0.5)^n)/1.5; hline=0.6667
-? input #95vbp | 8/9
+?! input #95vbp | 8/9
 Zapište číslo $0{,}\overline{8}$ zlomkem.
 ! $\frac{8/10}{1 - 1/10} = \frac89$.
 ? input #nigql | 37/99
@@ -2442,6 +2696,12 @@ Která řada nemá konečný součet?
 ! Řada s $q = -1$ má součty $1, 0, 1, 0, \dots$, které se k žádnému číslu neblíží. Ostatní mají $|q| < 1$.
 ? gen #iki1o | hs_inf_series
 ? gen #g5krq | hs_periodic
+? input #qvvyd | 1/6
+Zapište číslo $0{,}1\overline{6}$ zlomkem.
+! $$0{,}1\overline6 = \frac1{10}+\frac6{100}+\frac6{1000}+\dots = \frac1{10}+\frac{6/100}{1-1/10} = \frac1{10}+\frac1{15} = \frac16.$$
+? interval #3h3hf | (0; 2)
+Pro která $x$ má řada $1+(x-1)+(x-1)^2+\dots$ konečný součet?
+! Geometrická řada konverguje pro $|q|<1$, tedy $|x-1|<1$ a $x\in(0,2)$.
 
 ## Planimetrie | #p6hjf
 ### Úhly a trojúhelníky | #b9uh6
@@ -2452,14 +2712,14 @@ Přímka protínající dvě rovnoběžky vytvoří u obou stejné úhly. Souhla
 Souhlasné úhly $\alpha$ (oranžově) a úhel střídavý (zeleně) jsou shodné.
 > Trojúhelník
 Součet vnitřních úhlů trojúhelníku je $180^\circ$, $n$-úhelníku $(n - 2)\cdot180^\circ$. Ze tří délek lze sestrojit trojúhelník, jen když je každá menší než součet zbylých dvou (trojúhelníková nerovnost).
-? input #2549t | 110
+?! input #2549t | 110
 Dvě rovnoběžky protíná příčka. Jeden z úhlů, které svírá s první rovnoběžkou, má $70^\circ$. Jak velký je úhel $\beta$ na obrázku (ve stupních)?
 @@ x=-3..4; y=-1.4..2.9; aspect=equal; axes=off; line=0,0,1,0,ink; line=0,1.5,1,1.5,ink; line=0,0,0.546,1.5,def; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=0+0.35*cos(t),0+0.35*sin(t),0,1.222; label=0.545,0.171,70°; param=999,999,0,1; param=999,999,0,1; param=0.546+0.3*cos(t),1.5+0.3*sin(t),1.222,3.142; label=0.219,1.757,β
 ! Úhel u druhé rovnoběžky na stejném místě je souhlasný, má také $70^\circ$. Úhel $\beta$ je s ním vedlejší: $\beta = 180^\circ - 70^\circ = 110^\circ$.
-? input #vkaqv | 65
+?! input #vkaqv | 65
 Trojúhelník má dva úhly $50^\circ$ a $65^\circ$. Jak velký je třetí úhel (ve stupních)?
 ! $180 - 50 - 65 = 65$. Trojúhelník je rovnoramenný.
-? interval #xmkr4 | (2; 14)
+?! interval #xmkr4 | (2; 14)
 Trojúhelník má strany $a = 6$ cm a $b = 8$ cm. Jaké délky může mít strana $c$ (cm)?
 ! Podle trojúhelníkové nerovnosti $|a - b| < c < a + b$, tedy $c\in(2, 14)$.
 ? input #2sa97 | 720
@@ -2493,6 +2753,12 @@ Jaký úhel svírají ručičky hodin ve $4$ hodiny (ve stupních)?
 ? gen #ywrvs | hs_tri_angle
 ? gen #ipc9d | hs_polygon
 ? gen #9py8f | hs_tri_ineq
+? input #ied18 | 35
+Kolik úhlopříček má desetiúhelník?
+! Z každého z $10$ vrcholů vede $7$ úhlopříček a každou jsme počítali dvakrát: $\frac{10\cdot7}2 = 35$.
+? input #qtmja | 30
+Jak velký je vnější úhel pravidelného dvanáctiúhelníku (ve stupních)?
+! Součet vnějších úhlů konvexního mnohoúhelníku je $360^\circ$, tedy $\frac{360^\circ}{12} = 30^\circ$.
 
 ### Podobnost a Euklidovy věty | #3acp8
 ~ noaxes; poly=-0.9,-0.7,0.9,-0.7,0.25,0.55,-0.9,-0.7; line=0.25,-0.7,0.25,0.55
@@ -2503,13 +2769,13 @@ Podobné trojúhelníky mají stejné úhly a jejich strany jsou v poměru $k$. 
 Výška $v_c$ na přeponu rozdělí přeponu na úseky $c_a$ (u odvěsny $a$, zeleně) a $c_b$ (u odvěsny $b$, oranžově) a pravoúhlý trojúhelník na dva podobné:
 $$v_c^2 = c_ac_b,\qquad a^2 = c\,c_a,\qquad b^2 = c\,c_b.$$
 @@ x=-0.6..10.6; y=-0.6..5.4; aspect=equal; axes=off; seg=0,0,10,0,ink; seg=10,0,6.4,4.8,ink; seg=6.4,4.8,0,0,ink; label=-0.769,-0.379,A; label=10.755,-0.421,B; label=6.624,5.415,C; label=8.909,2.454,a; label=2.503,2.492,b; seg=5.862,4.397,6.266,3.859,thm; seg=6.266,3.859,6.803,4.262,thm; seg=0,0,6.4,0,thm; seg=6.4,0,10,0,prf; seg=6.4,0,6.4,4.8,ex; label=6.9,2.2,v
-? input #m5m7o | 24
+?! input #m5m7o | 24
 Trojúhelník se stranami $3$, $4$ a $5$ zvětšíme v poměru $k = 2$. Jaký obvod má nový trojúhelník?
 ! Obvod se zvětší také dvakrát: $2\cdot12 = 24$.
-? input #nzzgb | 9
+?! input #nzzgb | 9
 Dva podobné trojúhelníky mají strany v poměru $1 : 3$. Kolikrát větší obsah má větší z nich?
 ! Obsahy jsou v poměru $k^2 = 9$.
-? input #8ybbi | 8
+?! input #8ybbi | 8
 Tyč dlouhá $2$ m vrhá stín $3$ m. Strom ve stejnou chvíli vrhá stín $12$ m. Jak je strom vysoký (m)?
 ! Paprsky dopadají pod stejným úhlem, trojúhelníky jsou podobné: $\frac{v}{12} = \frac23$, tedy $v = 8$ m.
 @ x=-0.5..16; y=-0.8..9; aspect=equal; axes=off; seg=0,0,15.5,0,ink; seg=0,0,0,8,prf; seg=0,8,12,0,muted; seg=13,0,13,2,ex; seg=13,2,16,0,muted; label=6,-0.6,12 m; label=14.5,-0.6,3 m; label=-0.4,4,v; label=12.5,1.1,2 m
@@ -2550,6 +2816,12 @@ Na mapě v měřítku $1 : 50\,000$ je vzdálenost $3$ cm. Kolik je to ve skute�
 ! $3\cdot50\,000 = 150\,000$ cm $= 1{,}5$ km.
 ? gen #rwbb1 | hs_euclid
 ? gen #l0hhz | hs_shadow
+? input #u7pdv | 2√13; 7.2111
+Přepona pravoúhlého trojúhelníku měří $13$ a úsek přepony přilehlý k odvěsně $a$ měří $4$. Jak dlouhá je odvěsna $a$?
+! Podle Eukleidovy věty o odvěsně je $a^2 = c\cdot c_a = 13\cdot4 = 52$, tedy $a = \sqrt{52} = 2\sqrt{13}$.
+? input #qd5kg | 2√3; 3.4641
+Výška rovnostranného trojúhelníku je $3$. Jak dlouhá je jeho strana?
+! $v = \frac{\sqrt3}2a$, takže $a = \frac{2v}{\sqrt3} = \frac6{\sqrt3} = 2\sqrt3$.
 
 ### Kružnice a úhly | #j577z
 ~ noaxes; circle=0,0,0.8; poly=-0.8,0,0.8,0,0.3,0.74,-0.8,0
@@ -2559,13 +2831,13 @@ Obvodový úhel je polovinou středového úhlu nad týmž obloukem. Všechny ob
 > Tečna a mocnost bodu
 Tečna je kolmá na poloměr v bodě dotyku. Z bodu ve vzdálenosti $d$ od středu je délka tečny $t = \sqrt{d^2 - r^2}$. Když se dvě tětivy protnou v bodě $P$, platí $|PA|\cdot|PB| = |PC|\cdot|PD|$.
 @@ x=-1.3..2.4; y=-1.3..1.3; aspect=equal; axes=off; circle=0,0,1; seg=0,0,2,0,muted; seg=0,0,0.5,0.866,def; seg=0.5,0.866,2,0,ex; seg=0.389,0.674,0.581,0.563,thm; seg=0.581,0.563,0.692,0.755,thm; label=0.1,0.55,r; label=1,-0.2,d; label=1.4,0.6,t; pt=2,0
-? input #jgwpg | 70
+?! input #jgwpg | 70
 Obvodový úhel nad obloukem má $35^\circ$. Jak velký je středový úhel nad týmž obloukem (ve stupních)?
 ! Středový úhel je dvojnásobkem obvodového: $70^\circ$.
-? input #xnvpp | 65
+?! input #xnvpp | 65
 Středový úhel nad obloukem má $130^\circ$. Jak velký je obvodový úhel nad týmž obloukem (ve stupních)?
 ! Obvodový úhel je polovina středového: $65^\circ$.
-? input #s5cg1 | 65
+?! input #s5cg1 | 65
 Trojúhelník $ABC$ je vepsaný do kružnice a strana $AB$ je její průměr. Úhel při vrcholu $A$ má $25^\circ$. Jak velký je úhel při vrcholu $B$ (ve stupních)?
 ! Podle Thaletovy věty je úhel při $C$ pravý, takže $\beta = 90^\circ - 25^\circ = 65^\circ$.
 @ x=-1.4..1.4; y=-1.3..1.3; aspect=equal; axes=off; circle=0,0,1; seg=-1,0,1,0,ink; seg=1,0,0.643,0.766,ink; seg=0.643,0.766,-1,0,ink; seg=0.534,0.715,0.585,0.607,thm; seg=0.585,0.607,0.694,0.657,thm; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=-1+0.3*cos(t),0+0.3*sin(t),0,0.436; label=-0.444,0.039,25°; label=-1.15,-0.12,A; label=1.15,-0.12,B; label=0.7,0.9,C
@@ -2600,6 +2872,12 @@ Jaký poloměr má kružnice vepsaná pravoúhlému trojúhelníku se stranami $
 @ x=-0.6..4.6; y=-0.6..3.6; aspect=equal; axes=off; seg=0,0,4,0,ink; seg=4,0,0,3,ink; seg=0,3,0,0,ink; seg=0.312,0,0.312,0.312,thm; seg=0.312,0.312,0,0.312,thm; circle=1,1,1
 ? gen #lppte | hs_inscribed
 ? gen #sx0ct | hs_tangent_len
+? input #k8vk9 | 30
+Strana pravidelného šestiúhelníku vepsaného do kružnice je tětivou. Jak velký je obvodový úhel nad ní (nad menším obloukem, ve stupních)?
+! Středový úhel nad stranou šestiúhelníku je $60^\circ$ a obvodový je jeho polovina: $30^\circ$.
+? input #dwp8j | 6
+Přímka vedená bodem $P$ vně kružnice ji protíná v bodech $A$, $B$ s $|PA| = 4$ a $|PB| = 9$. Jak dlouhá je tečna z bodu $P$ ke kružnici?
+! Mocnost bodu: $t^2 = |PA|\cdot|PB| = 36$, takže $t = 6$.
 
 ### Shodná zobrazení a množiny bodů | #4a3qu
 ~ noaxes; dash=0,-1,0,1; poly=-0.85,-0.5,-0.25,-0.5,-0.55,0.4,-0.85,-0.5; poly=0.85,-0.5,0.25,-0.5,0.55,0.4,0.85,-0.5
@@ -2609,7 +2887,7 @@ Osová souměrnost, středová souměrnost, otočení a posunutí zachovávají 
 > Množiny bodů daných vlastností
 Body se stejnou vzdáleností od $A$ a $B$ tvoří osu úsečky $AB$. Body ve vzdálenosti $r$ od $S$ tvoří kružnici. Body $X$, z nichž je úsečka $AB$ vidět pod pravým úhlem, leží na Thaletově kružnici nad průměrem $AB$ (bez bodů $A$, $B$).
 @@ x=-2.2..2.2; y=-1.6..1.6; aspect=equal; axes=off; seg=-1,0,1,0,ink; pt=-1,0; pt=1,0; vline=0; pt=0,1.2; seg=-1,0,0,1.2,muted; seg=1,0,0,1.2,muted; label=-1.15,-0.3,A; label=1.15,-0.3,B
-? mc #jy64q
+?! mc #jy64q
 Které zobrazení převádí trojúhelník $ABC$ na obrázku na trojúhelník $A'B'C'$?
 @@ x=-4..4; y=-3..3; aspect=equal; seg=1,0.5,3,0.5,def; seg=3,0.5,1.5,2,def; seg=1.5,2,1,0.5,def; seg=-1,-0.5,-3,-0.5,ex; seg=-3,-0.5,-1.5,-2,ex; seg=-1.5,-2,-1,-0.5,ex; pt=0,0
 + Středová souměrnost podle počátku
@@ -2617,7 +2895,7 @@ Které zobrazení převádí trojúhelník $ABC$ na obrázku na trojúhelník $A
 - Osová souměrnost podle osy $x$
 - Posunutí
 ! Každý bod $[x, y]$ přešel v $[-x, -y]$: obrazec se otočil o $180^\circ$ kolem počátku. Je to středová souměrnost.
-? mc #pn75o
+?! mc #pn75o
 Které zobrazení převádí trojúhelník $ABC$ na obrázku na trojúhelník $A'B'C'$?
 @@ x=-4..4; y=-3..3; aspect=equal; seg=1,0.5,3,0.5,def; seg=3,0.5,1.5,2,def; seg=1.5,2,1,0.5,def; seg=-0.5,1,-0.5,3,ex; seg=-0.5,3,-2,1.5,ex; seg=-2,1.5,-0.5,1,ex
 - Středová souměrnost podle počátku
@@ -2625,7 +2903,7 @@ Které zobrazení převádí trojúhelník $ABC$ na obrázku na trojúhelník $A
 + Otočení o $90^\circ$ kolem počátku
 - Posunutí
 ! Bod $[1; 0{,}5]$ přešel v $[-0{,}5; 1]$ a $[3; 0{,}5]$ v $[-0{,}5; 3]$: každý bod $[x, y]$ přešel v $[-y, x]$. To je otočení o $90^\circ$ proti směru hodinových ručiček.
-? mc #mlhn6
+?! mc #mlhn6
 Co je množina všech bodů roviny, které mají od bodů $A$ a $B$ stejnou vzdálenost?
 + Osa úsečky $AB$
 - Kružnice s průměrem $AB$
@@ -2683,6 +2961,16 @@ Co je množina všech bodů roviny, které mají od přímky $p$ vzdálenost $2$
 Úsečku délky $3$ cm zobrazíme ve stejnolehlosti s koeficientem $\varkappa = -2$. Jak dlouhý je její obraz (cm)?
 ! Stejnolehlost násobí délky číslem $|\varkappa| = 2$: $6$ cm. Záporné $\varkappa$ jen převrací obrazec přes střed.
 ? gen #3nxgm | hs_reflect
+? input #6qyew | 2
+Bod $[2, 0]$ otočíme kolem počátku o $90^\circ$ proti směru hodinových ručiček. Jakou souřadnici $y$ má jeho obraz?
+! Otočení o $90^\circ$ pošle $[x,y]$ na $[-y,x]$, tedy $[2,0]$ na $[0,2]$. Souřadnice $y$ je $2$.
+? mc #u4ydx
+Jaké zobrazení vznikne složením dvou středových souměrností s různými středy?
++ posunutí
+- středová souměrnost
+- otočení o $90^\circ$
+- identita
+! Složení souměrností se středy $S_1$, $S_2$ je posunutí o vektor $2\overrightarrow{S_1S_2}$.
 
 ## Stereometrie | #1vjca
 ### Polohové vztahy v krychli | #tj8nz
@@ -2693,7 +2981,7 @@ Dvě přímky v prostoru jsou <b>rovnoběžné</b>, <b>různoběžné</b> (mají
 > Řez krychle rovinou
 Rovina protne krychli v mnohoúhelníku. Rovina $ACG$ obsahuje dvě protější hrany $AE$ a $CG$, takže řezem je obdélník $ACGE$ se stranami $a$ a $a\sqrt2$.
 @@ x=-0.7..1.35; y=-0.6..1.25; aspect=equal; axes=off; fill=-0.42,-0.32,1,0,1,1,-0.42,0.68,def; seg=-0.42,-0.32,0.58,-0.32,ink; seg=0.58,-0.32,1,0,ink; seg=1,0,0.875,0,muted; seg=0.75,0,0.625,0,muted; seg=0.5,0,0.375,0,muted; seg=0.25,0,0.125,0,muted; seg=0,0,-0.052,-0.04,muted; seg=-0.105,-0.08,-0.158,-0.12,muted; seg=-0.21,-0.16,-0.263,-0.2,muted; seg=-0.315,-0.24,-0.367,-0.28,muted; seg=-0.42,0.68,0.58,0.68,ink; seg=0.58,0.68,1,1,ink; seg=1,1,0,1,ink; seg=0,1,-0.42,0.68,ink; seg=-0.42,-0.32,-0.42,0.68,ink; seg=0.58,-0.32,0.58,0.68,ink; seg=1,0,1,1,ink; seg=0,0,0,0.125,muted; seg=0,0.25,0,0.375,muted; seg=0,0.5,0,0.625,muted; seg=0,0.75,0,0.875,muted; seg=-0.42,-0.32,1,0,def; seg=-0.42,0.68,1,1,def; label=-0.5,-0.44,A; label=0.65,-0.44,B; label=1.09,-0.04,C; label=-0.09,0.02,D; label=-0.5,0.72,E; label=0.68,0.7,F; label=1.08,1.04,G; label=-0.08,1.05,H
-? mc #f5frp
+?! mc #f5frp
 Jaká je vzájemná poloha přímek $AB$ a $GH$ v krychli $ABCDEFGH$?
 @@ x=-0.7..1.35; y=-0.6..1.25; aspect=equal; axes=off; seg=-0.42,-0.32,0.58,-0.32,ink; seg=0.58,-0.32,1,0,ink; seg=1,0,0.875,0,muted; seg=0.75,0,0.625,0,muted; seg=0.5,0,0.375,0,muted; seg=0.25,0,0.125,0,muted; seg=0,0,-0.052,-0.04,muted; seg=-0.105,-0.08,-0.158,-0.12,muted; seg=-0.21,-0.16,-0.263,-0.2,muted; seg=-0.315,-0.24,-0.367,-0.28,muted; seg=-0.42,0.68,0.58,0.68,ink; seg=0.58,0.68,1,1,ink; seg=1,1,0,1,ink; seg=0,1,-0.42,0.68,ink; seg=-0.42,-0.32,-0.42,0.68,ink; seg=0.58,-0.32,0.58,0.68,ink; seg=1,0,1,1,ink; seg=0,0,0,0.125,muted; seg=0,0.25,0,0.375,muted; seg=0,0.5,0,0.625,muted; seg=0,0.75,0,0.875,muted; seg=-0.42,-0.32,0.58,-0.32,ex; seg=1,1,0,1,prf; label=-0.5,-0.44,A; label=0.65,-0.44,B; label=1.09,-0.04,C; label=-0.09,0.02,D; label=-0.5,0.72,E; label=0.68,0.7,F; label=1.08,1.04,G; label=-0.08,1.05,H
 + rovnoběžné
@@ -2701,14 +2989,14 @@ Jaká je vzájemná poloha přímek $AB$ a $GH$ v krychli $ABCDEFGH$?
 - mimoběžné
 - totožné
 ! $AB\parallel DC$ a $DC\parallel HG$, takže i $AB\parallel GH$. Leží v rovině $ABGH$.
-? mc #hseac
+?! mc #hseac
 Jaká je vzájemná poloha přímek $AE$ a $BC$ v krychli $ABCDEFGH$?
 - rovnoběžné
 - různoběžné
 + mimoběžné
 - kolmé různoběžky
 ! Nemají společný bod a nejsou rovnoběžné ($AE$ je svislá, $BC$ vodorovná). Jsou mimoběžné, i když svírají pravý úhel.
-? mc #holb1
+?! mc #holb1
 Jaká je vzájemná poloha tělesových úhlopříček $AG$ a $BH$ krychle $ABCDEFGH$?
 @@ x=-0.7..1.35; y=-0.6..1.25; aspect=equal; axes=off; seg=-0.42,-0.32,0.58,-0.32,ink; seg=0.58,-0.32,1,0,ink; seg=1,0,0.875,0,muted; seg=0.75,0,0.625,0,muted; seg=0.5,0,0.375,0,muted; seg=0.25,0,0.125,0,muted; seg=0,0,-0.052,-0.04,muted; seg=-0.105,-0.08,-0.158,-0.12,muted; seg=-0.21,-0.16,-0.263,-0.2,muted; seg=-0.315,-0.24,-0.367,-0.28,muted; seg=-0.42,0.68,0.58,0.68,ink; seg=0.58,0.68,1,1,ink; seg=1,1,0,1,ink; seg=0,1,-0.42,0.68,ink; seg=-0.42,-0.32,-0.42,0.68,ink; seg=0.58,-0.32,0.58,0.68,ink; seg=1,0,1,1,ink; seg=0,0,0,0.125,muted; seg=0,0.25,0,0.375,muted; seg=0,0.5,0,0.625,muted; seg=0,0.75,0,0.875,muted; seg=-0.42,-0.32,1,1,ex; seg=0.58,-0.32,0,1,prf; label=-0.5,-0.44,A; label=0.65,-0.44,B; label=1.09,-0.04,C; label=-0.09,0.02,D; label=-0.5,0.72,E; label=0.68,0.7,F; label=1.08,1.04,G; label=-0.08,1.05,H
 - rovnoběžné
@@ -2767,6 +3055,12 @@ Jaký tvar má řez krychle rovinou, která prochází hranou $AB$ a hranou $GH$
 - lichoběžník
 ! Řez je $ABGH$: strany $AB$ a $GH$ mají délku $a$, strany $BG$ a $AH$ jsou stěnové úhlopříčky délky $a\sqrt2$, a úhly jsou pravé. Je to obdélník.
 @ x=-0.7..1.35; y=-0.6..1.25; aspect=equal; axes=off; fill=-0.42,-0.32,0.58,-0.32,1,1,0,1,def; seg=-0.42,-0.32,0.58,-0.32,ink; seg=0.58,-0.32,1,0,ink; seg=1,0,0.875,0,muted; seg=0.75,0,0.625,0,muted; seg=0.5,0,0.375,0,muted; seg=0.25,0,0.125,0,muted; seg=0,0,-0.052,-0.04,muted; seg=-0.105,-0.08,-0.158,-0.12,muted; seg=-0.21,-0.16,-0.263,-0.2,muted; seg=-0.315,-0.24,-0.367,-0.28,muted; seg=-0.42,0.68,0.58,0.68,ink; seg=0.58,0.68,1,1,ink; seg=1,1,0,1,ink; seg=0,1,-0.42,0.68,ink; seg=-0.42,-0.32,-0.42,0.68,ink; seg=0.58,-0.32,0.58,0.68,ink; seg=1,0,1,1,ink; seg=0,0,0,0.125,muted; seg=0,0.25,0,0.375,muted; seg=0,0.5,0,0.625,muted; seg=0,0.75,0,0.875,muted; label=-0.5,-0.44,A; label=0.65,-0.44,B; label=1.09,-0.04,C; label=-0.09,0.02,D; label=-0.5,0.72,E; label=0.68,0.7,F; label=1.08,1.04,G; label=-0.08,1.05,H
+? input #0doy8 | 3
+Kolik dalších hran krychle $ABCDEFGH$ je rovnoběžných s hranou $AB$?
+! S hranou $AB$ jsou rovnoběžné hrany $CD$, $EF$ a $GH$, tedy $3$.
+? tf #7o3y6 | false
+Řezem krychle rovinou může být sedmiúhelník.
+! Každá strana řezu leží v jedné stěně a v každé stěně leží nejvýš jedna strana. Krychle má $6$ stěn, takže řez má nejvýš $6$ stran.
 
 ### Vzdálenosti a odchylky | #n59qs
 ~ noaxes; poly=-0.7,-0.75,0.4,-0.75,0.4,0.35,-0.7,0.35,-0.7,-0.75; poly=-0.7,0.35,-0.35,0.75,0.75,0.75,0.4,0.35; line=0.75,0.75,0.75,-0.35; line=0.75,-0.35,0.4,-0.75; line=-0.7,-0.75,0.75,0.75
@@ -2775,13 +3069,13 @@ Stěnová úhlopříčka krychle o hraně $a$ má délku $a\sqrt2$, tělesová $
 @@ x=-0.7..1.35; y=-0.6..1.25; aspect=equal; axes=off; fill=-0.42,-0.32,1,0,1,1,def; seg=-0.42,-0.32,0.58,-0.32,ink; seg=0.58,-0.32,1,0,ink; seg=1,0,0.875,0,muted; seg=0.75,0,0.625,0,muted; seg=0.5,0,0.375,0,muted; seg=0.25,0,0.125,0,muted; seg=0,0,-0.052,-0.04,muted; seg=-0.105,-0.08,-0.158,-0.12,muted; seg=-0.21,-0.16,-0.263,-0.2,muted; seg=-0.315,-0.24,-0.367,-0.28,muted; seg=-0.42,0.68,0.58,0.68,ink; seg=0.58,0.68,1,1,ink; seg=1,1,0,1,ink; seg=0,1,-0.42,0.68,ink; seg=-0.42,-0.32,-0.42,0.68,ink; seg=0.58,-0.32,0.58,0.68,ink; seg=1,0,1,1,ink; seg=0,0,0,0.125,muted; seg=0,0.25,0,0.375,muted; seg=0,0.5,0,0.625,muted; seg=0,0.75,0,0.875,muted; seg=-0.42,-0.32,1,0,prf; seg=-0.42,-0.32,1,1,ex; label=-0.5,-0.44,A; label=0.65,-0.44,B; label=1.09,-0.04,C; label=-0.09,0.02,D; label=-0.5,0.72,E; label=0.68,0.7,F; label=1.08,1.04,G; label=-0.08,1.05,H; label=0.37,-0.26,a√2; label=0.24,0.42,a√3
 > Vzdálenost a odchylka
 Vzdálenost bodu od přímky (roviny) měříme po kolmici. Odchylka přímky od roviny je úhel, který přímka svírá se svým pravoúhlým průmětem do roviny; odchylka mimoběžek je úhel rovnoběžky s jednou z nich vedené bodem druhé.
-? input #yrd17 | 4√3; 6.9282
+?! input #yrd17 | 4√3; 6.9282
 Krychle má hranu $4$ cm. Jak dlouhá je tělesová úhlopříčka $AG$ (cm)?
 ! $|AG| = a\sqrt3 = 4\sqrt3$ cm.
-? input #1bf31 | 4√2; 5.6569
+?! input #1bf31 | 4√2; 5.6569
 Krychle má hranu $4$ cm. Jak dlouhá je stěnová úhlopříčka $AC$ (cm)?
 ! $|AC| = \sqrt{4^2 + 4^2} = 4\sqrt2$ cm.
-? input #tz5h2 | 6
+?! input #tz5h2 | 6
 Krychle $ABCDEFGH$ má hranu $4$ cm. Jak daleko je vrchol $A$ od středu hrany $GH$ (cm)?
 ! Zvolme $D = [0, 0, 0]$, $A = [4, 0, 0]$, $C = [0, 4, 0]$, $H = [0, 0, 4]$. Střed $GH$ je $[0, 2, 4]$ a vzdálenost $\sqrt{16 + 4 + 16} = 6$ cm.
 @ x=-0.7..1.35; y=-0.6..1.25; aspect=equal; axes=off; seg=-0.42,-0.32,0.58,-0.32,ink; seg=0.58,-0.32,1,0,ink; seg=1,0,0.875,0,muted; seg=0.75,0,0.625,0,muted; seg=0.5,0,0.375,0,muted; seg=0.25,0,0.125,0,muted; seg=0,0,-0.052,-0.04,muted; seg=-0.105,-0.08,-0.158,-0.12,muted; seg=-0.21,-0.16,-0.263,-0.2,muted; seg=-0.315,-0.24,-0.367,-0.28,muted; seg=-0.42,0.68,0.58,0.68,ink; seg=0.58,0.68,1,1,ink; seg=1,1,0,1,ink; seg=0,1,-0.42,0.68,ink; seg=-0.42,-0.32,-0.42,0.68,ink; seg=0.58,-0.32,0.58,0.68,ink; seg=1,0,1,1,ink; seg=0,0,0,0.125,muted; seg=0,0.25,0,0.375,muted; seg=0,0.5,0,0.625,muted; seg=0,0.75,0,0.875,muted; seg=-0.42,-0.32,0.5,1,ex; pt=0.5,1; label=-0.5,-0.44,A; label=0.65,-0.44,B; label=1.09,-0.04,C; label=-0.09,0.02,D; label=-0.5,0.72,E; label=0.68,0.7,F; label=1.08,1.04,G; label=-0.08,1.05,H
@@ -2822,6 +3116,12 @@ Krychle má hranu $4$ cm. Jaká je vzdálenost vrcholu $E$ od roviny $BDH$ (cm)?
 ! Vzdálenost $E$ od roviny $BDH$ je stejná jako vzdálenost $A$ od přímky $BD$ v podstavě: polovina úhlopříčky, $\frac{4\sqrt2}{2} = 2\sqrt2$ cm.
 @ x=-0.7..1.35; y=-0.6..1.25; aspect=equal; axes=off; fill=0.58,-0.32,0,0,0,1,0.58,0.68,def; seg=-0.42,-0.32,0.58,-0.32,ink; seg=0.58,-0.32,1,0,ink; seg=1,0,0.875,0,muted; seg=0.75,0,0.625,0,muted; seg=0.5,0,0.375,0,muted; seg=0.25,0,0.125,0,muted; seg=0,0,-0.052,-0.04,muted; seg=-0.105,-0.08,-0.158,-0.12,muted; seg=-0.21,-0.16,-0.263,-0.2,muted; seg=-0.315,-0.24,-0.367,-0.28,muted; seg=-0.42,0.68,0.58,0.68,ink; seg=0.58,0.68,1,1,ink; seg=1,1,0,1,ink; seg=0,1,-0.42,0.68,ink; seg=-0.42,-0.32,-0.42,0.68,ink; seg=0.58,-0.32,0.58,0.68,ink; seg=1,0,1,1,ink; seg=0,0,0,0.125,muted; seg=0,0.25,0,0.375,muted; seg=0,0.5,0,0.625,muted; seg=0,0.75,0,0.875,muted; seg=-0.42,-0.32,0.29,-0.16,ex; seg=-0.42,0.68,0.29,0.84,ex; label=-0.5,-0.44,A; label=0.65,-0.44,B; label=1.09,-0.04,C; label=-0.09,0.02,D; label=-0.5,0.72,E; label=0.68,0.7,F; label=1.08,1.04,G; label=-0.08,1.05,H
 ? gen #15i45 | hs_cube
+? input #bdus0 | √3/3; 0.5774
+Jaký je kosinus odchylky tělesové úhlopříčky $AG$ krychle od její hrany $AB$?
+! Pro hranu $a$ je $|AB| = a$, $|AG| = a\sqrt3$ a trojúhelník $ABG$ má pravý úhel u $B$. Tedy $\cos\varphi = \frac{a}{a\sqrt3} = \frac{\sqrt3}3$.
+? input #jtgy0 | 2√3; 3.4641
+Krychle má hranu $4$ cm. Jak daleko je její střed od vrcholu (cm)?
+! Je to polovina tělesové úhlopříčky: $\frac{4\sqrt3}2 = 2\sqrt3$ cm.
 
 ### Objemy a povrchy těles | #m51t2
 ~ noaxes; ell=0,-0.6,0.6,0.18; ell=0,0.6,0.6,0.18; line=-0.6,-0.6,-0.6,0.6; line=0.6,-0.6,0.6,0.6
@@ -2832,14 +3132,14 @@ Objem hranolu i válce je obsah podstavy krát výška, $V = S_pv$. Jehlan a ku�
 > Koule
 $$V = \frac43\pi r^3,\qquad S = 4\pi r^2.$$
 Při zvětšení všech rozměrů $k$-krát roste povrch $k^2$-krát a objem $k^3$-krát.
-? input #4uqi6 | 8
+?! input #4uqi6 | 8
 Hranu krychle zdvojnásobíme. Kolikrát se zvětší její objem?
 ! $(2a)^3 = 8a^3$: objem se zvětší osmkrát (povrch čtyřikrát).
-? input #qoaed | 20π; 62.8319
+?! input #qoaed | 20π; 62.8319
 Určete objem válce s poloměrem podstavy $2$ cm a výškou $5$ cm (cm³).
 ! $V = \pi r^2v = \pi\cdot4\cdot5 = 20\pi$ cm³.
 @ x=-1.4..1.4; y=-0.6..3; aspect=equal; axes=off; param=0+1*cos(t),0+0.3*sin(t),3.142,6.283; seg=1,0,0.975,0.067,muted; seg=0.901,0.13,0.782,0.187,muted; seg=0.623,0.235,0.434,0.27,muted; seg=0.223,0.292,0,0.3,muted; seg=-0.223,0.292,-0.434,0.27,muted; seg=-0.623,0.235,-0.782,0.187,muted; seg=-0.901,0.13,-0.975,0.067,muted; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=0+1*cos(t),2.5+0.3*sin(t),0,6.283; seg=-1,0,-1,2.5,ink; seg=1,0,1,2.5,ink; seg=0,0,1,0,ex; label=0.5,0.1,r; label=-1.18,1.25,v
-? input #5p129 | 24π; 75.3982
+?! input #5p129 | 24π; 75.3982
 Určete povrch rotačního kužele s poloměrem podstavy $3$ cm a výškou $4$ cm (cm²).
 ! Strana kužele je $s = \sqrt{9 + 16} = 5$. $S = \pi r^2 + \pi rs = 9\pi + 15\pi = 24\pi$ cm².
 @ x=-1.9..1.9; y=-0.6..2.5; aspect=equal; axes=off; param=0+1.5*cos(t),0+0.45*sin(t),3.142,6.283; seg=1.5,0,1.462,0.1,muted; seg=1.351,0.195,1.173,0.281,muted; seg=0.935,0.352,0.651,0.405,muted; seg=0.334,0.439,0,0.45,muted; seg=-0.334,0.439,-0.651,0.405,muted; seg=-0.935,0.352,-1.173,0.281,muted; seg=-1.351,0.195,-1.462,0.1,muted; seg=-1.5,0,0,2,ink; seg=1.5,0,0,2,ink; seg=0,0,0,0.2,muted; seg=0,0.4,0,0.6,muted; seg=0,0.8,0,1,muted; seg=0,1.2,0,1.4,muted; seg=0,1.6,0,1.8,muted; seg=0,0,1.5,0,ex; label=0.75,0.1,r; label=0.18,1,v
@@ -2879,6 +3179,12 @@ Kolikrát větší objem má válec než kužel se stejnou podstavou a výškou?
 ? gen #inlew | hs_box
 ? gen #agiio | hs_pyramid
 ? gen #2knln | hs_scale
+? input #f25gl | 2/3
+Koule je vepsaná do válce (dotýká se obou podstav i pláště). Jakou část objemu válce zaujímá?
+! Pro poloměr $r$ je výška válce $2r$: $V_\text{válec} = 2\pi r^3$ a $V_\text{koule} = \frac43\pi r^3$. Poměr je $\frac23$, jak zjistil Archimédés.
+? input #ot5kh | 18√2; 25.4558
+Jaký objem má pravidelný čtyřstěn s hranou $6$ cm (cm³)?
+! $V = \frac{a^3}{6\sqrt2} = \frac{216}{6\sqrt2} = \frac{36}{\sqrt2} = 18\sqrt2$ cm³.
 
 ## Vektory a analytická geometrie | #02fgl
 ### Vektory | #gcqcw
@@ -2889,17 +3195,17 @@ Vektor $\vec u = B - A$ udává, jak se dostat z bodu $A$ do bodu $B$: z $A = [1
 > Sčítání a násobek
 Vektory sčítáme po složkách; geometricky je $\vec u + \vec v$ úhlopříčka rovnoběžníku. Násobek $k\vec u$ má $|k|$-krát větší velikost, a pro záporné $k$ opačný směr.
 @@ x=-0.5..5.5; y=-0.5..4; aspect=equal; vec=4,1,def; vec=1,2.5,prf; vec=5,3.5,ex; seg=4,1,5,3.5,muted; seg=1,2.5,5,3.5,muted; label=2.2,0.3,u; label=0.2,1.5,v; label=2.8,2.4,u + v
-? mc #4u742
+?! mc #4u742
 Jsou dány body $A = [1, 3]$ a $B = [4, 1]$. Jaké souřadnice má vektor $\vec u = B - A$?
 + $(3, -2)$
 - $(-3, 2)$
 - $(5, 4)$
 - $(4, 3)$
 ! Odečteme souřadnice počátečního bodu od koncového: $(4 - 1, 1 - 3) = (3, -2)$.
-? input #k52ur | 5
+?! input #k52ur | 5
 Jakou velikost má vektor $\vec u = (3, 4)$?
 ! $|\vec u| = \sqrt{9 + 16} = 5$.
-? input #y26fg | 2√5; 4.4721
+?! input #y26fg | 2√5; 4.4721
 Jakou velikost má vektor $\vec u = (-4, 2)$?
 ! $\sqrt{16 + 4} = \sqrt{20} = 2\sqrt5$.
 @ x=-5..1; y=-1..3; aspect=equal; vec=-4,2,ex; seg=-4,0,-4,2,muted; label=-2,0.35,4; label=-4.4,1,2
@@ -2956,6 +3262,12 @@ Jaké souřadnice má těžiště trojúhelníku s vrcholy $[0, 0]$, $[6, 0]$ a 
 ! Těžiště je průměr vrcholů: $\left[\frac{0 + 6 + 0}3, \frac{0 + 0 + 3}3\right] = [2, 1]$.
 @ x=-0.5..6.5; y=-0.5..3.5; aspect=equal; seg=0,0,6,0,ink; seg=6,0,0,3,ink; seg=0,3,0,0,ink; seg=0,0,3,1.5,muted; seg=6,0,0,1.5,muted; seg=0,3,3,0,muted; pt=2,1
 ? gen #8bix6 | hs_vec_len
+? input #n4389 | √26; 5.0990
+Pro $\vec u = (2, -1)$ a $\vec v = (1, 3)$ určete velikost vektoru $2\vec u+\vec v$.
+! $2\vec u+\vec v = (5, 1)$ a jeho velikost je $\sqrt{25+1} = \sqrt{26}$.
+? tf #9sn6t | true
+Body $A = [1, 2]$, $B = [3, 6]$ a $C = [4, 8]$ leží na jedné přímce.
+! $\overrightarrow{AB} = (2,4)$ a $\overrightarrow{AC} = (3,6)$ jsou rovnoběžné, oba jsou násobky $(1,2)$. Body tedy leží na jedné přímce.
 
 ### Skalární a vektorový součin | #8dzig
 ~ arrow=-0.7,-0.6,0.8,-0.1; arrow=-0.7,-0.6,-0.3,0.8
@@ -2966,14 +3278,14 @@ Výsledkem je číslo. Z něj dopočítáme úhel vektorů; nenulové vektory js
 > Vektorový součin
 V prostoru je $\vec u\times\vec v$ vektor kolmý k $\vec u$ i $\vec v$; jeho velikost je obsah rovnoběžníku, který $\vec u$ a $\vec v$ určují.
 $$\vec u\times\vec v = (u_2v_3 - u_3v_2,\ u_3v_1 - u_1v_3,\ u_1v_2 - u_2v_1).$$
-? input #e1oox | 5
+?! input #e1oox | 5
 Vypočtěte skalární součin $(3, 1)\cdot(1, 2)$.
 ! $3\cdot1 + 1\cdot2 = 5$.
-? input #vueux | 45
+?! input #vueux | 45
 Jaký úhel svírají vektory $(3, 1)$ a $(1, 2)$ (ve stupních)?
 ! $\cos\varphi = \frac{5}{\sqrt{10}\sqrt5} = \frac{5}{\sqrt{50}} = \frac{1}{\sqrt2}$, tedy $\varphi = 45^\circ$.
 @ x=-0.5..4; y=-0.5..3; aspect=equal; vec=3,1,def; vec=1,2,ex; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=0+0.6*cos(t),0+0.6*sin(t),0.322,1.107; label=0.861,0.612,45°
-? input #87jmt | -9/2; -4.5
+?! input #87jmt | -9/2; -4.5
 Určete $m$ tak, aby vektor $\vec v = (m, 2)$ byl kolmý k vektoru $\vec u = (4, 9)$.
 ! $\vec u\cdot\vec v = 4m + 18 = 0$, tedy $m = -\frac92$.
 ? input #4w87v | 12
@@ -3014,6 +3326,12 @@ Jaký objem má rovnoběžnostěn určený vektory $(1, 0, 0)$, $(0, 2, 0)$ a $(
 ? gen #ej0nu | hs_dot
 ? gen #kxumy | hs_perp
 ? gen #3v1fy | hs_vec_angle
+? input #0kgfa | 60
+Jaký úhel svírají vektory $(1, 0, 1)$ a $(0, 1, 1)$ (ve stupních)?
+! $\cos\varphi = \frac{0+0+1}{\sqrt2\cdot\sqrt2} = \frac12$, tedy $\varphi = 60^\circ$.
+? input #kxpdu | 1
+Pro jaké $t$ jsou vektory $(1, t, 2)$ a $(t, -3, 1)$ kolmé?
+! Skalární součin $t-3t+2 = 0$, tedy $t = 1$.
 
 ### Přímka v rovině | #ilzjv
 ~ f=0.6*x+0.1; arrow=-0.5,-0.2,0.1,0.16
@@ -3023,17 +3341,17 @@ Přímka bodem $A$ se směrovým vektorem $\vec u$ má parametrické vyjádřen�
 Přímka $x - 2y + 1 = 0$ má normálový vektor $(1, -2)$ a směrový $(2, 1)$.
 > Směrnicový a úsekový tvar
 $y = kx + q$: $k$ je směrnice ($\operatorname{tg}$ úhlu s osou $x$), $q$ průsečík s osou $y$. Úsekový tvar $\frac xp + \frac yq = 1$ prozradí průsečíky s osami $[p, 0]$ a $[0, q]$.
-? mc #tb5pp
+?! mc #tb5pp
 Která rovnice popisuje přímku procházející body $A = [1, 2]$ a $B = [3, 6]$?
 + $2x - y = 0$
 - $x - 2y = 0$
 - $2x + y - 4 = 0$
 - $x + y - 3 = 0$
 ! Směrový vektor $(2, 4)$, normálový $(2, -1)$. $2x - y + c = 0$ a z bodu $A$: $2 - 2 + c = 0$, tedy $c = 0$.
-? input #gksg2 | -2/5; -0.4
+?! input #gksg2 | -2/5; -0.4
 Jakou směrnici má přímka $2x + 5y - 6 = 0$?
 ! $y = -\frac25x + \frac65$, směrnice je $-\frac25$.
-? mc #1xsfn
+?! mc #1xsfn
 Které je parametrické vyjádření přímky bodem $A = [4, 2]$ se směrovým vektorem $\vec u = (2, -1)$?
 + $x = 4 + 2t$, $y = 2 - t$
 - $x = 2 + 4t$, $y = -1 + 2t$
@@ -3090,6 +3408,16 @@ Která rovnice popisuje osu úsečky $AB$, je-li $A = [2, 4]$ a $B = [4, 2]$?
 ! Osa prochází středem $[3, 3]$ a je kolmá k $\vec{AB} = (2, -2)$, který je jejím normálovým vektorem: $x - y = 0$.
 @ x=0..5; y=0..5; aspect=equal; seg=2,4,4,2,ink; pt=2,4; pt=4,2; line=0,0,1,1,ex; pt=3,3
 ? gen #b19pt | hs_line_eq
+? input #qi3vh | 2
+Ve kterém bodě protíná přímka $2x-3y+6 = 0$ osu $y$? Zadejte souřadnici $y$.
+! Pro $x = 0$ je $-3y+6 = 0$, tedy $y = 2$.
+? mc #2yymr
+Která obecná rovnice popisuje přímku $x = 1+2t$, $y = 3-t$?
++ $x+2y-7 = 0$
+- $x-2y+5 = 0$
+- $2x+y-5 = 0$
+- $x+2y+7 = 0$
+! Směrový vektor $(2,-1)$ dává normálový $(1,2)$, tedy $x+2y+c = 0$. Bod $[1,3]$ dá $1+6+c = 0$, $c = -7$: $x+2y-7 = 0$.
 
 ### Vzdálenosti a vzájemná poloha | #6j7rt
 ~ f=0.5*x-0.3; pt=-0.3,0.7; line=-0.3,0.7,0.12,-0.24
@@ -3100,14 +3428,14 @@ pro bod $A = [x_0, y_0]$ a přímku $p: ax + by + c = 0$. Měří se po kolmici.
 > Vzájemná poloha přímek
 Přímky jsou rovnoběžné, když mají rovnoběžné normálové (nebo směrové) vektory; pak jsou buď různé, nebo totožné. Jinak jsou různoběžné a jejich odchylku $\varphi\in[0^\circ, 90^\circ]$ určíme ze směrových vektorů:
 $$\cos\varphi = \frac{|\vec u\cdot\vec v|}{|\vec u||\vec v|}.$$
-? input #fy75q | 5
+?! input #fy75q | 5
 Jaká je vzdálenost bodů $A = [-3, 1]$ a $B = [1, 4]$?
 ! $\sqrt{4^2 + 3^2} = 5$.
-? input #osatu | 2
+?! input #osatu | 2
 Jaká je vzdálenost počátku od přímky $3x + 4y - 10 = 0$?
 ! $\frac{|0 + 0 - 10|}{\sqrt{9 + 16}} = \frac{10}{5} = 2$.
 @ x=-1..4; y=-1..3; aspect=equal; line=0,2.5,3.333,0,def; pt=0,0; seg=0,0,1.2,1.6,ex
-? input #2vxtp | 2√2; 2.8284
+?! input #2vxtp | 2√2; 2.8284
 Jaká je vzdálenost bodu $[1, 2]$ od přímky $x - y + 5 = 0$?
 ! $\frac{|1 - 2 + 5|}{\sqrt2} = \frac{4}{\sqrt2} = 2\sqrt2$.
 ? input #p7o0t | 3/5; 0.6
@@ -3154,6 +3482,12 @@ Která dvojice přímek je kolmá?
 ! Kolmé přímky mají součin směrnic $-1$: $2\cdot\left(-\frac12\right) = -1$.
 ? gen #nbgo8 | hs_pt_line
 ? gen #1bzxf | hs_line_int
+? input #zsss7 | 19/2; 9.5
+Jaký obsah má trojúhelník s vrcholy $A = [1, 1]$, $B = [5, 2]$, $C = [2, 6]$?
+! $\overrightarrow{AB} = (4,1)$, $\overrightarrow{AC} = (1,5)$ a obsah je $\frac12|4\cdot5-1\cdot1| = \frac{19}2$.
+? input #4dirv | 4
+Bod $[3, 1]$ zobrazíme v osové souměrnosti podle přímky $y = x+1$. Jakou souřadnici $y$ má jeho obraz?
+! Souměrnost podle $y = x+1$ pošle $[x, y]$ na $[y-1, x+1]$, tedy $[3,1]$ na $[0, 4]$. (Střed úsečky $[1{,}5;\ 2{,}5]$ na přímce leží a úsečka je k ní kolmá.)
 
 ### Přímky a roviny v prostoru | #sonjo
 ~ noaxes; poly=-0.9,-0.5,0.3,-0.8,0.9,0.1,-0.3,0.4,-0.9,-0.5; line=0,-1,0.1,0.9
@@ -3164,10 +3498,10 @@ Na obrázku je výška zkrácená na polovinu.
 > Vzdálenost bodu od roviny
 $$|A\rho| = \frac{|ax_0 + by_0 + cz_0 + d|}{\sqrt{a^2 + b^2 + c^2}}.$$
 Přímku v prostoru zadáváme parametricky, $X = A + t\vec u$; obecnou rovnici samotná nemá.
-? input #vtpww | 2
+?! input #vtpww | 2
 Jaká je vzdálenost bodu $A = [4, 2, -3]$ od roviny $2x - 2y + z + 5 = 0$?
 ! $\frac{|8 - 4 - 3 + 5|}{\sqrt{4 + 4 + 1}} = \frac63 = 2$.
-? mc #80tbv
+?! mc #80tbv
 Která rovnice popisuje rovinu procházející body $[1, 0, 0]$, $[0, 1, 0]$ a $[0, 0, 1]$?
 + $x + y + z - 1 = 0$
 - $x + y + z = 0$
@@ -3175,7 +3509,7 @@ Která rovnice popisuje rovinu procházející body $[1, 0, 0]$, $[0, 1, 0]$ a $
 - $x - y + z - 1 = 0$
 ! Všechny tři body splňují $x + y + z = 1$. Rovina protíná každou osu v jedničce.
 @ x=-1..1.6; y=-0.7..1.8; aspect=equal; axes=off; vec=0,0,-0.63,-0.48,muted; label=-0.68,-0.618,x; vec=0,0,1.5,0,muted; label=1.62,0.05,y; vec=0,0,0,1.5,muted; label=0.12,1.67,z; fill=-0.42,-0.32,1,0,0,1,def; seg=-0.42,-0.32,1,0,def; seg=1,0,0,1,def; seg=0,1,-0.42,-0.32,def
-? mc #smzuz
+?! mc #smzuz
 Jaký normálový vektor má rovina $2x - y + 3z = 7$?
 + $(2, -1, 3)$
 - $(2, -1, 3, -7)$
@@ -3219,6 +3553,16 @@ Které je parametrické vyjádření přímky procházející body $A = [1, 1, 0
 - $X = [1, 2, 1] + t(1, 1, 0)$
 ! Směrový vektor je $B - A = (1, 2, 1)$ a přímka prochází bodem $A$.
 ? gen #0fqe5 | hs_plane_dist
+? mc #tin5m
+Která rovina prochází počátkem a je kolmá k přímce $x = 1+2t$, $y = -t$, $z = 3+t$?
++ $2x-y+z = 0$
+- $x-y+z = 0$
+- $2x+y+z = 0$
+- $x+2y-z = 0$
+! Směrový vektor přímky $(2,-1,1)$ je normálovým vektorem roviny. Rovina počátkem je $2x-y+z = 0$.
+? input #p3ob3 | 2
+Jaká je vzdálenost rovnoběžných rovin $x+2y+2z = 3$ a $x+2y+2z = 9$?
+! $\frac{|9-3|}{\sqrt{1+4+4}} = \frac63 = 2$.
 
 ## Kuželosečky | #dalbx
 ### Kružnice | #ehanl
@@ -3232,7 +3576,7 @@ Na obrázku $(x - 1)^2 + (y - 2)^2 = 4$.
 Rovnici $x^2 + y^2 - 2x + 4y - 4 = 0$ doplníme na čtverce:
 $$(x - 1)^2 + (y + 2)^2 = 4 + 1 + 4 = 9.$$
 Je to kružnice se středem $[1, -2]$ a poloměrem $3$. Vyjde-li vpravo záporné číslo, rovnici nevyhovuje žádný bod.
-? mc #0kvr2
+?! mc #0kvr2
 Jaký střed a poloměr má kružnice $(x - 1)^2 + y^2 = 16$?
 + $S = [1, 0]$, $r = 4$
 - $S = [-1, 0]$, $r = 4$
@@ -3240,14 +3584,14 @@ Jaký střed a poloměr má kružnice $(x - 1)^2 + y^2 = 16$?
 - $S = [0, 1]$, $r = 4$
 ! $(x - 1)^2 + (y - 0)^2 = 4^2$: střed $[1, 0]$, poloměr $4$.
 @ x=-4..6; y=-5..5; aspect=equal; circle=1,0,4; pt=1,0
-? mc #l9n9f
+?! mc #l9n9f
 Jaký střed a poloměr má kružnice $(x + 2)^2 + (y - 3)^2 = 2$?
 + $S = [-2, 3]$, $r = \sqrt2$
 - $S = [2, -3]$, $r = \sqrt2$
 - $S = [-2, 3]$, $r = 2$
 - $S = [2, 3]$, $r = 4$
 ! $x + 2 = x - (-2)$, takže $m = -2$, $n = 3$ a $r^2 = 2$.
-? mc #e9ybf
+?! mc #e9ybf
 Která rovnice popisuje kružnici se středem v počátku, která prochází bodem $[1, 1]$?
 + $x^2 + y^2 = 2$
 - $x^2 + y^2 = 1$
@@ -3303,6 +3647,12 @@ Bod $[1, 1]$ leží uvnitř kružnice $x^2 + y^2 = 4$.
 ! Jeho vzdálenost od středu je $\sqrt2 < 2$.
 ? gen #nrc5a | hs_circle_ce
 ? gen #7k7zu | hs_circle_pt
+? input #ws1ak | √13; 3.6056
+Kružnice prochází body $[0, 0]$, $[4, 0]$ a $[0, 6]$. Jaký má poloměr?
+! Úhel u počátku je pravý, takže úsečka mezi $[4,0]$ a $[0,6]$ je průměr (Thaletova věta): $\sqrt{16+36} = 2\sqrt{13}$. Poloměr je $\sqrt{13}$.
+? tf #ytsiq | true
+Rovnici $x^2+y^2+2x-4y+5 = 0$ vyhovuje jediný bod.
+! Doplněním na čtverce $(x+1)^2+(y-2)^2 = 0$, a to splňuje jen bod $[-1, 2]$.
 
 ### Elipsa | #xkbuh
 ~ ell=0,0,0.85,0.5; pt=-0.69,0; pt=0.69,0
@@ -3314,14 +3664,14 @@ Vrcholy jsou $[\pm a, 0]$ a $[0, \pm b]$, ohniska $[\pm e, 0]$.
 > Posunutá elipsa
 $$\frac{(x - m)^2}{a^2} + \frac{(y - n)^2}{b^2} = 1$$
 je elipsa se středem $[m, n]$. Je-li $b > a$, leží hlavní osa svisle.
-? input #wojvl | 3
+?! input #wojvl | 3
 Jakou délku má hlavní poloosa elipsy $4x^2 + 9y^2 = 36$?
 ! Vydělíme $36$: $\frac{x^2}{9} + \frac{y^2}{4} = 1$, hlavní poloosa je $a = 3$.
 @ x=-3.6..3.6; y=-2.5..2.5; aspect=equal; param=0+3*cos(t),0+2*sin(t),0,6.283
-? input #6svpb | √5; 2.2361
+?! input #6svpb | √5; 2.2361
 Jaká je excentricita (vzdálenost ohniska od středu) elipsy $4x^2 + 9y^2 = 36$?
 ! $a = 3$, $b = 2$, $e = \sqrt{9 - 4} = \sqrt5$.
-? mc #62kii
+?! mc #62kii
 Kde leží ohniska elipsy $\dfrac{x^2}{25} + \dfrac{y^2}{9} = 1$?
 + $[\pm4, 0]$
 - $[\pm3, 0]$
@@ -3377,6 +3727,12 @@ Elipsa s osami rovnoběžnými se souřadnicovými osami má střed $[4, -2]$ a 
 ! Ke svislé ose $y$ je to $4$, to je vodorovná poloosa; k ose $x$ je to $2$, to je svislá poloosa.
 @ x=-1..9; y=-5..1; aspect=equal; param=4+4*cos(t),-2+2*sin(t),0,6.283; pt=4,-2
 ? gen #mcxz4 | hs_ellipse
+? input #oelnl | 6
+Jaká je vzdálenost ohnisek elipsy $\dfrac{x^2}{16}+\dfrac{y^2}7 = 1$?
+! $e = \sqrt{a^2-b^2} = \sqrt{16-7} = 3$, ohniska jsou $[\pm3, 0]$ a jejich vzdálenost je $6$.
+? input #66vxv | 10π; 31.4159
+Jaký obsah má elipsa $4x^2+25y^2 = 100$?
+! $\frac{x^2}{25}+\frac{y^2}4 = 1$, takže $a = 5$, $b = 2$ a obsah je $\pi ab = 10\pi$.
 
 ### Hyperbola a parabola | #ur721
 ~ f=x^2*0.9-0.6; fd=0.15/x
@@ -3388,7 +3744,7 @@ $$\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1,\qquad e^2 = a^2 + b^2,\qquad \text{asym
 Parabola je množina bodů, které mají stejnou vzdálenost od ohniska $F$ a od řídicí přímky $d$. Pro $y^2 = 2px$ je $F = \left[\frac p2, 0\right]$ a $d: x = -\frac p2$.
 @@ x=-2..5; y=-3.5..3.5; aspect=equal; param=t^2/4,t,-3.4,3.4; vline=-1; pt=1,0; pt=2.25,3; seg=2.25,3,1,0,ex; seg=2.25,3,-1,3,ex; label=1.2,-0.45,F; label=-1.35,-2.5,d
 Na obrázku $y^2 = 4x$: bod $[2{,}25;\ 3]$ je od ohniska i od řídicí přímky vzdálen $3{,}25$.
-? mc #9phs9
+?! mc #9phs9
 Jaké asymptoty má hyperbola $\dfrac{x^2}{9} - \dfrac{y^2}{4} = 1$?
 + $y = \pm\dfrac23x$
 - $y = \pm\dfrac32x$
@@ -3396,10 +3752,10 @@ Jaké asymptoty má hyperbola $\dfrac{x^2}{9} - \dfrac{y^2}{4} = 1$?
 - $y = \pm2x$
 ! $a = 3$, $b = 2$, asymptoty $y = \pm\frac bax = \pm\frac23x$.
 @ x=-7..7; y=-5..5; aspect=equal; param=3*cosh(t),2*sinh(t),-2,2; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=-3*cosh(t),2*sinh(t),-2,2; line=0,0,3,2,muted; line=0,0,3,-2,muted
-? input #ivjzv | 2√2; 2.8284
+?! input #ivjzv | 2√2; 2.8284
 Jaká je excentricita (vzdálenost ohniska od středu) hyperboly $x^2 - y^2 = 4$?
 ! $\frac{x^2}4 - \frac{y^2}4 = 1$: $a = b = 2$, $e = \sqrt{4 + 4} = 2\sqrt2$.
-? mc #kqsc5
+?! mc #kqsc5
 Které jsou vrcholy hyperboly $9x^2 - 4y^2 = 36$?
 + $[\pm2, 0]$
 - $[\pm3, 0]$
@@ -3462,6 +3818,12 @@ Parabola $y^2 = 2px$ prochází bodem $[2, 4]$. Určete $p$.
 ! $16 = 2p\cdot2$, tedy $p = 4$.
 ? gen #dkpyq | hs_parab_f
 ? gen #7e0j6 | hs_hyper_asym
+? input #q5oqd | 5
+Jak daleko je ohnisko hyperboly $\dfrac{x^2}9-\dfrac{y^2}{16} = 1$ od jejího středu?
+! U hyperboly je $e = \sqrt{a^2+b^2} = \sqrt{9+16} = 5$.
+? input #phwml | -3
+Jakou rovnici $x = c$ má řídicí přímka paraboly $y^2 = 12x$? Zadejte $c$.
+! $y^2 = 2px$ s $p = 6$; řídicí přímka je $x = -\frac p2 = -3$.
 
 ### Kuželosečka a přímka | #7l66p
 ~ circle=0,0,0.6; f=0.4*x+0.2; f=0.6
@@ -3471,7 +3833,7 @@ Dosadíme rovnici přímky do rovnice kuželosečky a dostaneme kvadratickou rov
 > Tečna kružnice
 Tečna kružnice $x^2 + y^2 = r^2$ v jejím bodě $T = [x_0, y_0]$ je kolmá k poloměru $ST$:
 $$x_0x + y_0y = r^2.$$
-? mc #y5g4d
+?! mc #y5g4d
 Jaká je vzájemná poloha přímky $y = x + 1$ a paraboly $y = x^2$?
 + sečna
 - tečna
@@ -3479,7 +3841,7 @@ Jaká je vzájemná poloha přímky $y = x + 1$ a paraboly $y = x^2$?
 - přímka je osou paraboly
 ! $x^2 = x + 1$, tedy $x^2 - x - 1 = 0$ s $D = 5 > 0$: dva společné body, sečna.
 @ x=-2..3; y=-1..5; aspect=equal; f=x^2; f=x+1; pt=1.618,2.618; pt=-0.618,0.382
-? mc #fm52s
+?! mc #fm52s
 Jaká je vzájemná poloha přímky $y = 2x - 1$ a paraboly $y = x^2$?
 - sečna
 + tečna
@@ -3487,7 +3849,7 @@ Jaká je vzájemná poloha přímky $y = 2x - 1$ a paraboly $y = x^2$?
 - přímka je osou paraboly
 ! $x^2 - 2x + 1 = (x - 1)^2 = 0$: jediný dvojnásobný kořen, přímka je tečnou v bodě $[1, 1]$.
 @ x=-2..3; y=-2..5; aspect=equal; f=x^2; f=2*x-1; pt=1,1
-? mc #zzvqh
+?! mc #zzvqh
 Jaká je vzájemná poloha přímky $y = x - 3$ a kružnice $x^2 + y^2 = 1$?
 - sečna
 - tečna
@@ -3533,6 +3895,12 @@ Jaká je vzájemná poloha kružnice $x^2 + y^2 = 4$ a přímky $y = 2$?
 Pro která $c$ má přímka $y = x + c$ s kružnicí $x^2 + y^2 = 2$ aspoň jeden společný bod?
 ! Vzdálenost středu od přímky $x - y + c = 0$ je $\frac{|c|}{\sqrt2}\le\sqrt2$, tedy $|c|\le2$.
 ? gen #4k2en | hs_line_circle
+? input #8qs6r | -1
+Pro jaké $q$ je přímka $y = 2x+q$ tečnou paraboly $y = x^2$?
+! Rovnice $x^2 = 2x+q$ musí mít dvojnásobný kořen: $D = 4+4q = 0$, tedy $q = -1$ (dotyk v bodě $[1,1]$).
+? input #z4c1u | 4
+Jak dlouhou tětivu vytne parabola $y = x^2$ na přímce $y = 4$?
+! Průsečíky jsou $[\pm2, 4]$, takže tětiva má délku $4$.
 
 ## Komplexní čísla | #j5jbi
 ### Algebraický tvar | #vlw2k
@@ -3545,17 +3913,17 @@ Mocniny $i$ se opakují po čtyřech: $i, -1, -i, 1, i, \dots$
 Číslo sdružené k $z = a + bi$ je $\bar z = a - bi$ a $z\bar z = a^2 + b^2$ je reálné. Proto zlomek rozšíříme číslem sdruženým ke jmenovateli:
 $$\frac{3i + 1}{2 + i} = \frac{(1 + 3i)(2 - i)}{(2 + i)(2 - i)} = \frac{5 + 5i}{5} = 1 + i.$$
 @@ x=-1..4; y=-3..3; aspect=equal; vec=3,2,def; vec=3,-2,ex; hline=0; label=3.3,2.2,z; label=3.3,-2.2,z̄
-? mc #um0d3
+?! mc #um0d3
 Vypočtěte $(2 + i)(3 - i)$.
 + $7 + i$
 - $5 + i$
 - $7 - i$
 - $6 - i$
 ! $6 - 2i + 3i - i^2 = 6 + i + 1 = 7 + i$.
-? input #2jjrx | -1
+?! input #2jjrx | -1
 Vypočtěte $i^{50}$.
 ! $50 = 4\cdot12 + 2$, takže $i^{50} = i^2 = -1$.
-? mc #3o2lt
+?! mc #3o2lt
 Vypočtěte $i^{125}$.
 + $i$
 - $-i$
@@ -3606,6 +3974,12 @@ Určete reálné $x$ tak, aby číslo $(x - 3) + (x + 1)i$ bylo ryze imaginárn�
 ? gen #f06x3 | hs_cmul
 ? gen #kgyj3 | hs_ipow
 ? gen #nkyhe | hs_cdiv
+? input #ju9g3 | 0
+Jaká je reálná část čísla $\dfrac{1+i}{1-i}+\dfrac{1-i}{1+i}$?
+! $\frac{1+i}{1-i} = \frac{(1+i)^2}{2} = i$ a podobně $\frac{1-i}{1+i} = -i$. Součet je $0$, reálná část je $0$.
+? input #4cygu | -12
+Jaká je imaginární část čísla $(2-3i)^2$?
+! $(2-3i)^2 = 4-12i+9i^2 = -5-12i$. Imaginární část je $-12$.
 ### Gaussova rovina | #jo0bk
 ~ arrow=0,0,0.6,0.7; pt=0.6,0.7; dash=0.6,0,0.6,0.7
 > Komplexní číslo jako bod
@@ -3614,14 +3988,14 @@ Určete reálné $x$ tak, aby číslo $(x - 3) + (x + 1)i$ bylo ryze imaginárn�
 > Množiny v rovině
 $|z - 2| = 3$ jsou body ve vzdálenosti $3$ od čísla $2$: kružnice. $|z - 2|\le3$ je celý kruh a $|z - 1| = |z - i|$ osa úsečky mezi $1$ a $i$.
 @@ x=-2..6; y=-4..4; aspect=equal; fill=5,0,4.954,0.521,4.819,1.026,4.598,1.5,4.298,1.928,3.928,2.298,3.5,2.598,3.026,2.819,2.521,2.954,2,3,1.479,2.954,0.974,2.819,0.5,2.598,0.072,2.298,-0.298,1.928,-0.598,1.5,-0.819,1.026,-0.954,0.521,-1,0,-0.954,-0.521,-0.819,-1.026,-0.598,-1.5,-0.298,-1.928,0.072,-2.298,0.5,-2.598,0.974,-2.819,1.479,-2.954,2,-3,2.521,-2.954,3.026,-2.819,3.5,-2.598,3.928,-2.298,4.298,-1.928,4.598,-1.5,4.819,-1.026,4.954,-0.521,5,0,def; circle=2,0,3; pt=2,0
-? input #zvo3x | 2√10; 6.3246
+?! input #zvo3x | 2√10; 6.3246
 Vypočtěte $|6 + 2i|$.
 ! $\sqrt{36 + 4} = \sqrt{40} = 2\sqrt{10}$.
-? input #1erd6 | 5
+?! input #1erd6 | 5
 Vypočtěte $|3 - 4i|$.
 ! $\sqrt{9 + 16} = 5$.
 @ x=-1..4; y=-5..1; aspect=equal; vec=3,-4,ex; seg=3,0,3,-4,muted; label=1.8,-1.8,5
-? mc #6rt0u
+?! mc #6rt0u
 Které číslo je na obrázku vyznačeno jako $z$?
 @@ x=-4..2; y=-3..3; aspect=equal; vec=-3,2,ex; label=-3.2,2.3,z
 + $-3 + 2i$
@@ -3677,6 +4051,16 @@ Jaká je vzdálenost čísel $1 + 2i$ a $4 - 2i$ v Gaussově rovině?
 Každé komplexní číslo $z$ splňuje $|\bar z| = |z|$.
 ! $\bar z$ je obraz $z$ v souměrnosti podle reálné osy, má stejnou vzdálenost od počátku.
 ? gen #onbp6 | hs_cabs
+? mc #dalup
+Co je v Gaussově rovině množina všech $z$, pro která $|z|<|z-2|$?
++ polorovina vlevo od přímky $\operatorname{Re}z = 1$
+- kruh se středem $1$ a poloměrem $1$
+- polorovina vpravo od přímky $\operatorname{Re}z = 1$
+- přímka $\operatorname{Re}z = 1$
+! Body stejně vzdálené od $0$ a $2$ leží na ose úsečky, tedy na přímce $\operatorname{Re}z = 1$. Bližší k $0$ jsou body vlevo od ní.
+? input #wiefi | 5√2; 7.0711
+Vypočtěte $|(3+4i)(1-i)|$.
+! Absolutní hodnota součinu je součin absolutních hodnot: $5\cdot\sqrt2 = 5\sqrt2$.
 
 ### Goniometrický tvar a Moivreova věta | #qptmz
 ~ circle=0,0,0.75; arrow=0,0,0.53,0.53; pt=0.75,0; pt=-0.375,0.65; pt=-0.375,-0.65
@@ -3687,21 +4071,21 @@ Každé nenulové číslo zapíšeme jako $z = |z|(\cos\varphi + i\sin\varphi)$,
 Při násobení se absolutní hodnoty násobí a argumenty sčítají. Proto $z^n = |z|^n(\cos n\varphi + i\sin n\varphi)$ (Moivreova věta) a $n$-té odmocniny čísla leží ve vrcholech pravidelného $n$-úhelníku.
 @@ x=-1.5..1.5; y=-1.4..1.4; aspect=equal; circle=0,0,1; seg=1,0,-0.5,0.866,ex; seg=-0.5,0.866,-0.5,-0.866,ex; seg=-0.5,-0.866,1,0,ex; pt=1,0; pt=-0.5,0.866; pt=-0.5,-0.866
 Třetí odmocniny z $1$: čísla $1$ a $-\frac12\pm\frac{\sqrt3}2i$.
-? mc #p4zey
+?! mc #p4zey
 Jak zní goniometrický tvar čísla $z = 1 + i$?
 + $\sqrt2\left(\cos\frac\pi4 + i\sin\frac\pi4\right)$
 - $2\left(\cos\frac\pi4 + i\sin\frac\pi4\right)$
 - $\sqrt2\left(\cos\frac\pi2 + i\sin\frac\pi2\right)$
 - $\cos\frac\pi4 + i\sin\frac\pi4$
 ! $|z| = \sqrt2$ a bod $[1, 1]$ leží na ose I. kvadrantu, $\varphi = \frac\pi4$.
-? mc #9ggeo
+?! mc #9ggeo
 Jak zní goniometrický tvar čísla $z = 5i$?
 + $5\left(\cos\frac\pi2 + i\sin\frac\pi2\right)$
 - $5(\cos0 + i\sin0)$
 - $5\left(\cos\frac\pi2 - i\sin\frac\pi2\right)$
 - $\cos5 + i\sin5$
 ! $|z| = 5$ a $5i$ leží na kladné imaginární poloose, $\varphi = \frac\pi2$.
-? input #85ywj | 2π/3; 2.0944
+?! input #85ywj | 2π/3; 2.0944
 Jaký argument (v intervalu $[0, 2\pi)$) má číslo $z = -2 + 2\sqrt3\,i$?
 ! $|z| = 4$, $\cos\varphi = -\frac12$ a $\sin\varphi = \frac{\sqrt3}2$: druhý kvadrant, $\varphi = \frac{2\pi}3$.
 @ x=-2.5..1; y=-0.5..4; aspect=equal; vec=-2,3.464,ex; param=999,999,0,1; param=999,999,0,1; param=999,999,0,1; param=0+0.5*cos(t),0+0.5*sin(t),0,2.094; label=0.475,0.688,2π/3
@@ -3748,6 +4132,12 @@ Kolik je součet všech pátých odmocnin z čísla $32$?
 Pro komplexní jednotku $z = \cos x + i\sin x$ platí $\bar z = \dfrac1z$.
 ! $z\bar z = |z|^2 = 1$, tedy $\bar z = \frac1z$.
 ? gen #8lbj3 | hs_carg
+?! input #hknls | -64
+Vypočtěte $\left(\sqrt3+i\right)^6$.
+! $\sqrt3+i = 2\left(\cos\frac\pi6+i\sin\frac\pi6\right)$. Podle Moivreovy věty je šestá mocnina $64(\cos\pi+i\sin\pi) = -64$.
+? input #ilc4a | 7π/4; 5.4978
+Jaký argument (v intervalu $[0, 2\pi)$) má číslo $1-i$?
+! Číslo leží ve čtvrtém kvadrantu na přímce $y = -x$, takže jeho argument je $\frac{7\pi}4$.
 
 ### Rovnice v komplexních číslech | #tuybr
 ~ noaxes; circle=0,0,0.75; pt=0.75,0; pt=0,0.75; pt=-0.75,0; pt=0,-0.75
@@ -3758,21 +4148,21 @@ $$x^2 + 2x + 5 = 0:\quad x_{1,2} = \frac{-2\pm\sqrt{-16}}{2} = -1\pm2i.$$
 > Binomická rovnice
 Rovnice $x^n = a$ má $n$ kořenů, které leží na kružnici o poloměru $\sqrt[n]{|a|}$ ve vrcholech pravidelného $n$-úhelníku. Kořeny $x^4 = -16$ jsou $\sqrt2(\pm1\pm i)$.
 @@ x=-2.6..2.6; y=-2.5..2.5; aspect=equal; circle=0,0,2; seg=1.414,1.414,-1.414,1.414,ex; seg=-1.414,1.414,-1.414,-1.414,ex; seg=-1.414,-1.414,1.414,-1.414,ex; seg=1.414,-1.414,1.414,1.414,ex; pt=1.414,1.414; pt=-1.414,1.414; pt=-1.414,-1.414; pt=1.414,-1.414
-? mc #2lwuy
+?! mc #2lwuy
 Vyřešte v $\mathbb C$ rovnici $x^2 + 2x + 5 = 0$.
 + $x = -1\pm2i$
 - $x = 1\pm2i$
 - $x = -1\pm4i$
 - nemá řešení
 ! $D = 4 - 20 = -16$, $\sqrt D = 4i$, $x = \frac{-2\pm4i}{2} = -1\pm2i$.
-? mc #30l3v
+?! mc #30l3v
 Vyřešte v $\mathbb C$ rovnici $x^2 - 4x + 5 = 0$.
 + $x = 2\pm i$
 - $x = -2\pm i$
 - $x = 2\pm2i$
 - $x = 4\pm2i$
 ! $D = 16 - 20 = -4$, $x = \frac{4\pm2i}{2} = 2\pm i$.
-? mc #tdqbx
+?! mc #tdqbx
 Která rovnice s reálnými koeficienty má kořen $3 + i$?
 + $x^2 - 6x + 10 = 0$
 - $x^2 + 6x + 10 = 0$
@@ -3819,6 +4209,20 @@ Kde v Gaussově rovině leží kořeny rovnice $x^6 = 1$?
 ! $|x|^6 = 1$, tedy $|x| = 1$, a argumenty jsou $\frac{2k\pi}{6}$: šest bodů po $60^\circ$, mezi nimi $\pm1$.
 @ x=-1.5..1.5; y=-1.4..1.4; aspect=equal; circle=0,0,1; seg=1,0,0.5,0.866,ex; seg=0.5,0.866,-0.5,0.866,ex; seg=-0.5,0.866,-1,0,ex; seg=-1,0,-0.5,-0.866,ex; seg=-0.5,-0.866,0.5,-0.866,ex; seg=0.5,-0.866,1,0,ex
 ? gen #y0oht | hs_cquad
+? mc #rfb80
+Která čísla jsou řešením rovnice $z^2 = 2i$?
++ $1+i$ a $-1-i$
+- $1-i$ a $-1+i$
+- $\sqrt2\,i$ a $-\sqrt2\,i$
+- $1+i$ a $1-i$
+! $(1+i)^2 = 1+2i-1 = 2i$, a druhé řešení je opačné číslo $-1-i$.
+? mc #p0wm7
+Která čísla jsou řešením rovnice $z^4 = -4$?
++ $1+i$, $1-i$, $-1+i$, $-1-i$
+- $\pm\sqrt2$ a $\pm\sqrt2\,i$
+- $1+i$ a $-1-i$
+- žádná, $-4$ je záporné
+! $(1+i)^2 = 2i$ a $(2i)^2 = -4$, takže $1+i$ je řešením. Ostatní dostaneme otáčením o $90^\circ$ (násobením $i$): $\pm1\pm i$.
 
 ## Kombinatorika | #al4ww
 ### Faktoriál a kombinační čísla | #54zoi
@@ -3831,13 +4235,13 @@ je počet způsobů, jak z $n$ věcí vybrat $k$ bez ohledu na pořadí.
 Každé číslo je součtem dvou čísel nad ním, protože $\binom nk + \binom n{k+1} = \binom{n+1}{k+1}$. V řádku $n$ (počítáno od nuly) jsou čísla $\binom n0, \binom n1, \dots, \binom nn$ a čtou se stejně zleva i zprava: $\binom nk = \binom n{n-k}$.
 @@ x=-7.2..7.2; y=-8.8..0.8; aspect=equal; axes=off; label=0,-0.15,1; label=-1,-1.35,1; label=1,-1.35,1; label=-2,-2.55,1; label=0,-2.55,2; label=2,-2.55,1; label=-3,-3.75,1; label=-1,-3.75,3; label=1,-3.75,3; label=3,-3.75,1; label=-4,-4.95,1; label=-2,-4.95,4; label=0,-4.95,6; label=2,-4.95,4; label=4,-4.95,1; fill=-5.8,-6.45,-4.2,-6.45,-4.2,-5.45,-5.8,-5.45,ex; label=-5,-6.15,1; fill=-3.8,-6.45,-2.2,-6.45,-2.2,-5.45,-3.8,-5.45,ex; label=-3,-6.15,5; fill=-1.8,-6.45,-0.2,-6.45,-0.2,-5.45,-1.8,-5.45,ex; label=-1,-6.15,10; fill=0.2,-6.45,1.8,-6.45,1.8,-5.45,0.2,-5.45,ex; label=1,-6.15,10; fill=2.2,-6.45,3.8,-6.45,3.8,-5.45,2.2,-5.45,ex; label=3,-6.15,5; fill=4.2,-6.45,5.8,-6.45,5.8,-5.45,4.2,-5.45,ex; label=5,-6.15,1; label=-6,-7.35,1; label=-4,-7.35,6; label=-2,-7.35,15; label=0,-7.35,20; label=2,-7.35,15; label=4,-7.35,6; label=6,-7.35,1
 Vyznačený řádek $1, 5, 10, 10, 5, 1$ jsou čísla $\binom5k$.
-? input #aszgu | 20
+?! input #aszgu | 20
 Vypočtěte $\dfrac{5!}{3!}$.
 ! $\frac{5!}{3!} = 4\cdot5 = 20$.
-? input #iiacm | 70
+?! input #iiacm | 70
 Vypočtěte $\dfrac{8!}{4!\cdot4!}$.
 ! $\binom84 = \frac{8\cdot7\cdot6\cdot5}{4\cdot3\cdot2\cdot1} = 70$.
-? input #eg7hy | 21
+?! input #eg7hy | 21
 Vypočtěte $\dbinom72$.
 ! $\frac{7\cdot6}{2} = 21$.
 @ x=-8.2..8.2; y=-10..0.8; aspect=equal; axes=off; label=0,-0.15,1; label=-1,-1.35,1; label=1,-1.35,1; label=-2,-2.55,1; label=0,-2.55,2; label=2,-2.55,1; label=-3,-3.75,1; label=-1,-3.75,3; label=1,-3.75,3; label=3,-3.75,1; label=-4,-4.95,1; label=-2,-4.95,4; label=0,-4.95,6; label=2,-4.95,4; label=4,-4.95,1; label=-5,-6.15,1; label=-3,-6.15,5; label=-1,-6.15,10; label=1,-6.15,10; label=3,-6.15,5; label=5,-6.15,1; label=-6,-7.35,1; label=-4,-7.35,6; label=-2,-7.35,15; label=0,-7.35,20; label=2,-7.35,15; label=4,-7.35,6; label=6,-7.35,1; label=-7,-8.55,1; label=-5,-8.55,7; fill=-3.8,-8.85,-2.2,-8.85,-2.2,-7.85,-3.8,-7.85,ex; label=-3,-8.55,21; label=-1,-8.55,35; label=1,-8.55,35; label=3,-8.55,21; label=5,-8.55,7; label=7,-8.55,1
@@ -3878,6 +4282,12 @@ Pro které $k\in\{0, 1, \dots, 100\}$ je kombinační číslo $\dbinom{100}k$ ne
 Pro každé $n\in\mathbb N$ platí $\dbinom n0 = \dbinom nn = 1$.
 ! Z $n$ věcí lze vybrat žádnou i všechny jediným způsobem.
 ? gen #gko92 | hs_binom
+? input #p6bfs | 119
+Vypočtěte $1\cdot1!+2\cdot2!+3\cdot3!+4\cdot4!$.
+! $1+4+18+96 = 119$. Obecně $\sum_{k=1}^nk\cdot k! = (n+1)!-1$, tedy $5!-1 = 119$.
+? input #myrn9 | 6
+Řešte v $\mathbb N$ rovnici $\dfrac{(n+2)!}{n!} = 56$.
+! $\frac{(n+2)!}{n!} = (n+2)(n+1) = 56 = 8\cdot7$, tedy $n = 6$.
 
 ### Variace, permutace a kombinace | #bwtjj
 ~ noaxes; line=-0.8,0,0,0.6; line=-0.8,0,0,-0.6; line=0,0.6,0.8,0.85; line=0,0.6,0.8,0.35; line=0,-0.6,0.8,-0.35; line=0,-0.6,0.8,-0.85; pt=-0.8,0
@@ -3886,13 +4296,13 @@ Volíme-li postupně z $k_1$, pak z $k_2$, … možností, je všech výsledků 
 @@ x=-0.3..6.9; y=-4.9..4.9; aspect=equal; axes=off; pt=0,0; seg=0,0,3,3.6,def; pt=3,3.6; label=2.85,3.9,1; seg=0,0,3,1.8,def; pt=3,1.8; label=2.85,2.1,2; seg=0,0,3,0,def; pt=3,0; label=2.85,0.3,3; seg=0,0,3,-1.8,def; pt=3,-1.8; label=2.85,-1.5,4; seg=0,0,3,-3.6,def; pt=3,-3.6; label=2.85,-3.3,5; seg=3,3.6,6,4.2,prf; label=6.45,4.07,a; seg=3,3.6,6,3.6,prf; label=6.45,3.47,b; seg=3,3.6,6,3,prf; label=6.45,2.87,c; seg=3,1.8,6,2.4,prf; label=6.45,2.27,a; seg=3,1.8,6,1.8,prf; label=6.45,1.67,b; seg=3,1.8,6,1.2,prf; label=6.45,1.07,c; seg=3,0,6,0.6,prf; label=6.45,0.47,a; seg=3,0,6,0,prf; label=6.45,-0.13,b; seg=3,0,6,-0.6,prf; label=6.45,-0.73,c; seg=3,-1.8,6,-1.2,prf; label=6.45,-1.33,a; seg=3,-1.8,6,-1.8,prf; label=6.45,-1.93,b; seg=3,-1.8,6,-2.4,prf; label=6.45,-2.53,c; seg=3,-3.6,6,-3,prf; label=6.45,-3.13,a; seg=3,-3.6,6,-3.6,prf; label=6.45,-3.73,b; seg=3,-3.6,6,-4.2,prf; label=6.45,-4.33,c
 > Záleží na pořadí?
 <b>Variace</b> ($k$ z $n$, záleží na pořadí): $\frac{n!}{(n - k)!}$. <b>Permutace</b> (všech $n$): $n!$. <b>Kombinace</b> (nezáleží na pořadí): $\binom nk$. S opakováním: variace $n^k$, permutace $\frac{n!}{n_1!\,n_2!\cdots}$, kombinace $\binom{n + k - 1}{k}$.
-? input #g7cn8 | 15
+?! input #g7cn8 | 15
 Jana má $5$ různých triček a $3$ sukně. Kolika způsoby se může obléct (tričko a sukně)?
 ! Ke každému tričku $3$ sukně: $5\cdot3 = 15$.
-? input #2p77o | 120
+?! input #2p77o | 120
 Kolik čtyřciferných čísel s různými ciframi lze sestavit z cifer $1, 2, 3, 4, 5$?
 ! Variace čtyř z pěti: $5\cdot4\cdot3\cdot2 = 120$.
-? input #ir0l6 | 24
+?! input #ir0l6 | 24
 Kolik čtyřciferných čísel s různými ciframi lze sestavit z cifer $1, 2, 3, 4, 5$, která jsou dělitelná pěti?
 ! Na konci musí být $5$, zbylá tři místa obsadí $4\cdot3\cdot2 = 24$ způsoby.
 ? input #dluiu | 336
@@ -3935,6 +4345,12 @@ Ze skupiny $10$ děvčat a $5$ chlapců vybíráme trojici, ve které jsou dvě 
 ! $\binom{10}2\cdot\binom51 = 45\cdot5 = 225$.
 ? gen #ohp03 | hs_count
 ? gen #7q7si | hs_word_perm
+? input #z0m9o | 24
+Kolika způsoby lze posadit $5$ lidí kolem kulatého stolu, považujeme-li zasedací pořádky lišící se jen otočením za stejné?
+! Jednoho člověka posadíme kamkoli a zbylé čtyři seřadíme vzhledem k němu: $4! = 24$.
+? input #l3jez | 96
+Kolik pěticiferných čísel s různými ciframi lze sestavit z cifer $0, 1, 2, 3, 4$?
+! Všech pořadí je $5! = 120$; s nulou na začátku jich je $4! = 24$. Pěticiferných čísel je $120-24 = 96$.
 
 ### Binomická věta a indukce | #wjd0s
 ~ noaxes; text=(a+b)ⁿ; size=0.5
@@ -3946,17 +4362,17 @@ $(a + b)^2 = a^2 + 2ab + b^2$.
 > Matematická indukce
 Tvrzení platí pro všechna $n\in\mathbb N$, když (1) platí pro $n = 1$ a (2) z platnosti pro $n$ plyne platnost pro $n + 1$. Jako domino: padne první kostka a každá shodí následující.
 @@ x=-0.5..9; y=-0.3..2.3; aspect=equal; axes=off; seg=0,0,0.45,0,ex; seg=0.45,0,1.3,1.6,ex; seg=1.3,1.6,0.85,1.6,ex; seg=0.85,1.6,0,0,ex; seg=1.4,0,1.85,0,ex; seg=1.85,0,2.7,1.6,ex; seg=2.7,1.6,2.25,1.6,ex; seg=2.25,1.6,1.4,0,ex; seg=2.8,0,3.25,0,def; seg=3.25,0,3.95,1.75,def; seg=3.95,1.75,3.5,1.75,def; seg=3.5,1.75,2.8,0,def; seg=4.5,0,4.95,0,ink; seg=4.95,0,4.95,2,ink; seg=4.95,2,4.5,2,ink; seg=4.5,2,4.5,0,ink; seg=6,0,6.45,0,ink; seg=6.45,0,6.45,2,ink; seg=6.45,2,6,2,ink; seg=6,2,6,0,ink; seg=7.5,0,7.95,0,ink; seg=7.95,0,7.95,2,ink; seg=7.95,2,7.5,2,ink; seg=7.5,2,7.5,0,ink; seg=-0.3,0,8.8,0,muted
-? mc #vw790
+?! mc #vw790
 Roznásobte $(a + b)^3$.
 + $a^3 + 3a^2b + 3ab^2 + b^3$
 - $a^3 + b^3$
 - $a^3 + 3ab + b^3$
 - $a^3 + 2a^2b + 2ab^2 + b^3$
 ! Koeficienty jsou řádek $1, 3, 3, 1$ Pascalova trojúhelníku.
-? input #tq4uv | 10
+?! input #tq4uv | 10
 Jaký koeficient má $x^2$ v rozvoji $(1 + x)^5$?
 ! $\binom52 = 10$.
-? input #mn8pe | 21
+?! input #mn8pe | 21
 Kolik členů má binomický rozvoj $(1 + 2x)^{20}$?
 ! Pro $k = 0, 1, \dots, 20$ jeden člen: $21$.
 ? input #u8iji | 210
@@ -4001,6 +4417,12 @@ Přiřaďte výrazům jejich rozvoj.
 - $a^2 + b^2$
 ! $(a - b)^2$ má prostřední člen se znaménkem minus. Výraz $a^2 + b^2$ nevznikne roznásobením žádného z nich.
 ? gen #o3xkq | hs_binom_coef
+? input #winp8 | 240
+Jaký koeficient má $x^4$ v rozvoji $(1+2x)^6$?
+! Člen s $x^4$ je $\binom64(2x)^4 = 15\cdot16x^4$. Koeficient je $240$.
+? input #bgmqo | 1.1045
+Odhadněte $1{,}01^{10}$ prvními třemi členy binomického rozvoje.
+! $$(1+0{,}01)^{10}\approx1+10\cdot0{,}01+\binom{10}2\cdot0{,}0001 = 1+0{,}1+0{,}0045 = 1{,}1045.$$
 
 ## Pravděpodobnost a statistika | #kd2gs
 ### Pravděpodobnost | #g190b
@@ -4012,13 +4434,13 @@ Hod dvěma kostkami má $36$ výsledků. Součet $7$ dává šest z nich, $P = \
 @@ x=-0.2..7; y=-0.2..7; aspect=equal; axes=off; label=1,0.25,1; label=0.3,0.88,1; pt=1,1; pt=1,2; pt=1,3; pt=1,4; pt=1,5; fill=0.6,5.6,1.4,5.6,1.4,6.4,0.6,6.4,ex; pt=1,6; label=2,0.25,2; label=0.3,1.88,2; pt=2,1; pt=2,2; pt=2,3; pt=2,4; fill=1.6,4.6,2.4,4.6,2.4,5.4,1.6,5.4,ex; pt=2,5; pt=2,6; label=3,0.25,3; label=0.3,2.88,3; pt=3,1; pt=3,2; pt=3,3; fill=2.6,3.6,3.4,3.6,3.4,4.4,2.6,4.4,ex; pt=3,4; pt=3,5; pt=3,6; label=4,0.25,4; label=0.3,3.88,4; pt=4,1; pt=4,2; fill=3.6,2.6,4.4,2.6,4.4,3.4,3.6,3.4,ex; pt=4,3; pt=4,4; pt=4,5; pt=4,6; label=5,0.25,5; label=0.3,4.88,5; pt=5,1; fill=4.6,1.6,5.4,1.6,5.4,2.4,4.6,2.4,ex; pt=5,2; pt=5,3; pt=5,4; pt=5,5; pt=5,6; label=6,0.25,6; label=0.3,5.88,6; fill=5.6,0.6,6.4,0.6,6.4,1.4,5.6,1.4,ex; pt=6,1; pt=6,2; pt=6,3; pt=6,4; pt=6,5; pt=6,6; seg=0.6,0.6,6.6,0.6,muted; seg=0.6,0.6,0.6,6.6,muted
 > Opačný jev
 $P(A') = 1 - P(A)$. Často je snazší spočítat, že se něco <b>nestane</b>: pravděpodobnost, že ve dvou hodech padne aspoň jedna šestka, je $1 - \left(\frac56\right)^2 = \frac{11}{36}$.
-? input #f2ykm | 1/6
+?! input #f2ykm | 1/6
 Jaká je pravděpodobnost, že při hodu kostkou padne šestka?
 ! Jeden příznivý výsledek ze šesti: $\frac16$.
-? input #atrdd | 1/2; 0.5
+?! input #atrdd | 1/2; 0.5
 Jaká je pravděpodobnost, že při hodu kostkou padne sudé číslo?
 ! Příznivé jsou $2, 4, 6$: $\frac36 = \frac12$.
-? input #ye2i5 | 1/36
+?! input #ye2i5 | 1/36
 Hodíme dvěma kostkami. Jaká je pravděpodobnost, že na obou padne šestka?
 ! Ze $36$ stejně možných dvojic je příznivá jen $[6, 6]$.
 @ x=-0.2..7; y=-0.2..7; aspect=equal; axes=off; label=1,0.25,1; label=0.3,0.88,1; pt=1,1; pt=1,2; pt=1,3; pt=1,4; pt=1,5; pt=1,6; label=2,0.25,2; label=0.3,1.88,2; pt=2,1; pt=2,2; pt=2,3; pt=2,4; pt=2,5; pt=2,6; label=3,0.25,3; label=0.3,2.88,3; pt=3,1; pt=3,2; pt=3,3; pt=3,4; pt=3,5; pt=3,6; label=4,0.25,4; label=0.3,3.88,4; pt=4,1; pt=4,2; pt=4,3; pt=4,4; pt=4,5; pt=4,6; label=5,0.25,5; label=0.3,4.88,5; pt=5,1; pt=5,2; pt=5,3; pt=5,4; pt=5,5; pt=5,6; label=6,0.25,6; label=0.3,5.88,6; pt=6,1; pt=6,2; pt=6,3; pt=6,4; pt=6,5; fill=5.6,5.6,6.4,5.6,6.4,6.4,5.6,6.4,ex; pt=6,6; seg=0.6,0.6,6.6,0.6,muted; seg=0.6,0.6,0.6,6.6,muted
@@ -4059,6 +4481,12 @@ Jaká je pravděpodobnost, že se dva náhodně vybraní lidé narodili ve stejn
 ! Ať se první narodil kdykoli, druhý se trefí do stejného měsíce s pravděpodobností $\frac1{12}$.
 ? gen #bt098 | hs_dice
 ? gen #v86sr | hs_coins
+? input #iuvar | 1/6
+Hodíme dvěma kostkami. Jaká je pravděpodobnost, že součet bude $7$?
+! Součet $7$ dají dvojice $[1,6], [2,5], \dots, [6,1]$, tedy $6$ z $36$ možností: $\frac16$.
+? input #z69a4 | 3/248
+Z balíčku $32$ karet (z toho $4$ esa) vytáhneme dvě. Jaká je pravděpodobnost, že obě budou esa?
+! $\frac{\binom42}{\binom{32}2} = \frac{6}{496} = \frac3{248}$.
 
 ### Nezávislé jevy a opakované pokusy | #npru1
 ~ f=0.9*exp(-3*(x+0.1)^2)-0.1; rect=-0.9,0.9,6
@@ -4070,13 +4498,13 @@ Opakujeme-li $n$-krát nezávisle pokus s pravděpodobností úspěchu $p$, nast
 $$P = \binom nk p^k(1 - p)^{n-k}.$$
 @@ x=-0.8..5.8; y=-0.04..0.5; fill=-0.35,0,0.35,0,0.35,0.402,-0.35,0.402,def; fill=0.65,0,1.35,0,1.35,0.402,0.65,0.402,def; fill=1.65,0,2.35,0,2.35,0.161,1.65,0.161,def; fill=2.65,0,3.35,0,3.35,0.032,2.65,0.032,def; fill=3.65,0,4.35,0,4.35,0.003,3.65,0.003,def; fill=4.65,0,5.35,0,5.35,0,4.65,0,def
 Na obrázku pravděpodobnosti $0, 1, \dots, 5$ šestek v pěti hodech kostkou.
-? input #a53dr | 12/25; 0.48
+?! input #a53dr | 12/25; 0.48
 Dva střelci střílejí nezávisle na cíl, první zasáhne s pravděpodobností $0{,}6$, druhý $0{,}8$. Jaká je pravděpodobnost, že zasáhnou oba?
 ! $0{,}6\cdot0{,}8 = 0{,}48$.
-? input #edk15 | 23/25; 0.92
+?! input #edk15 | 23/25; 0.92
 Dva střelci střílejí nezávisle na cíl, první zasáhne s pravděpodobností $0{,}6$, druhý $0{,}8$. Jaká je pravděpodobnost, že cíl bude zasažen aspoň jednou?
 ! Oba minou s pravděpodobností $0{,}4\cdot0{,}2 = 0{,}08$, aspoň jeden zásah tedy $1 - 0{,}08 = 0{,}92$.
-? input #zfz9c | 11/25; 0.44
+?! input #zfz9c | 11/25; 0.44
 Dva střelci střílejí nezávisle na cíl, první zasáhne s pravděpodobností $0{,}6$, druhý $0{,}8$. Jaká je pravděpodobnost, že zasáhne právě jeden?
 ! $0{,}6\cdot0{,}2 + 0{,}4\cdot0{,}8 = 0{,}12 + 0{,}32 = 0{,}44$.
 ? input #ec4fs | 1/24
@@ -4115,6 +4543,12 @@ Co je pravděpodobnější: padne ve čtyřech hodech kostkou aspoň jedna šest
 ? gen #cnlnv | hs_binom_p
 ? gen #frvy5 | hs_shooters
 ? gen #54nmb | hs_urn
+? input #s2kxf | 7/8; 0.875
+Hodíme třikrát mincí. Jaká je pravděpodobnost, že padne aspoň jeden líc?
+! Opačný jev „třikrát rub“ má pravděpodobnost $\frac18$, takže aspoň jeden líc padne s pravděpodobností $\frac78$.
+? input #ku12x | 25/216
+Hodíme čtyřikrát kostkou. Jaká je pravděpodobnost, že šestka padne přesně dvakrát?
+! $\binom42\left(\frac16\right)^2\left(\frac56\right)^2 = 6\cdot\frac1{36}\cdot\frac{25}{36} = \frac{25}{216}$.
 
 ### Statistika | #34n26
 ~ noaxes; bar=-0.75,-0.8,-0.75,-0.1; bar=-0.3,-0.8,-0.3,0.6; bar=0.15,-0.8,0.15,0.3; bar=0.6,-0.8,0.6,-0.3
@@ -4124,13 +4558,13 @@ Aritmetický průměr je součet hodnot dělený jejich počtem. Medián je pros
 Známky $1$ až $5$ z testu sta studentů: modus je $2$, medián $2{,}5$ a průměr $2{,}6$.
 > Rozptyl a směrodatná odchylka
 Rozptyl je průměr druhých mocnin odchylek od průměru, směrodatná odchylka $s$ je jeho odmocnina. Udává, jak moc jsou hodnoty rozptýlené. Variační koeficient $\frac{s}{\bar x}$ ji vyjádří v poměru k průměru.
-? input #efd2h | 5
+?! input #efd2h | 5
 Určete aritmetický průměr hodnot $2, 4, 5, 6, 8$.
 ! $\frac{2 + 4 + 5 + 6 + 8}{5} = \frac{25}5 = 5$.
-? input #q9adl | 5
+?! input #q9adl | 5
 Určete medián hodnot $8, 2, 6, 4, 5$.
 ! Seřadíme: $2, 4, 5, 6, 8$. Prostřední hodnota je $5$.
-? input #vu6ic | 9/2; 4.5
+?! input #vu6ic | 9/2; 4.5
 Určete medián hodnot $1, 3, 6, 7$.
 ! Sudý počet: průměr dvou prostředních hodnot, $\frac{3 + 6}2 = 4{,}5$.
 ? input #zhzfu | 3
@@ -4170,6 +4604,12 @@ Ve firmě má $9$ zaměstnanců plat $30\,000$ Kč a ředitel $300\,000$ Kč. Kt
 ! Průměr $\frac{9\cdot30\,000 + 300\,000}{10} = 57\,000$ vytáhne jediný vysoký plat nahoru. Medián zůstane $30\,000$ Kč.
 @ x=0.2..10.8; y=-25.6..320; fill=0.65,0,1.35,0,1.35,30,0.65,30,def; fill=1.65,0,2.35,0,2.35,30,1.65,30,def; fill=2.65,0,3.35,0,3.35,30,2.65,30,def; fill=3.65,0,4.35,0,4.35,30,3.65,30,def; fill=4.65,0,5.35,0,5.35,30,4.65,30,def; fill=5.65,0,6.35,0,6.35,30,5.65,30,def; fill=6.65,0,7.35,0,7.35,30,6.65,30,def; fill=7.65,0,8.35,0,8.35,30,7.65,30,def; fill=8.65,0,9.35,0,9.35,30,8.65,30,def; fill=9.65,0,10.35,0,10.35,300,9.65,300,def
 ? gen #gri3o | hs_stats
+? input #kddhu | 2
+Určete rozptyl hodnot $1, 2, 3, 4, 5$ (průměr čtverců odchylek od průměru).
+! Průměr je $3$, čtverce odchylek jsou $4, 1, 0, 1, 4$ a jejich průměr je $\frac{10}5 = 2$.
+? input #c7qmr | 6
+Průměr pěti čísel je $6$. Čtyři z nich jsou $4$, $5$, $7$ a $8$. Jaké je páté?
+! Součet všech pěti je $5\cdot6 = 30$ a součet čtyř známých je $24$. Páté číslo je $6$.
 
 ## Úvod do analýzy | #eecu5
 ### Limita funkce | #w4kyt
@@ -4181,14 +4621,14 @@ $\frac{x^2 - 4}{x - 2} = x + 2$ pro $x\ne2$, proto $\lim_{x\to2}\frac{x^2 - 4}{x
 > Limity v nekonečnu a jednostranné limity
 U podílu polynomů rozhodují pro $x\to\pm\infty$ členy nejvyššího stupně. Jednostranná limita $\lim_{x\to a^+}$ sleduje jen $x > a$; u $\frac1x$ v nule vychází zprava $+\infty$ a zleva $-\infty$.
 @@ x=-3..3; y=-5..5; f=1/x
-? input #tk10f | 4
+?! input #tk10f | 4
 Vypočtěte $\displaystyle\lim_{x\to2}\frac{x^2 - 4}{x - 2}$.
 ! Pro $x\ne2$ je $\frac{(x - 2)(x + 2)}{x - 2} = x + 2\to4$.
 @ x=-1..4; y=-1..6; f=x+2; hole=2,4
-? input #9dykw | -1
+?! input #9dykw | -1
 Vypočtěte $\displaystyle\lim_{x\to2}\frac{x^2 - 5x + 6}{x^2 - 3x + 2}$.
 ! $\frac{(x - 2)(x - 3)}{(x - 2)(x - 1)} = \frac{x - 3}{x - 1}\to\frac{-1}{1} = -1$.
-? input #0cgve | 1/3
+?! input #0cgve | 1/3
 Vypočtěte $\displaystyle\lim_{x\to\infty}\frac{x + 5}{3x - 6}$.
 ! Vydělíme $x$: $\frac{1 + 5/x}{3 - 6/x}\to\frac13$.
 @ x=-2..30; y=-1..2; f=(x+5)/(3*x-6); hline=0.3333
@@ -4232,6 +4672,12 @@ Co platí pro funkci na obrázku v bodě $1$?
 ! Z obrázku: zleva se hodnoty blíží $1$, zprava $2$. Jednostranné limity se liší, takže limita v bodě $1$ neexistuje.
 ? gen #prfms | hs_lim_fac
 ? gen #2e035 | hs_lim_inf
+? input #q4hqt | 1/2; 0.5
+Vypočtěte $\displaystyle\lim_{x\to0}\frac{\sqrt{1+x}-1}{x}$.
+! Rozšíříme $\sqrt{1+x}+1$: $\frac{x}{x(\sqrt{1+x}+1)} = \frac1{\sqrt{1+x}+1}\to\frac12$.
+? input #g80pv | 3
+Vypočtěte $\displaystyle\lim_{x\to1}\frac{x^3-1}{x-1}$.
+! $x^3-1 = (x-1)(x^2+x+1)$, takže zlomek je $x^2+x+1\to3$.
 
 ### Derivace a tečna | #7simu
 ~ f=0.9*x^2-0.5; tan=0.4
@@ -4243,15 +4689,15 @@ Tečna paraboly $y = x^2$ v bodě $[1, 1]$ má směrnici $f'(1) = 2$: $y = 2x - 
 > Monotonie a extrémy
 Kde je $f' > 0$, funkce roste, kde $f' < 0$, klesá. Lokální extrémy hledáme mezi body, kde $f' = 0$. Pravidla: $(x^n)' = nx^{n-1}$, $(\sin x)' = \cos x$, $(e^x)' = e^x$, $(\ln x)' = \frac1x$.
 @@ x=-1.5..4.5; y=-15..3; f=x^3-4.5*x^2; pt=0,0; pt=3,-13.5; tan=x^3-4.5*x^2,0; tan=x^3-4.5*x^2,3
-? expr #amo7n | 3x^2+2x
+?! expr #amo7n | 3x^2+2x
 Derivujte $f(x) = x^3 + x^2$.
 = $3x^2 + 2x$
 ! $(x^3)' = 3x^2$ a $(x^2)' = 2x$.
-? expr #tdwyn | 2cos(x) - 3sin(x)
+?! expr #tdwyn | 2cos(x) - 3sin(x)
 Derivujte $f(x) = 2\sin x + 3\cos x$.
 = $2\cos x - 3\sin x$
 ! $(\sin x)' = \cos x$, $(\cos x)' = -\sin x$.
-? expr #l5fdt | 12x(x^2+1)^5
+?! expr #l5fdt | 12x(x^2+1)^5
 Derivujte $f(x) = (x^2 + 1)^6$.
 = $12x(x^2 + 1)^5$
 ! Derivace složené funkce: $6(x^2 + 1)^5\cdot2x = 12x(x^2 + 1)^5$.
@@ -4301,6 +4747,12 @@ Derivujte $f(x) = xe^x$.
 ? gen #p4uiq | hs_deriv
 ? gen #30luu | hs_tangent
 ? gen #ehypf | hs_extremum
+? input #0tr9x | 1
+Pro $f(x) = x^2\ln x$ spočtěte $f'(1)$.
+! $f'(x) = 2x\ln x+x$, takže $f'(1) = 0+1 = 1$.
+? input #ubgo2 | 2
+Ve kterém bodě má funkce $f(x) = x^3-12x$ lokální minimum?
+! $f'(x) = 3x^2-12 = 0$ pro $x = \pm2$. Derivace mění znaménko z $-$ na $+$ v bodě $2$, takže tam je lokální minimum.
 
 ### Integrál a obsah | #5irca
 ~ f=0.5+0.3*sin(3*x); shade=-0.6,0.6
@@ -4312,15 +4764,15 @@ $$\int_a^bf(x)\,\mathrm dx = F(b) - F(a)$$
 je obsah plochy pod grafem nezáporné funkce mezi $a$ a $b$ (části pod osou $x$ se počítají záporně).
 @@ x=-0.5..2.5; y=-0.5..4.5; f=x^2; shade=x^2,0,0,2
 $\int_0^2x^2\,\mathrm dx = \frac83$.
-? expr #7ko2n | x^3/3 + x^2 | +C
+?! expr #7ko2n | x^3/3 + x^2 | +C
 Najděte primitivní funkci k $f(x) = x^2 + 2x$.
 = $\dfrac{x^3}{3} + x^2 + C$
 ! Integrujeme člen po členu: $\int x^2 = \frac{x^3}3$, $\int2x = x^2$.
-? expr #mqjsf | -cos(x) | +C
+?! expr #mqjsf | -cos(x) | +C
 Najděte primitivní funkci k $f(x) = \sin x$.
 = $-\cos x + C$
 ! $(-\cos x)' = \sin x$.
-? input #m3wgt | 6
+?! input #m3wgt | 6
 Vypočtěte $\displaystyle\int_2^4x\,\mathrm dx$.
 ! $\left[\frac{x^2}2\right]_2^4 = 8 - 2 = 6$. Je to obsah lichoběžníku pod přímkou $y = x$.
 @ x=-0.5..5; y=-0.5..5; aspect=equal; f=x; shade=x,0,2,4
@@ -4358,3 +4810,9 @@ Určete $c$ tak, aby platilo $\displaystyle\int_0^3(x^2 + c)\,\mathrm dx = 15$.
 ! $\left[\frac{x^3}3 + cx\right]_0^3 = 9 + 3c = 15$, tedy $c = 2$.
 ? gen #61waq | hs_defint
 ? gen #o6k57 | hs_area_par
+? input #hne6s | 4
+Vypočtěte $\displaystyle\int_0^2\left(3x^2-2x\right)\mathrm dx$.
+! $\left[x^3-x^2\right]_0^2 = 8-4 = 4$.
+?! input #ts7cv | 9/2; 4.5
+Vypočtěte obsah obrazce omezeného parabolou $y = 4-x^2$ a přímkou $y = x+2$.
+! Průsečíky: $4-x^2 = x+2$, tedy $x = -2$ a $x = 1$. Obsah je $$\int_{-2}^1\left(2-x-x^2\right)\mathrm dx = \left[2x-\frac{x^2}2-\frac{x^3}3\right]_{-2}^1 = \frac76+\frac{10}3 = \frac92.$$
