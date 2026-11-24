@@ -1,7 +1,8 @@
 /* The Home view, where the app opens: the cusp and the tagline, a very short "how it works" (each line leads to
    its tab), and widgets for the current course: the next lesson (one tap to play it), today's review, streak / XP /
    lessons.
-   A new student sees the explanation and the first lesson; once something is done, the widgets come first. */
+   A new student sees the explanation and the first lesson; once something is done, the widgets come first.
+   "About Cusp" at the end explains the whole app in one paragraph. */
 (function () {
   "use strict";
   var C = window.CUSP;
@@ -31,6 +32,14 @@
       if (r[3]) { row.type = "button"; row.addEventListener("click", r[3]); }
       box.appendChild(row);
     });
+    return box;
+  }
+
+  // "About Cusp": one paragraph for a newcomer: what the app is, how a lesson works, where progress is kept
+  function about(s) {
+    var box = el("section", "h-about");
+    box.appendChild(el("h2", "h-about-t", escapeHtml(s.hAboutT)));
+    box.appendChild(el("p", null, escapeHtml(s.hAbout)));
     return box;
   }
 
@@ -99,7 +108,7 @@
     if (c.hasLessons && !c.units) C.load(c).then(function () { if (course() === c) render(); }, function () { /* shown as loading */ });
     body.innerHTML = "";
     // a new student: what this is, where to start, how it works; later: the widgets first, the explanation below
-    var parts = isNew() ? [intro(s), next(c, s), how(s)] : [next(c, s), review(c, s), stats(s), intro(s), how(s)];
+    var parts = isNew() ? [intro(s), next(c, s), how(s), about(s)] : [next(c, s), review(c, s), stats(s), intro(s), how(s), about(s)];
     parts.forEach(function (p) { if (p) body.appendChild(p); });
   }
 

@@ -2650,6 +2650,10 @@ Které funkce nabývají na intervalu $[0,1]$ maxima?
 > Mezihodnoty
 <b>Bolzanova věta:</b> je-li $f\in C[a,b]$, nabývá $f$ všech hodnot mezi svou nejmenší a největší hodnotou. Speciálně: je-li $f(a)f(b)<0$, existuje $\xi\in(a,b)$ s $f(\xi)=0$. Na tom stojí metoda půlení intervalů.
 @@ x=-0.3..1.3; y=-1.4..1.6; f=x^3+x-1; vband=0.5,0.75; pt=0,-1; pt=1,1; pt=0.682,0
+> Metoda půlení intervalů
+Bolzanova věta dává i postup, jak nulový bod najít. Je-li $f$ spojitá na $[a,b]$ a $f(a)f(b)<0$:
+<ol><li>spočteme $f(c)$ ve středu $c = \frac{a+b}2$;</li><li>je-li $f(c) = 0$, je $c$ hledaný bod; jinak ponecháme tu z polovin $[a,c]$, $[c,b]$, na jejíchž koncích má $f$ opačná znaménka;</li><li>opakujeme, dokud není interval kratší než požadovaná přesnost.</li></ol>
+Po $n$ krocích má interval délku $\frac{b-a}{2^n}$, každý krok tedy chybu zpřesní na polovinu. Pro $x^3+x-1$ na $[0,1]$: $f(0{,}5)<0$, takže nulový bod leží v $[0{,}5;\ 1]$, a $f(0{,}75)>0$, takže v $[0{,}5;\ 0{,}75]$ (vyznačený pás na obrázku výše).
 > Spojitost inverzní funkce
 Je-li $f$ ryze monotónní a spojitá na intervalu $I$, je $f^{-1}$ spojitá a ryze monotónní na $f(I)$. Odtud plyne spojitost $\arcsin$, $\ln$, $\sqrt[n]{x}$ a dalších.
 ?! tf #x1tpv | true
@@ -2707,7 +2711,8 @@ Kolik reálných kořenů má polynom $x^3-3x+1$?
 ! $f(-2) = -1$, $f(0) = 1$, $f(1) = -1$, $f(2) = 3$: tři změny znaménka, tedy tři kořeny (víc jich polynom třetího stupně mít nemůže).
 ? tf #2ftza | true
 Spojitá funkce $f\colon[0,1]\to[0,1]$ má pevný bod, tedy $f(c) = c$ pro nějaké $c$.
-! Pro $g(x) = f(x)-x$ je $g(0)\ge0$ a $g(1)\le0$; Bolzanova věta dá nulový bod $g$.
+! Pomocná funkce $g(x) = f(x)-x$ je spojitá na $[0,1]$. Hodnoty $f$ leží v $[0,1]$, proto $g(0) = f(0)\ge0$ a $g(1) = f(1)-1\le0$. Je-li některá z nich nulová, je pevným bodem $0$ nebo $1$. Jinak je $g(0)>0>g(1)$ a podle Bolzanovy věty existuje $c\in(0,1)$ s $g(c) = 0$, tedy $f(c) = c$. Na obrázku: graf $f$ vede od levé strany čtverce $[0,1]\times[0,1]$ k pravé, a proto musí protnout úhlopříčku $y = x$. Pevný bod tedy vždy existuje.
+@ x=-0.1..1.1; y=-0.1..1.1; aspect=equal; f=x>=0&&x<=1?0.8-0.6*x^2:NaN; f=x>=0&&x<=1?x:NaN; dash=0,1,1,1; dash=1,0,1,1; pt=0.5907,0.5907
 ?! tf #ad1z0 | false
 Je-li $f(a)\cdot f(b)<0$, má $f$ na $(a,b)$ kořen.
 ! Bez spojitosti to neplatí: funkce $-1$ pro $x<0$ a $1$ pro $x\ge0$ má na $[-1,1]$ v krajních bodech opačná znaménka, ale nikde není nulová.
@@ -2950,7 +2955,7 @@ Která funkce je nespojitá v každém bodě, ale její druhá mocnina je spojit
 ! $2\chi-1$ nabývá hodnot $\pm1$, takže $(2\chi-1)^2 = 1$.
 ? tf #7zyb9 | false
 Je-li $f\circ g$ spojitá, jsou spojité $f$ i $g$.
-! Vnější funkce může nespojitost vnitřní „vyhladit“.
+! Vnější funkce může nespojitost vnitřní „vyhladit“: $g = 2\chi-1$ je rovna $1$ na racionálních a $-1$ na iracionálních číslech, takže je nespojitá všude, ale $f(g(x)) = (\pm1)^2 = 1$ je konstantní, tedy spojitá. Dvojice $f(x) = x$, $g = \operatorname{sgn}x$ protipříkladem není: složení $f\circ g = \operatorname{sgn}x$ samo spojité není, takže předpoklad tvrzení neplatí. U $f = g = x$ je spojité všechno. Protipříkladem je tedy $f(x) = x^2$, $g = 2\chi-1$.
 + $f(x) = x^2$, $g = 2\chi-1$
 - $f(x) = x$, $g = \operatorname{sgn}x$
 - $f = g = x$
