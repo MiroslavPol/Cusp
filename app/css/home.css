@@ -65,6 +65,10 @@ body[data-view="home"] { background: #05080f; }      /* no light edge when a pho
 .h-card.h-review { --c: var(--ex); border-color: color-mix(in srgb, var(--ex) 45%, var(--line)); }
 
 .h-how { display: flex; flex-direction: column; gap: 2px; padding: 4px 2px; }
+/* "About Cusp": a plain paragraph under the ways in */
+.h-about { padding: 4px 8px 8px; }
+.h-about-t { margin: 0 0 6px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.h-about p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
 .h-intro { margin: 4px 0 0; font-size: 16px; color: var(--ink); text-align: center; }
 .h-row { background: none; border: none; border-radius: 12px; padding: 8px 6px; text-align: left; color: inherit; }
 div.h-row { cursor: default; }
