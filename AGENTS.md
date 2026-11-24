@@ -46,7 +46,8 @@ unanswered ones are offered later from the map. Questions written `?! kind` are 
 When you add questions, look at the whole lesson afterwards and mark with `?!` the few (at most 7,
 usually 2 to 4) that every student must meet. See *Which questions a lesson asks* in
 `courses/README.md`. Source material (exercise sheets, textbooks) may be outside the repository;
-ask the course owner where it is, and never commit it.
+ask the course owner where it is, and never commit it. Cite it in the course's `sources` in course.json
+(with a link where it can be read online); the app lists them on Home.
 
 Follow the writing rules in `courses/README.md` (*Writing for a phone*, *Notation*): a formula longer
 than about half a line goes in `$$…$$`, points are `[1, 2]`, decimals take a comma (`0{,}5`), and an

@@ -4,5 +4,10 @@
   "handle": "ss.opakovani",
   "lang": "cs",
   "order": 20,
-  "blurb": "Celá středoškolská matematika k maturitě a před VŠ: rovnice, funkce, goniometrie, posloupnosti, geometrie, kuželosečky, komplexní čísla, kombinatorika a pravděpodobnost. S obrázkem všude, kde pomůže."
+  "blurb": "Celá středoškolská matematika k maturitě a před VŠ: rovnice, funkce, goniometrie, posloupnosti, geometrie, kuželosečky, komplexní čísla, kombinatorika a pravděpodobnost. S obrázkem všude, kde pomůže.",
+  "sources": [
+    {
+      "cite": "PETÁKOVÁ, Jindra. *Matematika: příprava k maturitě a k přijímacím zkouškám na vysoké školy*. Dotisk 1. vyd. Praha: Prometheus, 1998. ISBN 80-7196-099-3."
+    }
+  ]
 }

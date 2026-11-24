@@ -153,3 +153,21 @@ math mrow.math-arrow.one mspace.math-arr { left: 0.16em; right: -0.1em; }     /*
 @media (max-width: 400px) {
   body { font-size: 16px; }
 }
+
+/* The launch screen: black, above everything, fades out on "Vstoupit" or when the timer runs out */
+.splash { position: fixed; inset: 0; z-index: 200; background: #000; color: #e6e9ef; display: flex; align-items: center; justify-content: center; padding: 24px 16px; transition: opacity 0.4s; }
+.splash.out { opacity: 0; pointer-events: none; }
+.splash-in { max-width: 420px; width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+.splash-cusp { width: 120px; height: 80px; }
+.splash-cusp path { fill: none; stroke: #ffd27a; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: splash-draw 1.2s ease-out 0.2s forwards; }
+.splash-cusp circle { fill: #ffd27a; filter: drop-shadow(0 0 6px #ffb347); }
+.splash-title { font-family: var(--font-display); font-size: 44px; line-height: 1; }
+.splash-k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #ffd27a; }
+.splash-text { margin: 0; font-family: var(--font-body); font-size: 16px; line-height: 1.55; color: #c9ced8; }
+.splash-go { margin-top: 10px; min-width: 180px; padding: 12px 24px; border: 1px solid #ffd27a; border-radius: 999px; background: transparent; color: #ffd27a; font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.06em; cursor: pointer; }
+.splash-go:hover, .splash-go:focus-visible { background: #ffd27a; color: #000; outline: none; }
+.splash-timer { width: 180px; height: 2px; background: #222; border-radius: 1px; overflow: hidden; }
+.splash-timer span { display: block; height: 100%; background: #ffd27a; transform-origin: left; animation: splash-time linear forwards; }
+@keyframes splash-draw { to { stroke-dashoffset: 0; } }
+@keyframes splash-time { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .splash-cusp path { animation: none; stroke-dashoffset: 0; } }

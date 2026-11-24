@@ -2,7 +2,8 @@
    its tab), and widgets for the current course: the next lesson (one tap to play it), today's review, streak / XP /
    lessons.
    A new student sees the explanation and the first lesson; once something is done, the widgets come first.
-   "About Cusp" comes first, as a box that rolls out and explains the whole app in one paragraph. */
+   "About Cusp" comes first, as a box that rolls out and explains the whole app in one paragraph; "Course sources"
+   at the end lists what the current course draws on. */
 (function () {
   "use strict";
   var C = window.CUSP;
@@ -41,6 +42,24 @@
     var box = el("details", "h-about");
     box.appendChild(el("summary", null, '<span>' + escapeHtml(s.hAboutT) + '</span><span class="h-about-chev" aria-hidden="true">' + ICON.go + "</span>"));
     box.appendChild(el("p", null, escapeHtml(s.hAbout)));
+    return box;
+  }
+
+  // "Course sources" at the bottom: the materials of the current course as ČSN ISO 690 citations (course.json
+  // "sources"); *…* is the italic part and a link after "Dostupné z:" opens in a new tab
+  function sources(c, s) {
+    if (!c.sources || !c.sources.length) return null;
+    var box = el("details", "h-about h-src");
+    box.appendChild(el("summary", null, "<span>" + escapeHtml(s.hSrcT + (c.short ? " · " + c.short : "")) +
+      '</span><span class="h-about-chev" aria-hidden="true">' + ICON.go + "</span>"));
+    box.appendChild(el("p", null, escapeHtml(s.hSrc)));
+    var list = el("ul", "h-src-list");
+    c.sources.forEach(function (r) {
+      var html = escapeHtml(r.cite).replace(/\*([^*]+)\*/g, "<i>$1</i>")
+        .replace(/https?:\/\/[^\s<]+/g, function (u) { return '<a href="' + u + '" target="_blank" rel="noopener">' + u + "</a>"; });
+      list.appendChild(el("li", null, html));
+    });
+    box.appendChild(list);
     return box;
   }
 
@@ -109,7 +128,7 @@
     if (c.hasLessons && !c.units) C.load(c).then(function () { if (course() === c) render(); }, function () { /* shown as loading */ });
     body.innerHTML = "";
     // a new student: what this is, where to start, how it works; later: the widgets first, the explanation below
-    var parts = isNew() ? [about(s), intro(s), next(c, s), how(s)] : [about(s), next(c, s), review(c, s), stats(s), intro(s), how(s)];
+    var parts = isNew() ? [about(s), intro(s), next(c, s), how(s), sources(c, s)] : [about(s), next(c, s), review(c, s), stats(s), intro(s), how(s), sources(c, s)];
     parts.forEach(function (p) { if (p) body.appendChild(p); });
   }
 

@@ -55,7 +55,8 @@ copied `#id` and run the tool again. Deleting a question deletes its history, wh
   "draft": true,
   "default": true,
   "lectures": ["2026-09-15", "2026-09-17"],
-  "guide": { "name": "Sprievodca", "title": "…", "author": "…", "url": "https://…/", "anchors": { "1": "#úvod" } }
+  "guide": { "name": "Sprievodca", "title": "…", "author": "…", "url": "https://…/", "anchors": { "1": "#úvod" } },
+  "sources": [{ "cite": "DOŠLÁ, Zuzana a Jaromír KUBEN. *Diferenciální počet funkcí jedné proměnné* [online]. 1. vyd. Brno: Masarykova univerzita, 2004 [cit. 2026-11-24]. ISBN 80-210-3121-2. Dostupné z: https://…" }]
 }
 ```
 
@@ -68,6 +69,7 @@ copied `#id` and run the tool again. Deleting a question deletes its history, wh
 | `default` | the course a new visitor sees first (only one course should have it) |
 | `lectures` | lecture dates. Lecture *n* is the *n*-th date. Turns on the `P1`, `P2` … labels |
 | `guide` | in-app reader. `anchors` maps lecture numbers to guide sections, shown as "Z Průvodce" buttons |
+| `sources` | the materials the course draws on, listed under "Zdroje kurzu" on Home: one `cite` per source, a citation by ČSN ISO 690 (surname in capitals, the italic part between `*…*`). For a text that can be read online add `[online]` after the title, `[cit. date]` and `Dostupné z: URL`; the app makes the URL a link. Link only official copies (the author's, the publisher's or a university repository), never an unofficial upload. Add every textbook, exercise sheet or thesis you take questions or theory from |
 | `report` | where "Nahlásit chybu" sends reports: an `https://…/issues/new` page or `mailto:address`. Default: this repository's GitHub issues |
 
 ## lessons.txt
