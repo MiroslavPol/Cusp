@@ -69,5 +69,37 @@
       "26": "#geometrická-aplikácia-určitého-integrálu",
       "27": "#nevlastný-riemannov-integrál"
     }
-  }
+  },
+  "sources": [
+    {
+      "cite": "DOŠLÁ, Zuzana a Jaromír KUBEN. *Diferenciální počet funkcí jedné proměnné* [online]. 1. vyd. Brno: Masarykova univerzita, 2004 [cit. 2026-11-24]. ISBN 80-210-3121-2. Dostupné z: https://archive.math.muni.cz/education/ebook-pdf/Diferencialni_pocet_funkci_jedne_promenne-Dosla-2004.pdf"
+    },
+    {
+      "cite": "DOŠLÝ, Ondřej a Petr ZEMÁNEK. *Integrální počet v ℝ*. 1. vyd. Brno: Masarykova univerzita, 2011. ISBN 978-80-210-5635-0."
+    },
+    {
+      "cite": "ZEMÁNEK, Petr a Petr HASIL. *Sbírka řešených příkladů z matematické analýzy I*. 3. vyd. Brno: Masarykova univerzita, 2012. ISBN 978-80-210-5882-8."
+    },
+    {
+      "cite": "HASIL, Petr. *Množiny, číselné obory, funkce*. Přednáška z Matematické analýzy I. Brno: Masarykova univerzita, Přírodovědecká fakulta, [2015]."
+    },
+    {
+      "cite": "ČERVENKA, Michal. *Cvičení z matematické analýzy I* [studijní materiály]. Brno: Masarykova univerzita, Přírodovědecká fakulta, 2025."
+    },
+    {
+      "cite": "*Zkouška M1100* [zkouškové zadání]. Brno: Masarykova univerzita, Přírodovědecká fakulta, 2010 a 2015."
+    },
+    {
+      "cite": "BABULA, Kamil. *Protipříklady v matematické analýze*. Brno, 2008. Bakalářská práce. Masarykova univerzita, Přírodovědecká fakulta. Vedoucí práce Roman HILSCHER."
+    },
+    {
+      "cite": "ŠMAK, Jan. *Matematická analýza duhy* [online]. Brno, 2013 [cit. 2026-11-24]. Bakalářská práce. Masarykova univerzita, Přírodovědecká fakulta. Vedoucí práce Roman ŠIMON HILSCHER. Dostupné z: https://theses.cz/id/wjb5qm/"
+    },
+    {
+      "cite": "GRABINER, Judith V. The Changing Concept of Change: The Derivative from Fermat to Weierstrass. *Mathematics Magazine* [online]. 1983, roč. 56, č. 4, s. 195–206 [cit. 2026-11-24]. ISSN 0025-570X. Dostupné z: https://scholarship.claremont.edu/pitzer_fac_pub/118/"
+    },
+    {
+      "cite": "POLÁCH, Miroslav. *Sprievodca Matematickou analýzou I* [online]. [cit. 2026-11-24]. Dostupné z: https://monstruoz.quarto.pub/spma/"
+    }
+  ]
 }

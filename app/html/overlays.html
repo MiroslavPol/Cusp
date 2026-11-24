@@ -47,3 +47,15 @@
 </div>
 
 <div class="toast" id="toast" role="status" hidden></div>
+
+<!-- shown at launch for a few seconds: Cusp is only complementary material (main.js fills the text and runs the timer) -->
+<div class="splash" id="splash" role="dialog" aria-modal="true" aria-labelledby="splashK">
+  <div class="splash-in">
+    <svg class="splash-cusp" viewBox="0 0 120 80" aria-hidden="true"><path pathLength="1" d="M80 6C58 40 40 40 40 40C40 40 58 40 80 74"/><circle cx="40" cy="40" r="4"/></svg>
+    <div class="splash-title">Cusp</div>
+    <div class="splash-k" id="splashK"></div>
+    <p class="splash-text" id="splashText"></p>
+    <button class="splash-go" id="splashGo" type="button"></button>
+    <div class="splash-timer" aria-hidden="true"><span id="splashBar"></span></div>
+  </div>
+</div>

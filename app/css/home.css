@@ -76,6 +76,10 @@ body[data-view="home"] { background: #05080f; }      /* no light edge when a pho
 .h-about-chev svg { width: 18px; height: 18px; }
 .h-about[open] .h-about-chev { transform: rotate(90deg); }
 .h-about p { margin: 0; padding: 0 16px 14px; font-size: 15px; line-height: 1.5; color: var(--ink); }
+/* "Course sources": the same box, with a list of citations */
+.h-src p { color: var(--muted); font-size: 14px; }
+.h-src-list { margin: 0; padding: 0 16px 16px 34px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
+.h-src-list a { font-family: var(--font-mono); font-size: 12px; color: var(--def); }
 .h-intro { margin: 4px 0 0; font-size: 16px; color: var(--ink); text-align: center; }
 .h-row { background: none; border: none; border-radius: 12px; padding: 8px 6px; text-align: left; color: inherit; }
 div.h-row { cursor: default; }

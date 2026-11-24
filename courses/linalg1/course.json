@@ -4,5 +4,22 @@
   "handle": "m1110.algebra",
   "lang": "cs",
   "order": 15,
-  "blurb": "M1110, PřF MU. Soustavy rovnic, matice, vektorové prostory, lineární zobrazení a determinanty. Lekce jdou podle přednášek; bonusové lekce jsou navíc a nic neblokují."
+  "blurb": "M1110, PřF MU. Soustavy rovnic, matice, vektorové prostory, lineární zobrazení a determinanty. Lekce jdou podle přednášek; bonusové lekce jsou navíc a nic neblokují.",
+  "sources": [
+    {
+      "cite": "ZLATOŠ, Pavol. *Lineárna algebra a geometria: Cesta z troch rozmerov s presahmi do príbuzných odborov* [online]. 1. vyd. Bratislava: Marenčin PT, 2011 [cit. 2026-11-24]. ISBN 978-80-8114-111-9. Dostupné z: http://thales.doa.fmph.uniba.sk/katc/pages/member.php?jazyk=sk&clen=zlatos"
+    },
+    {
+      "cite": "SLOVÁK, Jan. *Lineární algebra* [online]. Učební texty. Brno: Masarykova univerzita, 1998 [cit. 2026-11-24]. Dostupné z: http://www.math.muni.cz/~slovak/Vyuka/la.pdf"
+    },
+    {
+      "cite": "*Lineární algebra a geometrie I (M1110): přednášky, cvičení a domácí úkoly* [studijní materiály]. Brno: Masarykova univerzita, Přírodovědecká fakulta, 2020."
+    },
+    {
+      "cite": "*Sbírka úloh z lineární algebry* [online]. Brno: Masarykova univerzita [cit. 2026-11-24]. Dostupné z: https://www.physics.muni.cz/~krbek/la1_sbirka.pdf"
+    },
+    {
+      "cite": "*Sbírka úloh z lineární algebry a geometrie* [studijní materiál]. Brno: Masarykova univerzita."
+    }
+  ]
 }

@@ -677,6 +677,29 @@ def test_pwa(b, cs):
     ctx.close(); srv.shutdown()
 
 
+def test_splash(b, url, cs):
+    print("launch screen and course sources")
+    errors = []
+    pg = new_page(b, errors)
+    pg.goto(url); pg.wait_for_timeout(800)
+    check("tests skip the launch screen", pg.locator("#splash").count() == 0)
+    src = pg.evaluate("(CUSP.course().sources || []).length")
+    check("Home lists the course sources", pg.locator(".h-src li").count() == src and src > 0, str(src))
+    pg.locator(".h-src summary").click(); pg.wait_for_timeout(200)
+    links = pg.locator(".h-src li a")
+    check("sources with a url have a link that opens a new tab", links.count() > 0 and links.first.get_attribute("target") == "_blank")
+    pg.goto(url + "?splash"); pg.wait_for_timeout(500)
+    s = pg.evaluate("CUSP.L()")
+    check("with ?splash the launch screen shows its note", pg.locator("#splash").is_visible() and pg.text_content("#splashText") == s["sp"])
+    check("its button counts down", pg.text_content("#splashGo").startswith(s["spGo"] + " ("))
+    pg.click("#splashGo"); pg.wait_for_timeout(600)
+    check("the button enters the app", pg.locator("#splash").count() == 0 and pg.locator("#view-home").is_visible())
+    pg.goto(url + "?splash"); pg.wait_for_timeout(7000)
+    check("the timer enters by itself", pg.locator("#splash").count() == 0)
+    check("no errors in the page", not errors, "; ".join(errors[:3]))
+    pg.close()
+
+
 def main():
     r = subprocess.run([sys.executable, str(ROOT / "build.py")], capture_output=True, text=True, encoding="utf-8")
     print(r.stdout.strip())
@@ -688,6 +711,7 @@ def main():
         site = (ROOT / "site" / "index.html").as_uri()
         test_site(b, site, cs)
         test_home(b, site, cs)
+        test_splash(b, site, cs)
         test_migration(b, site, cs)
         test_pwa(b, cs)
         b.close()

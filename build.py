@@ -83,6 +83,20 @@ def check_course(d, probs):
     report = meta.get("report")
     if report is not None and not (isinstance(report, str) and report.startswith(("https://", "mailto:"))):
         probs.add(rel(meta_p), '"report" must be a link starting with https:// (e.g. a GitHub "issues/new" page) or mailto:')
+    sources = meta.get("sources")
+    if sources is not None:
+        if not isinstance(sources, list):
+            probs.add(rel(meta_p), '"sources" must be a list of {"cite": "…"} (ČSN ISO 690 citations)')
+        else:
+            for k, src in enumerate(sources, 1):
+                at = f'{rel(meta_p)} (sources, item {k})'
+                cite = src.get("cite") if isinstance(src, dict) else None
+                if not isinstance(cite, str) or not cite.strip() or set(src) != {"cite"}:
+                    probs.add(at, 'write each source as {"cite": "SURNAME, Name. *Title*. Place: Publisher, year."}'); continue
+                if cite.count("*") % 2:
+                    probs.add(at, 'an unpaired "*": the italic part goes between two asterisks')
+                if "Dostupné z:" in cite and not re.search(r"Dostupné z: https?://\S+", cite):
+                    probs.add(at, '"Dostupné z:" must be followed by a link starting with https:// or http://')
     n_lect = len(meta.get("lectures") or [])
     def check_lectures(parts, at):
         """P# labels must point to an existing lecture date (only for courses with "lectures")."""
