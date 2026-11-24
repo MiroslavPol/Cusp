@@ -132,6 +132,20 @@ Kolik řešení má soustava tří rovnic o dvou neznámých, jejichž přímky 
 ? tf #w3tzk | true
 Má-li soustava lineárních rovnic nad $\mathbb R$ dvě různá řešení, má jich nekonečně mnoho.
 ! Jsou-li $y\ne z$ řešení, je řešením i $y+t(z-y)$ pro každé $t\in\mathbb R$, protože $A(z-y) = b-b = o$. Řešení je tedy nekonečně mnoho.
+? order #ggoxx
+Seřaďte důkaz, že přičtení $c$-násobku rovnice $r_j$ k rovnici $r_i$ nezmění množinu řešení soustavy.
++ Řeší-li $x$ původní soustavu, splňuje rovnice $r_i$ i $r_j$.
++ Pak splňuje i rovnici $r_i+c\,r_j$, takže řeší i novou soustavu.
++ Obráceně, řeší-li $x$ novou soustavu, splňuje $r_j$ i $r_i+c\,r_j$.
++ Odečtením $c$-násobku $r_j$ dostaneme, že splňuje i $r_i$.
+! Úprava jde vrátit opačnou úpravou, proto se množina řešení nezmění. Obě soustavy mají stejná řešení.
+? mc #88v54
+Proč je vynásobení rovnice číslem $c$ ekvivalentní úprava jen pro $c\ne0$?
++ jen pro $c\ne0$ ji lze vrátit vynásobením číslem $\frac1c$
+- pro $c = 0$ by se změnil počet rovnic
+- pro $c\ne0$ se nezmění koeficienty soustavy
+- pro $c = 0$ by soustava neměla řešení
+! Vynásobením nulou se z rovnice stane $0 = 0$ a informace se ztratí, takže množina řešení se může zvětšit. Pro $c\ne0$ úpravu vrátí násobení $\frac1c$, a je proto ekvivalentní.
 
 ### Gaussova eliminace | P1 | #xaoxs
 ~ noaxes; poly=-0.8,0.7,-0.3,0.7,-0.3,0.2,0.2,0.2,0.2,-0.3,0.7,-0.3,0.7,-0.8
@@ -254,6 +268,16 @@ Kolik parametrů má obecné řešení soustavy $x_1+2x_2-x_3+x_4 = 1$, $2x_1+4x
 ? tf #00cdt | true
 Redukovaný schodovitý tvar matice je určen jednoznačně.
 ! Schodovitých tvarů může být víc, ale požadavek jedniček na schodech a nul nad nimi určí tvar jednoznačně. Tvrzení platí.
+?! mc #j717l
+Rozšířená matice soustavy je ve schodovitém tvaru. Kdy soustava nemá řešení?
++ když je vedoucí prvek některého řádku v posledním (pravém) sloupci
+- když má schodovitý tvar nulový řádek
+- když je neznámých víc než rovnic
+- když je některý vedoucí prvek záporný
+! Řádek $(0\ \cdots\ 0\,|\,c)$ s $c\ne0$ odpovídá rovnici $0 = c$, která řešení nemá. Jinak lze řešení dopočítat zpětnou substitucí.
+? tf #qo0oh | true
+Každou matici lze řádkovými úpravami převést na schodovitý tvar.
+! Gaussova eliminace postupuje sloupec po sloupci: najde nenulový prvek, výměnou ho dá nahoru a přičtením násobků vynuluje prvky pod ním. Po konečně mnoha krocích vznikne schodovitý tvar.
 
 ### Soustavy s parametrem | P1 | #xlgc3
 ~ f=0.5*x+0.35; f=0.5*x-0.35; fd=-0.9*x
@@ -355,6 +379,13 @@ Pro která $a$, $b$ má soustava $x+2y = a$, $3x+6y = b$ řešení?
 - pro všechna $a$, $b$
 - pro žádná $a$, $b$
 ! Odečtením trojnásobku první rovnice od druhé dostaneme $0 = b-3a$. Soustava má řešení, právě když $b = 3a$.
+? mc #2plj0
+Nad $\mathbb R$ nemůže mít soustava právě dvě řešení. Nad $\mathbb Z_2$ ale ano, třeba $x+y = 1$. Proč?
++ množina řešení je posunutý podprostor a podprostor dimenze $1$ nad $\mathbb Z_2$ má jen $2$ prvky
+- nad $\mathbb Z_2$ neplatí Frobeniova věta
+- nad $\mathbb Z_2$ nelze dělit nulou
+- nad $\mathbb Z_2$ mají všechny soustavy právě dvě řešení
+! Řešení jsou tvaru $z+\ker A$. Nad $\mathbb R$ je nenulový podprostor nekonečný, ale nad $\mathbb Z_2$ má podprostor dimenze $d$ přesně $2^d$ prvků. Pro $x+y = 1$ jsou řešení $(1,0)^T$ a $(0,1)^T$.
 
 ### Bonus: Přímky a roviny | P1 | bonus | #p5tc6
 ~ f=0.6*x+0.2; f=-0.7*x-0.1; pt=-0.231,0.062
@@ -609,6 +640,12 @@ Jaký je součet prvků na diagonále (stopa) součinu $\begin{pmatrix}1&2\\3&4\
 ? tf #fxsg2 | true
 Je-li $A$ tvaru $m\times n$, má součin $AA$ smysl, právě když $m = n$.
 ! Počet sloupců prvního činitele ($n$) se musí rovnat počtu řádků druhého ($m$). Součin $AA$ má tedy smysl, právě když je $A$ čtvercová.
+?! tf #pcm7h | true
+Součin $Ax$ je lineární kombinace sloupců matice $A$ s koeficienty $x_1,\dots,x_n$.
+! $i$-tá složka $Ax$ je $\sum_ja_{ij}x_j$, tedy $Ax = x_1a_{\ast1}+\dots+x_na_{\ast n}$, kde $a_{\ast j}$ je $j$-tý sloupec. Je to kombinace sloupců.
+? tf #608zr | true
+$j$-tý sloupec součinu $AB$ je $A$ krát $j$-tý sloupec matice $B$.
+! Prvek $(i,j)$ součinu je $i$-tý řádek $A$ krát $j$-tý sloupec $B$. Pro pevné $j$ dají všechny řádky dohromady $A\cdot b_{\ast j}$.
 
 ### Vlastnosti násobení a transpozice | P2 | #hxzhh
 ~ noaxes; text=Aᵀ; size=0.75
@@ -710,6 +747,22 @@ Pro symetrické matice $A$, $B$ stejného tvaru je $AB$ symetrická, právě kdy
 ? input #0c1ow | 35
 Pro $A = \begin{pmatrix}1&2\\3&4\\5&6\end{pmatrix}$ určete prvek na místě $(1,1)$ matice $A^TA$.
 ! Je to první sloupec $A$ krát sám se sebou: $1^2+3^2+5^2 = 35$.
+? order #e11er
+Seřaďte důkaz, že $(AB)^T = B^TA^T$.
++ Prvek $(i,j)$ matice $(AB)^T$ je prvek $(j,i)$ matice $AB$.
++ Ten je roven $\sum_k a_{jk}b_{ki}$.
++ Totéž je $\sum_k (B^T)_{ik}(A^T)_{kj}$.
++ A to je prvek $(i,j)$ matice $B^TA^T$.
+! Matice se shodují ve všech prvcích, takže $(AB)^T = B^TA^T$.
+? tf #zcuk0 | false
+Je-li $A^2 = E$, je $A = E$ nebo $A = -E$.
+! Souměrnost $A = \begin{pmatrix}0&1\\1&0\end{pmatrix}$ splňuje $A^2 = E$, a přitom není $\pm E$. Druhá odmocnina z $E$ má mnoho řešení.
++ $A = \begin{pmatrix}0&1\\1&0\end{pmatrix}$
+- $A = E$
+- $A = -E$
+? tf #e1g3x | true
+Pro každou čtvercovou matici $A$ je $A-A^T$ antisymetrická.
+! $(A-A^T)^T = A^T-A = -(A-A^T)$. Matice je tedy antisymetrická.
 
 ### Lineární modely | P2 | bonus | #z2ifb
 ~ f=0.25*exp(1.8*x)-0.6
@@ -985,6 +1038,22 @@ Je-li $A$ regulární a $AB = AC$, pak $B = C$.
 ? input #2w90l | -2
 Jaký prvek je na místě $(1,2)$ inverzní matice k $\begin{pmatrix}1&2\\3&7\end{pmatrix}$?
 ! $\det = 7-6 = 1$, takže inverze je $\begin{pmatrix}7&-2\\-3&1\end{pmatrix}$. Prvek na místě $(1,2)$ je $-2$.
+? order #50y7l
+Seřaďte důkaz, že pro regulární $A$ je $\left(A^T\right)^{-1} = \left(A^{-1}\right)^T$.
++ Spočteme $A^T\left(A^{-1}\right)^T$.
++ Podle pravidla pro transpozici součinu je to $\left(A^{-1}A\right)^T$.
++ To je $E^T = E$.
++ Stejně $\left(A^{-1}\right)^TA^T = \left(AA^{-1}\right)^T = E$.
+! $\left(A^{-1}\right)^T$ splňuje obě rovnosti z definice inverzní matice k $A^T$, a inverze je jediná. Tedy $\left(A^T\right)^{-1} = \left(A^{-1}\right)^T$.
+? tf #n718d | false
+Součet dvou regulárních matic je regulární.
+! $E$ i $-E$ jsou regulární, ale jejich součet je nulová matice, která inverzi nemá.
++ $E$ a $-E$
+- $E$ a $E$
+- $E$ a $2E$
+? tf #2xhxe | true
+Je-li $A$ regulární, má soustava $Ax = b$ pro každé $b$ právě jedno řešení $x = A^{-1}b$.
+! $A(A^{-1}b) = b$, takže $A^{-1}b$ řešení je. Je-li $Ax = b$, vynásobením $A^{-1}$ zleva dostaneme $x = A^{-1}b$, takže jiné řešení není.
 
 ### Výpočet inverzní matice | P3 | #043h0
 ~ noaxes; text=(A|E); size=0.5
@@ -1079,6 +1148,16 @@ Algoritmem spočtěte inverzní matici k
 $$A = \begin{pmatrix}1&0&2\\2&-1&3\\4&1&8\end{pmatrix}.$$
 Jaký je její prvek na místě $(2,3)$?
 ! $(A|E)\sim(E|A^{-1})$ dá $A^{-1} = \begin{pmatrix}-11&2&2\\-4&0&1\\6&-1&-1\end{pmatrix}$. Prvek na místě $(2,3)$ je $1$.
+? mc #enekf
+Proč algoritmus $(A\,|\,E)\sim(E\,|\,A^{-1})$ dává inverzní matici?
++ úpravy jsou násobení zleva elementárními maticemi; z $PA = E$ plyne $P = A^{-1}$ a vpravo vznikne $PE = P$
+- úpravy nemění determinant, takže vpravo vznikne $A^{-1}$
+- úpravy prohodí $A$ a $E$
+- vpravo se počítají algebraické doplňky
+! Všechny úpravy dohromady jsou násobení zleva jednou maticí $P$. Vlevo vznikne $PA = E$, takže $P = A^{-1}$, a vpravo $PE = P = A^{-1}$.
+? tf #lc11q | true
+Každou regulární matici lze řádkovými úpravami převést na jednotkovou matici.
+! Schodovitý tvar regulární matice $n\times n$ má $n$ vedoucích prvků, tedy jeden v každém sloupci. Vydělením a vynulováním nad nimi vznikne $E$.
 
 ## Vektorové prostory | P3–P4 | #602hm
 ### Axiomy vektorového prostoru | P3 | #y2j1o
@@ -1186,6 +1265,23 @@ Na $\mathbb R^2$ vezmeme obvyklé sčítání a násobení $a\odot(x_1,x_2)^T = 
 ? tf #hkyhh | true
 V každém vektorovém prostoru platí $(-1)\cdot u = -u$.
 ! $u+(-1)u = (1+(-1))u = 0\cdot u = o$, takže $(-1)u$ je opačný vektor k $u$, a ten je jediný. Tedy $(-1)u = -u$.
+?! order #i2k8r
+Seřaďte důkaz, že nulový vektor ve vektorovém prostoru je jediný.
++ Nechť $o$ i $o'$ splňují $u+o = u$ a $u+o' = u$ pro všechna $u$.
++ Dosadíme $u = o'$ do první rovnosti: $o'+o = o'$.
++ Dosadíme $u = o$ do druhé: $o+o' = o$.
++ Z komutativity sčítání plyne $o = o+o' = o'+o = o'$.
+! Oba „nulové“ vektory se tedy rovnají: nulový vektor je jediný.
+? order #8k1ks
+Seřaďte důkaz, že $a\cdot o = o$ pro každý skalár $a$.
++ $o = o+o$, protože $o$ je nulový vektor.
++ Proto $a\cdot o = a\cdot(o+o) = a\cdot o+a\cdot o$.
++ K oběma stranám přičteme opačný vektor $-(a\cdot o)$.
++ Dostaneme $o = a\cdot o$.
+! Stejný postup jako u $0\cdot u = o$, jen s distributivitou vůči sčítání vektorů. Tedy $a\cdot o = o$.
+? tf #ol8j5 | true
+Je-li $a\ne0$ a $a\cdot u = o$, pak $u = o$.
+! Vynásobíme $\frac1a$: $u = \frac1a(a\cdot u) = \frac1a\cdot o = o$.
 
 ### Bonus: Tělesa a zbytkové třídy | P3 | bonus | #gsop1
 ~ noaxes; text=ℤₚ; size=0.8
@@ -1368,6 +1464,23 @@ Které podmnožiny $\mathrm{Mat}_{2\times2}(\mathbb R)$ jsou podprostory?
 ? tf #h4gu5 | false
 Množina vektorů $(x,y,z)^T\in\mathbb R^3$ s $x\ge0$ je podprostor $\mathbb R^3$.
 ! Není uzavřená na násobení: $(1,0,0)^T$ do ní patří, ale $(-1)\cdot(1,0,0)^T = (-1,0,0)^T$ ne.
+? order #5fu8t
+Seřaďte důkaz, že průnik dvou podprostorů $V$, $W$ je podprostor.
++ $o$ leží ve $V$ i ve $W$, takže průnik je neprázdný.
++ Leží-li $u$, $v$ v průniku, leží $u+v$ ve $V$ (podprostor) i ve $W$.
++ Leží-li $u$ v průniku, leží $au$ ve $V$ i ve $W$.
++ Průnik je tedy uzavřený na součty a násobky.
+! Splňuje obě podmínky z definice, a je to proto podprostor.
+? build #b2qbb
+Sestavte definici: neprázdná množina $V\subseteq U$ je podprostor, jestliže
++ $u, v\in V$
++ $\Rightarrow$
++ $u+v\in V$
++ a
++ $au\in V$
+- $u+v\notin V$
+- $\Leftarrow$
+! Podprostor je uzavřený na součty vektorů a na násobky skalárem (pro všechna $a\in K$, $u\in V$).
 
 ### Lineární obal | P4 | #5zli1
 ~ noaxes; poly=-0.7,-0.6,0.4,-0.3,0.8,0.6,-0.3,0.3,-0.7,-0.6; arrow=-0.7,-0.6,0.4,-0.3; arrow=-0.7,-0.6,-0.3,0.3
@@ -1499,6 +1612,23 @@ Vyjádřete $(3,5,7)^T = a(1,1,1)^T+b(1,2,3)^T$. Kolik je $a$?
 ? tf #ndhz6 | false
 Je-li $[u, v] = [u, w]$, je $v = w$.
 ! Pro $u = e_1$, $v = e_2$ a $w = 2e_2$ jsou oba obaly rovny rovině $[e_1, e_2]$, ale $v\ne w$.
+?! order #z1x5s
+Seřaďte důkaz, že lineární obal $[u_1,\dots,u_k]$ je podprostor.
++ Nechť $u = \sum a_iu_i$ a $v = \sum b_iu_i$ jsou dva prvky obalu.
++ Pak $u+v = \sum(a_i+b_i)u_i$ je opět lineární kombinace vektorů $u_i$.
++ A $cu = \sum(ca_i)u_i$ také.
++ Obal je tedy uzavřený na součty a násobky.
+! Navíc obsahuje $o = \sum0\cdot u_i$, je tedy neprázdný. Lineární obal je podprostor.
+? tf #2pbe9 | true
+$[u_1,\dots,u_k]$ je nejmenší podprostor, který obsahuje vektory $u_1,\dots,u_k$.
+! Obal je podprostor a obsahuje všechna $u_i$. Každý podprostor, který je obsahuje, obsahuje i všechny jejich kombinace, tedy celý obal.
+? mc #ezn13
+Kdy leží vektor $v$ v obalu $[u_1,\dots,u_k]$?
++ když má rovnice $x_1u_1+\dots+x_ku_k = v$ nějaké řešení
+- když má rovnice $x_1u_1+\dots+x_ku_k = v$ jediné řešení
+- když jsou $u_1,\dots,u_k$ nezávislé
+- když je $v$ nenulový
+! Leží v obalu, právě když je lineární kombinací $u_i$, a to znamená, že soustava pro koeficienty má aspoň jedno řešení.
 
 ## Lineární nezávislost a báze | P5 | #8icjh
 ### Lineární nezávislost | P5 | #2e7qw
@@ -1625,6 +1755,19 @@ Jsou-li vektory $u$, $v$, $w$ lineárně závislé, je $w$ lineární kombinací
 + $u = e_1$, $v = 2e_1$, $w = e_2$
 - $u = e_1$, $v = e_2$, $w = e_1+e_2$
 - $u = e_1$, $v = e_2$, $w = o$
+?! order #bf4c8
+Seřaďte důkaz: jsou-li $u_1,\dots,u_k$ nezávislé a $v\notin[u_1,\dots,u_k]$, jsou nezávislé i $u_1,\dots,u_k,v$.
++ Nechť $a_1u_1+\dots+a_ku_k+bv = o$.
++ Kdyby $b\ne0$, bylo by $v = -\frac1b(a_1u_1+\dots+a_ku_k)\in[u_1,\dots,u_k]$, spor.
++ Tedy $b = 0$ a zbude $a_1u_1+\dots+a_ku_k = o$.
++ Z nezávislosti $u_i$ plyne $a_1 = \dots = a_k = 0$.
+! Všechny koeficienty jsou nulové, takže rozšířený seznam je nezávislý.
+? tf #g4uvi | true
+Každý podseznam lineárně nezávislého seznamu je lineárně nezávislý.
+! Netriviální kombinace podseznamu rovná $o$ by doplněním nulovými koeficienty dala netriviální kombinaci celého seznamu. Podseznam je tedy nezávislý.
+? tf #1ivve | true
+Jediný vektor $u$ je lineárně nezávislý, právě když $u\ne o$.
+! Pro $u = o$ je $1\cdot o = o$ netriviální kombinace. Pro $u\ne o$ plyne z $au = o$, že $a = 0$. Tvrzení platí.
 
 ### Báze | P5 | #gg955
 ~ noaxes; arrow=-0.6,-0.6,0.7,-0.6; arrow=-0.6,-0.6,-0.6,0.7
@@ -1731,6 +1874,19 @@ Z každého konečného seznamu generátorů prostoru lze vybrat bázi.
 ? input #bwkm9 | 2
 Pro kolik hodnot $a\in\mathbb R$ netvoří vektory $(1,a)^T$, $(a,1)^T$ bázi $\mathbb R^2$?
 ! Bázi netvoří, právě když je $\det\begin{pmatrix}1&a\\a&1\end{pmatrix} = 1-a^2 = 0$, tedy pro $a = \pm1$. Takové hodnoty jsou $2$.
+? tf #ml7lv | true
+Báze je maximální nezávislý seznam: přidáme-li k ní libovolný vektor, vznikne závislý seznam.
+! Báze generuje celý prostor, takže přidaný vektor je kombinací vektorů báze. Seznam je proto závislý.
+? tf #8dynj | true
+Báze je minimální seznam generátorů: vynecháme-li z ní libovolný vektor, přestane generovat celý prostor.
+! Kdyby zbylé vektory generovaly, byl by vynechaný vektor jejich kombinací a báze by byla závislá. To je spor.
+? mc #fjbxt
+Proč má každý vektor v bázi právě jedny souřadnice?
++ existence plyne z toho, že báze generuje, jednoznačnost z její nezávislosti
+- existence i jednoznačnost plynou z nezávislosti
+- existence i jednoznačnost plynou z toho, že báze generuje
+- plyne to ze Steinitzovy věty
+! Báze generuje, takže $u = \sum a_iu_i$ pro nějaká $a_i$. Dvě vyjádření se odečtou na kombinaci rovnou $o$, a z nezávislosti jsou koeficienty stejné.
 
 ### Výběr báze z generátorů | P5 | #lzmud
 ~ noaxes; arrow=-0.6,-0.6,0.7,-0.3; arrow=-0.6,-0.6,-0.2,0.7; dash=-0.6,-0.6,0.5,0.4
@@ -1810,6 +1966,13 @@ Které vektory vybere algoritmus (vedoucí sloupce schodovitého tvaru) z $u_1 =
 - $u_1$, $u_2$, $u_3$
 - všechny čtyři
 ! Redukovaný schodovitý tvar je $\begin{pmatrix}1&0&-2&-1\\0&1&1&1\\0&0&0&0\end{pmatrix}$, vedoucí jedničky jsou v 1. a 2. sloupci. Vybere tedy $u_1$ a $u_2$; navíc z něj vidíme $u_3 = -2u_1+u_2$ a $u_4 = -u_1+u_2$.
+? mc #b5pg4
+Proč vektory ve sloupcích s vedoucími prvky (v původní matici) tvoří bázi obalu?
++ řádkové úpravy nemění lineární vztahy mezi sloupci, a ve schodovitém tvaru jsou vedoucí sloupce nezávislé a ostatní jsou jejich kombinace
+- řádkové úpravy nemění sloupce matice
+- vedoucí sloupce jsou vždy vektory standardní báze
+- schodovitý tvar je určen jednoznačně
+! Řádkové úpravy jsou násobení regulární maticí zleva, a ta zachovává, které kombinace sloupců jsou nulové. Co platí pro sloupce schodovitého tvaru, platí i pro původní vektory.
 
 ## Dimenze a souřadnice | P6 | #r3msy
 ### Steinitzova věta a dimenze | P6 | #rfsv7
@@ -1901,6 +2064,12 @@ Jaká je dimenze prostoru matic $3\times3$, které komutují s $\mathrm{diag}(1,
 ? tf #htf8r | false
 Je-li $\dim V = n$, je každý seznam $n$ vektorů z $V$ bází $V$.
 ! Seznam musí být navíc nezávislý (pak už generuje). Například $n$ kopií téhož vektoru bází není.
+?! tf #t8ksx | true
+Je-li $V$ podprostor konečněrozměrného prostoru $U$ a $\dim V = \dim U$, je $V = U$.
+! Báze $V$ je nezávislý seznam v $U$ s $\dim U$ prvky. Kdyby negenerovala $U$, šla by doplnit na delší nezávislý seznam, což Steinitzova věta zakazuje. Generuje tedy $U$, a $V = U$.
+? tf #gq43p | true
+Dvě báze téhož konečněrozměrného prostoru mají stejný počet prvků.
+! Podle Steinitzovy věty je nezávislý seznam nejvýš tak dlouhý jako seznam generátorů. Obě báze jsou nezávislé i generující, takže $k\le n$ i $n\le k$. Mají tedy stejný počet prvků.
 
 ### Souřadnice | P6 | #6jy38
 ~ noaxes; arrow=-0.7,-0.7,0.1,-0.3; arrow=-0.7,-0.7,-0.4,0.1; dash=0.1,-0.3,0.4,0.5; dash=-0.4,0.1,0.4,0.5; pt=0.4,0.5
@@ -1993,6 +2162,9 @@ Jaká je první souřadnice polynomu $2x^2+3x+1$ v bázi $(1,\ 1+x,\ 1+x+x^2)$?
 ? tf #x8d7u | true
 Zobrazení, které vektoru přiřadí jeho souřadnice v pevné bázi $\alpha$, je lineární.
 ! Je-li $u = \sum a_iu_i$ a $v = \sum b_iu_i$, je $u+v = \sum(a_i+b_i)u_i$ a $cu = \sum ca_iu_i$. Souřadnice součtu a násobku jsou tedy součet a násobek souřadnic.
+? tf #jpoob | true
+Je-li $\alpha$ báze $n$-rozměrného prostoru $U$ nad $K$, je zobrazení $u\mapsto(u)_\alpha$ izomorfismus $U\to K^n$.
+! Zobrazení je lineární, prosté (souřadnice jsou jednoznačné) a na (každá $n$-tice je souřadnicemi nějakého vektoru). Je to tedy izomorfismus.
 
 ### Průnik a součet podprostorů | P6 | #wohv5
 ~ f=0.6*x; f=-1.2*x; pt=0,0
@@ -2076,6 +2248,15 @@ Dva podprostory dimenze $3$ v $\mathbb R^5$ mají vždy nenulový společný vek
 ? tf #r9eq7 | true
 Pro $U = [(1,0,0)^T, (0,1,0)^T]$ a $V = [(1,1,1)^T]$ platí $\mathbb R^3 = U\oplus V$.
 ! $(1,1,1)^T$ nemá nulovou třetí složku, takže $U\cap V = \{o\}$, a $\dim(U+V) = 2+1 = 3$. Součet je přímý a je to celé $\mathbb R^3$.
+? tf #c5f7q | false
+Pro každé dva podprostory platí $\dim(V+W) = \dim V+\dim W$.
+! Rovnost platí jen pro $V\cap W = \{o\}$. Obecně se odečítá $\dim(V\cap W)$: pro $V = W$ (rovina) vyjde $\dim(V+W) = 2$, ne $4$.
++ $V = W = [e_1, e_2]$ v $\mathbb R^3$
+- $V = [e_1]$, $W = [e_2]$ v $\mathbb R^3$
+- $V = [e_1, e_2]$, $W = [e_3]$ v $\mathbb R^3$
+? tf #hapj6 | true
+Součet $V+W$ je přímý ($V\cap W = \{o\}$), právě když lze každý vektor z $V+W$ napsat jako $v+w$ s $v\in V$, $w\in W$ jediným způsobem.
+! Z $v+w = v'+w'$ plyne $v-v' = w'-w\in V\cap W$. Je-li průnik nulový, jsou rozklady stejné; je-li v průniku $u\ne o$, pak $u+(-u) = o+o$ jsou dva různé rozklady nuly.
 
 ### Bonus: Fibonacci a prostory posloupností | P6 | bonus | #j0m63
 ~ noaxes; text=Fₙ; size=0.8
@@ -2247,6 +2428,15 @@ Která zobrazení definovaná na $\mathrm{Mat}_{2\times2}(\mathbb R)$ jsou line�
 ? tf #9yl7n | false
 Zobrazení $\varphi\colon\mathbb R^2\to\mathbb R^2$, $\varphi(x,y) = (xy,\ x)^T$, je lineární.
 ! $\varphi(2(1,1)) = (4,2)^T$, ale $2\varphi(1,1) = (2,2)^T$. Lineární tedy není.
+? order #omzmc
+Seřaďte důkaz, že lineární zobrazení zobrazí nulový vektor na nulový.
++ Platí $o = 0\cdot o$.
++ Z linearity $\varphi(o) = \varphi(0\cdot o) = 0\cdot\varphi(o)$.
++ A $0\cdot\varphi(o) = o$.
+! Tedy $\varphi(o) = o$. Proto zobrazení, které počátek posune, lineární není.
+? tf #qcai8 | true
+Lineární zobrazení zobrazí každý podprostor na podprostor.
+! Obraz $\varphi(V)$ obsahuje $\varphi(o) = o$ a s $\varphi(u)$, $\varphi(v)$ obsahuje i $\varphi(u)+\varphi(v) = \varphi(u+v)$ a $a\varphi(u) = \varphi(au)$. Je to tedy podprostor.
 
 ### Jádro a obraz | P6–P7 | #k5ilf
 ~ noaxes; text=ker; size=0.6
@@ -2357,6 +2547,16 @@ Lineární zobrazení $\varphi\colon\mathbb R^n\to\mathbb R^n$ je prosté, práv
 ? input #wskh6 | 3
 Jakou dimenzi má obraz zobrazení $\mathbb R_3[x]\to\mathbb R_3[x]$, $p(x)\mapsto p(x+1)-p(x)$?
 ! Rozdíl snižuje stupeň o $1$ a konstanty jdou na nulu, takže jádro jsou konstanty (dimenze $1$). Obraz má dimenzi $4-1 = 3$; je to celé $\mathbb R_2[x]$.
+?! order #y3n5z
+Seřaďte důkaz věty $\dim\ker\varphi+\dim\operatorname{im}\varphi = \dim U$.
++ Zvolíme bázi $u_1,\dots,u_k$ jádra a doplníme ji na bázi $u_1,\dots,u_n$ prostoru $U$.
++ Obraz generují vektory $\varphi(u_{k+1}),\dots,\varphi(u_n)$, protože $\varphi(u_i) = o$ pro $i\le k$.
++ Je-li $\sum_{i>k}a_i\varphi(u_i) = o$, leží $\sum_{i>k}a_iu_i$ v jádře, je tedy kombinací $u_1,\dots,u_k$.
++ Z nezávislosti $u_1,\dots,u_n$ plyne $a_i = 0$, takže $\varphi(u_{k+1}),\dots,\varphi(u_n)$ tvoří bázi obrazu.
+! Obraz má tedy dimenzi $n-k$, a proto $$\dim\ker\varphi+\dim\operatorname{im}\varphi = k+(n-k) = \dim U.$$
+? tf #ituuy | false
+Existuje lineární zobrazení $\mathbb R^4\to\mathbb R^2$, jehož jádro má dimenzi $1$.
+! $\dim\ker\varphi = 4-\dim\operatorname{im}\varphi\ge4-2 = 2$. Jádro dimenze $1$ mít nemůže.
 
 ### Matice lineárního zobrazení | P7 | #r1qeb
 ~ noaxes; text=[φ]; size=0.65
@@ -2456,6 +2656,9 @@ Jaká je matice zobrazení $(x_1, x_2)^T\mapsto(x_2, x_1)^T$ ve standardní báz
 ? input #yxa1e | -1
 Jaký prvek je na místě $(2,3)$ matice zobrazení $\varphi(x,y,z) = (x+y,\ y-z)^T$ ve standardních bázích?
 ! Sloupce jsou obrazy $e_1$, $e_2$, $e_3$: $\varphi(e_3) = (0,-1)^T$. Matice je $\begin{pmatrix}1&1&0\\0&1&-1\end{pmatrix}$ a prvek na místě $(2,3)$ je $-1$.
+? tf #z6h0j | true
+Hodnost matice lineárního zobrazení (v libovolných bázích) je rovna dimenzi jeho obrazu.
+! Sloupce matice jsou souřadnice obrazů vektorů báze, které generují obraz. Souřadnicový izomorfismus zachovává dimenzi, takže hodnost matice je $\dim\operatorname{im}\varphi$.
 
 ## Matice přechodu | P8 | #yxan7
 ### Skládání a inverze | P8 | #pgg5z
@@ -2532,6 +2735,12 @@ Pro $\varphi(x) = \begin{pmatrix}1&2\\0&1\end{pmatrix}x$ určete prvek na míst�
 ? tf #2rhrc | true
 Lineární zobrazení mezi prostory stejné konečné dimenze je izomorfismus, právě když je jeho matice v libovolných bázích regulární.
 ! Matice inverzního zobrazení je inverzní maticí, takže z izomorfismu plyne regularita. Obráceně regulární matice dává inverzní zobrazení. Tvrzení platí.
+? tf #xk33d | true
+Inverzní zobrazení k lineárnímu izomorfismu je lineární.
+! Pro $v = \varphi(u)$ a $v' = \varphi(u')$ je $\varphi(u+u') = v+v'$, tedy $\varphi^{-1}(v+v') = u+u' = \varphi^{-1}(v)+\varphi^{-1}(v')$; stejně pro násobky. Inverze je lineární.
+? tf #gphex | true
+Složení dvou prostých lineárních zobrazení je prosté.
+! Je-li $\psi(\varphi(u)) = o$, plyne z prostoty $\psi$, že $\varphi(u) = o$, a z prostoty $\varphi$, že $u = o$. Jádro složení je nulové, takže je prosté.
 
 ### Matice přechodu | P8 | #arkqa
 ~ noaxes; arrow=-0.7,-0.7,0.6,-0.7; arrow=-0.7,-0.7,-0.7,0.6; arrow=-0.7,-0.7,0.4,-0.1; arrow=-0.7,-0.7,-0.2,0.5
@@ -2628,6 +2837,9 @@ V $\mathbb R^2$ je $\alpha = \big((1,1)^T, (1,-1)^T\big)$ a $\varepsilon$ standa
 ? tf #dj34d | true
 Matice přechodu $(\mathrm{id})_{\alpha,\beta}$ je vždy regulární.
 ! Její inverzí je $(\mathrm{id})_{\beta,\alpha}$, protože jejich součin je matice identity v jedné bázi, tedy $E$. Je proto regulární.
+? tf #ajq5b | true
+Matice $A$ a $P^{-1}AP$ (pro regulární $P$) mají stejnou hodnost.
+! Násobení regulární maticí zleva ani zprava hodnost nemění. Navíc obě matice popisují totéž zobrazení v různých bázích, a hodnost je dimenze jeho obrazu.
 
 ## Determinanty | P8–P9 | #xdhl9
 ### Determinant z vlastností | P8 | #kh66k
@@ -2732,6 +2944,16 @@ Matice $A$ tvaru $3\times3$ má $\det A = 5$. Matice $B$ vznikne tak, že k druh
 ? tf #fuovj | true
 Má-li čtvercová matice lineárně závislé řádky, je její determinant nulový.
 ! Některý řádek je kombinací ostatních; odečtením této kombinace vznikne nulový řádek a determinant se nezmění. Determinant s nulovým řádkem je $0$.
+?! order #59ei4
+Seřaďte důkaz, že matice se dvěma stejnými řádky má nulový determinant (nad $\mathbb R$).
++ Vyměníme ty dva stejné řádky.
++ Matice se tím nezmění.
++ Výměna dvou řádků ale mění znaménko determinantu: $\det A = -\det A$.
++ Proto $2\det A = 0$.
+! Nad $\mathbb R$ z toho plyne $\det A = 0$.
+? tf #yntyx | true
+Determinant je lineární v každém řádku zvlášť (při pevných ostatních řádcích).
+! To je jedna z určujících vlastností determinantu: řádek $u+v$ dá součet determinantů s řádky $u$ a $v$ a řádek $cu$ dá $c$-násobek. Tvrzení platí.
 
 ### Počítání determinantů | P9 | #a15xz
 ~ noaxes; text=|A|; size=0.7
@@ -2894,6 +3116,12 @@ Spočtěte $\det\begin{pmatrix}3&0&0&2\\1&2&0&0\\0&1&4&0\\0&0&1&5\end{pmatrix}$.
 ? input #9yulq | -12
 Jaký je algebraický doplněk $\tilde a_{21}$ matice $\begin{pmatrix}1&2&3\\0&4&5\\1&0&6\end{pmatrix}$?
 ! Vyškrtneme 2. řádek a 1. sloupec: $\det\begin{pmatrix}2&3\\0&6\end{pmatrix} = 12$, se znaménkem $(-1)^{2+1} = -1$. Doplněk je $-12$.
+? tf #ar0s2 | true
+Pro $i\ne k$ platí $\sum_ja_{ij}\tilde a_{kj} = 0$ („rozvoj s cizími doplňky“).
+! Součet je Laplaceův rozvoj podle $k$-tého řádku matice, ve které je $k$-tý řádek nahrazen $i$-tým. Ta má dva stejné řádky, takže její determinant, a tedy i součet, je $0$.
+? tf #rem8q | true
+Pro matici algebraických doplňků platí $A\cdot\operatorname{adj}A = \det A\cdot E$, kde $(\operatorname{adj}A)_{jk} = \tilde a_{kj}$.
+! Prvek $(i,k)$ součinu je $\sum_ja_{ij}\tilde a_{kj}$: pro $i = k$ je to rozvoj $\det A$, pro $i\ne k$ rozvoj s cizími doplňky, tedy $0$. Součin je $\det A\cdot E$.
 
 ### Determinant součinu a inverze | P9 | #buuoi
 ~ noaxes; text=|AB|; size=0.55
@@ -2965,6 +3193,16 @@ Pro čtvercovou matici $A$ platí $\det(A+E) = \det A+1$.
 ! Pro $A = E_2$ je $\det(2E_2) = 4$, ale $\det E_2+1 = 2$. Determinant není aditivní.
 + $A = E_2$
 - $A = 0$
+? order #d05r5
+Seřaďte důkaz, že pro regulární $A$ je $\det A^{-1} = \dfrac1{\det A}$.
++ Platí $AA^{-1} = E$.
++ Podle věty o determinantu součinu je $\det(AA^{-1}) = \det A\cdot\det A^{-1}$.
++ A $\det E = 1$.
++ Tedy $\det A\cdot\det A^{-1} = 1$.
+! Odtud $\det A\ne0$ a $\det A^{-1} = \frac1{\det A}$.
+? tf #1lx72 | true
+Čtvercová matice je regulární, právě když má nenulový determinant.
+! Regulární matice má $\det A\cdot\det A^{-1} = 1$, tedy $\det A\ne0$. Při $\det A\ne0$ dává vzorec s algebraickými doplňky inverzi $\frac1{\det A}\operatorname{adj}A$. Tvrzení platí.
 
 ### Bonus: Permutace a vzorec pro determinant | P9 | bonus | #vz9y4
 ~ noaxes; text=σ; size=0.9
@@ -3075,6 +3313,13 @@ Cramerovým pravidlem řešte soustavu $x+2y+z = 7$, $2x-y+z = 6$, $x+y-z = 0$. 
 ? tf #belkp | true
 Má-li celočíselná matice $A$ determinant $\pm1$, má soustava $Ax = b$ s celočíselným $b$ celočíselné řešení.
 ! Podle Cramerova pravidla je $x_i = \frac{\det A_i}{\det A}$ a $\det A_i$ je celé číslo. Dělením $\pm1$ zůstane celé.
+? order #2y33b
+Seřaďte odvození Cramerova pravidla pro regulární $A$.
++ Řešení soustavy je $x = A^{-1}b$.
++ Podle vzorce s doplňky je $(A^{-1})_{ij} = \frac{\tilde a_{ji}}{\det A}$.
++ Tedy $x_i = \frac1{\det A}\sum_j\tilde a_{ji}b_j$.
++ Součet je Laplaceův rozvoj podle $i$-tého sloupce matice $A_i$ (s $b$ místo $i$-tého sloupce).
+! Proto $x_i = \frac{\det A_i}{\det A}$.
 
 ### Orientace, obsah a objem | P10 | #g78tp
 ~ noaxes; poly=-0.7,-0.6,0.3,-0.4,0.8,0.5,-0.2,0.3,-0.7,-0.6
@@ -3173,6 +3418,9 @@ Jaký objem má rovnoběžnostěn určený vektory $(1,1,0)^T$, $(0,1,1)^T$, $(1
 ? input #jvcb7 | 11/2; 5.5
 Jaký obsah má trojúhelník s vrcholy $[1,1]$, $[4,2]$, $[2,5]$?
 ! Strany z vrcholu $[1,1]$ jsou $(3,1)^T$ a $(1,4)^T$; $\det\begin{pmatrix}3&1\\1&4\end{pmatrix} = 11$. Obsah trojúhelníku je polovina: $\frac{11}2$.
+? tf #px5ik | true
+Lineární zobrazení s maticí se záporným determinantem převede každou kladně orientovanou bázi na záporně orientovanou.
+! Determinant matice obrazů báze je součin $\det A$ a determinantu původní báze. Záporný $\det A$ tedy znaménko obrátí.
 
 ### Vektorový součin | P10 | #hmknj
 ~ noaxes; arrow=-0.5,-0.5,0.7,-0.5; arrow=-0.5,-0.5,0.1,-0.1; arrow=-0.5,-0.5,-0.5,0.8
@@ -3252,6 +3500,12 @@ Jaká je první složka vektoru $(1,0,2)^T\times(0,1,3)^T$?
 ? input #yze3p | √3; 1.7321
 Jaký obsah má rovnoběžník určený vektory $(1,1,0)^T$ a $(1,0,1)^T$?
 ! $(1,1,0)^T\times(1,0,1)^T = (1,-1,-1)^T$ a obsah je jeho délka $\sqrt3$.
+? tf #zfopk | true
+Vektor $u\times v$ je kolmý k $u$ i k $v$.
+! $u\cdot(u\times v)$ je determinant matice se dvěma stejnými řádky $u$, $u$, $v$, tedy $0$; stejně pro $v$. Vektor je kolmý k oběma.
+? tf #xidc9 | true
+Pro $u, v, w\in\mathbb R^3$ platí $u\cdot(v\times w) = \det(u\ v\ w)$.
+! Složky $v\times w$ jsou algebraické doplňky prvků prvního sloupce matice $(u\ v\ w)$, takže $u\cdot(v\times w)$ je rozvoj jejího determinantu podle prvního sloupce.
 
 ## Hodnost a soustavy | P11 | #ib8u2
 ### Hodnost matice | P11 | #ndqhh
@@ -3334,6 +3588,16 @@ Pro která $a$ má matice $\begin{pmatrix}1&1&1\\1&2&a\\1&4&a^2\end{pmatrix}$ ho
 ? tf #01plt | true
 Pro každou reálnou matici $A$ platí $h(A^TA) = h(A)$.
 ! Je-li $A^TAx = o$, pak $x^TA^TAx = \|Ax\|^2 = 0$, tedy $Ax = o$. Obě matice mají stejné jádro a stejný počet sloupců, takže i stejnou hodnost.
+? tf #u00ss | true
+Řádkové úpravy nemění hodnost matice.
+! Úpravy nemění lineární obal řádků (každý nový řádek je kombinací starých a naopak), a hodnost je jeho dimenze.
+? mc #lwx94
+Co je hodnost matice $A$?
++ maximální počet lineárně nezávislých řádků, tedy dimenze obalu řádků
+- počet nenulových prvků matice
+- počet řádků matice
+- počet nenulových prvků na diagonále
+! Hodnost je dimenze obalu řádků. Spočteme ji jako počet nenulových řádků schodovitého tvaru; je rovna i dimenzi obalu sloupců.
 
 ### Věty o soustavách | P11 | #jwr8h
 ~ noaxes; text=Ax=b; size=0.45
@@ -3433,6 +3697,13 @@ Má-li soustava $Ax = b$ pro jedno $b$ právě jedno řešení, má právě jedn
 ! Pro $A = \begin{pmatrix}1\\1\end{pmatrix}$ (rovnice $x = b_1$, $x = b_2$) má soustava pro $b = (1,1)^T$ jediné řešení, ale pro $b = (1,2)^T$ žádné.
 + $A = \begin{pmatrix}1\\1\end{pmatrix}$
 - $A = E_2$
+? mc #vsmew
+Frobeniova věta: soustava $Ax = b$ má řešení, právě když
++ $h(A) = h(A\,|\,b)$
+- $h(A)<h(A\,|\,b)$
+- $\det A\ne0$
+- $h(A)$ je rovna počtu neznámých
+! Přidání sloupce pravých stran nesmí zvýšit hodnost, tedy $b$ musí ležet v obalu sloupců $A$. Podmínka zní $h(A) = h(A\,|\,b)$.
 
 ### Bonus: Afinní podprostory | P11 | bonus | #ocqo9
 ~ fd=0.5*x; f=0.5*x+0.5; pt=0,0
@@ -3702,3 +3973,6 @@ Jaký je vztah mezi hodností matice $A$ a matice $A^T$?
 ? input #0rs1k | 2
 Matice $A$ tvaru $4\times4$ splňuje $A^2 = 0$. Jaká je největší možná hodnost $A$?
 ! Z $A^2 = 0$ plyne $\operatorname{im}A\subseteq\ker A$, tedy $h(A)\le4-h(A)$ a $h(A)\le2$. Hodnosti $2$ dosáhne například matice s $a_{13} = a_{24} = 1$ a jinak nulami.
+? tf #0sop8 | false
+Existuje matice $A$ tvaru $3\times3$ s $A^2 = 0$ a hodností $2$.
+! Z $A^2 = 0$ plyne $\operatorname{im}A\subseteq\ker A$, tedy $h(A)\le3-h(A)$ a $h(A)\le1$. Hodnost $2$ mít nemůže.
