@@ -73,8 +73,8 @@ from its `course.json`. The file formats are in [courses/README.md](courses/READ
 ## Home
 
 The app opens on **Home** (the first tab; `#learn` and `#feed` in the address open those tabs
-directly). At the top are the cusp from the app icon, the name and the tagline *bod, kde se
-potkávají hry a matematika* ("the point where games and math meet"). Below it is the next lesson of the current course,
+directly). At the top are the cusp from the app icon, the name and the tagline *studentský
+open-source projekt* ("an open-source student project"). Below it is the next lesson of the current course,
 which starts with one tap, then today's review, streak, XP and finished lessons, and a three-line
 "how it works" (Learn, Feed, review). A new student sees the explanation and the first lesson first.
 Everything is in `app/js/home.js`, `app/html/home.html` and `app/css/home.css`; the texts (`home`,
