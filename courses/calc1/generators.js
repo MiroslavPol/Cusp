@@ -89,6 +89,36 @@ CUSP_GEN.define("calc1", function (K, G) {
     return inp(P("Pro $f(x) = (" + poly([[a, 1], [b, 0]]) + ")^{" + n + "}$ spočtěte $f'(0)$."), String(v),
       "$f'(x) = " + n + "(" + poly([[a, 1], [b, 0]]) + ")^{" + (n - 1) + "}\\cdot " + a + "$, v nule $" + n + "\\cdot " + b + "^{" + (n - 1) + "}\\cdot " + a + " = " + v + "$.");
   };
+  // a sum of two functions from the table of derivatives, typed as a formula
+  G.deriv_table = function () {
+    function term(c, body) { return (c === 1 ? "" : c === -1 ? "-" : String(c)) + body; }
+    function frac(c, den) { return (c < 0 ? "-" : "") + "\\frac{" + Math.abs(c) + "}{" + den + "}"; }
+    function join(list) { return list.map(function (s, i) { return i === 0 ? s : s.charAt(0) === "-" ? " - " + s.slice(1) : " + " + s; }).join(""); }
+    function make(k) {
+      var c = nz(-5, 5), m = ri(2, 6), b = ri(2, 5);
+      if (k === 0) return { f: term(c, "x^{" + m + "}"), d: term(c * m, m === 2 ? "x" : "x^{" + (m - 1) + "}"), s: "(" + c * m + ")*x^" + (m - 1) };
+      if (k === 1) return { f: term(c, "e^x"), d: term(c, "e^x"), s: "(" + c + ")*e^x" };
+      if (k === 2) return { f: term(c, "\\sin x"), d: term(c, "\\cos x"), s: "(" + c + ")*cos(x)" };
+      if (k === 3) return { f: term(c, "\\cos x"), d: term(-c, "\\sin x"), s: "(" + (-c) + ")*sin(x)" };
+      if (k === 4) return { f: term(c, "\\ln x"), d: frac(c, "x"), s: "(" + c + ")/x" };
+      if (k === 5) return { f: term(c, "\\operatorname{arctg}x"), d: frac(c, "1+x^2"), s: "(" + c + ")/(1+x^2)" };
+      if (k === 6) return { f: frac(c, "x"), d: frac(-c, "x^2"), s: "(" + (-c) + ")/x^2" };
+      return { f: b + "^x", d: b + "^x\\ln " + b, s: b + "^x*ln(" + b + ")" };
+    }
+    var i = ri(0, 7), j;
+    do { j = ri(0, 7); } while (j === i);
+    var A = make(i), B = make(j), k0 = ri(-9, 9), D = join([A.d, B.d]);
+    return expr(P("Zderivujte $" + join([A.f, B.f]) + (k0 ? sgn(k0) : "") + "$."), A.s + " + " + B.s,
+      "Derivujeme člen po členu podle tabulky, konstanta se vytýká" + (k0 ? " a derivace konstanty je $0$" : "") + ": $" + D + "$.", [], "$" + D + "$");
+  };
+  // velocity and acceleration of a point moving along a line
+  G.motion = function () {
+    var a = ri(1, 2), b = nz(-6, 6), c = ri(-5, 9), t0 = ri(1, 4), askV = Math.random() < 0.5;
+    var v = 3 * a * t0 * t0 + 2 * b * t0 + c, acc = 6 * a * t0 + 2 * b, vt = poly([[3 * a, 2], [2 * b, 1], [c, 0]], "t");
+    return inp(P("Bod se pohybuje po přímce a v čase $t$ sekund je v poloze $s(t) = " + poly([[a, 3], [b, 2], [c, 1]], "t") + "$ metrů. " + (askV ? "Jaká je jeho rychlost (m/s)" : "Jaké je jeho zrychlení (m/s²)") + " v čase $t = " + t0 + "$?"), String(askV ? v : acc),
+      askV ? "Rychlost je první derivace polohy: $v(t) = s'(t) = " + vt + "$, tedy $v(" + t0 + ") = " + v + "$."
+        : "Zrychlení je druhá derivace polohy: $v(t) = " + vt + "$ a $a(t) = v'(t) = " + poly([[6 * a, 1], [2 * b, 0]], "t") + "$, tedy $a(" + t0 + ") = " + acc + "$.");
+  };
 
   // ---- Věty o střední hodnotě a průběh ------------------------------------------
   G.lagrange_c = function () {

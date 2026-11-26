@@ -3071,6 +3071,132 @@ Jaký úhel (ve stupních) svírá tečna ke grafu $y = x^2$ v bodě $\left[\fra
 Jaká je směrnice sečny grafu $y = x^2$ procházející body grafu s $x = 1$ a $x = 3$?
 ! Směrnice sečny je $\frac{f(3)-f(1)}{3-1} = \frac{9-1}2 = 4$. Pro $x\to1$ by se blížila směrnici tečny $f'(1) = 2$.
 
+### Derivace elementárních funkcí | P10 | #nvfta
+~ f=exp(1.8*x)/3-0.6; tan=0
+> Tabulka derivací
+$$(c)' = 0,\qquad (x^a)' = ax^{a-1},$$
+$$(e^x)' = e^x,\qquad (a^x)' = a^x\ln a,$$
+$$(\ln x)' = \frac1x,\qquad (\log_a x)' = \frac{1}{x\ln a},$$
+$$(\sin x)' = \cos x,\qquad (\cos x)' = -\sin x,$$
+$$(\operatorname{tg}x)' = \frac{1}{\cos^2x},\qquad (\operatorname{cotg}x)' = -\frac{1}{\sin^2x},$$
+$$(\arcsin x)' = \frac{1}{\sqrt{1-x^2}},\qquad (\arccos x)' = -\frac{1}{\sqrt{1-x^2}},$$
+$$(\operatorname{arctg}x)' = \frac{1}{1+x^2},\qquad (\operatorname{arccotg}x)' = -\frac{1}{1+x^2}.$$
+Hyperbolické funkce: $(\sinh x)' = \cosh x$, $(\cosh x)' = \sinh x$. Vzorce platí všude, kde jsou funkce definované.
+> Součet a násobek
+Derivace součtu je součet derivací a konstanta se vytýká: $(af+bg)' = af'+bg'$. To stačí na každý polynom a každý součet funkcí z tabulky. Součin, podíl a složenou funkci derivujeme podle pravidel z dalších lekcí.
+> Odkud se vzorce berou
+Tabulku používáme hned, odvozovat ji budeme postupně. $(e^x)'$ plyne z definice a speciální limity $\frac{e^h-1}{h}\to1$, $(\sin x)'$ z $\frac{\sin h}{h}\to1$. Vzorce pro $\ln$, $\arcsin$ a $\operatorname{arctg}$ odvodíme v lekci o derivaci inverzní funkce.
+? input #7o4hh | ln 2; 0.6931
+Spočtěte derivaci $2^x$ v bodě $0$.
+! $(a^x)' = a^x\ln a$, v nule tedy $\ln 2\approx0{,}693$.
+@ x=-3..2.5; y=-0.5..5; f=2^x; tan=2^x,0; pt=0,1
+? mc #nvc2w
+$(\cosh x)' = $
++ $\sinh x$
+- $-\sinh x$
+- $\cosh x$
+- $\frac{1}{\cosh^2x}$
+! Na rozdíl od $(\cos x)' = -\sin x$ tu znaménko minus není: z $\cosh x = \frac{e^x+e^{-x}}2$ plyne $(\cosh x)' = \frac{e^x-e^{-x}}2 = \sinh x$.
+? input #4me86 | -1
+Spočtěte derivaci $\operatorname{arccotg}x$ v bodě $0$.
+! $(\operatorname{arccotg}x)' = -\frac{1}{1+x^2}$.
+? input #aqr6f | 2
+Spočtěte $(\operatorname{tg}x)'$ v bodě $\frac\pi4$.
+! $\cos^2\frac\pi4 = \frac12$.
+@ x=-1.4..1.4; y=-3..4; f=tan(x); tan=tan(x),pi/4; pt=pi/4,1
+? expr #on85j | 3^x ln 3
+Zderivujte $3^x$.
+! $(a^x)' = a^x\ln a$.
+? expr #a5q9t | 1/(x ln 2)
+Zderivujte $\log_2 x$.
+! $\log_2x = \frac{\ln x}{\ln 2}$.
+? expr #9kqbo | 3/2 sqrt(x)
+Zderivujte $x^{3/2}$.
+! $\frac32x^{1/2}$.
+? expr #4jo2p | 1/cos^2 x | dom=-1..1
+Zderivujte $\operatorname{tg}x$.
+! Je to vzorec z tabulky. Odvodíme ho z pravidla pro podíl: $\left(\frac{\sin x}{\cos x}\right)' = \frac{\cos^2x+\sin^2x}{\cos^2x} = \frac1{\cos^2x}$.
+?! match #7ykkz
+Přiřaďte funkcím jejich derivace.
++ $\sin x$ :: $\cos x$
++ $\cos x$ :: $-\sin x$
++ $\ln x$ :: $\dfrac1x$
++ $\operatorname{arctg} x$ :: $\dfrac{1}{1+x^2}$
+- $-\cos x$
+! Pozor na znaménko: $(\cos x)' = -\sin x$, ale $(\sin x)' = \cos x$. Výraz $-\cos x$ je derivace funkce $-\sin x$, ta tu není.
+? input #77dwe | 1/ln 10; 0.4343
+Spočtěte derivaci $\log_{10}x$ v bodě $1$.
+! $(\log_{10}x)' = \frac1{x\ln10}$, v bodě $1$ je to $\frac1{\ln10}$.
+?! tf #xjeea | false
+$(2^x)' = x\cdot2^{x-1}$.
+! Vzorec $(x^a)' = ax^{a-1}$ platí pro proměnný základ a pevný exponent. U $2^x$ je proměnná v exponentu, takže $(2^x)' = 2^x\ln2$. Například v nule vyjde $\ln2$, a ne $0\cdot2^{-1} = 0$.
+? expr #32m2w | 5x^4 + 5^x ln 5
+Zderivujte $x^5+5^x$.
+= $5x^4+5^x\ln5$
+! První člen je mocnina, druhý exponenciála: $(x^5)' = 5x^4$ a $(5^x)' = 5^x\ln5$, tedy derivace je $5x^4+5^x\ln5$.
+? expr #p09kt | 8x - 1
+Zderivujte $4x^2-x+1$.
+! Člen po členu: $(4x^2)' = 8x$, $(-x)' = -1$ a $(1)' = 0$, tedy derivace je $8x-1$.
+? expr #pqu99 | 2 + cos x
+Zderivujte $2x+\sin x-5$.
+! $(2x)' = 2$, $(\sin x)' = \cos x$ a derivace konstanty je $0$, tedy derivace je $2+\cos x$.
+?! expr #937rw | 1/cos(x)^2 + 5/sqrt(1-x^2) | dom=-0.9..0.9
+Zderivujte $\operatorname{tg}x+5\arcsin x$.
+= $\dfrac1{\cos^2x}+\dfrac5{\sqrt{1-x^2}}$
+! Podle tabulky je $(\operatorname{tg}x)' = \frac1{\cos^2x}$ a $(\arcsin x)' = \frac1{\sqrt{1-x^2}}$, tedy derivace je $\frac1{\cos^2x}+\frac5{\sqrt{1-x^2}}$.
+? expr #nd3md | -ln(5)/5^x
+Zderivujte $\left(\dfrac15\right)^x$.
+= $-\dfrac{\ln5}{5^x}$
+! $(a^x)' = a^x\ln a$ s $a = \frac15$ a $\ln\frac15 = -\ln5$, tedy derivace je $-\frac{\ln5}{5^x}$.
+? expr #s5t2b | 7/4 x^(3/4)
+Zderivujte $\sqrt[4]{x^7}$.
+= $\dfrac74\sqrt[4]{x^3}$
+! $\sqrt[4]{x^7} = x^{7/4}$, takže $\left(x^{7/4}\right)' = \frac74x^{3/4} = \frac74\sqrt[4]{x^3}$.
+? expr #8iq96 | 2 sin x + 4 e^x + 7/3 x^6
+Zderivujte $-2\cos x+4e^x+\dfrac{x^7}3$.
+= $2\sin x+4e^x+\dfrac73x^6$
+! $(-2\cos x)' = 2\sin x$, $(4e^x)' = 4e^x$ a $\left(\frac{x^7}3\right)' = \frac73x^6$, tedy derivace je $2\sin x+4e^x+\frac73x^6$.
+? mc #719lp
+$(\operatorname{cotg}x)' = $
++ $-\dfrac{1}{\sin^2x}$
+- $\dfrac{1}{\sin^2x}$
+- $-\dfrac{1}{\cos^2x}$
+- $-\operatorname{tg}x$
+! $\operatorname{cotg}x = \frac{\cos x}{\sin x}$ a podle pravidla pro podíl je derivace $\frac{-\sin^2x-\cos^2x}{\sin^2x} = -\frac1{\sin^2x}$.
+? input #d3haa | -2
+Spočtěte derivaci $\arccos x$ v bodě $\frac{\sqrt3}2$.
+! $(\arccos x)' = -\frac1{\sqrt{1-x^2}}$ a $1-\frac34 = \frac14$, tedy derivace je $-\frac1{1/2} = -2$.
+? input #k2uvs | 1/2; 0.5
+Ve kterém bodě (určete $x$) má graf $y = \ln x$ tečnu se směrnicí $2$?
+! Směrnice tečny je $(\ln x)' = \frac1x$. Z $\frac1x = 2$ plyne $x = \frac12$.
+@ x=-0.3..3; y=-2.5..1.5; f=ln(x); tan=ln(x),0.5; pt=0.5,-ln(2)
+? input #hwlv0 | 0
+Ve kterém bodě (určete $x$) má graf $y = e^x-x$ vodorovnou tečnu?
+! Vodorovná tečna má směrnici $0$: $e^x-1 = 0$, tedy $x = 0$.
+@ x=-2.5..2; y=-0.5..4; f=exp(x)-x; tan=exp(x)-x,0; pt=0,1
+? match #vq7gs
+Přiřaďte funkcím grafy jejich derivací.
++ $\sin x$ :: @ x=-3.5..3.5; y=-2.5..2.5; f=cos(x)
++ $\cos x$ :: @ x=-3.5..3.5; y=-2.5..2.5; f=-sin(x)
++ $x^2$ :: @ x=-3.5..3.5; y=-2.5..2.5; f=2*x
+- @ x=-3.5..3.5; y=-2.5..2.5; f=sin(x)
+! $(\sin x)' = \cos x$ má v nule hodnotu $1$, $(\cos x)' = -\sin x$ v okolí nuly klesá a $(x^2)' = 2x$ je přímka. Graf funkce $\sin x$ sem nepatří, je to derivace funkce $-\cos x$.
+? order #gmmry
+Seřaďte odvození vzorce $(e^x)' = e^x$ z definice.
++ Podle definice je $(e^x)' = \lim\limits_{h\to0}\dfrac{e^{x+h}-e^x}{h}$.
++ Vytkneme: $\dfrac{e^{x+h}-e^x}{h} = e^x\cdot\dfrac{e^h-1}{h}$.
++ Podle speciální limity je $\lim\limits_{h\to0}\dfrac{e^h-1}{h} = 1$.
++ Tedy $(e^x)' = e^x\cdot1 = e^x$.
+! Činitel $e^x$ na $h$ nezávisí, proto ho lze vytknout před limitu. Výsledek je $(e^x)' = e^x$.
+? mc #js6qj
+Ze které speciální limity plyne $(\sin x)' = \cos x$?
++ $\lim\limits_{h\to0}\dfrac{\sin h}{h} = 1$
+- $\lim\limits_{h\to0}\dfrac{e^h-1}{h} = 1$
+- $\lim\limits_{h\to0}\dfrac{\ln(1+h)}{h} = 1$
+- $\lim\limits_{n\to\infty}\left(1+\dfrac1n\right)^n = e$
+! Podle součtového vzorce je $\sin(x+h)-\sin x = 2\cos\left(x+\frac h2\right)\sin\frac h2$, takže $$\frac{\sin(x+h)-\sin x}{h} = \cos\left(x+\frac h2\right)\cdot\frac{\sin\frac h2}{\frac h2}\to\cos x.$$
+? gen #zux4m | deriv_table
+
 ### Jednostranné derivace a spojitost | P10 | #hei74
 ~ f=0.9*abs(x)-0.35; pt=0,-0.35
 > Jednostranné derivace
@@ -3244,6 +3370,39 @@ Pro podíl platí $\left(\dfrac fg\right)' = \dfrac{f'}{g'}$.
 ! Pro $f = g = x$ je $\left(\frac xx\right)' = 1' = 0$, ale $\frac{f'}{g'} = \frac11 = 1$. Správně je $\left(\frac fg\right)' = \frac{f'g-fg'}{g^2}$.
 + $f = g = x$
 - $f = 0$, $g = x$
+? expr #41obg | 1/cosh(x)^2
+Zderivujte $\operatorname{tgh}x = \dfrac{\sinh x}{\cosh x}$.
+= $\dfrac1{\cosh^2x}$
+! $\frac{\cosh x\cosh x-\sinh x\sinh x}{\cosh^2x} = \frac{1}{\cosh^2x}$, protože $\cosh^2x-\sinh^2x = 1$.
+? expr #507vl | sin x + x cos x
+Zderivujte $x\sin x$.
+! Podle pravidla pro součin: $(x)'\sin x+x(\sin x)' = \sin x+x\cos x$.
+? expr #e8vm2 | 2x - 1
+Zderivujte a upravte $\dfrac{x^3+1}{x+1}$.
+= $2x-1$
+! Podle pravidla pro podíl vyjde $\frac{2x^3+3x^2-1}{(x+1)^2}$. Čitatel je $(x+1)^2(2x-1)$, takže po zkrácení zbude $2x-1$. Rychlejší je nejdřív zkrátit: $\frac{x^3+1}{x+1} = x^2-x+1$, a jeho derivace je $2x-1$.
+? expr #yht2x | (-3x^2+4x+3)/(x^2+1)^2
+Zderivujte $\dfrac{3x-2}{x^2+1}$.
+= $\dfrac{-3x^2+4x+3}{(x^2+1)^2}$
+! Podle pravidla pro podíl: $$\frac{3(x^2+1)-(3x-2)\cdot2x}{(x^2+1)^2} = \frac{-3x^2+4x+3}{(x^2+1)^2}.$$
+? expr #hu3n4 | -1/(x ln(x)^2) | dom=1.2..3
+Zderivujte $\dfrac1{\ln x}$.
+= $-\dfrac1{x\ln^2x}$
+! Pro převrácenou hodnotu platí $\left(\frac1g\right)' = -\frac{g'}{g^2}$, tedy derivace je $-\frac{1/x}{\ln^2x} = -\frac1{x\ln^2x}$.
+? expr #in8yx | 7(ln x + 2)/(2 sqrt x)
+Zderivujte $7\sqrt x\ln x$.
+= $\dfrac{7(\ln x+2)}{2\sqrt x}$
+! Podle pravidla pro součin: $$7\left(\frac{\ln x}{2\sqrt x}+\frac{\sqrt x}{x}\right) = 7\cdot\frac{\ln x+2}{2\sqrt x} = \frac{7(\ln x+2)}{2\sqrt x}.$$
+? expr #zj3a2 | x e^x (2 sin x + x sin x + x cos x)
+Zderivujte $x^2e^x\sin x$.
+= $xe^x(2\sin x+x\sin x+x\cos x)$
+! Pro tři činitele platí $(fgh)' = f'gh+fg'h+fgh'$: $$2xe^x\sin x+x^2e^x\sin x+x^2e^x\cos x = xe^x(2\sin x+x\sin x+x\cos x).$$
+? tf #o5vgz | false
+Je-li součin $fg$ diferencovatelný v bodě $x_0$, jsou v $x_0$ diferencovatelné i $f$ a $g$.
+! Pro $f = g = |x|$ je $fg = x^2$ s derivací $0$ v nule, ale $|x|$ v nule derivaci nemá.
++ $f = g = |x|$ v bodě $0$
+- $f = g = x^2$ v bodě $0$
+- $f = 1$, $g = x$ v bodě $0$
 
 ### Derivace složené funkce | P10 | #o8dy7
 ~ noaxes; text=∘; size=1.3
@@ -3296,7 +3455,6 @@ Zderivujte $\sin^3(2x)$.
 ? input #90epr | 10
 Pro $f(x) = (2x+1)^5$ spočtěte $f'(0)$.
 ! $f'(x) = 5(2x+1)^4\cdot2$, tedy $f'(0) = 10$.
-
 ? gen #xhkhd | deriv_expr
 ?! expr #n5zof | 12x (x^2+1)^5
 Zderivujte $\left(x^2+1\right)^6$.
@@ -3324,6 +3482,145 @@ Spočtěte $f'(0)$ pro $f(x) = \ln\dfrac1{x+\sqrt{x^2+1}}$.
 ? tf #re2t9 | true
 Derivace diferencovatelné periodické funkce je periodická se stejnou periodou.
 ! Z $f(x+T) = f(x)$ derivováním podle pravidla o složené funkci dostaneme $f'(x+T) = f'(x)$. Derivace má tedy periodu $T$.
+? mc #hbi63
+Taková úloha může přijít u zkoušky: derivace $f(t) = (t^2+1)\operatorname{arctg}\dfrac{t+1}{t-1}$ po zjednodušení je
++ $2t\operatorname{arctg}\dfrac{t+1}{t-1} - 1$
+- $2t\operatorname{arctg}\dfrac{t+1}{t-1} + 1$
+- $2t\operatorname{arctg}\dfrac{t+1}{t-1}$
+- $\dfrac{2t}{t^2+1}$
+! Derivace $\operatorname{arctg}\frac{t+1}{t-1}$ vyjde $-\frac{1}{t^2+1}$, takže druhý člen součinu je $-1$.
+? expr #oc4mx | 2cosh(2x)
+Zderivujte $\sinh 2x$.
+! $(\sinh u)' = \cosh u\cdot u'$.
+? expr #daihu | -e^(-x) (cos(x) + sin(x))
+Zderivujte $e^{-x}\cos x$.
+= $-e^{-x}(\cos x+\sin x)$
+! Podle pravidla pro součin: $$-e^{-x}\cos x+e^{-x}(-\sin x) = -e^{-x}(\cos x+\sin x).$$
+? tf #tywyi | true
+Derivace funkce $\operatorname{arctg}x+\operatorname{arctg}\dfrac1x$ je na $(0,\infty)$ nulová.
+! $\frac1{1+x^2}+\frac1{1+1/x^2}\cdot\left(-\frac1{x^2}\right) = \frac1{1+x^2}-\frac1{x^2+1} = 0$. Funkce je proto na $(0,\infty)$ konstantní, rovna $\frac\pi2$.
+? expr #ln8z9 | -3cos(x)/sin(x)^4 | dom=0.3..2.8
+Zderivujte $\dfrac1{\sin^3x}$.
+= $-\dfrac{3\cos x}{\sin^4x}$
+! Funkce je $(\sin x)^{-3}$, takže derivace je $-3(\sin x)^{-4}\cos x = -\frac{3\cos x}{\sin^4x}$.
+? expr #wiq0p | -3cos(x)/(8-3sin(x))
+Zderivujte $\ln(8-3\sin x)$.
+= $-\dfrac{3\cos x}{8-3\sin x}$
+! $\frac{1}{8-3\sin x}\cdot(8-3\sin x)' = \frac{-3\cos x}{8-3\sin x}$. Argument je vždy kladný, protože $3\sin x\le3$.
+? expr #vgh9r | 2sin(x)/cos(x) | dom=-1.2..1.2
+Zderivujte $-2\ln\cos x$.
+= $2\operatorname{tg}x$
+! $-2\cdot\frac{1}{\cos x}\cdot(-\sin x) = \frac{2\sin x}{\cos x} = 2\operatorname{tg}x$.
+? expr #ox3va | -x/sqrt(4-x^2) | dom=-1.8..1.8
+Zderivujte $\sqrt{4-x^2}$.
+= $-\dfrac{x}{\sqrt{4-x^2}}$
+! $\frac{1}{2\sqrt{4-x^2}}\cdot(-2x) = -\frac{x}{\sqrt{4-x^2}}$.
+? expr #xvknp | cos(x)/sin(x) | dom=0.3..2.8
+Zderivujte $\ln\sin x$.
+= $\operatorname{cotg}x$
+! $\frac{1}{\sin x}\cdot\cos x = \operatorname{cotg}x$.
+? expr #6vjj8 | 3cos(3x)/(2sqrt(sin(3x))) | dom=0.1..0.95
+Zderivujte $\sqrt{\sin3x}$.
+= $\dfrac{3\cos3x}{2\sqrt{\sin3x}}$
+! Tři vrstvy: odmocnina, sinus a $3x$. Derivace je $\frac{1}{2\sqrt{\sin3x}}\cdot\cos3x\cdot3 = \frac{3\cos3x}{2\sqrt{\sin3x}}$.
+? expr #uu0pv | (2x+1) 3^(x^2+x) ln 3
+Zderivujte $3^{x^2+x}$.
+= $(2x+1)\,3^{x^2+x}\ln3$
+! $(a^u)' = a^u\ln a\cdot u'$ s $u = x^2+x$, tedy derivace je $(2x+1)\,3^{x^2+x}\ln3$.
+?! expr #9kwhc | 1 - 2x/(x^2+1)
+Zderivujte $\ln\dfrac{e^x}{x^2+1}$.
+= $1-\dfrac{2x}{x^2+1}$
+! Nejdřív upravíme: $\ln\frac{e^x}{x^2+1} = x-\ln(x^2+1)$. Derivace je $1-\frac{2x}{x^2+1}$.
+? expr #b3dzb | -1/cos(x) | dom=-1.2..1.2
+Zderivujte a upravte $\ln\sqrt{\dfrac{1-\sin x}{1+\sin x}}$.
+= $-\dfrac1{\cos x}$
+! Funkce je $\frac12\ln(1-\sin x)-\frac12\ln(1+\sin x)$, takže derivace je $$\frac{-\cos x}{2(1-\sin x)}-\frac{\cos x}{2(1+\sin x)} = \frac{-\cos x}{1-\sin^2x} = -\frac1{\cos x}.$$
+? expr #0xyfa | x/6 + 8/3
+Napište rovnici tečny ke grafu $y = \sqrt{x^2-3x+11}$ v bodě $x_0 = 2$ ve tvaru $y = \dots$
+= $y = \frac x6+\frac83$
+! $f(2) = 3$ a $f'(x) = \frac{2x-3}{2\sqrt{x^2-3x+11}}$, tedy $f'(2) = \frac16$. Tečna je $y = 3+\frac16(x-2) = \frac x6+\frac83$.
+@ x=-2..6; y=0..6; f=sqrt(x^2-3*x+11); f=x/6+8/3; pt=2,3
+? tf #o0gr4 | false
+Pro složenou funkci platí $\big(f(g(x))\big)' = f'(g'(x))$.
+! Správně je $f'(g(x))\cdot g'(x)$. Pro $f(u) = u^2$ a $g(x) = x^2$ je $(x^4)' = 4x^3$, ale $f'(g'(x)) = 2\cdot2x = 4x$.
++ $f(u) = u^2$, $g(x) = x^2$
+- $f(u) = u$, $g(x) = x+3$
+- $f(u) = u+1$, $g(x) = x$
+
+### Vyšší derivace | P10 | #pbas2
+~ noaxes; text=f″; size=1
+> Druhá a vyšší derivace
+Druhá derivace je derivace derivace, $f'' = (f')'$, a obecně $f^{(n)} = \left(f^{(n-1)}\right)'$. Polynom stupně $n$ má všechny derivace řádu vyššího než $n$ nulové.
+> Rychlost a zrychlení
+Je-li $s(t)$ poloha bodu v čase $t$, je $v(t) = s'(t)$ jeho rychlost a $a(t) = v'(t) = s''(t)$ zrychlení.
+> Opakující se vzory
+$$(e^{ax})^{(n)} = a^ne^{ax},\qquad (\sin x)^{(4)} = \sin x,$$
+$$\left(\frac1x\right)^{(n)} = \frac{(-1)^nn!}{x^{n+1}}.$$
+?! expr #9octf | (x+2) e^x
+Spočtěte druhou derivaci funkce $xe^x$.
+= $(x+2)e^x$
+! $f'(x) = e^x+xe^x = (x+1)e^x$ a $f''(x) = e^x+(x+1)e^x = (x+2)e^x$.
+?! input #i2501 | -6
+Bod se pohybuje po přímce a v čase $t$ sekund je v poloze $s(t) = t^3-6t^2+9t$ metrů. Jaké je jeho zrychlení (m/s²) v čase $t = 1$?
+! $v(t) = s'(t) = 3t^2-12t+9$ a $a(t) = v'(t) = 6t-12$, tedy $a(1) = -6$.
+?! mc #45f19
+Čemu se rovná $(\sin x)^{(102)}$?
++ $-\sin x$
+- $\sin x$
+- $\cos x$
+- $-\cos x$
+! Derivace $\sin x$ se opakují s periodou $4$: $\cos x$, $-\sin x$, $-\cos x$, $\sin x$. Protože $102 = 4\cdot25+2$, je $(\sin x)^{(102)} = (\sin x)'' = -\sin x$.
+?! tf #n6ezt | false
+Má-li $f$ derivaci v každém bodě, má v každém bodě i druhou derivaci.
+! $f(x) = x|x|$ má derivaci $f'(x) = 2|x|$ v každém bodě, ale $2|x|$ nemá v nule derivaci. Druhá derivace $f''(0)$ tedy neexistuje.
++ $x|x|$
+- $x^3$
+- $\sin x$
+@ x=-2..2; y=-3..4; f=x*abs(x); f=2*abs(x)
+? input #13s90 | -10
+Kámen vyhozený svisle vzhůru je v čase $t$ sekund ve výšce $h(t) = 20t-5t^2$ metrů. Jaké je jeho zrychlení (m/s²)?
+! $h'(t) = 20-10t$ a $h''(t) = -10$. Zrychlení je stálé, směřuje dolů a je to tíhové zrychlení (zaokrouhlené), tedy $-10$ m/s².
+? input #ahj6m | -12
+Bod kmitá podle zákona $s(t) = 3\sin2t$. Jaké je jeho zrychlení v čase $t = \frac\pi4$?
+! $s'(t) = 6\cos2t$ a $s''(t) = -12\sin2t$. V čase $\frac\pi4$ je $\sin\frac\pi2 = 1$, tedy zrychlení je $-12$.
+? input #rgn8j | 3628800
+Spočtěte desátou derivaci funkce $x^{10}$.
+! Každou derivací klesne exponent o $1$ a přibude činitel: $(x^{10})^{(10)} = 10\cdot9\cdots1 = 10! = 3\,628\,800$.
+? mc #8lyob
+$n$-tá derivace funkce $\dfrac1x$ je
++ $\dfrac{(-1)^nn!}{x^{n+1}}$
+- $\dfrac{n!}{x^{n+1}}$
+- $\dfrac{(-1)^n}{x^{n+1}}$
+- $\dfrac{(-1)^nn!}{x^{n}}$
+! $\left(x^{-1}\right)' = -x^{-2}$, $\left(x^{-1}\right)'' = 2x^{-3}$, $\left(x^{-1}\right)''' = -6x^{-4}$. Každou derivací přibude činitel $-k$, tedy $\left(\frac1x\right)^{(n)} = \frac{(-1)^nn!}{x^{n+1}}$.
+? mc #g7dle
+$n$-tá derivace funkce $e^{2x}$ je
++ $2^ne^{2x}$
+- $2ne^{2x}$
+- $e^{2x}$
+- $n^2e^{2x}$
+! Každou derivací přibude činitel $2$ z vnitřní funkce $2x$, tedy $(e^{2x})^{(n)} = 2^ne^{2x}$.
+? tf #u5mic | true
+Má-li $f$ v bodě $x_0$ vlastní druhou derivaci, je $f'$ v $x_0$ spojitá.
+! $f''(x_0)$ je vlastní derivace funkce $f'$ v bodě $x_0$. Funkce s vlastní derivací je v bodě spojitá, takže $f'$ je v $x_0$ spojitá.
+? expr #gaidl | 2(1-x^2)/(1+x^2)^2
+Spočtěte druhou derivaci funkce $\ln(1+x^2)$.
+= $\dfrac{2(1-x^2)}{(1+x^2)^2}$
+! $f'(x) = \frac{2x}{1+x^2}$ a podle pravidla pro podíl $$f''(x) = \frac{2(1+x^2)-2x\cdot2x}{(1+x^2)^2} = \frac{2(1-x^2)}{(1+x^2)^2}.$$
+? expr #11jq0 | (2+4sin(x)^2)/cos(x)^4 | dom=-1..1
+Spočtěte druhou derivaci funkce $\operatorname{tg}^2x$.
+= $\dfrac{2+4\sin^2x}{\cos^4x}$
+! $f'(x) = 2\operatorname{tg}x\cdot\frac1{\cos^2x} = \frac{2\sin x}{\cos^3x}$ a $$f''(x) = \frac{2\cos^4x+6\sin^2x\cos^2x}{\cos^6x} = \frac{2+4\sin^2x}{\cos^4x}.$$
+? input #20xqb | -π; -3.1416
+Spočtěte $f''\left(\frac\pi4\right)$ pro $f(x) = x\sin2x$.
+! $f'(x) = \sin2x+2x\cos2x$ a $f''(x) = 4\cos2x-4x\sin2x$. V bodě $\frac\pi4$ je $\cos\frac\pi2 = 0$ a $\sin\frac\pi2 = 1$, tedy $f''\left(\frac\pi4\right) = -\pi$.
+? input #67dj3 | 9/2; 4.5
+Spočtěte $f''(-1)$ pro $f(x) = \sqrt{3x^4+1}$.
+! $f'(x) = \frac{6x^3}{\sqrt{3x^4+1}}$ a $f''(x) = \frac{18x^6+18x^2}{(3x^4+1)^{3/2}}$. V bodě $-1$ je $f''(-1) = \frac{36}{8} = \frac92$.
+? tf #1j2fm | true
+Funkce $y = e^{-x}\sin x$ splňuje rovnici $y''+2y'+2y = 0$.
+! $y' = e^{-x}(\cos x-\sin x)$ a $y'' = -2e^{-x}\cos x$. Sečteme: $$y''+2y' = -2e^{-x}\sin x = -2y,$$ tedy $y''+2y'+2y = 0$ a rovnice platí.
+? gen #m5eiz | motion
 
 ### Derivace inverzní funkce | P11 | #obsu1
 ~ dash=-1,-1,1,1; f=x^3*0.9; f=cbrt(x/0.9); tan=0.6
@@ -3403,24 +3700,16 @@ Zderivujte $\ln\left(x+\sqrt{x^2+1}\right)$, inverzní funkci k $\sinh$.
 = $\dfrac1{\sqrt{x^2+1}}$
 ! $\frac{1+\frac{x}{\sqrt{x^2+1}}}{x+\sqrt{x^2+1}} = \frac{\frac{\sqrt{x^2+1}+x}{\sqrt{x^2+1}}}{x+\sqrt{x^2+1}} = \frac1{\sqrt{x^2+1}}$.
 
-### Derivace elementárních funkcí | P11 | #nvfta
-~ f=exp(1.8*x)/3-0.6; tan=0
-> Vzorce
-$$(x^a)' = ax^{a-1},\qquad (e^x)' = e^x,\qquad (a^x)' = a^x\ln a,$$
-$$(\ln x)' = \frac1x,\qquad (\sin x)' = \cos x,\qquad (\cos x)' = -\sin x,$$
-$$(\operatorname{tg}x)' = \frac{1}{\cos^2x},\qquad (\arcsin x)' = \frac{1}{\sqrt{1-x^2}},\qquad (\operatorname{arctg}x)' = \frac{1}{1+x^2}.$$
-Hyperbolické funkce: $(\sinh x)' = \cosh x$, $(\cosh x)' = \sinh x$.
-?! input #7o4hh | ln 2; 0.6931
-Spočtěte derivaci $2^x$ v bodě $0$.
-! $(a^x)' = a^x\ln a$, v nule tedy $\ln 2\approx0{,}693$.
-@ x=-3..2.5; y=-0.5..5; f=2^x; tan=2^x,0; pt=0,1
-? mc #nvc2w
-$(\cosh x)' = $
-+ $\sinh x$
-- $-\sinh x$
-- $\cosh x$
-- $\frac{1}{\cosh^2x}$
-! $\left(\frac{e^x+e^{-x}}2\right)' = \frac{e^x-e^{-x}}2$.
+### Logaritmické derivování | P11 | #wmb25
+~ f=0.35*pow((x+1)*1.1,(x+1)*1.1)-0.95; dash=-1,-0.708,-0.33,-0.708; pt=-0.666,-0.708
+> Proměnný základ i exponent
+Na $x^x$ nestačí vzorec pro $x^a$ ani pro $a^x$. Pro $f>0$ přepíšeme mocninu přes exponenciálu,
+$$f^g = e^{g\ln f},$$
+a derivujeme jako složenou funkci:
+$$\left(f^g\right)' = f^g\left(g'\ln f+g\,\frac{f'}{f}\right).$$
+> Logaritmická derivace
+Platí $(\ln|f|)' = \frac{f'}{f}$. Součin mnoha činitelů je proto výhodné nejdřív zlogaritmovat: z $\ln|f| = \ln|f_1|+\dots+\ln|f_k|$ plyne
+$$f' = f\left(\frac{f_1'}{f_1}+\dots+\frac{f_k'}{f_k}\right).$$
 ?! mc #xi0v6
 Derivace $x^x$ pro $x>0$ je
 + $x^x(\ln x + 1)$
@@ -3428,64 +3717,67 @@ Derivace $x^x$ pro $x>0$ je
 - $x^x\ln x$
 - $x^x$
 ! $x^x = e^{x\ln x}$.
-? mc #hbi63
-Taková úloha může přijít u zkoušky: derivace $f(t) = (t^2+1)\operatorname{arctg}\dfrac{t+1}{t-1}$ po zjednodušení je
-+ $2t\operatorname{arctg}\dfrac{t+1}{t-1} - 1$
-- $2t\operatorname{arctg}\dfrac{t+1}{t-1} + 1$
-- $2t\operatorname{arctg}\dfrac{t+1}{t-1}$
-- $\dfrac{2t}{t^2+1}$
-! Derivace $\operatorname{arctg}\frac{t+1}{t-1}$ vyjde $-\frac{1}{t^2+1}$, takže druhý člen součinu je $-1$.
-? input #4me86 | -1
-Spočtěte derivaci $\operatorname{arccotg}x$ v bodě $0$.
-! $(\operatorname{arccotg}x)' = -\frac{1}{1+x^2}$.
-? input #aqr6f | 2
-Spočtěte $(\operatorname{tg}x)'$ v bodě $\frac\pi4$.
-! $\cos^2\frac\pi4 = \frac12$.
-@ x=-1.4..1.4; y=-3..4; f=tan(x); tan=tan(x),pi/4; pt=pi/4,1
-? expr #on85j | 3^x ln 3
-Zderivujte $3^x$.
-! $(a^x)' = a^x\ln a$.
-? expr #a5q9t | 1/(x ln 2)
-Zderivujte $\log_2 x$.
-! $\log_2x = \frac{\ln x}{\ln 2}$.
-? expr #oc4mx | 2cosh(2x)
-Zderivujte $\sinh 2x$.
-! $(\sinh u)' = \cosh u\cdot u'$.
-? expr #9kqbo | 3/2 sqrt(x)
-Zderivujte $x^{3/2}$.
-! $\frac32x^{1/2}$.
-? expr #4jo2p | 1/cos^2 x | dom=-1..1
-Zderivujte $\operatorname{tg}x$.
-! $\left(\frac{\sin x}{\cos x}\right)' = \frac{\cos^2x+\sin^2x}{\cos^2x}$.
 ? input #yq8ca | 1
 Spočtěte derivaci $x^x$ v bodě $1$.
 ! $(x^x)' = x^x(\ln x+1)$, v bodě $1$: $1\cdot(0+1) = 1$.
-?! match #7ykkz
-Přiřaďte funkcím jejich derivace.
-+ $\sin x$ :: $\cos x$
-+ $\cos x$ :: $-\sin x$
-+ $\ln x$ :: $\dfrac1x$
-+ $\operatorname{arctg} x$ :: $\dfrac{1}{1+x^2}$
-- $-\cos x$
-! Pozor na znaménko: $(\cos x)' = -\sin x$, ale $(\sin x)' = \cos x$. Výraz $-\cos x$ je derivace funkce $-\sin x$, ta tu není.
 ? expr #766qe | e^(sin(x) ln(x)) (cos(x) ln(x) + sin(x)/x)
 Zderivujte $x^{\sin x}$ pro $x>0$.
 = $x^{\sin x}\left(\cos x\ln x+\dfrac{\sin x}x\right)$
 ! $x^{\sin x} = e^{\sin x\ln x}$, takže derivace je $$e^{\sin x\ln x}\left(\cos x\ln x+\frac{\sin x}x\right) = x^{\sin x}\left(\cos x\ln x+\frac{\sin x}x\right).$$
-? expr #41obg | 1/cosh(x)^2
-Zderivujte $\operatorname{tgh}x = \dfrac{\sinh x}{\cosh x}$.
-= $\dfrac1{\cosh^2x}$
-! $\frac{\cosh x\cosh x-\sinh x\sinh x}{\cosh^2x} = \frac{1}{\cosh^2x}$, protože $\cosh^2x-\sinh^2x = 1$.
-? input #77dwe | 1/ln 10; 0.4343
-Spočtěte derivaci $\log_{10}x$ v bodě $1$.
-! $(\log_{10}x)' = \frac1{x\ln10}$, v bodě $1$ je to $\frac1{\ln10}$.
-? expr #daihu | -e^(-x) (cos(x) + sin(x))
-Zderivujte $e^{-x}\cos x$.
-= $-e^{-x}(\cos x+\sin x)$
-! Podle pravidla pro součin: $$-e^{-x}\cos x+e^{-x}(-\sin x) = -e^{-x}(\cos x+\sin x).$$
-? tf #tywyi | true
-Derivace funkce $\operatorname{arctg}x+\operatorname{arctg}\dfrac1x$ je na $(0,\infty)$ nulová.
-! $\frac1{1+x^2}+\frac1{1+1/x^2}\cdot\left(-\frac1{x^2}\right) = \frac1{1+x^2}-\frac1{x^2+1} = 0$. Funkce je proto na $(0,\infty)$ konstantní, rovna $\frac\pi2$.
+? order #n5v15
+Seřaďte výpočet derivace $x^x$ pro $x>0$.
++ Přepíšeme $x^x = e^{x\ln x}$.
++ Podle pravidla pro složenou funkci je $(x^x)' = e^{x\ln x}\cdot(x\ln x)'$.
++ Podle pravidla pro součin je $(x\ln x)' = \ln x+1$.
++ Tedy $(x^x)' = x^x(\ln x+1)$.
+! Proměnná je v základu i v exponentu, proto nejdřív přepíšeme přes exponenciálu. Výsledek je $(x^x)' = x^x(\ln x+1)$.
+?! tf #6kucz | false
+Pro každé $f>0$ a $g$ platí $(f^g)' = g\,f^{g-1}f'$.
+! Vzorec platí jen pro konstantní exponent. Pro $f = 2$ a $g = x$ dává $x\cdot2^{x-1}\cdot0 = 0$, ale $(2^x)' = 2^x\ln2$. Správně je $(f^g)' = f^g\left(g'\ln f+g\frac{f'}{f}\right)$.
++ $f = 2$, $g = x$
+- $f = x$, $g = 3$
+- $f = x^2$, $g = 2$
+?! match #y10jx
+Přiřaďte funkcím jejich derivace.
++ $x^e$ :: $ex^{e-1}$
++ $e^x$ :: $e^x$
++ $x^x$ :: $x^x(\ln x+1)$
++ $2^x$ :: $2^x\ln2$
+- $x\cdot2^{x-1}$
+! $x^e$ je mocnina s pevným exponentem, $2^x$ exponenciála a $x^x$ obojí najednou. Výraz $x\cdot2^{x-1}$ je chybné použití vzorce pro mocninu na $2^x$.
+? expr #sgbev | x^(x^2) (2x ln x + x)
+Zderivujte $x^{x^2}$ pro $x>0$.
+= $x^{x^2}(2x\ln x+x)$
+! $x^{x^2} = e^{x^2\ln x}$ a $(x^2\ln x)' = 2x\ln x+x$, tedy derivace je $x^{x^2}(2x\ln x+x)$.
+? expr #b88zl | sin(x)^ln(x) (ln(sin(x))/x + ln(x) cos(x)/sin(x)) | dom=0.4..2.7
+Zderivujte $(\sin x)^{\ln x}$ pro $x\in(0,\pi)$.
+= $(\sin x)^{\ln x}\left(\dfrac{\ln\sin x}{x}+\ln x\operatorname{cotg}x\right)$
+! $(\sin x)^{\ln x} = e^{\ln x\cdot\ln\sin x}$ a $(\ln x\cdot\ln\sin x)' = \frac{\ln\sin x}{x}+\ln x\cdot\frac{\cos x}{\sin x}$, tedy derivace je $$(\sin x)^{\ln x}\left(\frac{\ln\sin x}{x}+\ln x\operatorname{cotg}x\right).$$
+? expr #atczv | (x^2+1)^arctg(x) (ln(x^2+1) + 2x arctg(x))/(x^2+1)
+Zderivujte $(x^2+1)^{\operatorname{arctg}x}$.
+= $(x^2+1)^{\operatorname{arctg}x}\,\dfrac{\ln(x^2+1)+2x\operatorname{arctg}x}{x^2+1}$
+! Exponent $\operatorname{arctg}x\cdot\ln(x^2+1)$ má derivaci $\frac{\ln(x^2+1)}{1+x^2}+\operatorname{arctg}x\cdot\frac{2x}{x^2+1}$, tedy derivace je $$(x^2+1)^{\operatorname{arctg}x}\,\frac{\ln(x^2+1)+2x\operatorname{arctg}x}{x^2+1}.$$
+? input #7qs76 | -20
+Spočtěte $f'(1)$ pro $f(x) = x^2(x+1)^3(x-2)$.
+! Logaritmická derivace: $\frac{f'}{f} = \frac2x+\frac3{x+1}+\frac1{x-2}$, v bodě $1$ je to $2+\frac32-1 = \frac52$. Protože $f(1) = 1\cdot8\cdot(-1) = -8$, je $f'(1) = -8\cdot\frac52 = -20$.
+? input #l7tqf | 1/e; 0.3679
+Ve kterém bodě (určete $x$) má graf $y = x^x$ vodorovnou tečnu?
+! $(x^x)' = x^x(\ln x+1) = 0$ právě pro $\ln x = -1$, tedy $x = \frac1e$.
+@ x=0..1.8; y=0..2.2; f=x^x; tan=x^x,exp(-1); pt=exp(-1),exp(-exp(-1))
+? input #yqfdo | e; 2.7183
+Ve kterém bodě (určete $x$) má graf $y = x^{1/x}$ pro $x>0$ vodorovnou tečnu?
+! $x^{1/x} = e^{\frac{\ln x}{x}}$, takže derivace je $x^{1/x}\cdot\frac{1-\ln x}{x^2}$. Ta je nulová pro $\ln x = 1$, tedy $x = e$.
+@ x=0..8; y=0..1.8; f=x^(1/x); tan=x^(1/x),exp(1); pt=exp(1),exp(exp(-1))
+? tf #1qm5e | true
+Pro $x<0$ platí $(\ln|x|)' = \dfrac1x$.
+! Pro $x<0$ je $\ln|x| = \ln(-x)$ a podle pravidla pro složenou funkci $(\ln(-x))' = \frac{1}{-x}\cdot(-1) = \frac1x$.
+? mc #2lhlq
+Logaritmická derivace $(\ln|f|)'$ funkce $f$ je
++ $\dfrac{f'}{f}$
+- $\dfrac1f$
+- $\ln|f'|$
+- $\dfrac{f}{f'}$
+! Podle pravidla pro složenou funkci je $(\ln|f|)' = \frac{1}{f}\cdot f' = \frac{f'}{f}$.
 
 ### Bonus: Související rychlosti | P11 | bonus | #yshgp
 ~ noaxes; line=-0.75,-0.85,-0.75,0.95; line=-0.95,-0.85,0.95,-0.85; bar=-0.75,0.55,0.25,-0.85; arrow=0.35,-0.6,0.85,-0.6

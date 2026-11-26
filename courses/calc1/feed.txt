@@ -122,6 +122,12 @@ Judith Grabinerová (Mathematics Magazine, 1983) popisuje cestu derivace ve čty
 
 V přednášce postupujeme přesně opačně: nejdřív definice, pak použití.
 
+=== tip | P10 | Mocnina, nebo exponenciála? | (x^2)'\ne(2^x)'
+Vzorec $(x^a)'=ax^{a-1}$ platí, když je proměnná v základu a exponent je pevný. Je-li proměnná v exponentu, platí $(a^x)'=a^x\ln a$. Proto $(x^2)'=2x$, ale $(2^x)'=2^x\ln2$.
+--- solution
+Je-li proměnná v základu i v exponentu, nepomůže ani jeden vzorec. Přepíšeme $x^x=e^{x\ln x}$ a derivujeme jako složenou funkci:
+$$(x^x)'=x^x(\ln x+1).$$
+
 === app | P11 | Vypouštění nádrže | \frac{dh}{dt}
 Válcová nádrž má poloměr $2$ m. Čerpáme z ní $3\ \mathrm{m^3}$ za minutu. Jak rychle klesá hladina?
 --- hint
