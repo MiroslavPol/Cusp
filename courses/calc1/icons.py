@@ -44,6 +44,8 @@ ICONS = {
 "Derivace složené funkce": "noaxes; text=∘; size=1.3",
 "Derivace inverzní funkce": "dash=-1,-1,1,1; f=x^3*0.9; f=cbrt(x/0.9); tan=0.6",
 "Derivace elementárních funkcí": "f=exp(1.8*x)/3-0.6; tan=0",
+"Vyšší derivace": "noaxes; text=f″; size=1",
+"Logaritmické derivování": "f=0.35*pow((x+1)*1.1,(x+1)*1.1)-0.95; dash=-1,-0.708,-0.33,-0.708; pt=-0.666,-0.708",
 "Bonus: Související rychlosti": "noaxes; line=-0.75,-0.85,-0.75,0.95; line=-0.95,-0.85,0.95,-0.85; bar=-0.75,0.55,0.25,-0.85; arrow=0.35,-0.6,0.85,-0.6",
 # --- Věty o střední hodnotě a průběh funkce
 "Rolleova a Lagrangeova věta": "f=0.9*x^2-0.6; sec=-0.3,0.9; tan=0.3",
